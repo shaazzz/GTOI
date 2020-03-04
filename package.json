@@ -1,0 +1,11 @@
+{
+  "name": "GTOI",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/shaazzz/GTOI.git",
+  "author": "HKalbasi <kalbasi@ce.sharif.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "gh-pages": "^2.2.0"
+  }
+}
