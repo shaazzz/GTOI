@@ -4,7 +4,9 @@ import glob from "glob";
 import YAML from "yaml";
 import fs from "fs";
 import { promisify } from "util";
+import Markdown from "markdown-it";
 
+const markdown = new Markdown()
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const rmdir = promisify(fs.rmdir);
@@ -18,6 +20,8 @@ const getDirectories = (src) => {
   });
 };
 
+const md = (txt) => markdown.render(txt);
+
 const template = ({ text, solution, id }) => `
 <html>
   <head>
@@ -25,9 +29,9 @@ const template = ({ text, solution, id }) => `
   </head>
   <body style="direction:rtl;">
     <h1>سوال ${id}:</h1>
-    ${text}
+    ${md(text)}
     <h1>جواب:</h1>
-    ${solution}
+    ${md(solution)}
   </body>
 </html>`;
 

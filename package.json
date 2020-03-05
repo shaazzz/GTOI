@@ -8,6 +8,7 @@
   "dependencies": {
     "gh-pages": "^2.2.0",
     "glob": "^7.1.6",
+    "markdown-it": "^10.0.0",
     "yaml": "^1.7.2"
   }
 }
