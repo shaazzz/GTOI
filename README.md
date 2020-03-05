@@ -5,12 +5,13 @@ Graph Theory for Olympiad in Informatics
 one time:
 ```
 git clone https://github.com/shaazzz/GTOI.git
-npm install -g http-server
+sudo apt-get install python3-sphinx
+sudo npm install -g http-server
 ```
 
 after every change:
 ```
 cd GTOI
-./scripts/build
+./scripts/build.sh
 http-server _build
 ```
