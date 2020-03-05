@@ -6,6 +6,8 @@
   "author": "HKalbasi <kalbasi@ce.sharif.edu>",
   "license": "MIT",
   "dependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "glob": "^7.1.6",
+    "yaml": "^1.7.2"
   }
 }
