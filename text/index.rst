@@ -12,5 +12,5 @@
 .. toctree::
 	:maxdepth: 6
 
-	book/01/index
-	book/02/index
+	book/1/index
+	book/2/index
