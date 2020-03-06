@@ -1,6 +1,7 @@
 cd $(dirname "$0")
 cd ..
 rm -r text/_build/html
+rm -r _build/
 cd text
 make html
 cd ..
