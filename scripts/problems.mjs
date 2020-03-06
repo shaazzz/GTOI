@@ -53,7 +53,7 @@ const problemInIndex1Template = ({ id, data: { text }}) => `
 
 const index1Template = ({ id, children }) => mainTemplate(`
 <h1>بخش ${id}</h1>
-${children.map(problemInIndex1Template).join()}
+${children.map(problemInIndex1Template).join('')}
 `);
 
 const problemInIndexTemplate = ({ id }) => `
@@ -65,7 +65,7 @@ const problemInIndexTemplate = ({ id }) => `
 const indexTemplate = ({ id, children }) => mainTemplate(`
 <h1>بخش ${id}</h1>
 <ul>
-${children.map(problemInIndexTemplate).join()}
+${children.map(problemInIndexTemplate).join('')}
 </ul>
 `);
 
