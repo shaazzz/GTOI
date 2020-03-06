@@ -30,6 +30,8 @@ const getParent = (id) => {
 const mainTemplate = (body) => `
 <html>
   <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body style="direction:rtl;">${body}</body>
