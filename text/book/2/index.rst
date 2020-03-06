@@ -7,5 +7,5 @@
 .. toctree::
 	:maxdepth: 6
 
-	01.part1
-	02.part2
+	1
+	2
