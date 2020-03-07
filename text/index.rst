@@ -14,3 +14,4 @@
 
 	book/1/index
 	book/2/index
+	book/3/index
