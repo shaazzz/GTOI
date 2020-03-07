@@ -5,3 +5,4 @@ Contributors
 * Mahdi Ghempanah
 * Shayan Pardis
 * Arshia Dadras
+* Pedram Sadeghian
