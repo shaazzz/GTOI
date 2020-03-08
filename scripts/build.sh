@@ -8,3 +8,6 @@ cd ..
 cp -r text/_build/html _build
 node scripts/problems.mjs
 cp -a problems/_build/. _build/problems
+
+cd _build
+http-server -p $1
