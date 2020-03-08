@@ -10,4 +10,5 @@ node scripts/problems.mjs
 cp -a problems/_build/. _build/problems
 
 cd _build
-http-server -p $1
+touch .nojekyll
+echo "gtoi.shaazzz.ir" > CNAME
