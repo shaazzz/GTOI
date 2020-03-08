@@ -2,4 +2,12 @@ import ghPages from "gh-pages";
 import path from "path";
 import { projectRoot } from "./rootAddress.mjs";
 
-ghPages.publish(path.join(projectRoot, '_build'));
+ghPages.publish(
+  path.join(projectRoot, '_build'),
+  {
+    dotfiles: true,
+  },
+  (err) => {
+    console.log('Done');
+  }
+);
