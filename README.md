@@ -12,6 +12,5 @@ sudo npm install -g http-server
 after every change:
 ```
 cd GTOI
-./scripts/build.sh
-http-server _build
+./scripts/build.sh 8080
 ```
