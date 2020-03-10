@@ -20,7 +20,10 @@ const getDirectories = (src) => {
   });
 };
 
-const md = (txt) => markdown.render(txt);
+const md = (txt) => {
+  if (!txt) return '';
+  return markdown.render(txt);
+};
 
 const getParent = (id) => {
   const idsplit = id.split('.');
