@@ -30,6 +30,13 @@ const getParent = (id) => {
   return idsplit.slice(0, -1).join('.');
 };
 
+const backlink = (id) => {
+  if (id === '') {
+    return `<h1>برگرد به <a href="index.html">فهرست اصلی</a></h1>`;
+  }
+  return `<h1>برگرد به <a href="${id}.html">بخش ${id}</a></h1>`;
+};
+
 const mainTemplate = (body) => `
 <html>
   <head>
@@ -47,23 +54,38 @@ const mainTemplate = (body) => `
   <body style="direction:rtl;">${body}</body>
 </html>`;
 
-const problemTemplate = ({ text, solution, id }) => mainTemplate(`
+const problemTemplate = ({ data, id, parent }) => {
+  if (id.slice(-5) === 'extra') {
+    const x = id.slice(0,-6);
+    return mainTemplate(`<h1>مسائل بیشتر <a href="${x}.html">بخش ${x}</a></h1><ul>${data.map(
+      ({ name, link })=>`<li><a href=${link}>${name}</a></li>`
+    )}</ul>`);
+  }
+  return mainTemplate(`
 <h1>سوال ${id}:</h1>
-${md(text)}
+${md(data.text)}
 <h1>جواب:</h1>
-${md(solution)}
+${md(data.solution)}
+${backlink(parent)}
 `);
+};
 
-const problemInIndex1Template = ({ id, data: { text }}) => `
+const problemInIndex1Template = ({ id, data }) => {
+  if (id.slice(-5) === 'extra') {
+    return `<h1><a href="${id}.html">مسائل بیشتر...</a></h1>`;
+  }
+  return `
 <div>
   <h2>سوال <a href="${id}.html">${id}</a></h2>
-  ${md(text)}
+  ${md(data.text)}
 </div>
 `;
+};
 
-const index1Template = ({ id, children }) => mainTemplate(`
+const index1Template = ({ id, children, parent }) => mainTemplate(`
 <h1>بخش ${id}</h1>
 ${children.map(problemInIndex1Template).join('')}
+${backlink(parent)}
 `);
 
 const problemInIndexTemplate = ({ id }) => `
@@ -72,11 +94,12 @@ const problemInIndexTemplate = ({ id }) => `
 </li>
 `;
 
-const indexTemplate = ({ id, children }) => mainTemplate(`
+const indexTemplate = ({ id, children, parent }) => mainTemplate(`
 <h1>بخش ${id}</h1>
 <ul>
 ${children.map(problemInIndexTemplate).join('')}
 </ul>
+${backlink(parent)}
 `);
 
 const generateHtmls = (q) => {
@@ -86,8 +109,8 @@ const generateHtmls = (q) => {
   while (head !== q.length) {
     const { id, type, data } = q[head];
     head += 1;
+    const parent = getParent(id);
     if (id !== '') {
-      const parent = getParent(id);
       const me = {id, type, data};
       if (children[parent] === undefined) {
         children[parent] = [me];
@@ -104,19 +127,19 @@ const generateHtmls = (q) => {
     if (type === 'problem') {
       htmls.push({
         id,
-        html: problemTemplate({ ...data, id }),
+        html: problemTemplate({ data, id, parent }),
       });
     }
     else if (type === 'index1') {
       htmls.push({
         id,
-        html: index1Template({ id, children: children[id] })
+        html: index1Template({ id, children: children[id], parent })
       });
     }
     else {
       htmls.push({
         id,
-        html: indexTemplate({ id, children: children[id] })
+        html: indexTemplate({ id, children: children[id], parent })
       });
     }
   }
