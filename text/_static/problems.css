@@ -1,0 +1,16 @@
+#body-top {
+  width: 100%;
+  height: auto;
+  padding: 10px 0;
+  display: inline-block;
+  color: #5C6BC0;
+  border-bottom: 3px #E8EAF6 solid;
+  margin-bottom: 24px;
+}
+
+a, ul > li > a, ol > li > a {
+  text-decoration: none !important;
+  color: 
+  #5C6BC0;
+  padding: 0;
+}
