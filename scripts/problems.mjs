@@ -71,7 +71,7 @@ const problemTemplate = ({ data, id, parent }) => {
     const x = id.slice(0,-6);
     return mainTemplate(`<h1>مسائل بیشتر <a href="${x}.html">بخش ${x}</a></h1><ul>${data.map(
       ({ name, link })=>`<li><a href=${link}>${name}</a></li>`
-    )}</ul>`, { bookLink });
+    ).join('')}</ul>`, { bookLink });
   }
   return mainTemplate(`
 <h1>سوال ${id}:</h1>
