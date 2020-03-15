@@ -9,6 +9,8 @@ cp -r text/_build/html _build
 node scripts/problems.mjs
 cp -a problems/_build/. _build/problems
 
+node scripts/statistics.mjs
+
 cd _build
 touch .nojekyll
 echo "gtoi.shaazzz.ir" > CNAME
