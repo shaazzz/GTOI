@@ -90,7 +90,7 @@
   		while(top[u] != 0 && used[top[u]]){
   			top[u] = next[top[u]];
   		}
-  		assert(top[u] == 0); // اگر شرط برقرار باشد گراف اویلری نیست
+  		assert(top[u] == 0); // agar shart bargharar bashad graph euleri nist.
   		used[top[u]] = 1;
   		tmp.push_back(top[u]);
   		u = to[top[u]];		
@@ -104,9 +104,9 @@
   }
   
   int main(){
-	// گراف را ورودی بگیرید و برای هر یال ``add_edge`` را صدا بزنید.  
-	// تابع ``build`` را صدا بزنید.  
-	// حالا ترتیب طی کردن یال ها در وکتور ``ans`` قرار دارد.
+	// graph ra voroodi begirid va baraye har yal add_edge ra seda bezanid
+	// taabe build ra seda bezanid
+	// hala tartib yal ha dar vector ans gharar darad
   }
 
 
