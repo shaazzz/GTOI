@@ -16,6 +16,7 @@ const getDirectories = (src, end = 'yaml') => {
 
 const render = ({ problemCount, foreignProblemCount, partCount, completePartCount, partLines }) => {
   const percent = Math.round(completePartCount / partCount * 100);
+  const pertos = Math.round(completePartCount / partCount * 1000)/10;
   return `
 <html>
   <head>
@@ -37,7 +38,7 @@ const render = ({ problemCount, foreignProblemCount, partCount, completePartCoun
     بخش کامل شده است.
     <br>
     <div style="background-color:#ddd;direction:ltr;">
-      <div style="background-color:#0f0;width:${percent}%;text-align:center">${percent}%</div>
+      <div style="background-color:#0f0;width:${percent}%;text-align:center">${pertos}%</div>
     </div>
     </div>
     <div>
