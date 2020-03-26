@@ -26,4 +26,5 @@
 	book/12/index
 	book/13/index
 	book/14/index
+	book/appendix/index
 
