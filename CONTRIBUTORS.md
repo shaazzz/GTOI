@@ -6,3 +6,4 @@ Contributors
 * Shayan Pardis
 * Arshia Dadras
 * Pedram Sadeghian
+* Abolfazl Soltani
