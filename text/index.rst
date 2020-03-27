@@ -15,7 +15,6 @@
 	book/1/index
 	book/2/index
 	book/3/index
-	book/4/index
 	book/5/index
 	book/6/index
 	book/7/index
