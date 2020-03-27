@@ -60,6 +60,7 @@
 توجه کنید که تفاوت کد پیدا کردن تور اویلری گراف جهت دار و بدون جهت تنها در تابع ``add_edge`` است.
 
 .. code-block:: cpp
+		
   #include<bits/stdc++.h>
 
   using namespace std;
