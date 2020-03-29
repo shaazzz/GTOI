@@ -45,7 +45,7 @@ const mainTemplate = (body, { bookLink = '/' }) => `
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']]
       }
     };
   </script>
@@ -73,11 +73,14 @@ const problemTemplate = ({ data, id, parent }) => {
       ({ name, link })=>`<li><a href=${link}>${name}</a></li>`
     ).join('')}</ul>`, { bookLink });
   }
+  const sol = data.solution ? `<h1>جواب:</h1>${md(data.solution)}` : '';
+  const hint = data.hint ? `<h1>راهنمایی:</h1>${md(data.hint)}` : '';
+  const cat = data.cat ? `(${data.cat})` : '';
   return mainTemplate(`
-<h1>سوال ${id}:</h1>
+<h1>سوال ${id} ${cat}:</h1>
 ${md(data.text)}
-<h1>جواب:</h1>
-${md(data.solution)}
+${hint}
+${sol}
 ${backlink(parent)}
 `, { bookLink });
 };
@@ -86,9 +89,10 @@ const problemInIndex1Template = ({ id, data }) => {
   if (id.slice(-5) === 'extra') {
     return `<h1><a href="${id}.html">مسائل بیشتر...</a></h1>`;
   }
+  const cat = data.cat ? `(${data.cat})` : '';
   return `
 <div>
-  <h2>سوال <a href="${id}.html">${id}</a></h2>
+  <h2>سوال <a href="${id}.html">${id}</a> ${cat} </h2>
   ${md(data.text)}
 </div>
 `;
