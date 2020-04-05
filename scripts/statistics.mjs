@@ -75,10 +75,16 @@ const text = async () => {
     .filter((x) => x.slice(-9) !== 'index.rst');
   const partCount = parts.length;
   const completePartLines = await Promise.all(parts.map(async (x) => {
-    return (await readFile(x)).toString().split('\n').length;
+    const text = (await readFile(x)).toString();
+    const lines = text.split('\n').length;
+    const completed = lines > 15 && text.trim().slice(-7) !== 'not yet';
+    return {
+      lines,
+      completed,
+    };
   }));
-  const partLines = completePartLines.reduce((a, b) => a + b);
-  const completePartCount = completePartLines.filter(x => x > 15).length;
+  const partLines = completePartLines.map(({ lines }) => lines).reduce((a, b) => a+b);
+  const completePartCount = completePartLines.filter(x => x.completed).length;
   return {
     partCount,
     completePartCount,
