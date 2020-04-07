@@ -25,12 +25,7 @@
 ابتدا توجه کنید که برقرار بودن شرط تات به ازای :math:`S = \phi` به ما نتیجه می دهد که :math:`H` دارای هیچ مولفه همبندی با فرد راس نیست در نتیجه تعداد راس های گراف زوج است.
 
 
-.. figure:: /_static/sib.png
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
-
-.. figure:: /_static/golabi.png
+.. figure:: /_static/sib_golabi.png
    :width: 50%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
