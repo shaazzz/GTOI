@@ -7,4 +7,4 @@ Contributors
 * Arshia Dadras
 * Pedram Sadeghian
 * Abolfazl Soltani
-* AliPasha Montaseri
+* Alipasha Montaseri
