@@ -3,11 +3,123 @@
 
 در بخش قبل گفتیم که شرط لازم و کافی برای داشتن یک تطابق ماکسیمم این است که مسیر افزوده وجود نداشته باشد. این شرط در گراف دوبخشی به راحتی قابل بررسی است (چرا؟).
 
-در نتیجه بررسی کردن تطابق در گراف های دوبخشی (به عنوان حالت خاصی از گراف) سودمند است.
+در نتیجه بررسی کردن تطابق در گراف های دوبخشی (به عنوان حالت خاصی از گراف) به علت کاربرد زیادشان سودمند است.
 
 الگوریتم
 ----------
 
+در این الگوریتم از تطابق خالی شروع می‌کنیم و تا زمانی که مسیری افزایشی در گراف وجود داشت تطابق را بزرگ‌تر می‌کنیم. به راحتی قابل مشاهده است که در این صورت ماکسیمم بودن تطابق نهایی ما بدیهی است. برای پیدا کردن مسیر افزایشیبه این صورت عمل میکنیم:
+
+فرض کنید گراف ما شامل دو بخش :math:`n1` راسی و :math:`n2` راسی باشد. به ازای :math:`v = 1 ... n1` در گراف حال حاضرمان به دنبال مسیر افزایشی می‌گردیم. در مرحله :math:`i` ام می‌توان ادعا کرد تطابقی که بین :math:`i` راس بخش اول و بقیه رئوس بخش دوم است ماکسیمم است، در نتیجه در آخر نیز تطابق ما ماکسیمم خواهد بود. پیاده‌سازی آن به شکل زیر است:
+
+.. code-block:: cpp
+
+  /* In the name of Allah */
+  #include<bits/stdc++.h>
+  using namespace std;
+
+  const int N = 2e3 + 5;
+  int n1, n2, m, k, match[N];
+  vector<int> adj[N];
+  bool mark[N];
+
+  bool try_kuhn(int u) {
+      mark[u] = true;
+      for (auto v: adj[u])
+          if (match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))) {
+              match[v] = u;
+              return true;
+          }
+      return false;
+  }
+
+  void read_input() {
+      cin >> n1 >> n2 >> m;
+      for (int i = 0; i < m; i++) {
+          int u, v;
+          cin >> u >> v;
+          adj[--u].push_back(--v);
+      }
+  }
+
+  void calc() {
+      memset(match, -1, sizeof match);
+      for (int u = 0; u < n1; u++) {
+          memset(mark, false, sizeof mark);
+          k += try_kuhn(u);
+      }
+  }
+
+  void write_output() {
+      cout << k << endl;
+      for (int u = 0; u < n2; u++)
+          if (match[u] != -1)
+              cout << match[u] + 1 << ' ' << u + 1 << endl;
+  }
+
+  int main() {
+      ios:: sync_with_stdio(0), cin.tie(0), cout.tie(0);
+      read_input(), calc(), write_output();
+      return 0;
+  }
+
+در الگوریتم ذکر شده به ازای هر راس از بخش بالا، :math:`O(m)` گام انجام می‌شود، پس پیچیدگی زمانی آن برابر :math:`O(nm)` است. البته یک نوع پیاده‌سازی دیگر همین الگوریتم نیز وجود دارد که سرعت آن حداقل دوبرابر سریع‌تر از الگوریتم بالا است (چرا؟):
+
+.. code-block:: cpp
+
+  /* In the name of Allah */
+  #include<bits/stdc++.h>
+  using namespace std;
+
+  const int N = 2e3 + 5;
+  int n1, n2, m, k, match[N];
+  vector<int> adj[N];
+  bool mark[N];
+
+  bool try_kuhn(int u) {
+      mark[u] = true;
+      for (auto v: adj[u])
+          if (match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))) {
+              match[v] = u;
+              return true;
+          }
+      return false;
+  }
+
+  void read_input() {
+      cin >> n1 >> n2 >> m;
+      for (int i = 0; i < m; i++) {
+          int u, v;
+          cin >> u >> v;
+          adj[--u].push_back(--v);
+      }
+  }
+
+  void calc() {
+      memset(match, -1, sizeof match);
+      while (true) {
+          bool flag = false;
+          memset(mark, false, sizeof mark);
+          for (int u = 0; u < n1; u++)
+              if (!mark[u])
+                  k += try_kuhn(u);
+          if (!flag)
+              break;
+      }
+  }
+
+  void write_output() {
+      cout << k << endl;
+      for (int u = 0; u < n2; u++)
+          if (match[u] != -1)
+              cout << match[u] + 1 << ' ' << u + 1 << endl;
+  }
+
+  int main() {
+      ios:: sync_with_stdio(0), cin.tie(0), cout.tie(0);
+      read_input(), calc(), write_output();
+      return 0;
+  }
 
 قضیه هال
 -------------
