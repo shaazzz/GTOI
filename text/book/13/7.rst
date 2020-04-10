@@ -26,20 +26,10 @@
 
 - **گلابی** : راس های :math:`a,b,c,d` به طوریکه :math:`ab,ac` یال‌های گراف باشند ولی :math:`bc,ad` یال‌های گراف نباشند.
 
-<<<<<<< HEAD
-.. figure:: /_static/sib.png
-   :width: 20%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
-
 - **سیب** : راس های :math:`a,b,c` به طوریکه :math:`ab,ac` یال‌های گراف باشند ولی :math:`bc` یال‌ گراف نباشد.
 
-.. figure:: /_static/golabi.png
-   :width: 20%
-=======
 .. figure:: /_static/sib_golabi.png
    :width: 50%
->>>>>>> ae2ccc2acb533fb94a9c2447c75ff2d57405209d
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
 
