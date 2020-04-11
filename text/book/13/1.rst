@@ -79,9 +79,3 @@
    :width: 30%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
-
-<<<<<<< HEAD
-// arshia: shayan ishalla ke dorost she
-=======
-shayan
->>>>>>> 6744105dfc4934e98d3506a4051e8044f540af01
