@@ -2,12 +2,15 @@ import { projectRoot } from "./rootAddress.mjs";
 import path from "path";
 import fs from "fs";
 import { promisify } from "util";
+import YAML from "yaml";
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 
-const render = ({ }) => {
+const render = ({ labels, textData, problemData, codeData }) => {
+  const color = (i) => `hsl(${i/labels.length*360},100%,50%)`
+  const spans = labels.map((x, i) => `<a href="www.google.com"><span style="color:${color(i)}">${x}</span></a>`);
   return `
 <html>
   <head>
@@ -27,37 +30,56 @@ const render = ({ }) => {
     در آن قرار دارد نمی رسید. ممکن است برخی به صورت گمنام مشارکت کرده باشند یا به دلیل
     اشتباهی از ما، اسم آن ها در این فهرست نیامده باشد. اما ما قدردان زحمات همه آنان هستیم.
     <h2>آمار</h2>
+    <h3>اسامی مشارکت کنندگان</h3>
+    ${spans.join('،')}
     <h3>درسنامه</h3>
     <canvas id="text-chart"></canvas>
+    <h3>سوالات تئوری</h3>
+    <canvas id="problem-chart"></canvas>
+    <h3>سوالات کد</h3>
+    <canvas id="code-chart"></canvas>
     <script defer>
+      const cf = function(context) {
+        var index = context.dataIndex;
+        var len = context.dataset.data.length;
+        return 'hsl('+(index/len*360)+',100%,50%)';
+      };
       var ctx = document.getElementById('text-chart').getContext('2d');
+      Chart.defaults.global.display = false;
       var chart = new Chart(ctx, {
-          // The type of chart we want to create
-          type: 'pie',
-
-          // The data for our dataset
-          data: data = {
-            datasets: [{
-              backgroundColor: function(context) {
-                var index = context.dataIndex;
-                var len = context.dataset.data.length;
-                return 'hsl('+(index/len*360)+',100%,50%)';
-            },
-                data: [10, 20, 30, 40]
-            }],
-        
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-                'Red',
-                'Yellow',
-                'Blue',
-                'boz'
-            ],
-
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: ${JSON.stringify(textData)}
+          }],
+          labels: ${JSON.stringify(labels)},
         },
-
-          // Configuration options go here
-          options: {}
+        options: {legend:{display: false}},
+      });
+      var ctx = document.getElementById('problem-chart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: ${JSON.stringify(problemData)}
+          }],
+          labels: ${JSON.stringify(labels)},
+        },
+        options: {legend:{display: false}},
+      });
+      var ctx = document.getElementById('code-chart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: ${JSON.stringify(codeData)}
+          }],
+          labels: ${JSON.stringify(labels)},
+        },
+        options: {legend:{display: false}},
       });
     </script>
     </div>
@@ -66,8 +88,19 @@ const render = ({ }) => {
   `
 };
 
+const normalize = ({ name, text = [], problem = [], codeProblem = 0 }) => ({
+  name, text, problem, codeProblem,
+})
+
 const main = async () => {
-  const result = render({});
+  const data = YAML.parse(
+    (await readFile(path.join(projectRoot, 'contributors.yaml'))).toString()
+  ).map(normalize);
+  const labels = data.map(({ name })=>name);
+  const textData = data.map(({ text })=>text.length);
+  const problemData = data.map(({ problem })=>problem.length);
+  const codeData = data.map(({ codeProblem })=>codeProblem);
+  const result = render({ labels, textData, problemData, codeData });
   await writeFile(path.join(projectRoot, '_build', 'contributors.html'), result);
 };
 
