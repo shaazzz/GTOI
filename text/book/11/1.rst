@@ -12,6 +12,7 @@
 پیاده سازی الگوریتم را در ادامه ببینید
 
 .. code-block:: cpp
+
   # include<bits/stdc++.h>
 
   using namespace std;
@@ -50,6 +51,7 @@ Centroid Decomposition
 پیاده سازی الگوریتم را در ادامه ببینید
 
 .. code-block:: cpp
+
   # include<bits/stdc++.h>
 
   using namespace std;
