@@ -8,9 +8,16 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 
-const render = ({ labels, textData, problemData, codeData }) => {
+const render = ({ labels, websites, textData, problemData, codeData }) => {
   const color = (i) => `hsl(${i/labels.length*360},100%,50%)`
-  const spans = labels.map((x, i) => `<a href="www.google.com"><span style="color:${color(i)}">${x}</span></a>`);
+  const textSpans = labels.map((x, i) => {
+    if (textData[i] !== 0) 
+      return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
+  }).filter(x => x);
+  const probSpans = labels.map((x, i) => {
+    if (problemData[i] !== 0 || codeData[i] !== 0) 
+      return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
+  }).filter(x => x);
   return `
 <html>
   <head>
@@ -30,14 +37,21 @@ const render = ({ labels, textData, problemData, codeData }) => {
     در آن قرار دارد نمی رسید. ممکن است برخی به صورت گمنام مشارکت کرده باشند یا به دلیل
     اشتباهی از ما، اسم آن ها در این فهرست نیامده باشد. اما ما قدردان زحمات همه آنان هستیم.
     <h2>آمار</h2>
-    <h3>اسامی مشارکت کنندگان</h3>
-    ${spans.join('،')}
-    <h3>درسنامه</h3>
+    <h3>نویسندگان</h3>
+    ${textSpans.join('،')}
     <canvas id="text-chart"></canvas>
-    <h3>سوالات تئوری</h3>
-    <canvas id="problem-chart"></canvas>
-    <h3>سوالات کد</h3>
-    <canvas id="code-chart"></canvas>
+    <h3>گرد آورندگان سوال</h3>
+    ${probSpans.join('،')}
+    <table style="width:100%">
+      <tr>
+        <th style="width:50%">سوالات تئوری</th>
+        <th style="width:50%">سوالات کد</th>
+      </tr>
+      <tr>
+        <td><canvas id="problem-chart"></canvas></td>
+        <td><canvas id="code-chart"></canvas></td>
+      </tr>
+    </table>
     <script defer>
       const cf = function(context) {
         var index = context.dataIndex;
@@ -88,8 +102,10 @@ const render = ({ labels, textData, problemData, codeData }) => {
   `
 };
 
-const normalize = ({ name, text = [], problem = [], codeProblem = 0 }) => ({
-  name, text, problem, codeProblem,
+const normalize = ({
+  name, text = [], problem = 0, codeProblem = 0, website = 'https://shaazzz.ir',
+}) => ({
+  name, text, problem, codeProblem, website,
 })
 
 const main = async () => {
@@ -97,10 +113,11 @@ const main = async () => {
     (await readFile(path.join(projectRoot, 'contributors.yaml'))).toString()
   ).map(normalize);
   const labels = data.map(({ name })=>name);
+  const websites = data.map(({ website })=>website);
   const textData = data.map(({ text })=>text.length);
-  const problemData = data.map(({ problem })=>problem.length);
+  const problemData = data.map(({ problem })=>problem);
   const codeData = data.map(({ codeProblem })=>codeProblem);
-  const result = render({ labels, textData, problemData, codeData });
+  const result = render({ labels, textData, problemData, codeData, websites });
   await writeFile(path.join(projectRoot, '_build', 'contributors.html'), result);
 };
 
