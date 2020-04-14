@@ -14,3 +14,17 @@ a, ul > li > a, ol > li > a {
   #5C6BC0;
   padding: 0;
 }
+
+
+#body-footer{
+  direction:rtl;width:100%;height:auto;padding:10px 0;background-color:#E8EAF6;line-height:30px;display:block;margin:0 0 24px 0;
+  display: flex;
+}
+#body-footer>#text>p{text-align:center;margin-bottom:0}
+#body-footer>#text {
+  flex-grow: 1;
+}
+#body-footer>div>a>img {
+  height: 20vmin;
+  margin: 0 10px 0 10px;
+}

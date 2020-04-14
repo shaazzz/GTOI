@@ -87,8 +87,6 @@ box-shadow: 0px 0px 1px 1px rgba(66,66,66,1);}
 #body-btn>a{width:auto;height:auto;display:inline-block;padding:5px 8px;color:#FFFFFF;background-color:#5C6BC0}
 #body-btn>a:hover{background-color:#66BB6A}
 #body-btn>a>i{height:22px;display:inline-block;vertical-align:middle}
-#body-footer{direction:rtl;width:100%;height:auto;padding:10px 0;background-color:#E8EAF6;line-height:30px;display:block;margin:0 0 24px 0}
-#body-footer>p{text-align:center;margin-bottom:0}
 .back-to-top{margin:10px;position:fixed;bottom:0;left:0;width:28px;height:28px;z-index:100;display:none;color:#66BB6A;cursor:pointer;opacity:0.7}
 .back-to-top:hover{opacity:1}
 .back-to-top>i{font-size:32px;line-height:28px;vertical-align:top}
@@ -240,3 +238,16 @@ body{font-size:16px}
 .reportmenufield:hover{border-right:5px #f48fb1 solid !important}
 .exercisesmenufield{background-color:#ef5350 !important}
 .exercisesmenufield:hover{border-right:5px #ef9a9a solid !important}
+
+#body-footer{
+  direction:rtl;width:100%;height:auto;padding:10px 0;background-color:#E8EAF6;line-height:30px;display:block;margin:0 0 24px 0;
+  display: flex;
+}
+#body-footer>#text>p{text-align:center;margin-bottom:0}
+#body-footer>#text {
+  flex-grow: 1;
+}
+#body-footer>div>a>img {
+  height: 20vmin;
+  margin: 0 10px 0 10px;
+}

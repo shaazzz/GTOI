@@ -19,3 +19,37 @@
                 {% endif %}
             </div>
         {% endif %}
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/"><img src="/_static/shaazzz_logo.png"></a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت پروانه cc-by-sa در دسترس است.
+                </p>
+                {%- if last_updated %}
+                    <p style="font-size: 13px;">
+                        {% trans last_updated=last_updated|e %}آخرین به روز رسانی در {{ last_updated }}.{% endtrans %}
+                    </p>
+                {%- endif %}
+                <p style="font-size: 13px;">
+                    {% trans sphinx_version=sphinx_version|e %}
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> ({{ sphinx_version }}) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    {% endtrans %}
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img src="/_static/cc-by-sa.png">
+                </a>
+            </div>
+        </div>
