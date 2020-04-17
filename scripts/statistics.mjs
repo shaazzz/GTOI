@@ -51,6 +51,23 @@ const render = ({ problemCount, foreignProblemCount, partCount, completePartCoun
     ${partLines}
     خط تشکیل شده است.
     </div>
+    <div>
+    <span id="day-pass"></span>
+    روز پیش نوشتن کتاب آغاز شده است.
+    طبق تقریب ۱، کتاب در روز
+    <span id="day-finish"></span>
+    بعد از شروع به پایان می رسد و این یعنی
+    <span id="day-remain"></span>
+    روز به پایان کتاب باقی مانده است.
+    <script>
+    const dayNow = Math.ceil(((new Date) - 1583008200000)/86400000);
+    const dayFinal = Math.ceil(dayNow*100/${percent});
+    const dayRemain = dayFinal - dayNow;
+    document.getElementById('day-pass').innerText = dayNow;
+    document.getElementById('day-finish').innerText = dayFinal;
+    document.getElementById('day-remain').innerText = dayRemain;
+    </script>
+    </div>
     <div style="height:40vmin"></div>
     <div id="body-footer">
     <div>
