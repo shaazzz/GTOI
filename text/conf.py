@@ -200,7 +200,7 @@ html_last_updated_fmt = '%b %d, %Y'
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'GitPersianTutorialdoc'
+htmlhelp_basename = 'GTOI'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -222,8 +222,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'GitPersian.tex', u'GitPersianTutorial Documentation',
-   u'Dariush Abbasi', 'manual'),
+  (master_doc, 'GTOI.tex', u'نظریه گراف ها برای المپیاد کامپیوتر',
+   u'مشارکت کنندگان شاز', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -252,7 +252,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'gitpersiantutorial', u'GitPersianTutorial Documentation',
+    (master_doc, 'GTOI', u'GTOI Documentation',
      [author], 1)
 ]
 
@@ -266,8 +266,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'GitPersianTutorial', u'GitPersianTutorial Documentation',
-   author, 'GitPersianTutorial', 'One line description of project.',
+  (master_doc, 'GTOI', u'نظریه گراف ها برای المپیاد کامپیوتر',
+   author, 'GTOI', 'نظریه گراف ها برای المپیاد کامپیوتر',
    'Miscellaneous'),
 ]
 
