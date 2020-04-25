@@ -61,7 +61,7 @@ const render = ({ problemCount, foreignProblemCount, partCount, completePartCoun
     روز به پایان کتاب باقی مانده است.
     <script>
     const dayNow = Math.ceil(((new Date) - 1583008200000)/86400000);
-    const dayFinal = Math.ceil(dayNow*100/${percent});
+    const dayFinal = Math.ceil(dayNow*${partCount}/${completePartCount});
     const dayRemain = dayFinal - dayNow;
     document.getElementById('day-pass').innerText = dayNow;
     document.getElementById('day-finish').innerText = dayFinal;
