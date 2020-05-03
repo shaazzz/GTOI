@@ -20,6 +20,17 @@ const getDirectories = (src) => {
   });
 };
 
+const idCmp = ({ id: id1 }, { id: id2 }) => {
+  const s1 = id1.split('.');
+  const s2 = id2.split('.');
+  for (let i = 0; i < s1.length; i++) {
+    if (s1[i] != s2[i]) {
+      return s1[i]-s2[i];
+    }
+  }
+  return 0;
+};
+
 const md = (txt) => {
   if (!txt) return '';
   return markdown.render(txt);
@@ -100,7 +111,7 @@ const problemInIndex1Template = ({ id, data }) => {
 
 const index1Template = ({ id, children, parent }) => mainTemplate(`
 <h1>بخش ${id}</h1>
-${children.map(problemInIndex1Template).join('')}
+${children.sort(idCmp).map(problemInIndex1Template).join('')}
 ${backlink(parent)}
 `, { bookLink: `/book/${id.split('.').join('/')}`});
 
@@ -111,7 +122,7 @@ const problemInIndexTemplate = ({ id }) => `
 `;
 
 const indexTemplate = ({ id, children, parent }) => {
-  const c = children.map(problemInIndexTemplate).join('');
+  const c = children.sort(idCmp).map(problemInIndexTemplate).join('');
   if (id === '') return mainTemplate(`<h1>فهرست اصلی</h1><ul>${c}</ul>`, {});
   return mainTemplate(`
   <h1>بخش ${id}</h1>
