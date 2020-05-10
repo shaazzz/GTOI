@@ -22,7 +22,7 @@
 
 یک خاصیت مهم
 -----------------------------------------
-**قضیه 3.3.1** 
+**قضیه 3.3.2** 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **صورت قضیه :** اگر 
 :math:`G`
@@ -87,58 +87,7 @@ topological sort
 گوییم!
 
 
-
 الگوریتم مرتب سازی توپولوژیک
------------------------------------------
-.. code-block:: cpp
-
-	#include<bits/stdc++.h>
-
-	using namespace std;
-
-	const int MX = 5e5 + 5;
-
-	int n, m; /// Tedad ra's ha va yal ha
-	vector<int> gr[MX]; /// vector mojaverat
-	vector<int> topologic; /// topological sort
-	bool mark[MX];
-
-	void dfs(int v){
-	    mark[v] = 1;
-	    for(int u: gr[v]){
-		if(!mark[u])
-		    dfs(u);
-	    }
-	    topologic.push_back(v); // in array yek topological sort baraie DAG ast!
-	}
-
-	int main(){
-	    cin >> n >> m;
-	    for(int i = 0; i < m; i++){
-		int v, u;
-		cin >> v >> u; // Ra's ha 0-based hastand!
-		gr[v].push_back(u);
-	    }
-	    // Graph vorodi baiad DAG bashad!
-
-	    for(int i = 0; i < n; i++){
-		if(!mark[i])
-		    dfs(i);
-	    }
-	    
-	    // topological sort ro khoroji midahim!
-	    for(int i = 0; i < topologic.size(); i++){
-		  cout << topologic[i] << ' ';
-	    }
-	    cout << endl;
-	    return 0;
-	}
-
-**پی نوشت۱ :** دقت کنید که الگوریتم بالا در صورتی جواب درست را می‌دهد که گرافی بدون دور به عنوان ورودی بگیرد. بعد‌ها الگوریتم پیدا کردن دور در گراف جهت دار را شرح خواهیم داد.
-
-**پی نوشت۲ :** در آخر ترتیب توپولوژیکی که به دست می‌اوریم, یال ها از راست به چپ هستند(به عبارتی یال ها از ایندکس بزرگ تر به ایندکس کوچک تر هستند. برعکس ترتیبی که در **قضیه 3.3.1** آوردیم).
-
-توضیح الگوریتم
 -----------------------------------------
 این الگوریتم همان الگوریتم 
 :math:`DFS`
@@ -190,3 +139,53 @@ topological sort
 که 
 :math:`m, n`
 به ترتیب تعداد راس ها و یال ها می‌باشند.
+
+پیاده‌سازی الگوریتم
+-----------------------------------------
+.. code-block:: cpp
+
+	#include<bits/stdc++.h>
+
+	using namespace std;
+
+	const int MX = 5e5 + 5;
+
+	int n, m; /// Tedad ra's ha va yal ha
+	vector<int> gr[MX]; /// vector mojaverat
+	vector<int> topologic; /// topological sort
+	bool mark[MX];
+
+	void dfs(int v){
+	    mark[v] = 1;
+	    for(int u: gr[v]){
+		if(!mark[u])
+		    dfs(u);
+	    }
+	    topologic.push_back(v); // in array yek topological sort baraie DAG ast!
+	}
+
+	int main(){
+	    cin >> n >> m;
+	    for(int i = 0; i < m; i++){
+		int v, u;
+		cin >> v >> u; // Ra's ha 0-based hastand!
+		gr[v].push_back(u);
+	    }
+	    // Graph vorodi baiad DAG bashad!
+
+	    for(int i = 0; i < n; i++){
+		if(!mark[i])
+		    dfs(i);
+	    }
+	    
+	    // topological sort ro khoroji midahim!
+	    for(int i = 0; i < topologic.size(); i++){
+		  cout << topologic[i] << ' ';
+	    }
+	    cout << endl;
+	    return 0;
+	}
+
+**پی نوشت۱ :** دقت کنید که الگوریتم بالا در صورتی جواب درست را می‌دهد که گرافی بدون دور به عنوان ورودی بگیرد. بعد‌ها الگوریتم پیدا کردن دور در گراف جهت دار را شرح خواهیم داد.
+
+**پی نوشت۲ :** در آخر ترتیب توپولوژیکی که به دست می‌اوریم, یال ها از راست به چپ هستند(به عبارتی یال ها از ایندکس بزرگ تر به ایندکس کوچک تر هستند. برعکس ترتیبی که در **قضیه 3.3.2** آوردیم).
