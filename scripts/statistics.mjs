@@ -1,18 +1,12 @@
 import { projectRoot } from "./rootAddress.mjs";
 import path from "path";
-import glob from "glob";
+import { getDirectories } from "./util.mjs";
 import fs from "fs";
 import { promisify } from "util";
 import YAML from "yaml";
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-
-const getDirectories = (src, end = 'yaml') => {
-  return new Promise(res=>{
-    glob(src + '/**/*.'+end, (err, ans) => res(ans));
-  });
-};
 
 const render = ({ problemCount, foreignProblemCount, partCount, completePartCount, partLines }) => {
   const percent = Math.round(completePartCount / partCount * 100);
