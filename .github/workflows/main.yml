@@ -28,6 +28,9 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Deploy to github pages
+        if: success()
         uses: crazy-max/ghaction-github-pages@v2.1.2
         with:
           build_dir: _build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
