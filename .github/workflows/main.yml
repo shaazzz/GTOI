@@ -23,6 +23,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build the book
         run: |
+          sudo apt install python3-sphinx
           npm install
           ./scripts/build.sh
 
