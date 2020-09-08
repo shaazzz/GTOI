@@ -22,7 +22,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build the book
-        run: ./scripts/build.sh
+        run: |
+          npm install
+          ./scripts/build.sh
 
       # Runs a set of commands using the runners shell
       - name: Deploy to github pages
