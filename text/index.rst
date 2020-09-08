@@ -10,7 +10,7 @@
 ===========
 
 .. toctree::
-	:maxdepth: 6
+	:maxdepth: 2
 
 	book/1/index
 	book/2/index

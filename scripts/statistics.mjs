@@ -84,7 +84,7 @@ const render = ({ problemCount, foreignProblemCount, partCount, completePartCoun
     </div>
     <div>
         <a href="https://pdcommunity.ir/license/cc-by-sa/">
-            <img src="/_static/cc-by-sa.png">
+            <img src="/_static/cc-by-sa.svg">
         </a>
     </div>
   </div>
