@@ -9,7 +9,7 @@
 :math:`K_n` نشان می دهند.
 
 .. figure:: /_static/complete_graph.jpg
-   :width: 100%
+   :width: 90%
    :align: center
    :alt: complete graph
 
@@ -30,7 +30,7 @@
 :math:`P_n` نشان می دهند.
 
 .. figure:: /_static/path_graph.png
-   :width: 100%
+   :width: 70%
    :align: center
    :alt: path graph
 
@@ -62,7 +62,7 @@
 گراف پیترسن ۱۰ راس و ۱۵ یال دارد که درجه هر راس آن ۳ است.
 
 .. figure:: /_static/petersen_graph.png
-   :width: 100%
+   :width: 80%
    :align: center
    :alt: Petersen graph
 
@@ -81,7 +81,7 @@
 به گرافی که بتوان راس های آن را به k بخش تقسیم کرد به طوری که به ازای هر دو راس u و v در یک بخش، به هم یال نداشته باشند.
 
 .. figure:: /_static/complete_multipartite_graph6.png
-   :width: 100%
+   :width: 50%
    :align: center
    :alt: complete multipartite graph
 
@@ -101,7 +101,7 @@
 برای مثال اگر k = 3 باشد گراف به شکل زیر می شود.
 
 .. figure:: /_static/cube.jpg
-   :width: 100%
+   :width: 50%
    :align: center
    :alt: hypercube
 
