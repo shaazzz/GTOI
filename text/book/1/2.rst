@@ -44,11 +44,13 @@
    :width: 100%
    :align: center
    :alt: cycle graph
+
+
 گراف منتظم
 ------------
 به گرافی که درجه تمامی رئوسش برابر باشد، گراف متنظم می گوییم. اگر درجه تمامی رئوس برابر و برابر با k باشد به آن گراف k-منتظم می گوییم.
 
-.. figure:: /_static/regular_graph.png
+.. figure:: /_static/regular_graphs.png
    :width: 100%
    :align: center
    :alt: regular graph
@@ -66,16 +68,6 @@
    :align: center
    :alt: Petersen graph
 
-گراف ستاره ( Star )
----------------------
-به گراف G که یک راس u به تمامی راس های دیگر یال دارد و راس های دیگر فقط به u یال دارند، استار گویند.
-گراف استار n - 1 یال دارد و به شکل :math:`S_n` نمایش داده می شود.
-
-.. figure:: /_static/star_graph.png
-   :width: 100%
-   :align: center
-   :alt: star graph
-
 گراف k بخشی
 -------------
 به گرافی که بتوان راس های آن را به k بخش تقسیم کرد به طوری که به ازای هر دو راس u و v در یک بخش، به هم یال نداشته باشند.
@@ -85,14 +77,64 @@
    :align: center
    :alt: complete multipartite graph
 
+به کوچک ترین
+k
+ای که گراف
+k بخشی
+باشد، عدد رنگی آن گراف می گویند و آن را با حرف یونانی خی به صورت
+:math:`\chi`
+یا
+:math:`\chi (G)`
+نمایش می دهند.
+
 گراف k بخشی کامل
 ------------------
-همانند گراف k بخشی که در بخش قبل تعریف شد می باشد با این تفاوت کرد که بین هر دو راس u و v که در یک بخش نیستند، یال وجود دارد.
+همانند گراف k بخشی که در بخش قبل تعریف شد می باشد با این تفاوت کرد که بین هر دو راس
+u و v
+که در یک بخش نیستند، یال وجود دارد. گراف های
+k بخشی کامل را به صورت
+:math:`K_{a_1,a_2,...,a_k}`
+نمایش می دهند. برای مثال گراف
+:math:`K_{a,b,c}`
+یک گراف سه بخشی کامل است که بخش های آن
+a و b و c
+راس و در کل
+:math:`a+b+c`
+راس دارد.
 
-.. figure:: /_static/complete_multipartite_graph8.png
+گراف
+:math:`K_{3,5}`
+
+.. figure:: /_static/K_3_5.png
    :width: 60%
    :align: center
    :alt: complete multipartite graph
+
+گراف
+:math:`K_{2,2,2}`
+
+.. figure:: /_static/complete_multipartite_graph6.png
+   :width: 60%
+   :align: center
+   :alt: complete multipartite graph
+
+گراف ستاره ( Star )
+---------------------
+به گراف G که یک راس u به تمامی راس های دیگر یال دارد و راس های دیگر فقط به
+u
+یال دارند، استار گویند.
+گراف استار چون حالت خاصی از گراف دو بخشی کامل است، به شکل
+:math:`K_{1,n}`
+نمایش داده می شود که
+:math:`n`
+یال و
+:math:`n+1`
+راس دارد.
+
+.. figure:: /_static/star_graph.png
+   :width: 100%
+   :align: center
+   :alt: star graph
 
 گراف k مکعب (Cube)
 --------------------
