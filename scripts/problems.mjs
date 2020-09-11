@@ -96,6 +96,11 @@ ${backlink(parent)}
 `, { bookLink });
 };
 
+const countElem = ({ count, countCode }) => `<p>در این قسمت ${
+  [{ t: count, k: 'سوال' }, { t: countCode, k: 'پیوند به سوال بیرونی' }]
+    .filter((x) => x.t !== 0).map((x) => `${x.t} ${x.k}`).join(' و ')
+} وجود دارد`;
+
 const problemInIndex1Template = ({ id, data }) => {
   if (id.slice(-5) === 'extra') {
     return `<h1><a href="${id}.html">مسائل بیشتر...</a></h1>`;
@@ -109,9 +114,10 @@ const problemInIndex1Template = ({ id, data }) => {
 `;
 };
 
-const index1Template = ({ id, children, parent }) => mainTemplate(`
+const index1Template = ({ id, children: { nodes, count, countCode }, parent }) => mainTemplate(`
 <h1>بخش ${id}</h1>
-${children.sort(idCmp).map(problemInIndex1Template).join('')}
+${countElem({ countCode, count })}
+${nodes.sort(idCmp).map(problemInIndex1Template).join('')}
 ${backlink(parent)}
 `, { bookLink: `/book/${id.split('.').join('/')}`});
 
@@ -121,11 +127,14 @@ const problemInIndexTemplate = ({ id }) => `
 </li>
 `;
 
-const indexTemplate = ({ id, children, parent }) => {
-  const c = children.sort(idCmp).map(problemInIndexTemplate).join('');
-  if (id === '') return mainTemplate(`<h1>فهرست اصلی</h1><ul>${c}</ul>`, {});
+const indexTemplate = ({ id, children: { nodes, count, countCode }, parent }) => {
+  const c = nodes.sort(idCmp).map(problemInIndexTemplate).join('');
+  if (id === '') return mainTemplate(`<h1>فهرست اصلی</h1>${
+    countElem({ count, countCode })
+  }<ul>${c}</ul>`, {});
   return mainTemplate(`
   <h1>بخش ${id}</h1>
+  ${countElem({ count, countCode })}
   <ul>${c}</ul>
   ${backlink(parent)}
   `, { bookLink: `/book/${id.split('.').join('/')}`});
@@ -138,11 +147,25 @@ const generateHtmls = (q) => {
   while (head !== q.length) {
     const { id, type, data } = q[head];
     head += 1;
+    let mc = { count: 0, countCode: 0 };
+    if (children[id]) {
+      mc = children[id];
+    } else {
+      if (id.slice(-5) !== 'extra') {
+        mc = { count: 1, countCode: 0 };
+      } else {
+        mc = { count: 0, countCode: data.length };
+      }
+    }
     const parent = getParent(id);
     if (id !== '') {
       const me = {id, type, data};
       if (children[parent] === undefined) {
-        children[parent] = [me];
+        children[parent] = {
+          nodes: [me],
+          count: mc.count,
+          countCode: mc.countCode,
+        };
         const ptype = type === 'problem' ? 'index1' : 'index';
         q.push({
           id: parent,
@@ -150,7 +173,9 @@ const generateHtmls = (q) => {
         });
       }
       else {
-        children[parent].push(me);
+        children[parent].nodes.push(me);
+        children[parent].count += mc.count;
+        children[parent].countCode += mc.countCode;
       }
     }
     if (type === 'problem') {
