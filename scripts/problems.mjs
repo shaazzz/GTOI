@@ -53,11 +53,44 @@ const mainTemplate = (body, { bookLink = '/' }) => `
   <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
   <script>
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\\\(', '\\\\)']]
       }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -73,6 +106,13 @@ const mainTemplate = (body, { bookLink = '/' }) => `
     <div id="page-body" style="max-width:800px;">
       ${body}
     </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
   </body>
 </html>`;
 
@@ -84,15 +124,54 @@ const problemTemplate = ({ data, id, parent }) => {
       ({ name, link })=>`<li><a href=${link}>${name}</a></li>`
     ).join('')}</ul>`, { bookLink });
   }
-  const sol = data.solution ? `<h1>جواب:</h1>${md(data.solution)}` : '';
-  const hint = data.hint ? `<h1>راهنمایی:</h1>${md(data.hint)}` : '';
+  const solFosh = `
+هرگز سوالات را نسوزانید. سوزاندن سوالات نه تنها مفید نیست، بلکه ذهن شما را تنبل
+می کند و مضر است. اگر فکر می کنید که سوال به چیزی نیاز دارد که بلد نیستید، خواندن پاسخ سوال راه
+خوبی برای یادگیری نیست. از افراد مطلع بپرسید که آیا چیزی هست که بلد نباشید و
+آن چیز را از آن ها یاد بگیرید و سپس دوباره به سوال برگردید. اگر این توضیحات
+شما را به راه راست هدایت کرد، سریعا دکمه پنهان کردن را بزنید تا سوال برای شما
+سوزانده نشود.
+  `.replace(/\n/g, ' ');
+  const sol = data.solution ? `
+  <h1>جواب: <button id="bsolution" onclick="toggle('solution','${solFosh}')">نمایش</button></h1>
+  <div id="solution" class="hidden">
+    ${md(data.solution)}
+  </div>` : '';
+  const hint = data.hint ? `
+  <h1>راهنمایی: <button id="bhint" onclick="toggle('hint')">نمایش</button></h1>
+  <div id="hint" class="hidden">
+    ${md(data.hint)}
+  </div>
+  ` : '';
+  const idx = id.replace(/\./g, 'x');
   const cat = data.cat ? `(${data.cat})` : '';
   return mainTemplate(`
-<h1>سوال ${id} ${cat}:</h1>
+<h1>سوال ${id} ${cat}: <button id="b${idx}" onclick="swapButton('${idx}')">حل کردم</button></h1>
 ${md(data.text)}
+<script>
+  const toggle = (id, txt) => {
+    const b = document.getElementById('b'+id);
+    const isSolved = window.getComputedStyle(document.body, null).getPropertyValue('background-color') === 'rgb(238, 255, 238)';
+    if (b.innerText === 'نمایش') {
+      if (txt && !isSolved) alert(txt);
+      b.innerText = 'پنهان کردن';
+    } else {
+      b.innerText = 'نمایش';
+    }
+    document.getElementById(id).classList.toggle('hidden');
+  };
+</script>
 ${hint}
 ${sol}
+<div>
+  <a href="https://github.com/shaazzz/GTOI/blob/master/problems/${id.replace(/\./g, '/')}.yaml">
+    ویرایش و بهبود در گیت هاب
+  </a>
+</div>
 ${backlink(parent)}
+<script>
+document.body.id = "d${idx}";
+</script>
 `, { bookLink });
 };
 
@@ -106,9 +185,10 @@ const problemInIndex1Template = ({ id, data }) => {
     return `<h1><a href="${id}.html">مسائل بیشتر...</a></h1>`;
   }
   const cat = data.cat ? `(${data.cat})` : '';
+  const idx = id.replace(/\./g, 'x');
   return `
-<div>
-  <h2>سوال <a href="${id}.html">${id}</a> ${cat} </h2>
+<div id="d${idx}">
+  <h2>سوال <a href="${id}.html">${id}</a> ${cat} <button id="b${idx}" onclick="swapButton('${idx}')">حل کردم</button> </h2>
   ${md(data.text)}
 </div>
 `;
