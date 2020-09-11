@@ -16,7 +16,7 @@
     - "1.7"
     - "7.2"
   codeProblem: 4
-  problem: 20
+  problem: 40
 - name: مهدی قائم پناه
   text:
     - "2.1"
@@ -56,7 +56,8 @@
 - name: پوریا جلالی
   problem: 8
 - name: امین هاشمی
-  problem: 5
+  problem: 25
+  website: https://t.me/Seyed37
   codeProblem: 90
   text:
     - "1.2"
