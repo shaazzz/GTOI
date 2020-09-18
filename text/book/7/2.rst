@@ -9,6 +9,7 @@
 \end{vmatrix}
 = 5 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -16,6 +17,7 @@
 \end{vmatrix}
 = 3.3 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -25,7 +27,8 @@
 \end{equation*}`
 
 برای بدست آوردن دترمینان یک ماتریس ابتدا یه سطر یا یک ستون را انتخاب میکنیم. برای مثال سطر i را انتخاب می کنیم.
-حال دترمینان برابر است با جمع `-1^{i + j} × a_{ij} x det(B_{ij}) ` که در آن j عدد طبیعی حداکثر برابر با تعداد ستون ها است و `det(C)` برابر با دترمینان ماتریس مربعی C است و `B_{ij}` برابر با ماتریسی است که با حذف سطر i و ستون j از A بدست می آید.
+حال دترمینان برابر است با جمع 
+:math:`-1^{i + j} × a_{ij} x det(B_{ij}) ` که در آن j عدد طبیعی حداکثر برابر با تعداد ستون ها است و :math:`det(C)` برابر با دترمینان ماتریس مربعی C است و :math:`B_{ij}` برابر با ماتریسی است که با حذف سطر i و ستون j از A بدست می آید.
 
 :math:`\begin{equation*}
 |A| = 
@@ -34,6 +37,7 @@
 \end{vmatrix}
 = 5 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -42,6 +46,7 @@
 \end{vmatrix}
 = 6 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -50,6 +55,7 @@
 \end{vmatrix}
 = -2
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -67,6 +73,7 @@
 \end{vmatrix}
 = 0 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -76,6 +83,7 @@
 \end{vmatrix}
 = 0 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -97,6 +105,7 @@
 \end{vmatrix}
 = 120 
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
@@ -108,6 +117,7 @@
 \end{vmatrix}
 = 37
 \end{equation*}`
+
 :math:`\begin{equation*}
 |A| = 
 \begin{vmatrix} 
