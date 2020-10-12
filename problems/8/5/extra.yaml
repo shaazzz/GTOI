@@ -106,6 +106,8 @@
   name: Maximum Sum
 - link: https://www.spoj.com/problems/GSS1/
   name: Can you answer these queries I
+- link: https://www.spoj.com/problems/KQUERY/
+  name: K-query
 - link: https://www.spoj.com/problems/KQUERYO/
   name: K-Query Online
 - link: https://www.spoj.com/problems/NAJ0001/
@@ -142,3 +144,5 @@
   name: Ada and Mulberry
 - link: https://toph.co/p/maintain-the-queue
   name: Maintain the Queue
+- link: https://codeforces.com/problemset/problem/311/D
+  name: Interval Cubing
