@@ -4,7 +4,7 @@
 گراف چیست؟ گراف یک سری نقطه (موجود) و خط (رابطه) است. توی شکل زیر یه گراف می بینید:
 (شکل ۱)
 
-.. figure:: /_static/undirected_city.png
+.. figure:: /_static/dot/sib_golabi.svg
    :width: 50%
    :align: center
    :alt: گراف سیب و گلابی
@@ -121,7 +121,7 @@ G و H
 نمایش می دهند. در شکل زیر، دو گراف چهار راسی قرمز و آبی مکمل
 یک دیگر هستند:
 
-.. figure:: /_static/k4top4.png
+.. figure:: /_static/dot/graph_mokamel.svg
    :width: 30%
    :align: center
    :alt: تصویری از یک گراف و مکملش

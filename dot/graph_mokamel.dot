@@ -1,0 +1,14 @@
+
+graph G {
+    node [label="", shape=circle, width=0.2];
+    
+    a -- b[color=blue];
+    b -- c[color=blue];
+	c -- d[color=red];
+	d -- a[color=red];
+	a -- c[color=red];
+	b -- d[color=blue];
+	
+	{rank=same; a,b}
+	{rank=same; c,d}
+}
