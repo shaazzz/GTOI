@@ -8,16 +8,16 @@
 همبند بودن یک گراف به این معناست که بین هر دو راس گراف مسیر وجود داشته باشد.
 
 .. figure:: /_static/ConnectedGraph1.png
-   :width: 35%
-   :align: left
+   :width: 50%
+   :align: center
    :alt: Connected Graph
 .. figure:: /_static/S37.png
-   :width: 30%
+   :width: 50%
    :align: center
    :alt: Connected Graph
 .. figure:: /_static/ConnectedGraph2.png
-   :width: 35%
-   :align: right
+   :width: 50%
+   :align: center
    :alt: Connected Graph
 
 مولفه همبندی
@@ -26,16 +26,16 @@
 در جنگل زیر هر مولفه با رنگ متفاوت نشان داده شده است.
 
 .. figure:: /_static/ForrestP1.png
-   :width: 20%
-   :align: left
-   :alt: Component
-   figure:: /_static/ForrestP2.png
-   :width: 20%
+   :width: 50%
    :align: center
    :alt: Component
-   figure:: /_static/ForrestP3.png
-   :width: 20%
-   :align: right
+.. figure:: /_static/ForrestP2.png
+   :width: 50%
+   :align: center
+   :alt: Component
+.. figure:: /_static/ForrestP3.png
+   :width: 50%
+   :align: center
    :alt: Component
 
 همبندی در گراف های جهت دار
