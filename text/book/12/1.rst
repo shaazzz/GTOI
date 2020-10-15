@@ -11,12 +11,10 @@
    :width: 35%
    :align: left
    :alt: Connected Graph
-
 .. figure:: /_static/S37.png
    :width: 30%
    :align: center
    :alt: Connected Graph
-
 .. figure:: /_static/ConnectedGraph2.png
    :width: 35%
    :align: right
@@ -31,12 +29,10 @@
    :width: 30%
    :align: left
    :alt: Component
-
 .. figure:: /_static/ForrestP2.png
    :width: 30%
    :align: center
    :alt: Component
-
 .. figure:: /_static/ForrestP3.png
    :width: 30%
    :align: right
