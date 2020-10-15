@@ -24,18 +24,18 @@
 ~~~~~~~~~~~~~~
 به هر قسمت همبند گراف مولفه همبندی می گویند. هر گرافی که بیش از یک مولفه داشته باشد، گراف **ناهمبند** گویند. برای مثال در یک جنگل به هر درخت موجود مولفه می گویند و تعداد مولفه های جنگل برابر تعداد درخت های موجود در آن است.
 در جنگل زیر هر مولفه با رنگ متفاوت نشان داده شده است.
+|ForrestP1| |ForrestP2| |ForrestP3|
 
-.. figure:: /_static/ForrestP1.png
+.. |ForrestP1| figure:: /_static/ForrestP1.png
    :width: 30%
-   :align: left
    :alt: Component
-.. figure:: /_static/ForrestP2.png
+
+.. |ForrestP2| figure:: /_static/ForrestP2.png
    :width: 30%
-   :align: center
    :alt: Component
-.. figure:: /_static/ForrestP3.png
+
+.. |ForrestP3| figure:: /_static/ForrestP3.png
    :width: 30%
-   :align: right
    :alt: Component
 
 همبندی در گراف های جهت دار
