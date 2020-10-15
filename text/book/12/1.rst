@@ -8,17 +8,17 @@
 همبند بودن یک گراف به این معناست که بین هر دو راس گراف مسیر وجود داشته باشد.
 
 .. figure:: /_static/ConnectedGraph1.png
-   :width: 50%
+   :width: 35%
    :align: left
    :alt: Connected Graph
 
 .. figure:: /_static/S37.png
-   :width: 50%
+   :width: 30%
    :align: center
    :alt: Connected Graph
 
 .. figure:: /_static/ConnectedGraph2.png
-   :width: 50%
+   :width: 35%
    :align: right
    :alt: Connected Graph
 
@@ -28,17 +28,17 @@
 در جنگل زیر هر مولفه با رنگ متفاوت نشان داده شده است.
 
 .. figure:: /_static/ForrestP1.png
-   :width: 50%
+   :width: 30%
    :align: left
    :alt: Component
 
 .. figure:: /_static/ForrestP2.png
-   :width: 50%
+   :width: 30%
    :align: center
    :alt: Component
 
 .. figure:: /_static/ForrestP3.png
-   :width: 50%
+   :width: 30%
    :align: right
    :alt: Component
 
