@@ -16,6 +16,8 @@
     - "1.7"
     - "7.5"
     - "7.6"
+    - "9.1"
+    - "9.2"
     - "9.3"
   codeProblem: 4
   problem: 40
@@ -73,7 +75,7 @@
 - name: محمد امین هاشمی
   problem: 55
   website: https://t.me/Seyed37
-  codeProblem: 196
+  codeProblem: 207
   text:
     - "1.2"
     - "1.6"
