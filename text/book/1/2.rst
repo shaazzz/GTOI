@@ -124,7 +124,7 @@ a و b و c
 گراف
 :math:`K_{2,2,2}`
 
-.. figure:: /_static/complete_multipartite_graph6.png
+.. figure:: /_static/dot/K_2_2_2.svg
    :width: 60%
    :align: center
    :alt: complete multipartite graph
@@ -153,7 +153,7 @@ u
 حال بین دو راس یال می گذاریم اگر و تنها اگر در رشته های متناظرشون دقیقا در یک رقم تفاوت داشته باشند.
 برای مثال اگر k = 3 باشد گراف به شکل زیر می شود.
 
-.. figure:: /_static/cube.jpg
+.. figure:: /_static/dot/Q_3.svg
    :width: 50%
    :align: center
    :alt: hypercube
