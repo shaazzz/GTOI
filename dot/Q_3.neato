@@ -1,0 +1,22 @@
+graph G {
+    node [label="", shape=circle, style=filled, width=0.3];
+
+    A, B, C, D [fillcolor=grey];
+    E, F, G, H [fillcolor=white];
+
+    A [label=010, pos="1,1!"];
+    B [label=000, pos="2,3!"];
+    C [label=001, pos="5,3!"];
+    D [label=011, pos="4,1!"];
+    E [label=110, pos="1,-2!"];
+    F [label=100, pos="2,0!"];
+    G [label=101, pos="5,0!"];
+    H [label=111, pos="4,-2!"];
+
+    A -- B -- C -- D -- A
+    A -- E
+    B -- F
+    C -- G
+    D -- H
+    E -- F -- G -- H -- E
+}

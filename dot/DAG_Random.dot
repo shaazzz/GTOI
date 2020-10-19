@@ -1,0 +1,11 @@
+digraph G {
+	node [shape=circle, width=0.3];
+	
+	A -> {C, E}
+	C -> {D, E}
+	A -> B -> C
+	
+	{rank=min; A}
+	{rank=same; C, E}
+	{rank=max; B}
+}

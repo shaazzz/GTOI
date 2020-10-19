@@ -1,0 +1,32 @@
+digraph G {
+	node [shape=circle, width=0.3];
+	
+	subgraph col_2{
+    	A -> B [weight=1000, color=grey60]
+    	B -> C [weight=1000, color=grey60]
+    	C -> E [weight=1000, color=grey60]
+	}
+	subgraph col_1{
+	    D, G;
+	}
+	
+	A, B, C, E [color=grey60, fontcolor=grey60]
+	
+	A -> D -> F
+	A -> F
+	B -> G
+	B -> D [label="       ", style=invis]
+	C -> G [label="       "]
+	F -> G [label="      ", weight=0]
+	D -> G
+	
+	E -> A [color=red]
+	
+	X -> Y -> F [style=invis]
+	X, Y [style=invis]
+	TTTT -> C [style=invis]
+	TTTT [style=invis]
+	
+	{rank=same; B, D}
+	{rank=same; C, F, G}
+}

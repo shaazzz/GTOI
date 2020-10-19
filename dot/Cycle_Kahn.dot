@@ -1,0 +1,85 @@
+digraph G {
+	node [shape=circle, width=0.3];
+	
+	subgraph cluster_0 {
+	    style=rounded
+	    color=red;
+    	A, B, C
+    	#A -> B -> C [style=invis, weight=100]
+	}
+	subgraph cluster_1 {
+	    style=rounded
+	    color=purple;
+    	D, E
+    	#E -> E [style=invis]
+    	{rank=same; D, E}
+	}
+	subgraph cluster_2 {
+	    style=rounded
+	    color=invis
+    	F, G, H [color=blue, fontcolor=blue]
+    	F -> H [weight=1000, color=blue]
+    	H -> G [label="        ", color=blue]
+    	G -> F [weight=10000, color=blue]
+    	{rank=same; G, H}
+	}
+	#E -> C [style=invis weight=100]
+	#C -> H [style=invis weight=100]
+	#A -> F [style=invis]
+	#A -> D
+	
+	#X -> A [style=invis]
+	#X -> D [style=invis]
+	#E -> F [style=invis]
+	#X [style=invis]
+	
+	A -> {D, F} [constraint=true]
+	B -> E [constraint=false weight=0]
+	B -> G [constraint=false weight=0]
+	C -> E [constraint=false weight=0]
+	C -> G, H
+	
+	#C -> X -> F [weight=10]
+}
+
+/* digraph G {
+	node [shape=circle, width=0.3];
+	
+	subgraph cluster_0 {
+	    style=rounded
+	    color=red;
+    	A, B, C
+    	A -> B -> C [style=invis, weight=100]
+	}
+	subgraph cluster_1 {
+	    style=rounded
+	    color=purple;
+    	D, E
+    	D -> E [style=invis]
+	}
+	subgraph cluster_2 {
+	    style=rounded
+	    color=invis
+    	F, G, H[color=blue]
+    	F -> H [weight=1000, color=blue]
+    	H -> G [label="        ", color=blue]
+    	G -> F [weight=100, color=blue]
+    	{rank=same; G, H}
+	}
+	E -> C [style=invis weight=100]
+	#C -> H [style=invis weight=100]
+	#A -> F [style=invis]
+	
+	X -> A [style=invis]
+	X -> D [style=invis]
+	E -> F [style=invis]
+	X [style=invis]
+	
+	A -> {D, F} [constraint=false]
+	B -> E [constraint=false]
+	B -> G
+	C -> E
+	C -> G, H 
+	
+	#C -> X -> F [weight=10]
+} */

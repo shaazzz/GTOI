@@ -1,0 +1,22 @@
+graph G {
+	node [label="", shape=circle, width=0.3];
+	
+	A [width=1, style=filled, color=red]
+	A -- F -- G
+	F -- H
+	A -- I
+	A -- J -- K -- L
+	K -- M
+	A -- N
+	
+	A [pos="2,0.75!"]
+	F [pos="1.5,-0.25!"]
+	G [pos="0.75,-1!"]
+	H [pos="1.75,-1.25!"]
+	I [pos="2.25,-0.5!"]
+	J [pos="2.75,0!"]
+	K [pos="3.25,-0.75!"]
+	L [pos="2.75,-1.25!"]
+	M [pos="3.75,-1.5!"]
+	N [pos="3.5,0.25!"]
+}

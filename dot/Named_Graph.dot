@@ -1,0 +1,15 @@
+graph G {
+    node [shape=circle, width=0.2, fontsize=10];
+
+    A -- B [label=1]
+    A -- B [label=2]
+    A -- C [style=invis]
+    B -- C [label=3]
+    B -- D [label=4]
+    C -- D [label=5]
+    D -- D [style=invis]
+    D -- D [label=6]
+
+    {rank=same; A, C}
+    {rank=same; B, D}
+}

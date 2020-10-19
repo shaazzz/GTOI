@@ -1,0 +1,12 @@
+graph G {
+	node [label="", shape=circle, width=0.3];
+	
+	A -- {B, C} [weight=100]
+	B -- {D, E} [weight=100]
+	E -- {F} [weight=100]
+	C -- {G} [weight=100]
+	G -- {H, I, J} [weight=100]
+	
+	A -- {D, G} [style=dashed, weight=0]
+	C -- {I, J} [style=dashed, weight=0]
+}

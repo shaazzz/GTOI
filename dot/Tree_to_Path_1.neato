@@ -1,0 +1,27 @@
+graph G {
+	node [label="", shape=circle, width=0.3];
+	
+    A, B, C, D, E [color=red]
+	A -- B -- C -- D -- E [color=red]
+	B -- F -- G
+	F -- H
+	B -- I
+	C -- J -- K -- L
+	K -- M
+	D -- N
+	
+	A [pos="0.5,1.25!"]
+	B [pos="2,0.75!"]
+	C [pos="3,1.25!"]
+	D [pos="4,0.75!"]
+	E [pos="4.75,1.25!"]
+	F [pos="1.5,0!"]
+	G [pos="0.75,-0.75!"]
+	H [pos="1.75,-1!"]
+	I [pos="2.25,-0.25!"]
+	J [pos="2.75,0.5!"]
+	K [pos="3.25,-0.25!"]
+	L [pos="2.75,-0.75!"]
+	M [pos="3.75,-1!"]
+	N [pos="4.25,0!"]
+}

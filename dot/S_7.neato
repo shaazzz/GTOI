@@ -1,0 +1,5 @@
+graph G {
+    node [label="", shape=circle, width=0.1];
+
+    A -- {B, C, D, E, F, G, H};
+}

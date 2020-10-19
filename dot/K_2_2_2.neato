@@ -1,0 +1,16 @@
+graph G {
+    node [label="", shape=circle, style=filled, width=0.3];
+
+    A, D [fillcolor=yellow];
+    B, E [fillcolor=blue];
+    C, F [fillcolor=red];
+
+    A [pos="3.75,2!"];
+    B [pos="3,1!"];
+    C [pos="2,1!"];
+    D [pos="1.25,2!"];
+    E [pos="2,3!"];
+    F [pos="3,3!"];
+
+    {A, D} -- {B, E} -- {C, F} -- {A, D};
+}

@@ -1,0 +1,19 @@
+graph G {
+    node [label="", shape=circle, width=0.3];
+
+    A -- B -- C [color=blue]
+    C -- D [color=blue, style=dotted, label="               "]
+    D -- E [color=blue]
+    E -- F -- G
+    A -- E [color=blue, style=dashed]
+    A -- X [color=red]
+    
+    A, B, C, D, E [color=blue]
+    X [style=filled, color=red];
+    
+    X -- T -- A [style=invis]
+    T [style=invis]
+    
+    {rank=min; X}
+    {rank=same; T, A, B, C, D, E, F, G}
+}

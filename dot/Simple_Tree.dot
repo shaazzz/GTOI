@@ -1,0 +1,26 @@
+digraph G {
+    node [label="", fixedsize=true, shape=circle, width=0.3];
+
+    A [label=1];
+    B [label=2];
+    C [label=3];
+    D [label=4];
+    E [label=5];
+    F [label=6];
+    G [label=7];
+    H [label=8];
+    I [label=9];
+    J [label=10];
+    K [label=11];
+    L [label=12];
+    M [label=13];
+    N [label=14];
+    O [label=15];
+    P [label=16];
+
+    A -> {B, C, D};
+    B -> {E, F, G};
+    C -> {H, I, J};
+    D -> {K, L, M};
+    E -> {N, O, P};
+}

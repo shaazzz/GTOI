@@ -1,0 +1,16 @@
+graph G {
+	node [shape=circle, width=0.3];
+	
+	subgraph F {
+	    C -- A
+	    C -- A
+	    A -- B
+	    A -- B
+	}
+	
+	C -- D
+	A -- D [label="             "]
+	B -- D
+	
+	{rank=same; A, D}
+}
