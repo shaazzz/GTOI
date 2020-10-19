@@ -45,6 +45,7 @@
     - "2.2"
     - "4.3"
     - "2.5"
+    - "3.6"
   problem: 4
   codeProblem: 9 
 - name: ارشیا دادرس
@@ -55,7 +56,9 @@
   text:
     - "11.3"
 - name: پدرام صادقیان
-- name: ابولفضل سلطانی
+- name: علی شاه‌علی
+  website: https://codeforces.com/profile/AliShahali1382
+  codeProblem: 11
 - name: علی توسلی
   codeProblem: 4
   text:
