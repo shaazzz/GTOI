@@ -1,10 +1,100 @@
 - link: https://quera.ir/problemset/olympiad/9783/%D8%B3%D8%A4%D8%A7%D9%84-%D8%AF%D8%A7%D8%AF%D9%87-%D8%B3%D8%A7%D8%AE%D8%AA%D8%A7%D8%B1-%D8%AF%D9%88%D8%B1%D9%87-%DB%B2%DB%B6-%D8%AA%D8%B9%D8%B7%DB%8C%D9%84%D8%A7%D8%AA-%D8%AF%D8%B1-%D9%BE%D9%88%D8%B3%D8%AA%D9%88%D9%86
   name: تعطیلات در پوستون
-- link: https://www.spoj.com/problems/QTREE2/
-  name: کوئری روی درخت ۲
 - link: http://codeforces.com/problemset/problem/192/E
   name: احمق ها و جاده ها
 - link: http://codeforces.com/problemset/problem/466/E
   name: گراف اطلاعات
 - link: https://quera.ir/problemset/contest/4070/
   name: چارلی در کازابلانکا
+- link: https://www.spoj.com/problems/ADAAPPLE/
+  name: Ada and Apple
+- link: https://www.spoj.com/problems/ADAVISIT/
+  name: Ada and Plum
+- link: https://www.spoj.com/problems/ADALICI/
+  name: Ada and Lychees
+- link: https://www.spoj.com/problems/ADAORANG/
+  name: Ada and Orange Tree
+- link: https://www.spoj.com/problems/COWGATH/
+  name: The Cow Gathering
+- link: https://codeforces.com/gym/101908/problem/L
+  name: Subway Lines
+- link: https://codeforces.com/gym/101808/problem/K
+  name: Another Shortest Path Problem
+- link: https://www.spoj.com/problems/LCA/
+  name: Lowest Common Ancestor
+- link: https://codeforces.com/contest/916/problem/E
+  name: Jamie and Tree
+- link: https://codeforces.com/contest/911/problem/F
+  name: Tree Destruction
+- link: https://devskill.com/CodingProblems/ViewProblem/141
+  name: Motku
+- link: https://www.codechef.com/problems/PSHTTR
+  name: Pishty and tree
+- link: https://www.codechef.com/problems/CLOSEFAR
+  name: So Close Yet So Far
+- link: https://codeforces.com/contest/733/problem/F
+  name: Drivers Dissatisfaction
+- link: https://www.spoj.com/problems/POLICEMEN/
+  name: Police Men
+- link: https://www.spoj.com/problems/QTREE2/
+  name: Query on a tree II
+- link: https://codeforces.com/contest/828/problem/F
+  name: Best Edge Weight
+- link: https://codeforces.com/contest/832/problem/D
+  name: Misha, Grisha and Underground
+- link: https://www.spoj.com/problems/DRTREE/
+  name: Dynamically-Rooted Tree
+- link: https://codeforces.com/problemset/problem/838/B
+  name: Diverging Directions
+- link: https://www.spoj.com/problems/NTICKETS/
+  name: Nlogonian Tickets
+- link: https://www.spoj.com/problems/GRASSPLA/
+  name: Grass Planting
+- link: https://codeforces.com/contest/855/problem/D
+  name: Rowena Ravenclaw's Diadem
+- link: https://codeforces.com/contest/208/problem/E
+  name: Blood Cousins
+- link: https://codeforces.com/contest/191/problem/C
+  name: Fools and Roads
+- link: https://codeforces.com/contest/519/problem/E
+  name: A and B and Lecture Rooms
+- link: https://codeforces.com/contest/587/problem/C
+  name: Duff in the Army
+- link: https://codeforces.com/contest/609/problem/E
+  name: Minimum spanning tree for each edge
+- link: https://codeforces.com/contest/178/problem/B3
+  name: Greedy Merchants
+- link: https://codeforces.com/contest/176/problem/E
+  name: Archaeology
+- link: https://codeforces.com/contest/466/problem/E
+  name: Information Graph
+- link: https://codeforces.com/contest/504/problem/E
+  name: Misha and LCP on Tree
+- link: https://codeforces.com/contest/342/problem/E
+  name: Xenia and Tree
+- link: https://codeforces.com/contest/372/problem/D
+  name: Choosing Subtree is Fun
+- link: https://codeforces.com/contest/629/problem/E
+  name: Famil Door and Roads
+- link: https://www.codechef.com/problems/TOMJERGA
+  name: Tom & Jerry
+- link: https://codeforces.com/contest/916/problem/E
+  name: Jamie and Tree
+- link: https://codeforces.com/contest/986/problem/E
+  name: Prince's Problem
+- link: https://www.spoj.com/problems/DISQUERY/
+  name: Distance Query
+- link: https://codeforces.com/contest/1062/problem/E
+  name: Company
+- link: https://www.codechef.com/problems/MOAT
+  name: Marathon on a Tree
+- link: https://open.kattis.com/problems/tourists
+  name: Tourists
+- link: https://open.kattis.com/problems/boxes
+  name: Boxes
+- link: https://open.kattis.com/problems/pokegene
+  name: Pokegene
+- link: https://codeforces.com/contest/1304/problem/E
+  name: 1-Trees and Queries
+- link: https://codeforces.com/contest/1328/problem/E
+  name: Tree Queries
