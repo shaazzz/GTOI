@@ -1,16 +1,23 @@
 graph G {
+    node [fixedsize=true, shape=oval, width=0.7];
 
-    سیب -- آناناس;
-    آناناس -- خیار;
-    سیب -- خیار;
-    خیار -- پرتقال;
-    سیب -- پرتقال;
-    سیب -- انار;
-    پرتقال -- انار;
-    پرتقال -- هلو;
-    خیار -- هلو;
+    A [label=سیب]
+    B [label=آناناس]
+    C [label=خیار]
+    D [label=پرتقال]
+    E [label=انار]
+    F [label=هلو]
 
-    {rank=same; پرتقال, آناناس}
-    {rank=same; هلو, انار}
+    A -- B;
+    B -- C;
+    A -- C;
+    C -- D;
+    A -- D;
+    A -- E;
+    D -- E;
+    D -- F;
+    C -- F;
 
+    {rank=same; D, B}
+    {rank=same; F, E}
 }
