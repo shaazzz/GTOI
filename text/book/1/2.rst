@@ -83,7 +83,7 @@ n
 -------------
 به گرافی که بتوان راس های آن را به k بخش تقسیم کرد به طوری که به ازای هر دو راس u و v در یک بخش، به هم یال نداشته باشند.
 
-.. figure:: /_static/complete_multipartite_graph6.png
+.. figure:: /_static/dot/K_2_2_2.svg
    :width: 50%
    :align: center
    :alt: complete multipartite graph
@@ -116,7 +116,7 @@ a و b و c
 گراف
 :math:`K_{3,5}`
 
-.. figure:: /_static/K_3_5.png
+.. figure:: /_static/dot/K_3_5.svg
    :width: 60%
    :align: center
    :alt: complete multipartite graph

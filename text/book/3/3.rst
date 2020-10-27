@@ -36,12 +36,12 @@
 :math:`i < j` 
 باشد. (شکل۱ و شکل۲ را ببینید. شکل۲ یک ترتیب مرتب کردن راس ها برای گراف شکل۱ می‌باشد.)
 
-.. figure:: /_static/dag1.png
+.. figure:: /_static/dot/DAG_Random.svg
    :width: 50%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
 
-.. figure:: /_static/dag2.png
+.. figure:: /_static/dot/DAG_Sorted.svg
    :width: 50%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد

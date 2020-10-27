@@ -4,10 +4,10 @@
 گراف چیست؟ گراف یک سری نقطه (موجود) و خط (رابطه) است. توی شکل زیر یه گراف می بینید:
 (شکل ۱)
 
-.. figure:: /_static/dot/sib_golabi.svg
+.. figure:: /_static/dot/Apple_Pineapple.svg
    :width: 50%
    :align: center
-   :alt: گراف سیب و گلابی
+   :alt: گراف سیب و آناناس
 
 به نقطه ها راس و به خط ها یال می گوییم. هر نقطه و هر خط می تواند نماد چیزی باشد.
 
@@ -121,7 +121,7 @@ G و H
 نمایش می دهند. در شکل زیر، دو گراف چهار راسی قرمز و آبی مکمل
 یک دیگر هستند:
 
-.. figure:: /_static/dot/graph_mokamel.svg
+.. figure:: /_static/dot/Complement_Graph.svg
    :width: 30%
    :align: center
    :alt: تصویری از یک گراف و مکملش
