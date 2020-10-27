@@ -24,6 +24,6 @@
    :alt: اگه اینترنت یارو آشغال باشه این میاد
 
 .. figure:: /_static/dot/Konigsberg_Graph.svg
-   :width: 50%
+   :width: 35%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
