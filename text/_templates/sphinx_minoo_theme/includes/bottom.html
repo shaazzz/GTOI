@@ -59,3 +59,12 @@
                 </a>
             </div>
         </div>
+
+        <script>
+            var x = window.location.pathname.slice(6,-5).split('/');
+            if (x.length === 2) {
+                document.querySelectorAll("h2").forEach(function (e,i) {
+                    e.innerHTML = x.join('.') + '.' + (i+1) + " " + e.innerHTML;
+                });
+            }
+        </script>
