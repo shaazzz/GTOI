@@ -97,15 +97,18 @@ Centroid Tree
 فرض کنید درختی جدید از درختی که داریم میسازیم الگوریتم Centroid Decomposition را در نظر بگیرید حال در هر مرحله که سنتروید یک زیر درخت را پیدا می کنیم پدر آن را در این درختی که می سازیم سنتروید مولفه قبلی که این راس را داشته می گذاریم به این درخت جدید Centroid Tree می گوییم
 
 .. figure:: /_static/dot/Centroid_Clusters.svg
-   :width: 50%
+   :figwidth: 50%
    :align: center
-   :caption: درخت اولیه
    :alt: درخت اولیه
+   
+   درخت اولیه
+
 .. figure:: /_static/dot/Centroid_Tree.svg
-   :width: 50%
+   :figwidth: 50%
    :align: center
-   :caption: درخت سنتروید
    :alt: درخت سنتروید
+   
+   درخت سنتروید
 
 در بسیاری از سوال ها Centroid Tree کمک بسیاری در محاسبات می کند
 
