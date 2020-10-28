@@ -1,0 +1,22 @@
+graph G {
+    node [label="", shape=circle, fixedsize=false, width=0.5];
+    
+    B [pos="3.9, 1.75!"]
+    A [pos="5, 1!", color=red]
+    C [pos="3.9, 0.25!"]
+    D [pos="2.65, 1.75!"]
+    E [pos="1.55, 2.5!"]
+    F [pos="1.55, 1!"]
+    
+    X [pos="0.45, 2.5!", width=0, style=invis]
+    Y [pos="0.45, 1!", width=0, style=invis]
+    Z [pos="0.45, 0.25!", width=0, style=invis]
+    X -- E [color=blue]
+    Y -- F [color=blue]
+    Z -- C [color=blue]
+    A -- {B, C}
+    B -- C
+    B -- D
+    D -- {E, F}
+    E -- F
+}

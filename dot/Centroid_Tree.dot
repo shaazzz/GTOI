@@ -1,0 +1,28 @@
+graph G {
+	node [label="", shape=circle, fixedsize=true, width=0.5];
+	
+	A [label=3, color=red]
+	B [label=2, color="#ffcc00"]
+	C [label=6, color="#ffcc00"]
+	D [label=4, color=blue]
+	E [label=5, color=green]
+	F [label=7, color=blue]
+	G [label=8, color="#ffcc00"]
+	H [label=10, color=green]
+	I [label=12, color="#ffcc00"]
+	J [label=1, color=blue]
+	K [label=9, color=green]
+	L [label=11, color=blue]
+	M [label=13, color="#ffcc00"]
+	N [label=14, color=green]
+	O [label=15, color="#ffcc00"]
+	
+	A -- {L, D, J, F}
+	G -- E
+	F -- {G, I}
+	I -- H
+	J -- B
+	C -- K
+	L -- {M, O, C}
+	O -- N
+}

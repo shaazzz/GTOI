@@ -1,0 +1,24 @@
+digraph G {
+    node [label="", shape=circle, fixedsize=true, width=0.5];
+    
+    B [label=a]
+    C [label=b]
+    D [label=s]
+    E [label=am]
+    F [label=ba]
+    G [label=be]
+    H [label=so]
+    I [label=bad]
+    
+    A -> B [label=a]
+    A -> C [label=b]
+    A -> D [label=s]
+    B -> E [label=m]
+    C -> F [label=a]
+    C -> G [label=e]
+    D -> H [label=o]
+    F -> I [label=d]
+    B -> C -> D [style=invis]
+
+    {rank=same; B, C, D}
+}

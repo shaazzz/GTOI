@@ -1,0 +1,16 @@
+graph G {
+    node [label="", shape=circle, fixedsize=true, width=0.3];
+    
+    A [pos="1.5, 3!", xlabel="((()(()))())"]
+    B [pos="1, 2!", xlabel="(()(()))"]
+    C [pos="2, 2!", xlabel="()"]
+    D [pos="0.5, 1!", xlabel="()"]
+    E [pos="1.5, 1!", xlabel="(())"]
+    F [pos="1.5, 0!", xlabel="()"]
+    
+    A -- B
+    A -- C
+    B -- D
+    B -- E
+    E -- F
+}

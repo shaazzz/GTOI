@@ -1,0 +1,34 @@
+# http://www.graphviz.org/content/cluster
+
+graph G {
+    node [label="", shape=circle, fixedsize=true, width=0.3];
+
+	A [pos="0, 4!"]
+	B [pos="0, 3!"]
+	C [pos="0, 2!"]
+	D [pos="0, 1!"]
+	E [pos="2, 4.5!"]
+	F [pos="2, 3.5!"]
+	G [pos="2, 2.5!"]
+	H [pos="2, 1.5!"]
+	I [pos="2, 0.5!"]
+	
+	A -- E [constraint=false][color=red]
+	A -- F [constraint=false]
+	A -- G [constraint=false]
+	
+	B -- E [constraint=false]
+	B -- H [constraint=false][color=red]
+	B -- I [constraint=false]
+	
+	C -- F [constraint=false][color=red]
+	C -- G [constraint=false]
+	C -- H [constraint=false]
+	
+	D -- E [constraint=false]
+	D -- G [constraint=false][color=red]
+	D -- I [constraint=false]
+	
+	S [shape=rectangle, label=S, labelloc=t, pos="0,2.5!", width=0.6, height=4]
+	T [shape=rectangle, label=T, labelloc=t, pos="2,2.5!", width=0.6, height=5]
+}

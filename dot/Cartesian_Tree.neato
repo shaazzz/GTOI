@@ -1,0 +1,49 @@
+graph G {
+    node [fixedsize=true, width=0.5]
+    
+    D1 -- B1;
+    D1 -- K1;
+    B1 -- A1;
+    B1 -- C1;
+    K1 -- E1;
+    E1 -- G1;
+    G1 -- F1;
+    G1 -- I1;
+    I1 -- H1;
+    I1 -- J1;
+  
+    A0 -- A1 [style="dotted"]
+    B0 -- B1 [style="dotted"]
+    C0 -- C1 [style="dotted"]
+    D0 -- D1 [style="dotted"]
+    E0 -- E1 [style="dotted"]
+    F0 -- F1 [style="dotted"]
+    G0 -- G1 [style="dotted"]
+    H0 -- H1 [style="dotted"]
+    I0 -- I1 [style="dotted"]
+    J0 -- J1 [style="dotted"]
+    K0 -- K1 [style="dotted"]
+  
+    A0 [shape=square label=9  pos="0, 10!"]
+    B0 [shape=square label=3  pos="0.5, 10!"]
+    C0 [shape=square label=7  pos="1, 10!"]
+    D0 [shape=square label=1  pos="1.5, 10!"]
+    E0 [shape=square label=8  pos="2, 10!"]
+    F0 [shape=square label=12 pos="2.5, 10!"]
+    G0 [shape=square label=10 pos="3, 10!"]
+    H0 [shape=square label=20 pos="3.5, 10!"]
+    I0 [shape=square label=15 pos="4, 10!"]
+    J0 [shape=square label=18 pos="4.5, 10!"]
+    K0 [shape=square label=5  pos="5, 10!"]
+    A1 [shape=circle label=9  pos="0, 7.5!"]
+    B1 [shape=circle label=3  pos="0.5, 8.25!"]
+    C1 [shape=circle label=7  pos="1, 7.5!"]
+    D1 [shape=circle label=1  pos="1.5, 9!"]
+    E1 [shape=circle label=8  pos="2, 7.5!"]
+    F1 [shape=circle label=12 pos="2.5, 6!"]
+    G1 [shape=circle label=10 pos="3, 6.75!"]
+    H1 [shape=circle label=20 pos="3.5, 5.25!"]
+    I1 [shape=circle label=15 pos="4, 6!"]
+    J1 [shape=circle label=18 pos="4.5, 5.25!"]
+    K1 [shape=circle label=5  pos="5, 8.25!"]
+}

@@ -1,0 +1,90 @@
+graph G {
+	node [label="", shape=circle, fixedsize=true, width=0.5];
+	
+	subgraph cluster_0 {
+	    color=red
+	    A, B, C, D, E, F, G, H, I, J, K, L, M, N, O
+	    subgraph cluster_0_0 {
+	        color=blue
+	        B, J
+	        subgraph cluster_0_0_0 {
+	            color="#ffcc00"
+	            B
+	        }
+	    }
+	    subgraph cluster_0_1 {
+	        color=blue
+	        C, K, L, M, N, O
+	        subgraph cluster_0_1_0 {
+	            color="#ffcc00"
+	            C, K
+	            subgraph cluster_0_1_0_0 {
+    	            color=green
+    	            K
+    	        }
+	        }
+	        subgraph cluster_0_1_1 {
+	            color="#ffcc00"
+	            M
+	        }
+	        subgraph cluster_0_1_2 {
+	            color="#ffcc00"
+	            N, O
+	            subgraph cluster_0_1_2_0 {
+    	            color=green
+    	            N
+    	        }
+	        }
+	    }
+	    subgraph cluster_0_2 {
+	        color=blue
+	        D
+	    }
+	    subgraph cluster_0_3 {
+	        color=blue
+	        E, F, G, H, I
+	        subgraph cluster_0_3_0 {
+	            color="#ffcc00"
+	            E, G
+	            subgraph cluster_0_3_0_0 {
+    	            color=green
+    	            E
+    	        }
+	        }
+	        subgraph cluster_0_3_1 {
+	            color="#ffcc00"
+	            H, I
+	            subgraph cluster_0_3_1_0 {
+    	            color=green
+    	            H
+    	        }
+	        }
+	    }
+	}
+	
+	A [label=3, color=red]
+	B [label=2, color="#ffcc00"]
+	C [label=6, color="#ffcc00"]
+	D [label=4, color=blue]
+	E [label=5, color=green]
+	F [label=7, color=blue]
+	G [label=8, color="#ffcc00"]
+	H [label=10, color=green]
+	I [label=12, color="#ffcc00"]
+	J [label=1, color=blue]
+	K [label=9, color=green]
+	L [label=11, color=blue]
+	M [label=13, color="#ffcc00"]
+	N [label=14, color=green]
+	O [label=15, color="#ffcc00"]
+	
+	A -- {B, C, D, E}
+	E -- {F, G}
+	F -- H
+	H -- I
+	B -- J
+	C -- K
+	K -- L
+	L -- {M, N}
+	N -- O
+}
