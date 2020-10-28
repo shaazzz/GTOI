@@ -27,7 +27,7 @@
 :math:`P: 2, 3, 1, 5, 4, 6`
 را در نظر بگیرید. گراف‌ زیر، یک گراف‌جایگشت برای این جایگشت است:
 
-.. figure:: /_static/permutation_graph.png
+.. figure:: /_static/dot/Permutation_Graph.svg
    :width: 80%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد

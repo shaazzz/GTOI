@@ -21,7 +21,7 @@ De Bruijn sequence
 
 حالا اگر یک تور اویلری از گراف را پیدا کنید و ارقام روی یال های آن را به ترتیب دور دایره بنویسید چینش مطلوب ما حاصل خواهد شد!
 
-.. figure:: /_static/De_bruijn_graph.svg.png
+.. figure:: /_static/dot/De_Bruijn_Graph.svg
    :width: 40%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
