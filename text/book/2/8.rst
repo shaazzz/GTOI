@@ -43,7 +43,7 @@
 
 
 .. figure:: /_static/dot/DFS_Magic.svg
-   :width: 80%
+   :width: 50%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
 
