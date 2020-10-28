@@ -3,13 +3,12 @@ graph G {
 	
 	subgraph cluster_0 {
 	    style=rounded
-	    tooltip=A0
-	    label=A0
+	    label=<A<SUB>0</SUB>>
 	    A
 	}
 	subgraph cluster_1 {
 	    style=rounded
-	    label=A1
+	    label=<A<SUB>1</SUB>>
 	    labeljust=l
 	    B, C, D
 	    B -- C
@@ -18,7 +17,7 @@ graph G {
 	}
 	subgraph cluster_2 {
 	    style=rounded
-	    label=A2
+	    label=<A<SUB>2</SUB>>
 	    labeljust=l
 	    labelloc=b
 	    E -- F [style=invis]
@@ -27,7 +26,7 @@ graph G {
 	}
 	subgraph cluster_3 {
 	    style=rounded
-	    label=A3
+	    label=<A<SUB>3</SUB>>
 	    //labeljust=l
 	    labelloc=b
 	    I, J

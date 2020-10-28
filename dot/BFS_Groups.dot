@@ -1,8 +1,8 @@
 graph G {
-	A [label="A0", shape=oval, width=1, height=0.5];
-	B [label="A1", shape=oval, width=2, height=0.62];
-	C [label="A2", shape=oval, width=3, height=0.74];
-	D [label="Ah", shape=oval, width=4, height=0.86];
+	A [label=<A<SUB>0</SUB>>, shape=oval, width=1, height=0.5];
+	B [label=<A<SUB>1</SUB>>, shape=oval, width=2, height=0.62];
+	C [label=<A<SUB>2</SUB>>, shape=oval, width=3, height=0.74];
+	D [label=<A<SUB>h</SUB>>, shape=oval, width=4, height=0.86];
 
 	A -- B 
 	A -- B 
