@@ -1,0 +1,63 @@
+graph G {
+	node [label="", shape=circle, width=0.3];
+	
+	subgraph cluster_0 {
+	    style=rounded
+	    tooltip=A0
+	    label=A0
+	    A
+	}
+	subgraph cluster_1 {
+	    style=rounded
+	    label=A1
+	    labeljust=l
+	    B, C, D
+	    B -- C [style=invis]
+	    C -- D [style=invis]
+	    {rank=same; B, C, D}
+	}
+	subgraph cluster_2 {
+	    style=rounded
+	    label=A2
+	    labeljust=l
+	    labelloc=b
+	    E -- F [style=invis]
+	    F -- G -- H [style=invis]
+	    {rank=same; E, F, G, H}
+	}
+	subgraph cluster_3 {
+	    style=rounded
+	    label=A3
+	    //labeljust=l
+	    labelloc=b
+	    I, J
+	}
+	
+	A -- D [style=invis]
+	A -- C [style=invis]
+	C -- E [style=invis, weight=126]
+	C -- F [style=invis]
+	B -- E [style=invis]
+	
+	D -- H [style=invis, weight=65]
+	
+	F -- I [style=invis]
+	G -- J [style=invis]
+	A -- {B, C, D} [constraint=false]
+	B -- {E, G} [constraint=false]
+	C -- {F} [constraint=false]
+	D -- {H} [constraint=false]
+	G -- {I} [constraint=false]
+	H -- {J} [constraint=false]
+	F -- I [style=invis]
+	G -- J [style=invis]
+	
+	C -- F [style=invis, weight=0]
+	
+	A -- D [style=invis]
+	A -- C [style=invis, weight=2]
+	B -- E [style=invis]
+	
+	D -- H [style=invis, weight=65]
+	C -- E [style=invis]
+}

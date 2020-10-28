@@ -1,0 +1,27 @@
+graph G {
+    node [label="", shape=circle, fixedsize=true, width=0.6];
+
+    A -- B -- C 
+    C -- D [style=dotted, label="               "]
+    D -- E 
+    E -- F [style=dotted, label="               "]
+    F -- G 
+    A -- E [style=dashed]
+    D -- G [style=dashed]
+
+    A [label=V1]
+    B [label=V2]
+    C [label=V3]
+    D [label="Vi-1"]
+    E [label=Vi]
+    F [label="Vn-1"]
+    G [label="Vn"]
+
+    X [width=0]
+    X, Y [style=invis]
+    C -- X [style=invis]
+    {rank=min; X}
+    {rank=same; X}
+    {rank=same; Y}
+    {rank=same; A, B, C, D, E, F, G}
+}

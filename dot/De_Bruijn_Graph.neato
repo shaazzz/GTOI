@@ -1,0 +1,64 @@
+digraph G {
+    node [label="", shape=circle, fixedsize=false, width=0.3];
+
+    A [label=000, pos="2,4.75!"];
+    B [label=010, pos="2,3.25!"];
+    C [label=001, pos="4,4!"];
+    D [label=011, pos="4,0.75!"];
+    E [label=110, pos="0,0.75!"];
+    F [label=100, pos="0,4!"];
+    G [label=101, pos="2,1.5!"];
+    H [label=111, pos="2,0!"];
+
+    A -> C -> D -> H [label=1]
+    //H -> H [label=1]
+    E -> G -> D [label=1]
+    F -> C [label=1]
+    
+    B -> G [label=1]
+    G -> B [label=0]
+    G -> B [style=invis]
+    G -> B [style=invis]
+    G -> B [style=invis]
+    G -> B [style=invis]
+    
+    H -> E -> F -> A [label=0]
+    //A -> A [label=0]
+    C -> B -> F [label=0]
+    D -> E [label=0]
+    
+    X [pos="1.75,4.82!"] [style=invis]
+    Y [pos="2.25,4.82!"] [style=invis]
+    
+    X -> Y
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    X -> Y [style=invis]
+    
+    Z [pos="1.75,-0.07!"] [style=invis]
+    W [pos="2.25,-0.07!"] [style=invis]
+    
+    W -> Z
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    W -> Z [style=invis]
+    
+    M [label=1, color=invis, pos="2,5.60!", fixedsize=true, width=0]
+    N [label=0, color=invis, pos="2,-0.85!", fixedsize=true, width=0]
+}

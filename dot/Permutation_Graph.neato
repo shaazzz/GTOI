@@ -1,0 +1,14 @@
+digraph G {
+	node [fixedsize=true, shape=circle, width=0.3];
+
+	A [label=1];
+	B [label=2];
+	C [label=3];
+	D [label=4];
+	E [label=5];
+	F [label=6];
+	
+	A -> B -> C -> A
+	D -> E -> D
+	F -> F
+}

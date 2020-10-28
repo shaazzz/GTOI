@@ -1,0 +1,20 @@
+graph G {
+	node [label="", shape=circle, width=0.3];
+
+	A -- B [label=1, weight=2]
+	B -- C [label=2]
+	C -- A [label=3, style=dashed]
+	B -- D [label=4]
+	D -- A [label=5, style=dashed]
+	A -- G [label=8]
+	A -- E [label=6]
+	E -- F [label=7]
+	G -- H [label=9]
+	E -- H [style=invis]
+	C -- D [label = "              ", style=invis]
+
+	
+	{rank=same; A}
+	{rank=same; B, E, G}
+	{rank=same; C, D, F, H}
+}
