@@ -2,7 +2,7 @@
 Graph Theory for Olympiad in Informatics
 
 # How to make the book?
-one time:
+first time:
 ```
 download npm and node at https://nodejs.org/en/
 git clone https://github.com/shaazzz/GTOI.git
