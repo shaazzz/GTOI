@@ -7,7 +7,7 @@ Trie
 در این صورت هر راس حداکثر X بچه دارد.
 دقت کنید که در راس ها حروف وجود ندارند بلکه یال بین هر دو راس دارای حرف است برای فهم بهتر به شکل زیر نگاه کنید.
 
-.. figure:: /_static/Trie.png
+.. figure:: /_static/dot/Trie.svg
    :width: 50%
    :align: center
    :alt: Trie example

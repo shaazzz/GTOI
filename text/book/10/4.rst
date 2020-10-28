@@ -31,7 +31,7 @@ RMQ
 فرزند راست معادل درخت دکارتی بازه عضو کمینه تا انتها است. در شکل زیر
 یک درخت دکارتی را می‌بینید.
 
-.. figure:: /_static/Cartesian_tree.svg
+.. figure:: /_static/dot/Cartesian_Tree.svg
    :width: 40%
    :align: center
    :alt: عکس یک مثال از درخت دکارتی

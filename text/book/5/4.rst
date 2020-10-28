@@ -12,13 +12,8 @@
 
 حالا فرض کنید مسیر همیلتونی ما :math:`a = v_1, v_2, ..., v_n = b` می باشد. اگر :math:`v_1` به :math:`v_i` یال داشته باشد و :math:`v_n` به :math:`v_{i-1}` یال داشته باشد آنگاه می توانیم یک دور همیلتونی در گراف :math:`G` بیابیم. (از :math:`v_1` به مستقیم به :math:`v_i` بروید سپس مسیر :math:`v_i` تا :math:`v_n` را طی کنید سپس از :math:`v_n` مستقیم به :math:`v_{i-1}` بروید سپس مسیر :math:`v_{i-1}` تا :math:`v_1` را طی کنید).
 
-
-.. figure:: /_static/dirac.png
-   :width: 40%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
 .. figure:: /_static/dot/Ore_Theorem_Proof.svg
-   :width: 40%
+   :width: 80%
    :align: center
    :alt: اگه اینترنت یارو آشغال باشه این میاد
 

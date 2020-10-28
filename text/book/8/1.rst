@@ -11,7 +11,7 @@
 زیر درخت به زیر گرافی از درخت دودویی گفته میشود که در آن راس u آمده باشد تمام بچه های u هم در آن آمده باشد.
 
 
-.. figure:: /_static/Binary_Tree.png
+.. figure:: /_static/dot/Binary_Tree.svg
    :width: 60%
    :align: center
    :alt: Binary Tree
@@ -22,17 +22,27 @@ Full Binary Tree
 ----------------
 درخت دودویی که در آن تمامی راس ها یا دو بچه دارند و یا برگ هستند.
 
+.. figure:: /_static/dot/Full_Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Full Binary Tree
+
 Complete Binary Tree
 --------------------
 درخت دودویی که تمام برگ ها در دو طبقه آخر هستند و برگ های طبقه آخر از چپ پر شدند.
+
+.. figure:: /_static/dot/Complete_Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Complete Binary Tree
 
 Perfect Binary Tree
 -------------------
 به درختی که تمامی برگ ها در طبقه آخر باشند و تعداد بچه های تمامی راس ها در دیگر طبقات دو باشد گویند.
 
-یکی از بیشترین استفاده ها از درخت دودویی، درخت جست و جوی دودویی است که جلوتر با آن بیشتر آشنا می شویم.
-
-.. figure:: /_static/full_complete_perfect.png
-   :width: 80%
+.. figure:: /_static/dot/Perfect_Binary_Tree.svg
+   :width: 60%
    :align: center
-   :alt: Full Complete Perfect Bianry Tree
+   :alt: Perfect Binary Tree
+
+یکی از بیشترین استفاده ها از درخت دودویی، درخت جست و جوی دودویی است که جلوتر با آن بیشتر آشنا می شویم.

@@ -102,7 +102,7 @@ np سخت
 کرد. تنها نکته ای که باقی می ماند، طراحی گراف گجت است. یک کاندید ممکن برای گراف
 گجت، گراف زیر است.
 
-.. figure:: /_static/orgadget.png
+.. figure:: /_static/dot/Gadget.svg
    :width: 50%
    :align: center
    :alt: تصویر گراف گجت
