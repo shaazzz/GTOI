@@ -194,3 +194,20 @@
   name: The Bakery
 - link: https://codeforces.com/contest/869/problem/E
   name: The Untended Antiquity
+- link: https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2397
+  name: Ahoy, Pirates!
+- link: https://www.spoj.com/problems/GSS3/
+  name: Can you answer these queries III
+- link: https://codeforces.com/problemset/problem/1234/D
+  name: Distinct Characters Queries
+- link: https://codeforces.com/problemset/problem/920/F
+  name: SUM and REPLACE
+- link: https://oj.uz/problem/view/COCI17_deda
+  name: Deda
+- link: https://cses.fi/problemset/task/1143
+  name: Hotel Queries
+- link: https://cses.fi/problemset/task/1736
+  name: Polynomial Queries
+- link: https://cses.fi/problemset/task/1735
+  name: Range Updates and Sums
+  

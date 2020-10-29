@@ -1,67 +1,56 @@
 - name: حمیدرضا کلباسی
   website: https://hkalbasi.github.io/
   text:
-    - "10.1"
-    - "10.2"
-    - "10.3"
-    - "10.4"
-    - "10.5"
-    - "12.3"
-    - "13.5"
-    - "14.1"
     - "1.1"
     - "1.3"
     - "1.4"
     - "1.5"
     - "1.7"
+    - "4.1"
+    - "4.2"
     - "7.5"
     - "7.6"
     - "9.1"
     - "9.2"
     - "9.3"
+    - "10.1"
+    - "10.2"
+    - "10.3"
+    - "10.4"
+    - "10.5"
     - "11.2"
+    - "12.3"
+    - "13.5"
+    - "14.1"
     - "14.8"
   codeProblem: 4
   problem: 40
-- name: مهدی قائم پناه
-  text:
-    - "2.1"
-    - "2.2"
-    - "2.6"
+
 - name: شایان پردیس
   text:
+    - "2.2"
+    - "2.3"
+    - "2.4"
+    - "2.5"
+    - "2.8"
+    - "3.6"
+    - "4.3"
     - "5.1"
     - "5.2"
     - "5.3"
     - "5.4"
     - "5.5"
-    - "14.6"
     - "13.3"
     - "13.4"
     - "13.6"
     - "13.7"
     - "11.4"
     - "11.5"
-    - "2.4"
-    - "2.2"
-    - "4.3"
-    - "2.5"
-    - "3.6"
-    - "2.8"
     - "14.5"
+    - "14.6"
   problem: 5
   codeProblem: 9 
-- name: ارشیا دادرس
-  text:
-    - "13.1"
-    - "13.2"
-- name: علی پاشا منتصری
-  text:
-    - "11.3"
-- name: پدرام صادقیان
-- name: علی شاه‌علی
-  website: https://codeforces.com/profile/AliShahali1382
-  codeProblem: 11
+
 - name: علی توسلی
   codeProblem: 4
   text:
@@ -73,8 +62,7 @@
     - "3.6"
     - "3.7"
     - "14.2"
-- name: پوریا جلالی
-  problem: 8
+
 - name: متین انصاری پور
   text:
     - "3.1"
@@ -85,16 +73,40 @@
     - "3.6"
     - "3.7"
     - "14.2"
+
 - name: علی صفری
   website: https://codeforces.com/profile/Amoo_Safar
   text:
     - "6.1"
     - "6.2"
     - "6.3"
+
+- name: مهدی قائم پناه
+  text:
+    - "2.1"
+    - "2.2"
+    - "2.6"
+
+- name: ارشیا دادرس
+  text:
+    - "13.1"
+    - "13.2"
+
+- name: علی پاشا منتصری
+  text:
+    - "11.3"
+
+- name: علی شاه‌علی
+  website: https://codeforces.com/profile/AliShahali1382
+  codeProblem: 11
+
+- name: پوریا جلالی
+  problem: 8
+
 - name: محمد امین هاشمی
   problem: 55
   website: https://codeforces.com/profile/_Seyed37_
-  codeProblem: 391
+  codeProblem: 399
   text:
     - "1.2"
     - "1.6"
