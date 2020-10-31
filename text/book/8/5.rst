@@ -1,4 +1,4 @@
-Segment tree
+Segment Tree
 ============
 یکی از پرکاربرد ترین داده ساختار های مورد استفاده در المپیاد کامپیوتر بی شک Segment Tree است.
 نوع درخت دودویی آن `Full Binary Tree <https://gtoi.shaazzz.ir/book/8/1.html#full-binary-tree>`_ است.
@@ -24,7 +24,7 @@ Segment tree
 برای درک بیشتر از این قسمت به شکل زیر نگاه کنید که چطور هر راس مقداری را ذخیره کرده.
 
 .. figure:: /_static/construction.png
-   :width: 75%
+   :width: 85%
    :align: center
    :alt: Segment Tree
 
