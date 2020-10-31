@@ -86,11 +86,11 @@ Segment tree
 
 برای فهم بهتر فرض کنید :math:`F(u,ul,ur,l,r)` تابع بازگشتی بالا باشد که با گرفتن راسی که روی آن هستیم و بازه این راس و بازه خواسته شده، جواب را به ما بدهد(با فرض اینکه بازه خواسته شده درون بازه راس u باشد) و :math:`sum[u]` به معنای مقدار ذخیره شده در راس u باشد. خلاصه سه حالت بالا به صورت زیر می شود.
 
-.. math::`Middle = (ul + ur) / 2`
-.. math::`(ul = l, ur = r) => F(u,ul,ur,l,r) = sum[u] `
-.. math::`(r < Middle) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,r)`
-.. math::`(l > Middle) => F(u,ul,ur,l,r) = F(2*u,Middle,ur,l,r)`
-.. math::`(l < Middle, Middle < r) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,Middle) + F(2*u+1,Middle,ur,Middle,r)`
+.. math:: Middle = (ul + ur) / 2
+.. math:: (ul = l, ur = r) => F(u,ul,ur,l,r) = sum[u]
+.. math:: (r < Middle) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,r)
+.. math:: (l > Middle) => F(u,ul,ur,l,r) = F(2*u,Middle,ur,l,r)
+.. math:: (l < Middle, Middle < r) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,Middle) + F(2*u+1,Middle,ur,Middle,r)
 
 اردر این عملیات :math:`O(lg n)` است به این دلیل که در هر طبقه حداکثر ۴ راس در تابع بازگشتی مورد استفاده قرار می گیرند. برای اثبات کافیست توجه کنید که فقط راست ترین و چپ ترین راس های یک طبقه می توانند بچه های خود را صدا کنند و این یعنی در هر طبقه حداکثر ۴ راس صدا زده می شوند.
 
