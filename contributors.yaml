@@ -105,6 +105,8 @@
 - name: علی شاه‌علی
   website: https://codeforces.com/profile/AliShahali1382
   codeProblem: 11
+  text:
+    - "11.6"
 
 - name: پوریا جلالی
   problem: 8
