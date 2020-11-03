@@ -26,45 +26,45 @@
 
 .. code-block:: cpp
 
-#include<bits/stdc++.h>
-using namespace std;
+	#include<bits/stdc++.h>
+	using namespace std;
 
-const int MAXN=100010;
+	const int MAXN=100010;
 
-int n, m, k, u, v, x, y;
-int par[MAXN], sz[MAXN], h[MAXN], head[MAXN];
-int stt[MAXN], fnt[MAXN], timer=1;
+	int n, m, k, u, v, x, y;
+	int par[MAXN], sz[MAXN], h[MAXN], head[MAXN];
+	int stt[MAXN], fnt[MAXN], timer=1;
 
-int dfs1(int node){ // finding subtree sizes
-	h[node]=h[par[node]]+1;
-	for (int v:G[node]) if (v!=par[node]){
-		par[v]=node;
-		sz[node]+=dfs1(v);
+	int dfs1(int node){ // finding subtree sizes
+		h[node]=h[par[node]]+1;
+		for (int v:G[node]) if (v!=par[node]){
+			par[v]=node;
+			sz[node]+=dfs1(v);
+		}
+		return ++sz[node];
 	}
-	return ++sz[node];
-}
-void dfs2(int node, int hd){
-	head[node]=hd;
-	stt[node]=timer++;
-	int big=0;
-	for (int v:G[node]) if (v!=par[node] && sz[big]<sz[v]) big=v;
-	if (big) dfs2(big, hd);
-	for (int v:G[node]) if (v!=par[node] && v!=big) dfs2(v, v);
-	fnt[node]=timer;
-}
-
-int main(){
-	ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-	cin>>n;
-	for (int i=1; i<n; i++){
-		cin>>u>>v;
-		G[u].push_back(v);
-		G[v].push_back(u);
+	void dfs2(int node, int hd){
+		head[node]=hd;
+		stt[node]=timer++;
+		int big=0;
+		for (int v:G[node]) if (v!=par[node] && sz[big]<sz[v]) big=v;
+		if (big) dfs2(big, hd);
+		for (int v:G[node]) if (v!=par[node] && v!=big) dfs2(v, v);
+		fnt[node]=timer;
 	}
-	dfs1(1);
-	dfs2(1, 1);
 
-	return 0;
-}
+	int main(){
+		ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+		cin>>n;
+		for (int i=1; i<n; i++){
+			cin>>u>>v;
+			G[u].push_back(v);
+			G[v].push_back(u);
+		}
+		dfs1(1);
+		dfs2(1, 1);
+
+		return 0;
+	}
 
 
