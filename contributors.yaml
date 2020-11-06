@@ -32,7 +32,7 @@
     - "2.3"
     - "2.4"
     - "2.5"
-    - "2.8"
+    - "2.9"
     - "3.6"
     - "4.3"
     - "5.1"
@@ -112,13 +112,13 @@
   problem: 8
 
 - name: محمد امین هاشمی
-  problem: 55
+  problem: 65
   website: https://codeforces.com/profile/_Seyed37_
   codeProblem: 426
   text:
     - "1.2"
     - "1.6"
-    - "2.7"
+    - "2.8"
     - "6.2"
     - "6.3"
     - "7.1"
