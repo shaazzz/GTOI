@@ -27,13 +27,7 @@ jobs:
           sudo apt install graphviz
           npm install
           ./scripts/build.sh
-
-      - uses: actions/upload-artifact@v2
-        if: success()
-        with:
-          name: allsite
-          path: _build
-
+      
       # Runs a set of commands using the runners shell
       - name: Deploy to github pages
         if: success()
