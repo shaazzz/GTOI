@@ -1,7 +1,10 @@
 cat: "-"
-text:
+text: |
   در گراف زیر، درجه هر راس، تعداد راس ها، تعداد یال ها و
   $\delta , \Delta$
-  را مشخص کنید. ![](/_static/dot/Apple_Pineapple.svg)
+  را مشخص کنید.
+  
+  
+  ![](/_static/dot/Apple_Pineapple.svg)
 solution:
   اینم راه سوال است.
