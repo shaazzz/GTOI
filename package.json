@@ -9,6 +9,8 @@
     "gh-pages": "^2.2.0",
     "glob": "^7.1.6",
     "markdown-it": "^10.0.0",
+    "restructured": "0.0.11",
+    "rst2html": "^1.0.4",
     "yaml": "^1.7.2"
   }
 }
