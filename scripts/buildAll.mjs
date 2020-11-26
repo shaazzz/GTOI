@@ -30,7 +30,7 @@ const rst2html = (rst, name) => {
       return `<p>${children.map(f).join('')}</p>`;  
     } else if (type === 'strong') {
       return `<b>${children.map(f).join('')}</b>`;  
-    } else if (type === 'bullet_list') {
+    } else if (type === 'bullet_list' || type === 'definition_list') {
       return `<ul>${children.map(f).join('')}</ul>`;  
     } else if (type === 'enumerated_list') {
       return `<ol>${children.map(f).join('')}</ol>`;  
