@@ -77,9 +77,6 @@
 
 .. code-block:: cpp
 
-    #include <bits/stdc++.h>
-    using namespace std;
-
     const int M = 1e5 + 5;
     vector<int> g[M];
     int sz[M]; // andaaze zirderakht har ras, baraaye tashkhis yaal haaye sabok va sangin

@@ -102,7 +102,7 @@ DFS
   int parat(int stpx, int hgoal) { // jadi az rase voroodi ke ertefae hadaf ra darad ra mikhahim
     int x = hld[st[stpx]];
     while (h[x] > hgoal) x = hld[par[x]];
-    return stp[x+hgoal-h[x]];
+    return stp[x + hgoal - h[x]];
   }
 
   int main(){
@@ -134,22 +134,18 @@ DFS
 دارد.
 
 .. code-block:: cpp
-		
-  #include<bits/stdc++.h>
-
-  using namespace std;
 
   const int M = 1e5+5;
   
   int edge_counter = 1;
   
   int st[M], stp[M], hld[M], par[M], h[M];
-  vector<int> g[M];
+  vector <int> g[M];
   int time = 0;
 
   int dfsz(int x, int p = 0) {
     int sz = 1, mxsz = -2;
-    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size()-1]);
+    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size() - 1]);
     for (int i = 0; i < g[x].size(); i++) {
       if (g[x][i] == p) continue;
       int szy = dfsz(g[x][i], x);
@@ -175,18 +171,20 @@ DFS
   int parat(int x, int hgoal) { // jadi az rase voroodi ke ertefae hadaf ra darad ra mikhahim
     int x = hld[x];
     while (h[x] > hgoal) x = hld[par[x]];
-    return x+hgoal-h[x];
+    return x + hgoal - h[x];
   }
 
   int lca(int stpx, int stpy) {
     int x = st[stpx], y = st[stpy];
-    if (h[x]<h[y]) swap(x,y);
+    if (h[x] < h[y]) swap(x,y);
     x = parat(x, h[y]); // do ras ra ham ertefa mikonim ta kod sade tar shavad  
     while (x != y) {
-      x = hld[x]; y = hld[y];
-      if (h[x]<h[y]) swap(x,y);
+      x = hld[x];
+      y = hld[y];
+      if (h[x] < h[y]) swap(x, y);
       y += h[x] - h[y];
-      x = par[x]; y = par[y];  
+      x = par[x];
+      y = par[y];  
     }
     return stp[x];
   }

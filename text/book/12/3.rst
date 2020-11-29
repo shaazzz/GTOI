@@ -72,40 +72,44 @@ f
 
 .. code-block:: cpp
 
-  ll cnt,head[M],pre[M],cap[M],to[M],from[M];
-  ll n,m;
+  int cnt, head[M], pre[M], cap[M], to[M], from[M];
+  int n,m;
   
-  void add(ll u,ll v,ll w)
-  {
+  void add(int u, int v, int w){
       // ezafe kardane yale asli
-      from[cnt]=u;to[cnt]=v;pre[cnt]=head[u];cap[cnt]=w;head[u]=cnt++;
+      from[cnt] = u;
+      to[cnt] = v;
+      pre[cnt] = head[u];
+      cap[cnt] = w;
+      head[u] = cnt++;
       // ezafe kardane yale dogaan
-      from[cnt]=v;to[cnt]=u;pre[cnt]=head[v];cap[cnt]=0;head[v]=cnt++;
+      from[cnt] = v;
+      to[cnt] = u;
+      pre[cnt] = head[v];
+      cap[cnt] = 0;
+      head[v] = cnt++;
   }
   
-  ll tnod=0;
-  bitset<M> mark;
+  int tnod = 0;
+  bitset <M> mark;
   
   // say mikonim ke masir afzaayesh dahande peydaa konim
-  ll dfs(ll u,ll mn)
-  {
-      mark[u]=1;
-      if (u==tnod) return mn;
+  int dfs(int u, int mn){
+      mark[u] = 1;
+      if(u == tnod)return mn;
       // yal haye ras u dar yek link list rikhte shode and.
-      for (ll i=head[u];i!=-1;i=pre[i])
-      {
+      for (int i = head[u]; i != -1; i = pre[i]){
           // agar yale hadaf zarfiat nadasht bikhiaale aan mishavim
-          if (cap[i]==0 || mark[to[i]]) continue;
+          if (cap[i] == 0 || mark[to[i]]) continue;
           // say mikonim ke jaryani be maghsad peyda konim
-          ll s=dfs(to[i],min(mn,cap[i]));
+          int s = dfs(to[i], min(mn,cap[i]));
           // agar s = 0 nabashad, masir afzayesh dahande i vojood darad ke
           // kam zarfiat tarin yale aan s vahed zarfiat darad
-          if (s)
-          {
+          if (s){
               // az zarfiate yal s vahed kam mikonim
-              cap[i]-=s;
+              cap[i] -= s;
               // be zarfiate yaale dogan s vahed ezafe mikonim
-              cap[i^1]+=s;
+              cap[i^1] += s;
               // elam mikonim ke masir s vahedi peyda shode ast
               return s;
           }
@@ -114,16 +118,14 @@ f
       return 0;
   }
   
-  ll maxflow()
-  {
-      ll flow=0;
-      while (1)
-      {
-          mark&=0;
-          ll s=dfs(0,inf);
+  int maxflow(){
+      int flow = 0;
+      while(1){
+          mark &= 0;
+          int s = dfs(0, inf);
           // agar masiri peyda nashode bood flow = maxflow
           if (!s) return flow;
-          flow+=s;
+          flow += s;
       }
   }
 

@@ -14,52 +14,49 @@
 
 .. code-block:: cpp
 
-  /* In the name of Allah */
-  #include<bits/stdc++.h>
-  using namespace std;
-
   const int N = 2e3 + 5;
   int n1, n2, m, k, match[N];
-  vector<int> adj[N];
+  vector <int> adj[N];
   bool mark[N];
 
-  bool try_kuhn(int u) {
+  bool try_kuhn(int u){
       mark[u] = true;
-      for (auto v: adj[u])
-          if (match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))) {
+      for(auto v: adj[u])
+          if(match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))){
               match[v] = u;
               return true;
           }
       return false;
   }
 
-  void read_input() {
+  void read_input(){
       cin >> n1 >> n2 >> m;
-      for (int i = 0; i < m; i++) {
+      for(int i = 0; i < m; i++){
           int u, v;
           cin >> u >> v;
           adj[--u].push_back(--v);
       }
   }
 
-  void calc() {
+  void calc(){
       memset(match, -1, sizeof match);
-      for (int u = 0; u < n1; u++) {
+      for(int u = 0; u < n1; u++){
           memset(mark, false, sizeof mark);
           k += try_kuhn(u);
       }
   }
 
-  void write_output() {
+  void write_output(){
       cout << k << endl;
-      for (int u = 0; u < n2; u++)
+      for(int u = 0; u < n2; u++)
           if (match[u] != -1)
               cout << match[u] + 1 << ' ' << u + 1 << endl;
   }
 
   int main() {
-      ios:: sync_with_stdio(0), cin.tie(0), cout.tie(0);
-      read_input(), calc(), write_output();
+      read_input();
+      calc();
+      write_output();
       return 0;
   }
 
@@ -67,18 +64,14 @@
 
 .. code-block:: cpp
 
-  /* In the name of Allah */
-  #include<bits/stdc++.h>
-  using namespace std;
-
   const int N = 2e3 + 5;
   int n1, n2, m, k, match[N];
-  vector<int> adj[N];
+  vector <int> adj[N];
   bool mark[N];
 
-  bool try_kuhn(int u) {
+  bool try_kuhn(int u){
       mark[u] = true;
-      for (auto v: adj[u])
+      for(auto v: adj[u])
           if (match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))) {
               match[v] = u;
               return true;
@@ -86,21 +79,21 @@
       return false;
   }
 
-  void read_input() {
+  void read_input(){
       cin >> n1 >> n2 >> m;
-      for (int i = 0; i < m; i++) {
+      for(int i = 0; i < m; i++){
           int u, v;
           cin >> u >> v;
           adj[--u].push_back(--v);
       }
   }
 
-  void calc() {
+  void calc(){
       memset(match, -1, sizeof match);
-      while (true) {
+      while(true){
           bool flag = false;
           memset(mark, false, sizeof mark);
-          for (int u = 0; u < n1; u++)
+          for(int u = 0; u < n1; u++)
               if (!mark[u])
                   k += try_kuhn(u);
           if (!flag)
@@ -108,16 +101,17 @@
       }
   }
 
-  void write_output() {
+  void write_output(){
       cout << k << endl;
       for (int u = 0; u < n2; u++)
           if (match[u] != -1)
               cout << match[u] + 1 << ' ' << u + 1 << endl;
   }
 
-  int main() {
-      ios:: sync_with_stdio(0), cin.tie(0), cout.tie(0);
-      read_input(), calc(), write_output();
+  int main(){
+      read_input();
+      calc();
+      write_output();
       return 0;
   }
 

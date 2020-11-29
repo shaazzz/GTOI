@@ -24,9 +24,6 @@
 
 .. code-block:: cpp
 
-	#include <bits/stdc++.h>
-	using namespace std;
-
 	const int MAXN = 100010;
 
 	int n, m, k, u, v, x, y;

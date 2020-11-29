@@ -43,25 +43,20 @@
 
 .. code-block:: cpp
 
-  #include<bits/stdc++.h>
-  
-  using namespace std;
-  
   const int maxn = 1e5 + 10, P = 101, M = 1e9 + 9;
   
-  vector<int> v[maxn];
+  vector <int> v[maxn];
   
   int calc(int u, int par = -1){
-        vector<int> vec;
-        for(int y : v[u]){
-  	  if(y != par)
-  	      vec.push_back( calc(y, u) );
+      vector<int> vec;
+      for(int y : v[u]){
+  	      if(y != par)
+  	      vec.push_back(calc(y, u));
       }
       sort(vec.begin(), vec.end());
       int H = 0;
-      for(int x : vec){
-	  H = (1ll * H * P + x) % M;
-      }
+      for(int x : vec)
+	    H = (1ll * H * P + x) % M;
       H = (1 + H) % M;
       return H;
   }
@@ -69,7 +64,7 @@
   int main(){
       int n;
       cin >> n;
-      for(int i = 0; i < n-1; i++){
+      for(int i = 0; i < n - 1; i++){
 	  int a, b;
 	  cin >> a >> b;
 	  v[a].push_back(b);

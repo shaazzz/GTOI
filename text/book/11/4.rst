@@ -56,9 +56,6 @@
 
 .. code-block:: cpp
 
-  #include<bits/stdc++.h>
-  
-  using namespace std;
   typedef pair<int, int> pii;
   
   const int maxn = 1e5 + 10;
@@ -73,23 +70,21 @@
       int n; // tedad horoof alephba
       cin >> n;
       for(int i = 0; i < n; i++){
-  	  cin >> c[i];
-  	  pq.push({c[i], i});
+  	    cin >> c[i];
+  	     pq.push({c[i], i});
       }
       Counter = n;
-  
       int ans = 0;
-    
       while(pq.size() > 1){
-  	  int x = pq.top().second, y = pq.top().second;
-  	  pq.pop(), pq.pop();
-  	  int z = Counter;
-  	  Counter++;
-  	  Tree[z].push_back(x);
-  	  Tree[z].push_back(y);	    
-  	  c[z] = c[x] + c[y];
-  	  ans+= c[x] + c[y];
-  	  pq.push({c[z], z});
+         int x = pq.top().second, y = pq.top().second;
+         pq.pop(), pq.pop();
+         int z = Counter;
+         Counter++;
+         Tree[z].push_back(x);
+         Tree[z].push_back(y);	    
+         c[z] = c[x] + c[y];
+         ans+= c[x] + c[y];
+         pq.push({c[z], z});
       }
       // dar inja ans kamine tool p mibashad va dar Tree yek derakht ramzgozari behine sakhtim.
   }

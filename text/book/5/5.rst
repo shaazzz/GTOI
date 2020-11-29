@@ -20,11 +20,7 @@
 
 .. code-block:: cpp
 
-  #include<bits/stdc++.h>
-
   #define bit(n,k) (((n)>>(k))&1)
-
-  using namespace std;
 
   const int maxn = 16;
 
@@ -32,15 +28,13 @@
   bool adj[maxn][maxn];
 
   int main(){
-
       // voroodi gereftan graph
       int n;
       cin >> n;
-      for(int i = 0; i < n; i++){ 
-  	  for(int j = 0; j < n; j++){
-  	      cin >> adj[i][j];
-	  }
-      }
+      for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            cin >> adj[i][j];
+
       // mohasebe dp
       for(int mask = 1; mask < (1<<n); mask++){
 	  if(__builtin_popcount(mask) == 1){
@@ -49,30 +43,25 @@
 	  }
 	  for(int i = 0; i < n; i++){
 	      for(int j = 0; j < n; j++){
-		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0){
-		      continue;
-		  }
-		  for(int k = 0; k < n; k++){
-		      if(k == j || bit(mask, k) == 0 || adj[k][j] == 0){
-			  continue;
-		      }
-		      dp[mask][i][j] |= dp[mask ^ (1<<j)][i][k];
-		  }
+		    if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0)
+		        continue;
+		    for(int k = 0; k < n; k++){
+		        if(k == j || bit(mask, k) == 0 || adj[k][j] == 0)
+			        continue;
+		        dp[mask][i][j] |= dp[mask ^ (1<<j)][i][k];
+		    }
 	      }
 	  }
       }
       bool ans = 0;
-      for(int i = 0; i < n; i++){
-	  for(int j = 0; j < n; j++){
-	      ans |= dp[(1<<n)-1][i][j];
-	  }
-      }
-      if(ans){
-	  cout << "YES\n";
-      }
-      else{
+      for(int i = 0; i < n; i++)
+	     for(int j = 0; j < n; j++)
+	         ans |= dp[(1<<n)-1][i][j];
+
+      if(ans)
+	      cout << "YES\n";
+      else
 	  cout << "NO\n";
-      }
       return 0;
   }
 
@@ -89,11 +78,7 @@
 
 .. code-block:: cpp
 
-  #include<bits/stdc++.h>
-
   #define bit(n,k) (((n)>>(k))&1)
-
-  using namespace std;
 
   const int maxn = 16;
 
@@ -101,18 +86,15 @@
   bool adj[maxn][maxn];
 
   int main(){
-
       // voroodi gereftan graph
       int n;
       cin >> n;
-      for(int i = 0; i < n; i++){
-	  for(int j = 0; j < n; j++){
-	      cin >> adj[i][j];
-	  }
-      }
+      for(int i = 0; i < n; i++)
+    	  for(int j = 0; j < n; j++)
+	          cin >> adj[i][j];
       // mohasebe dp
       for(int mask = 1; mask < (1<<n); mask++){
-	  if(__builtin_popcount(mask) == 1){
+	     if(__builtin_popcount(mask) == 1){
 	      dp[mask][__builtin_ctz(mask)] = mask;
 	      continue;
 	  }	
@@ -126,17 +108,13 @@
 	  }
       }
       bool ans = 0;
-      for(int i = 0; i < n; i++){
+      for(int i = 0; i < n; i++)
 	  if(dp[(1<<n)-1][i] != 0){
 	      ans = 1;
-	  }
-      }
-      if(ans){
+      if(ans)
 	  cout << "YES\n";
-      }
-      else{
+      else
 	  cout << "NO\n";
-      }
       return 0;
   }
 
@@ -176,15 +154,12 @@
   bool adj[maxn][maxn];
   
   int main(){
-    
       // voroodi gereftan graph
       int n;
       cin >> n;
-      for(int i = 0; i < n; i++){
-  	  for(int j = 0; j < n; j++){
+      for(int i = 0; i < n; i++)
+  	  for(int j = 0; j < n; j++)
 	      cin >> adj[i][j];
-	  }
-      }
       // mohasebe dp
       for(int mask = 1; mask < (1<<n); mask++){
 	  if(__builtin_popcount(mask) == 1){
@@ -194,25 +169,21 @@
 	  int low_bit = __builtin_ctz(mask);
 	  for(int i = 0; i < n; i++){
 	      for(int j = 0; j < n; j++){
-		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || i == low_bit || adj[i][j] == 0){
+		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || i == low_bit || adj[i][j] == 0)
 		      continue;
-		  }
 		  dp[mask][i] |= dp[mask ^ (1<<i)][j];
 	      }		    
 	  }
       }
       bool ans = 0;
       for(int i = 1; i < n; i++){ // i != 0
-	  if(dp[(1<<n)-1][i] && adj[0][i]){
+	  if(dp[(1<<n)-1][i] && adj[0][i])
 	      ans = 1;
-	  }
       }
-      if(ans){
+      if(ans)
 	  cout << "YES\n";
-      }
-      else{
+      else
 	  cout << "NO\n";
-      }
       return 0;
   }
 
@@ -232,11 +203,7 @@
 
 .. code-block:: cpp
 
-  #include<bits/stdc++.h>
-
   #define bit(n,k) (((n)>>(k))&1)
-
-  using namespace std;
 
   const int maxn = 16;
 
@@ -272,15 +239,12 @@
 	  }
       }
       bool ans = 0;
-      if(dp[(1<<n)-1] != 0){
+      if(dp[(1<<n)-1] != 0)
 	  ans = 1;
-      }
-      if(ans){
+      if(ans)
 	  cout << "YES\n";
-      }
-      else{
+      else
 	  cout << "NO\n";
-      }
       return 0;
   }
 پس در نهایت به الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n)` رسیدیم.
