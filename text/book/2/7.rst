@@ -68,9 +68,9 @@ dfs
 :math:`v`
 در بین ریوس در ارتفاع 
 :math:`k`
-تا بالاتر است. به بیان دیگر:
+تا بالاتر است. به بیان دیگر
 
-.. math::u with maximum stt such that h[u]=h[v]-k and stt[u]<=stt[v]
+.. math:: u with maximum stt such that h[u]=h[v]-k and stt[u]<=stt[v]
 
 به ازای هر ارتفاع یک وکتور از تمام ریوس ان ارتفاع بسازید که ریوس هر وکتور بر حسب استارتینگ تایم مرتب شده اند.
 :math:`O(n)`
