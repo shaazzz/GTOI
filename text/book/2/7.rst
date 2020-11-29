@@ -69,11 +69,13 @@ dfs
 در بین ریوس در ارتفاع 
 :math:`k`
 تا بالاتر است. به بیان دیگر:
-:math:`u with maximum stt such that h[u]=h[v]-k and stt[u]<=stt[v]`;
+
+.. math::u with maximum stt such that h[u]=h[v]-k and stt[u]<=stt[v]
+
 به ازای هر ارتفاع یک وکتور از تمام ریوس ان ارتفاع بسازید که ریوس هر وکتور بر حسب استارتینگ تایم مرتب شده اند.
 :math:`O(n)`
 
-حال هر کویری سوال به یک باینری سرچ روی یکی از این وکتور ها تبدیل میشود!
+حال هر کوئری سوال به یک باینری سرچ روی یکی از این وکتور ها تبدیل میشود!
 
 
 `Blood Cousins <https://codeforces.com/problemset/problem/208/E>`_
@@ -103,7 +105,7 @@ w
 حال جواب تعداد 
 u
 هایی است که 
-:math:`h[u] = h[v] and stt[w]<=stt[u] and stt[u]<fnt[w]`
+:math:`h[u] = h[v] , stt[w]<=stt[u] , stt[u] < fnt[w]` 
 .
 یعنی در وکتور مربوط به راس 
 v
