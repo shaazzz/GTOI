@@ -131,45 +131,42 @@ root
 
 .. code-block:: cpp
 
-  // in the name of GOD
-  #include <bits/stdc++.h>
-  using namespace std ;
-  const int maxn = 1e5 + 10 ;// hadeaksar meghdare n
-  int n , m ;// tedad ras ha va tedad yal ha
-  int Dis[maxn] ;//javab har ras
-  bool Mark[maxn] ;//neshan midahad aya yek ras tabehal varede queue shode ya na
-  queue<int>q ;// toozihe un neveshte shode
+  const int maxn = 1e5 + 10;// hadeaksar meghdare n
+  int n, m;// tedad ras ha va tedad yal ha
+  int Dis[maxn];//javab har ras
+  bool Mark[maxn];//neshan midahad aya yek ras tabehal varede queue shode ya na
+  queue <int> q;// toozihe un neveshte shode
   vector<int> adj[maxn] ;//list hamsaye haye har ras dar un neveshte shode
   
   void bfs(int root){//fasele harki az root bedast khahad amad
-      Dis[root] = 0 ; // dis(root , root) = 0
-      Mark[root] = 1 ;
-      q.push(root) ; 
+      Dis[root] = 0; // dis(root , root) = 0
+      Mark[root] = 1;
+      q.push(root); 
       while(q.size()){//ta zamani ke dakhele q ras hast while ra edame bede
-          int u = q.front() ;//rasi dar q ke kamtarin Dis ra darad
-          q.pop() ; //hazfe un
-          for(int i = 0 ; i < adj[u].size() ; i++){//hamsaye haye i ra negah mikonim va agar ta be hal vared q nashodan vared mikonim
-              int v = adj[u][i] ;
-              if(!Mark[v]){
-               Mark[v] = 1 ;
-               Dis[v] = Dis[u] + 1 ;
-               q.push(v) ;
-              }
+          int u = q.front();//rasi dar q ke kamtarin Dis ra darad
+          q.pop(); //hazfe un
+          for(int i = 0; i < adj[u].size(); i++){//hamsaye haye i ra negah mikonim va agar ta be hal vared q nashodan vared mikonim
+              int v = adj[u][i];
+                if(!Mark[v]){
+                    Mark[v] = 1;
+                    Dis[v] = Dis[u] + 1;
+                    q.push(v);
+                }
           }
       }
   }
   
   int main(){
       cin >> n >> m ;
-      for(int i = 1 ; i <= m ; i++){//list hamsaye haye ras ha ra por mikonim
-          int u , v ;
+      for(int i = 1; i <= m; i++){//list hamsaye haye ras ha ra por mikonim
+          int u, v;
           cin >> u >> v ;
           adj[u].push_back(v);
           adj[v].push_back(u);
       }
       bfs(1);//yani be ezaye root = 1 tabe bfs ra seda bezan
-      for(int i = 1 ; i <= n ; i++)//chupe khrooji
-         cout << Dis[i] << ' ' ;
+      for(int i = 1; i <= n; i++)//chupe khrooji
+         cout << Dis[i] << ' ';
   }
 
 در این الگوریتم هر راس حداکثر یک بار وارد q میشود و هر یال هم به ازای هر سر حداکثر یک بار صدا میشود پس الگوریتم ما از :math:`O(n+m)` است.

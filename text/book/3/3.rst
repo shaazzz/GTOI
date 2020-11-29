@@ -170,21 +170,17 @@ topological sort
 	int main(){
 	    cin >> n >> m;
 	    for(int i = 0; i < m; i++){
-		int v, u;
-		cin >> v >> u; // Ra's ha 0-based hastand!
-		gr[v].push_back(u);
+			int v, u;
+			cin >> v >> u; // Ra's ha 0-based hastand!
+			gr[v].push_back(u);
 	    }
-	    // Graph vorodi baiad DAG bashad!
-
-	    for(int i = 0; i < n; i++){
-		if(!mark[i])
-		    dfs(i);
-	    }
-	    
+	    // Graph vorodi bayad DAG bashad!
+	    for(int i = 0; i < n; i++)
+			if(!mark[i])
+		 	   dfs(i);
 	    // topological sort ro khoroji midahim!
-	    for(int i = 0; i < topologic.size(); i++){
+	    for(int i = 0; i < topologic.size(); i++)
 		  cout << topologic[i] << ' ';
-	    }
 	    cout << endl;
 	    return 0;
 	}

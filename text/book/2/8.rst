@@ -8,11 +8,6 @@
 
 .. code-block:: cpp
 
-    // S 100101
-    #include <bits/stdc++.h>
-
-    using namespace std;
-    
     const int maxn = 1e6 + 10;
     
     bool mark[maxn], is[maxn];
@@ -67,11 +62,6 @@
 
 .. code-block:: cpp
 
-    // S 100101
-    #include <bits/stdc++.h>
-
-    using namespace std;
-    
     const int maxn = 1e6 + 10;
     
     bool mark[maxn], is[maxn];

@@ -28,10 +28,9 @@ dfs
 
   void dfs(int u){
      mark[u] = true;
-     for(int y : g[u]){
-	 if(mark[y] == false)
+     for(int y : g[u])
+	      if(mark[y] == false)
              dfs(y);
-     }
   }
 
 از شهودی که با حل مسئله بالا به دست آوردیم استفاده کنید. وقتی dfs(u) صدا زده می شود الگوریتم تلاش می کند که به صورت بازگشتی تمام راس هایی که با :math:`u` می توان به آن رسید را ببیند سپس dfs(u) به اتمام می رسد و به راسی به نام :math:`par` بر می گردیم که از آن برای اولین بار به :math:`u` رسیده بودیم.
@@ -134,7 +133,7 @@ dfs
   
   const int maxn = 1e5 + 10;
 
-  vector<int> g[maxn];
+  vector <int> g[maxn];
   int sz[maxn], h[maxn];
 
   void dfs(int u, int par = 0){
@@ -143,7 +142,7 @@ dfs
      for(int y : g[u]){
 	 if(y != par){
              dfs(y, u);
-             sz[u]+= sz[y];
+             sz[u] += sz[y];
          }
      }
   }

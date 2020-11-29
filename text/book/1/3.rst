@@ -72,7 +72,7 @@ https://csacademy.com/app/graph_editor/
 
   const int M = 1e5 + 5; // bishine tedad rase momken ke dar soal maloom mishavad
 
-  vector<int> list_peyvandi[M];
+  vector <int> list_peyvandi[M];
 
   int main() {
     int n, m;
@@ -186,7 +186,7 @@ m
   const int Mras = 1e5 + 5; // bishine tedad rase momken ke dar soal maloom mishavad
   const int Myal = 3e5 + 5; // bishine tedad yale momken ke dar soal maloom mishavad
 
-  vector<int> list_peyvandi[Mras];
+  vector <int> list_peyvandi[Mras];
   int sib[Mras];
   int u[Myal], v[Myal];
   double zaman[Myal];

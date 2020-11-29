@@ -350,10 +350,6 @@
 
 .. code-block:: cpp
 
-	#include <bits/stdc++.h>
-
-	using namespace std;
-
 	const int MX = 5e5 + 5;
 
 	int n, m; /// tedad ras ha va yal ha
@@ -363,58 +359,46 @@
 
 	void dfs(int v){  /// dfs mamoli!
 	    mark[v] = 1;
-	    for(int u: gr[v]){
-		if(!mark[u])
-		    dfs(u);
-	    }
+	    for(int u: gr[v])
+			if(!mark[u])
+		 	   dfs(u);
 	    sk.push(v);
 	}
 
 	void back_dfs(int v, int cnt){  /// dfs roie yal haie barax!
 	    mark[v] = 1;
 	    comp[cnt].push_back(v);
-	    for(int u: back_gr[v]){
-		if(!mark[u])
-		    back_dfs(u, cnt);
-	    }
+	    for(int u: back_gr[v])
+			if(!mark[u])
+			    back_dfs(u, cnt);
 	}
 
 	int main(){
 	    cin >> n >> m;
 	    for(int i = 0; i < m; i++){
-		int v, u;
-		cin >> v >> u; /// shomare ras ha 0-based hast.
-		gr[v].push_back(u); /// in vector yal ha ra zakhire mikonad
-		back_gr[u].push_back(v); /// in vector barax yal ha ra zakhire mikonad
+			int v, u;
+			cin >> v >> u; /// shomare ras ha 0-based hast.
+			gr[v].push_back(u); /// in vector yal ha ra zakhire mikonad
+			back_gr[u].push_back(v); /// in vector barax yal ha ra zakhire mikonad
 	    }
-	    
-	    for(int i = 0; i < n; i++){
-		if(!mark[i])
-		    dfs(i);
-	    }
-
+	    for(int i = 0; i < n; i++)
+			if(!mark[i])
+			    dfs(i);
 	    fill(mark, mark + n, 0); /// chon mikhahim dfs jadid bezanim, mark ra 0 mikonim.
-
 	    int cnt = 0;
 	    while(sk.size() != 0){ /// stack kheili kond ast. dar inja serfan baraie dark behtar stack estefade shode. behtar ast az vector estefade konid.
-		if(!mark[sk.top()]){
-		    back_dfs(sk.top(), cnt); /// yek moalefe ra peida mikonim
-		    cnt++;
-		}
-		sk.pop();
+			if(!mark[sk.top()]){
+				back_dfs(sk.top(), cnt); /// yek moalefe ra peida mikonim
+				cnt++;
+			}
+			sk.pop();
 	    }
-
-
 	    /// moalefe hara be tartib topo sort eshan chap mikonim
 	    for(int i = 0; i < cnt; i++){
-		cout << i << ": ";
-		for(auto v: comp[i]){
-		    cout << v << ' ';
-		}
-		cout << endl;
+			cout << i << ": ";
+			for(auto v: comp[i])
+				cout << v << ' ';
+			cout << endl;
 	    }
 	    return 0;
 	}
-
-
-

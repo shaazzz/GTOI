@@ -24,33 +24,31 @@
 در کد زیر در :math:`mx1, mx2` به ترتیب راس های با بیشترین :math:`dp` را نگه داری می کنیم.
 
 .. code-block:: cpp
-  
-  const int maxn = 1e5 + 10;
+    
+    const int maxn = 1e5 + 10;
 
-  vector<int> g[maxn];
-  int dp[maxn], ans[maxn];
+    vector<int> g[maxn];
+    int dp[maxn], ans[maxn];
 
-  void dfs(int u, int par = 0){
-     int mx1 = -1, mx2 = -1;
-     for(int y : g[u]){
-	 if(y != par){
-             dfs(y, u);
-             dp[u] = max(dp[u], 1 + dp[y]);
-             ans[u] = max(ans[u], ans[y]);
-             if(mx1 == -1 || dp[mx1] < dp[y]){
-                  mx2 = mx1;
-                  mx1 = y;
-             }
-             else if(mx2 == -1 || dp[mx2] < dp[y]){
-                  mx2 = y;
-             }            
-         }
-     }
-     ans[u] = max(ans[u], dp[u]);
-     if(mx1 != -1 && mx2 != -1){
-	  ans[u] = max(ans[u], 2 + dp[mx1] + dp[mx2]);
-     }
-  }
+    void dfs(int u, int par = 0){
+        int mx1 = -1, mx2 = -1;
+        for(int y : g[u]){
+            if(y != par){
+                dfs(y, u);
+                dp[u] = max(dp[u], 1 + dp[y]);
+                ans[u] = max(ans[u], ans[y]);
+                if(mx1 == -1 || dp[mx1] < dp[y]){
+                    mx2 = mx1;
+                    mx1 = y;
+                }
+                else if(mx2 == -1 || dp[mx2] < dp[y])
+                    mx2 = y;            
+            }
+        }
+        ans[u] = max(ans[u], dp[u]);
+        if(mx1 != -1 && mx2 != -1){
+        ans[u] = max(ans[u], 2 + dp[mx1] + dp[mx2]);
+    }
 
 
 پس توانستیم الگوریتمی ارائه دهیم که با پیچیدگی زمانی :math:`O(n)` قطر درخت را پیدا می کند.
@@ -93,7 +91,7 @@ dfs up/down
       for(int y : g[u]){
           if(y != par){
               dfsDown(y, u);
-              dpDown[u] = max(dpDown[u], dpDown[y]+1);
+              dpDown[u] = max(dpDown[u], dpDown[y] + 1);
           }
       }
   }
@@ -113,12 +111,12 @@ dfs up/down
      for(int y : g[u]){
 	 if(y != par){
               if(y == mx1){
-                  dpUp[y] = dpUp[u]+1;
+                  dpUp[y] = dpUp[u] + 1;
                   if(mx2 != -1)
-                      dpUp[u] = max(dpUp[u], doDown[mx2]+2);
+                      dpUp[u] = max(dpUp[u], doDown[mx2] + 2);
               }
               else{
-                  dpUp[y] = max(dpUp[u]+1, doDown[mx1]+2);
+                  dpUp[y] = max(dpUp[u]+1, doDown[mx1] + 2);
               }
               dfsUp(y, u);
          }

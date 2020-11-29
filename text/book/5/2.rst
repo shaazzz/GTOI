@@ -60,10 +60,6 @@
 توجه کنید که تفاوت کد پیدا کردن تور اویلری گراف جهت دار و بدون جهت تنها در تابع ``add_edge`` است.
 
 .. code-block:: cpp
-		
-  #include<bits/stdc++.h>
-
-  using namespace std;
 
   const int max_edges = 1010, max_vertices = 1010;
   
@@ -80,25 +76,24 @@
   }
 
   vector<int> ans;
-  
+
   void build(int start){
-  	while(top[start] != 0 && used[top[start]]){
+  	while(top[start] != 0 && used[top[start]])
 		top[start] = next[top[start]];
-  	}
-  	if(top[start] == 0){
+  	if(top[start] == 0)
   		return;
-  	}
-  	vector<int> tmp;
+  	vector <int> tmp;
   	int u = start;	
+	
   	do{
-  		while(top[u] != 0 && used[top[u]]){
+  		while(top[u] != 0 && used[top[u]])
   			top[u] = next[top[u]];
-  		}
   		assert(top[u] == 0); // agar shart bargharar bashad graph euleri nist.
   		used[top[u]] = 1;
   		tmp.push_back(top[u]);
   		u = to[top[u]];		
   	}while(start != u);
+
   	u = start;
   	for(int id : tmp){
   		build(u);

@@ -74,61 +74,55 @@
 توجه کنید که در پیاده‌سازی زیر در صورت داشتن دور، دور پیدا شده و در صورت نداشتن دور، ترتیب توپولوژیک راس‌ها را خروجی می‌دهیم.
 
 .. code-block:: cpp
-	
-	#include<bits/stdc++.h>
 
-	using namespace std;
-
-	const int MX=5e5+200;
+	const int MX = 5e5 + 200;
 
 	int n, m;
 	vector<int> gr[MX], topo, cycle;
 	bool st[MX], ed[MX];
 
 	bool dfs(int v){
-	    st[v]=1;
+	    st[v] = 1;
 	    for(int u: gr[v]){
-		if(st[u] && !ed[u]){
-		    cycle.push_back(u);
-		    cycle.push_back(v);
-		    return 0;
-		}
-		if(!st[u] && !dfs(u)){
-		    if(cycle[0]!=cycle[cycle.size()-1])
-		        cycle.push_back(v);
-		    return 0;
-		}
+			if(st[u] && !ed[u]){
+				cycle.push_back(u);
+				cycle.push_back(v);
+				return 0;
+			}
+			if(!st[u] && !dfs(u)){
+				if(cycle[0] != cycle[cycle.size() - 1])
+					cycle.push_back(v);
+				return 0;
+			}
 	    }
-	    ed[v]=1;
+	    ed[v] = 1;
 	    topo.push_back(v);
 	    return 1;
 	}
 
 	int main(){
-	    cin>>n>>m;
-	    for(int i=0; i<m; i++){
-		int v,u;
-		cin>>v>>u;
-		gr[v].push_back(u);
+	    cin >> n >> m;
+	    for(int i = 0; i < m; i++){
+			int v, u;
+			cin >> v >> u;
+			gr[v].push_back(u);
 	    }
-	    bool check=1;
-	    for(int i=0; i<n; i++){
-		if(!st[i] && !dfs(i)){
-		    check=0;
-		    break;
-		}
+	    bool check = 1;
+	    for(int i = 0; i < n; i++){
+			if(!st[i] && !dfs(i)){
+				check = 0;
+				break;
+			}
 	    }
 	    if(check){
-		cout<<"no cycle \ntopo order: ";
-		for(int v: topo){
-		    cout<<v<<' ';
-		}
+			cout << "no cycle \ntopo order: ";
+			for(int v: topo)
+				cout << v << ' ';
 	    }
 	    else{
-		cout<<"cycle: ";
-		for(int i=cycle.size()-2; i>=0; i--){
-		    cout<<cycle[i]<<' ';
-		}
+			cout << "cycle: ";
+			for(int i = cycle.size() - 2; i >= 0; i--)
+				cout << cycle[i] << ' ';
 	    }
 	    return 0;
 	} 
@@ -212,17 +206,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: cpp
 
-	#include <bits/stdc++.h>
-
-	using namespace std;
-
 	const int maxn = 5e5 + 5;
 
 	int n, m; // tedad ras ha va yal ha
 	int in_edge[maxn]; // in_edge[v] daraje vorodi rase v hast!
 
-	vector<int> g[maxn]; // vector e mojaverat
-	vector<int> zero; // ras haie ke daraje vorodi 0 daran va baiad hazf shan!
+	vector <int> g[maxn]; // vector e mojaverat
+	vector <int> zero; // ras haie ke daraje vorodi 0 daran va baiad hazf shan!
 
 	bool has_cycle(){
 	      for(int i = 0; i < n; i++){
@@ -230,15 +220,12 @@
 			  zero.push_back(i); 
 		    }	   
 	      }
-	      
 	      for(int i = 0; i < n; i++) {
 		    if(zero.size() == 0){
 			  return true;
 		    }
-
 		    int v = zero[zero.size() - 1]; // ozve akhar az remove_set
 		    zero.pop_back();
-		    
 		    for(int u : g[v]){
 			  in_edge[u]--;
 			  if(in_edge[u] == 0){
@@ -246,7 +233,6 @@
 			  }
 		    }
 	      }
-
 	      return false;
 	}
 
@@ -259,13 +245,10 @@
 		    g[u].push_back(v);
 		    in_edge[v]++; // yale (u, v) dar graph ast. pas daraje vorodi v yeki ziad mishe!
 	      }
-
-	      if(has_cycle()){
+	      if(has_cycle())
 		    cout << "graph has at least one cycle!" << endl;	    
-	      } else {
+		  else 
 		    cout << "graph is acyclic!" << endl;
-	      }
-	      
 	      return 0;
 	}
 
