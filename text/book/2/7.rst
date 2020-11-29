@@ -70,7 +70,7 @@ dfs
 :math:`k`
 تا بالاتر است. به بیان دیگر
 
-- u with maximum :math:`stt` such that :math:`h[u] = h[v] - k` and :math:`stt[u] <= stt[v]`
+- u with maximum stt such that h[u] = h[v] - k and stt[u] <= stt[v]
 
 به ازای هر ارتفاع یک وکتور از تمام ریوس ان ارتفاع بسازید که ریوس هر وکتور بر حسب استارتینگ تایم مرتب شده اند.
 :math:`O(n)`
