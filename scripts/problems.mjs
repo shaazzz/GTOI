@@ -145,8 +145,10 @@ const problemTemplate = ({ data, id, parent }) => {
   ` : '';
   const idx = id.replace(/\./g, 'x');
   const cat = data.cat ? `(${data.cat})` : '';
+  const manba = data.source ? `<p>منبع: ${data.source}</p>` : '';
   return mainTemplate(`
 <h1>سوال ${id} ${cat}: <button id="b${idx}" onclick="swapButton('${idx}')">حل کردم</button></h1>
+${manba}
 ${md(data.text)}
 <script>
   const toggle = (id, txt) => {
@@ -185,10 +187,12 @@ const problemInIndex1Template = ({ id, data }) => {
     return `<h1><a href="${id}.html">مسائل بیشتر...</a></h1>`;
   }
   const cat = data.cat ? `(${data.cat})` : '';
+  const manba = data.source ? `<p>منبع: ${data.source}</p>` : '';
   const idx = id.replace(/\./g, 'x');
   return `
 <div id="d${idx}">
   <h2>سوال <a href="${id}.html">${id}</a> ${cat} <button id="b${idx}" onclick="swapButton('${idx}')">حل کردم</button> </h2>
+  ${manba}
   ${md(data.text)}
 </div>
 `;
