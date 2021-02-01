@@ -346,7 +346,7 @@ finishing-time
     h[v] = h[par] + 1;
     sparse_table[v][0] = par;
     for(int i = 1; i < max_log; i++){
-        sparse_table[v][i] = sparse_table[sparse_table[v][i-1]][i-1]
+        sparse_table[v][i] = sparse_table[sparse_table[v][i-1]][i-1];
     }
     start_time[v] = Counter;
     Counter = Counter + 1;
