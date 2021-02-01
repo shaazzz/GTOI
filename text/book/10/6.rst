@@ -358,10 +358,10 @@ finishing-time
   }
 
   int lca(int a, int b){
-    if(h[a] > h[b])
+    if(h[a] < h[b])
         swap(a, b);
     for(int i = max_log-1; i >= 0; i--){
-        if(h[sparse_table[a][i]] <= h[b])
+        if(h[sparse_table[a][i]] >= h[b])
             a = sparse_table[a][i];
     }
     if(a == b)
