@@ -361,24 +361,25 @@ finishing-time
     if(h[a] > h[b])
         swap(a, b);
     for(int i = max_log-1; i >= 0; i--){
-        if(h[sp[a][i]] <= h[b])
-            a = sp[a][i];
+        if(h[sparse_table[a][i]] <= h[b])
+            a = sparse_table[a][i];
     }
     if(a == b)
         return a;
     for(int i = max_log-1; i >= 0; i--){
-        if(sp[a][i] != sp[b][i])
-            a = sp[a][i], b = sp[b][i];
+        if(sparse_table[a][i] != sparse_table[b][i])
+            a = sparse_table[a][i], b = sparse_table[b][i];
     }
-    return sp[a][0];
+    return sparse_table[a][0];
   }
   
   vector<int> build_virtual_tree(vector<int> vec){
-    sort(vec.begin(), vec.end(), [](int a, int b){ return sp[a] < sp[b]; }); // sort on starting time
+    sort(vec.begin(), vec.end(), [](int a, int b){ return start_time[a] < start_time[b]; }); // sort on starting time
     for(int i = vec.size()-1; i > 0; i--){
         vec.push_back(lca(vec[i], vec[i-1]));
     }
-    sort(vec.begin(), vec.end(), [](int a, int b){ return sp[a] < sp[b]; });
+    sort(vec.begin(), vec.end(), [](int a, int b){ return start_time[a] < start_time[b]; });
+    vec.resize(unique(vec.begin(), vec.end())-vec.begin());
     return vec;
   }
 
