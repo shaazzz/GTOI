@@ -13,6 +13,7 @@
     {% endif %}
     {% if pagename != "search" %}
         <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`;</script>
         {% if display_github %}
             <a href="https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ source_suffix }}" id="top-src" target="_blank"><i class="fa fa-github"></i>&nbsp; {{glossary.on_github}}</a>
         {% elif display_bitbucket %}
