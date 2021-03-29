@@ -100,7 +100,7 @@ const mainTemplate = (body, { bookLink = '/' }) => `
   <body style="direction:rtl;">
     <div class="container-fluid">
     <div id="body-top">
-      <a><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
       <a style="float: left; padding-right: 20px;" href="${bookLink}" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
     </div>
     <div id="page-body" style="max-width:800px;">
