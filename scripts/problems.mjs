@@ -9,7 +9,7 @@ import Markdown from "markdown-it";
 const markdown = new Markdown()
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-const rmdir = promisify(fs.rmdir);
+const rm = promisify(fs.rm);
 const mkdir = promisify(fs.mkdir);
 
 process.on('unhandledRejection', up => { throw up; });
@@ -287,7 +287,7 @@ const generateHtmls = (q) => {
 const main = async () => {
   const ppath = path.join(projectRoot, 'problems');
   const bpath = path.join(ppath, '_build');
-  await rmdir(bpath, { recursive: true });
+  await rm(bpath, { recursive: true, force: true });
   const problems = await Promise.all(
     (await getDirectories(ppath)).map(
       async (adr) => ({
