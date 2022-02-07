@@ -2,7 +2,6 @@ cd $(dirname "$0")
 cd ..
 rm -r text/_build/html
 rm -r _build/
-mkdir _build/
 bash scripts/build-dot.sh
 cd text
 make html
