@@ -14,6 +14,11 @@ node scripts/buildAll.mjs
 node scripts/statistics.mjs
 node scripts/contributors.mjs
 
+cd text_en
+make html
+cd ..
+cp -r text_en/_build/html _build/en
+
 cd _build
 touch .nojekyll
 echo "gtoi.shaazzz.ir" > CNAME
