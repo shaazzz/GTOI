@@ -225,3 +225,28 @@ tr.row-even{background-color:#F5F5F5;}
 
 /* custome style */
 
+ul li{text-align:justify}
+.red{color:#E65100}
+.emoji-size{font-size:20px;color:#E65100}
+p,blockquote{text-align:justify}
+body{font-size:16px}
+@font-face{font-family:'IranianSans';src:url('fonts/IranianSansWeb-Regular.woff');font-weight:normal;font-style:normal}
+.table-ltr{direction:ltr !important;text-align:center;margin-bottom: -24px !important;}
+.table-ltr th{text-align:center !important}
+.reportmenufield{background-color:#ec407a !important}
+.reportmenufield:hover{border-right:5px #f48fb1 solid !important}
+.exercisesmenufield{background-color:#ef5350 !important}
+.exercisesmenufield:hover{border-right:5px #ef9a9a solid !important}
+
+#body-footer{
+  direction:ltr;width:100%;height:auto;padding:10px 0;background-color:#E8EAF6;line-height:30px;display:block;margin:0 0 24px 0;
+  display: flex;
+}
+#body-footer>#text>p{text-align:center;margin-bottom:0}
+#body-footer>#text {
+  flex-grow: 1;
+}
+#body-footer>div>a>img {
+  height: 20vmin;
+  margin: 0 10px 0 10px;
+}

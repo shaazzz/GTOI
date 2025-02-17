@@ -9,9 +9,9 @@
 Graph theory for olympiad in informatics
 ====================================
 
-حتما پیش از شروع به خواندن، مطلب
-`چگونه این کتاب را بخوانیم </book/appendix/1>`_
-را مطالعه کنید.
+Please read
+`How to read this book </en/book/appendix/1>`_
+before start reading.
 
 
 .. toctree::
