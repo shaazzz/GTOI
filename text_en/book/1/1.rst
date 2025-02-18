@@ -1,140 +1,79 @@
-مقدمات و مدل سازی با گراف
-==========================
+Introduction and Modeling with Graphs
+=====================================
 
-گراف چیست؟ گراف یک سری نقطه (موجود) و خط (رابطه) است. در شکل ۱ یک گراف می بینید:
+What is a graph? A graph is a set of points (entities) and lines (relationships). In Figure 1, you see a graph:
 
 .. figure:: /_static/dot/Apple_Pineapple.svg
    :width: 50%
    :align: center
-   :alt: گراف سیب و آناناس
+   :alt: Apple and Pineapple graph
 
-   شکل ۱
+   Figure 1
 
-به نقطه ها راس و به خط ها یال می گوییم. هر نقطه و هر خط می تواند نماد چیزی باشد.
+We call the points vertices and the lines edges. Each vertex and edge can symbolize anything.
 
-چرا گراف؟
-----------
-گراف یک تعریف انتزاعی است. مثل ۲. در واقعیت چیزی به اسم ۲ وجود ندارد اما مثلا
-۲ توپ یا ۲ سیب وجود دارند. توپ و سیب، چیز های پیچیده ای هستند و در مسائل
-(مثلا مساله ۲ توپ با ۳ توپ می شود چند توپ)
-این پیچیدگی تاثیر ندارد. پس ما این جزییات بی مصرف را حذف و تمرکزمان را روی
-قسمت های مهم مساله می گذاریم.
+Why Graphs?
+-----------
+A graph is an abstract concept. Like the number 2. In reality, there’s no physical "2," but we can have 2 balls or 2 apples. Balls and apples are complex objects, but in problems (e.g., "2 balls + 3 balls = ?"), their complexity doesn’t matter. So we remove irrelevant details and focus on the core of the problem.
 
-فرض کنید می خواهیم بین دو شهر مسافرت کنیم و در کشور ما بین بعضی از شهر ها جاده وجود
-دارد. هر جاده طولی دارد و یا آسفالت و یا خاکی است و ما می خواهیم در کمترین زمان
-ممکن از مبدا به مقصد برسیم. یک ذهن فعال به راحتی تشخیص می دهد که در این مساله
-مهم نیست که بخواهیم از شهری به شهر دیگر برویم یا از کشوری به کشور دیگر یا از
-روستایی به روستای دیگر. پس مساله را با یک تعریف انتزاعی مثل گراف مدل می کند. شهر ها
-تبدیل به راس می شوند و جاده ها تبدیل به یال. برای هر یال می دانیم که آسفالت یا خاکی است
-و طولش چقدر است. با کمی فکر بیشتر، او در می یابد که آسفالت بودن و طول جاده نیز به تنهایی
-اهمیتی ندارد و تنها تاثیر خود را در زمان طی کردن یک جاده می گذارد. پس این را نیز
-حذف می کند و در نهایت به یک گراف می رسد که روی هر یالش یک عدد زمان نوشته است.
+Imagine planning a trip between two cities where roads connect some cities. Each road has a length, is either paved or unpaved, and we want the shortest travel time. A sharp mind quickly realizes that it doesn’t matter whether we’re moving between cities, countries, or villages. Thus, the problem is modeled abstractly as a graph: cities become vertices, roads become edges. For each edge, we know if it’s paved/unpaved and its length. Further reflection reveals that road type and length only affect travel time. These are also abstracted away, leaving a graph where each edge has a "time" value.
 
-انتزاع علاوه بر ساده سازی مسائل، به ما کمک می کند که از راه خود در یک مساله، در مسائل
-دیگر نیز استفاده کنیم. مثلا وقتی می فهمیم که ۲+۳=۵ دیگر فهم ۲ سیب با سه سیب می شود ۵ سیب
-یا ۲ گلابی با ۳ گلابی می شود ۵ گلابی
-برایمان ساده است. یا در مثال شهر ها، اگر بتوانیم مساله را برای مدل
-انتزاعی "گرافی که روی هر یالش یک عدد زمان نوشته است" حل کنیم، می توانیم از همان راه حل
-برای مسیریابی بسته ها در یک شبکه کامپیوتری مثل اینترنت استفاده کنیم. در صورتی که
-اگر بدون رویکرد انتزاعی به مساله نگاه می کردیم ممکن بود به یک راه حل خاص منظوره برسیم
-(مثلا اگر جاده آسفالت بود از جاده آسفالت برو وگرنه از خاکی برو)
-این موضوع فایده انتزاع و گراف به عنوان یک تعریف انتزاعی را به ما نشان می دهد.
+Abstraction not only simplifies problems but also lets us reuse solutions across domains. For example, knowing 2+3=5 makes it easy to solve "2 apples + 3 apples" or "2 pears + 3 pears." Similarly, solving the abstract problem of "graphs with edge travel times" allows the same solution to route packets in computer networks like the internet. Without abstraction, we might devise ad hoc solutions (e.g., "take paved roads first"), limiting applicability. This demonstrates the power of graphs as abstract models.
 
-گراف در کجا ظاهر می شود؟
---------------------------
-مثال های ساده ای که به ذهن می رسد، مجموعه ای از انسان ها به عنوان راس و رابطه دوستی
-بین آن ها به عنوان یال، شهر ها و جاده های بین شان یا شبکه های کامپیوتری که در بالا
-بررسی شد است. اما در حقیقت هر جایی که با یک رابطه سر و کار داریم، گراف ظاهر می شود. مثلا
-شجره نامه یک گراف است که در آن هر کس به پدر و مادر خود یال دارد. یک مثال پیچیده تر
-که در ابتدا گراف بودنش به چشم نمی آید، نقشه است. می توان هر ناحیه در نقشه را یک راس
-در نظر گرفت و هر دو ناحیه ای که با هم مرز مشترک داشتند را با یک یال به هم وصل کرد و
-به این ترتیب یک گراف به وجود آورد:
+Where Do Graphs Appear?
+-----------------------
+Simple examples include:  
+- People as vertices and friendships as edges.  
+- Cities and roads.  
+- Computer networks (as above).  
+
+But graphs emerge wherever relationships exist. For example:  
+- A family tree is a graph where edges connect individuals to their parents.  
+- A map can be modeled as a graph: regions are vertices, and adjacent regions share an edge.  
 
 .. figure:: /_static/naghshe.png
    :width: 80%
    :align: center
-   :alt: تبدیل نقشه به گراف
+   :alt: Converting a map to a graph
 
-یک مثال پیچیده تر، می تواند یک بازی باشد. برای مثال می خواهیم کل بازی شطرنج را
-به یک گراف مدل کنیم. هر حالت ممکن از شطرنج را یک راس در نظر می گیریم و بین هر حالتی
-که با یک حرکت بازیکنی که نوبتش است به حالت دیگر تبدیل می شود، یک یال می گذاریم. این
-مدل سازی طیف وسیعی از بازی های موسوم به بازی فکری را پوشش می دهد. برخی از
-الگوریتم های هوش مصنوعی
-بازی ها، از این تعریف انتزاعی استفاده می کنند و برای همین می توان از یک الگوریتم در
-بازی های زیادی استفاده کرد.
+A more complex example is modeling a game like chess. Every possible board state is a vertex, and edges connect states reachable by a single move. This abstract model covers many strategy games, and AI algorithms for games often use this approach, enabling cross-game solutions.
 
-تعاریف ساده
-------------
+Basic Definitions
+-----------------
+Definitions clarify ideas concisely. No need to memorize them—practice will internalize these terms. All definitions are summarized on `this page </book/appendix/3>`_.
 
-تعاریف به ما کمک می کنند تا منظور خود را واضح تر، دقیق تر و با کلمات کمتر بیان کنیم. نیازی
-به حفظ کردن تعاریف نیست. شما با حل تمرین های این کتاب به مرور این تعاریف را یاد
-می گیرید. اگر در ابتدای کار تعریفی را یادتان رفت، می توانید به این جا برگردید و
-منظور از لغتی که یادتان رفته را ببینید. همچنین تمامی تعاریف این کتاب به طور خلاصه در
-`این صفحه </book/appendix/3>`_
-آمده اند.
+Vertex and Edge:  
+As above: points and lines in a graph.
 
-**راس و یال:**
-در بالا اشاره شد. منظور نقاط و خطوط در گراف هستند.
+Loop:  
+An edge connecting a vertex to itself.
 
-**طوقه:**
-اگر یک راس به خودش یال داشته باشد به آن یال طوقه می گوییم.
+Multiple Edges:  
+Two or more edges connecting the same pair of vertices.
 
-**یال چندگانه:**
-اگر بین دو راس چند یال وجود داشته باشد به آن یال ها یال چندگانه می گوییم.
+Simple Graph:  
+A graph with no loops or multiple edges. Most graphs we use are simple.
 
-**گراف ساده:**
-گرافی که طوقه و یال چندگانه نداشته باشد گراف ساده است. ما معمولا با گراف های ساده
-سر و کله می زنیم پس نگران طوقه و یال چندگانه نباشید.
+Degree of a Vertex:  
+The number of edges connected to a vertex. Loops count twice. Denoted as :math:`d_v` for vertex :math:v.
 
-**درجه یک راس:**
-تعداد یال های متصل به یک راس را درجه آن راس می نامیم. به دلایلی، طوقه را دو بار در
-درجه حساب می کنیم. اگر خود راس را با
-:math:`v`
-نمایش دهیم درجه آن را با
-:math:`d_v`
-نمایش می دهیم.
+Minimum Degree of a Graph:  
+The smallest degree among all vertices. Denoted by :math:\delta (lowercase delta). For multiple graphs (e.g., G and H), use :math:\delta(G) or :math:\delta(H).
 
-**کمترین درجه گراف:**
-کمترین درجه گراف را با حرف یونانی دلتای کوچک نمایش می دهند. اگر تنها یک گراف
-مورد بحث باشد، به سادگی از
-:math:`\delta`
-و اگر چند گراف مانند
-G و H
-مورد بحث باشند از
-:math:`\delta (G)` و :math:`\delta (H)`
-استفاده می کنیم.
+Maximum Degree of a Graph:  
+The largest degree among all vertices. Denoted by :math:\Delta (uppercase delta). For multiple graphs, use :math:\Delta(G) or :math:\Delta(H).
 
-**بیشترین درجه گراف:**
-بیشترین درجه گراف را با حرف یونانی دلتای بزرگ نمایش می دهند. اگر تنها یک گراف
-مورد بحث باشد، به سادگی از
-:math:`\Delta`
-و اگر چند گراف مانند
-G و H
-مورد بحث باشند از
-:math:`\Delta (G)` و :math:`\Delta (H)`
-استفاده می کنیم.
-
-**مکمل یک گراف ساده:**
-منظور از مکمل یک گراف، گرافی است که راس های آن همان راس های گراف اصلی هستند اما بین
-هر دو راسش یال هست اگر و تنها اگر بینشان در گراف اصلی یالی نباشد. طبق تعریف، مکمل
-مکمل یک گراف، خود آن گراف است. مکمل گراف G را با
-:math:`\overline{G}`
-نمایش می دهند. در شکل زیر، دو گراف چهار راسی قرمز و آبی مکمل
-یک دیگر هستند:
+Complement of a Simple Graph:  
+A graph with the same vertices as G, but edges exist only if they don’t exist in G. The complement of the complement is the original graph. Denoted as :math:\overline{G}. Below, the red and blue graphs are complements:
 
 .. figure:: /_static/dot/Complement_Graph.svg
    :width: 30%
    :align: center
-   :alt: تصویری از یک گراف و مکملش
+   :alt: A graph and its complement
 
-جمع تمامی درجات
------------------
-در این قسمت یک قضیه ساده از گراف را با هم اثبات می کنیم. خوب است قبل از خواندن جواب
-کمی به راه حل آن فکر کنید. قضیه بیان می کند که جمع درجه تمامی رئوس گراف دو برابر
-تعداد یال هاست یا به عبارتی دیگر
-:math:`\sum d_v = 2e`
+Sum of All Degrees
+------------------
+We prove a simple theorem: the sum of all vertex degrees equals twice the number of edges, i.e., :math:\sum d_v = 2e.
 
-برای اثبات این قضیه، تاثیر هر یال را روی جمع درجات تمامی رئوس بررسی می کنیم. یک
-یال عادی درجه سر و تهش را یک واحد افزایش می دهد و یک طوقه درجه راسش را دو واحد
-پس هر یال جمع درجات را دقیقا دو واحد اضافه می کند پس جمع درجات دو برابر تعداد
-یال هاست.
+Proof:  
+Each edge contributes to the degree of two vertices. A regular edge adds 1 to two degrees; a loop adds 2 to one degree. Thus, every edge increases the total degree sum by exactly 2. Hence, :math:\sum d_v = 2e.
