@@ -6,7 +6,7 @@ first time:
 ```
 download npm and node at https://nodejs.org/en/
 git clone https://github.com/shaazzz/GTOI.git
-sudo apt-get install python3-sphinx
+sudo apt-get install python3-sphinx graphviz
 sudo npm install -g http-server
 npm install
 ```
