@@ -1,0 +1,96 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/3/7" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>سوال 3.7.4 : <button id="b3x7x4" onclick="swapButton('3x7x4')">حل کردم</button></h1>
+
+<p>جایگشت $a_1,a_2,a_3,a_4,a_5,a_6$ از اعداد 1 تا 6 داریم . در ابتدا یک عدد دلخواه انتخاب میکنیم. سپس در هر مرحله اگر عدد $a_i$ انتخاب شده بود، در مرحله ی بعد به ازای $a_i \ne 6 $ عدد $a_{a_{i+1}}$ را انتخاب میکنیم . برای $a_i = 6$ هم عدد $a_1$ انتخاب میشود . به ازای چند جایگشت مختلف میتوان عدد اول را به گونه ای انتخاب کرد که بعد از تعدادی مرحله همه ی اعداد جایگشت حداقل یکبار انتخاب شده باشند؟</p>
+
+<script>
+  const toggle = (id, txt) => {
+    const b = document.getElementById('b'+id);
+    const isSolved = window.getComputedStyle(document.body, null).getPropertyValue('background-color') === 'rgb(238, 255, 238)';
+    if (b.innerText === 'نمایش') {
+      if (txt && !isSolved) alert(txt);
+      b.innerText = 'پنهان کردن';
+    } else {
+      b.innerText = 'نمایش';
+    }
+    document.getElementById(id).classList.toggle('hidden');
+  };
+</script>
+
+
+<div>
+  <a href="https://github.com/shaazzz/GTOI/blob/master/problems/3/7/4.yaml">
+    ویرایش و بهبود در گیت هاب
+  </a>
+</div>
+<h1>برگرد به <a href="3.7.html">بخش 3.7</a></h1>
+<script>
+document.body.id = "d3x7x4";
+</script>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>
