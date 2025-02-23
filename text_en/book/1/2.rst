@@ -1,181 +1,141 @@
-انواع گراف
+Types of Graphs
 =============
-در این قسمت یسری گراف های معروف و شناخته شده رو براتون لیست کردیم.
-قبل از اینکه با آن ها آشنا شویم به این نکته توجه کنید که در این قسمت هرجا صحبت از
-n
-شده منظور تعداد راس های گراف بوده است.
-آشنایی با این گراف ها به شما کمک می کند تا با گراف ها بیشتر انس بگیرید و هم چنین
-در ادامه بعضا در تمارین و درس نامه و
-یا حتی متون دیگر گراف به این گراف ها اشاره می شود و از توضیحشان
-صرف نظر می شود. هر گاه که تعریف یکی از این گراف ها یادتان رفت می توانید
-به این صفحه برگردید و آن را مرور کنید.
+In this section, we have listed some well-known and important graphs for you. 
+Before introducing them, note that wherever we mention **n** in this section, 
+it refers to the number of vertices in the graph. Familiarity with these graphs 
+will help you become more comfortable with graphs in general. Additionally, 
+these graphs may be referenced in future exercises, lessons, or other texts 
+without further explanation. If you forget the definition of any of these graphs, 
+you can return to this page for a review.
 
-گراف کامل
+Complete Graph
 -----------
-به گراف G که به ازای هر دو راس u و v یک یال بینشون وجود داشته باشه گراف کامل می گوییم که آن را با 
-:math:`K_n` نشان می دهند.
+A graph **G** where every pair of vertices **u** and **v** is connected by an edge 
+is called a **complete graph**, denoted by :math:`K_n`.
 
 .. figure:: /_static/complete_graph.jpg
-   :width: 90%
-   :align: center
-   :alt: complete graph
+ :width: 90%
+ :align: center
+ :alt: complete graph
 
-گراف تهی
+Empty Graph
 ----------
-به گراف G که در آن هیچ یالی وجود ندارد گویند. در واقع گراف تهی مکمل گراف کامل است که آن را با 
-:math:`\overline{K_n}` نشان می دهند.
+A graph **G** with no edges is called an **empty graph**. Essentially, the empty graph 
+is the complement of the complete graph, denoted by :math:`\overline{K_n}`.
 
 .. figure:: /_static/empty_graph.png
-   :width: 100%
-   :align: center
-   :alt: empty graph
+ :width: 100%
+ :align: center
+ :alt: empty graph
 
-گراف مسیر
+Path Graph
 ----------
-به گراف G که در آن تعداد یال ها n - 1 و درجه راس ها حداکثر ۲ باشد گویند.
-گراف مسیر را با 
-:math:`P_n` نشان می دهند.
+A graph **G** with **n - 1** edges where the degree of each vertex is at most 2 
+is called a **path graph**, denoted by :math:`P_n`.
 
 .. figure:: /_static/path_graph.png
-   :width: 70%
-   :align: center
-   :alt: path graph
+ :width: 70%
+ :align: center
+ :alt: path graph
 
-گراف دور
+Cycle Graph
 ----------
-به گراف G که در آن درجه تمامی راس ها ۲ است و می توان با پیمودن چند یال از هر راسی به راس دیگری رفت.
-گراف دور را با 
-:math:`C_n` نشان می دهند.
+A graph **G** where all vertices have degree 2, and you can travel from any vertex 
+to another by traversing some edges, is called a **cycle graph**, denoted by :math:`C_n`.
 
 .. figure:: /_static/cycle_graph.png
-   :width: 100%
-   :align: center
-   :alt: cycle graph
+ :width: 100%
+ :align: center
+ :alt: cycle graph
 
-
-گراف منتظم
+Regular Graph
 ------------
-به گرافی که درجه تمامی رئوسش برابر باشد، گراف متنظم می گوییم. اگر درجه تمامی رئوس برابر و برابر با k باشد به آن گراف k-منتظم می گوییم.
+A graph where all vertices have the same degree is called a **regular graph**. 
+If all vertices have degree **k**, it is called a **k-regular graph**.
 
 .. figure:: /_static/regular_graphs.png
-   :width: 100%
-   :align: center
-   :alt: regular graph
+ :width: 100%
+ :align: center
+ :alt: regular graph
 
-گراف پیترسن ( Petersen )
+Petersen Graph
 --------------------------
-در این بخش بر خلاف بخش های دیگر که گراف های زیادی رو شامل میشدن، فقط یک گراف را شامل می شود.
-نحوه ساخت گراف :
+Unlike previous sections that covered multiple graphs, this section focuses on a single graph.  
+**Construction method**:  
 
+Take a 5-element set, and for each of its 3-element subsets, create a vertex in the graph.  
+Connect two vertices with an edge if and only if their corresponding subsets share exactly one element.  
 
-یک مجموعه ۵ عضوی در نظر بگیرید و به ازای هر زیرمجموعه ۳ عضوی آن یک راس در گراف قرار می دهیم.
-بین دو راس یال قرار می دهیم اگر و تنها اگر دو مجموعه متناظر آنها دقیقا در یک عضو مشترک باشند.
-
-
-گراف پیترسن ۱۰ راس و ۱۵ یال دارد که درجه هر راس آن ۳ است.
+The Petersen graph has 10 vertices, 15 edges, and each vertex has degree 3.
 
 .. figure:: /_static/petersen_graph.png
-   :width: 80%
-   :align: center
-   :alt: Petersen graph
+ :width: 80%
+ :align: center
+ :alt: Petersen graph
 
-گراف k بخشی
+k-partite Graph
 -------------
-به گرافی که بتوان راس های آن را به k بخش تقسیم کرد به طوری که به ازای هر دو راس u و v در یک بخش، به هم یال نداشته باشند.
+A graph whose vertices can be partitioned into **k** subsets such that no two vertices 
+within the same subset are adjacent.
 
 .. figure:: /_static/dot/K_2_2_2.svg
-   :width: 50%
-   :align: center
-   :alt: complete multipartite graph
+ :width: 50%
+ :align: center
+ :alt: complete multipartite graph
 
-به کوچک ترین
-k
-ای که گراف
-k بخشی
-باشد، عدد رنگی آن گراف می گویند و آن را با حرف یونانی خی به صورت
-:math:`\chi`
-یا
-:math:`\chi (G)`
-نمایش می دهند.
+The smallest **k** for which a graph is **k-partite** is called its **chromatic number**, 
+denoted by the Greek letter chi: :math:`\chi` or :math:`\chi (G)`.
 
-گراف k بخشی کامل
+Complete k-partite Graph
 ------------------
-همانند گراف k بخشی که در بخش قبل تعریف شد می باشد با این تفاوت کرد که بین هر دو راس
-u و v
-که در یک بخش نیستند، یال وجود دارد. گراف های
-k بخشی کامل را به صورت
-:math:`K_{a_1,a_2,...,a_k}`
-نمایش می دهند. برای مثال گراف
-:math:`K_{a,b,c}`
-یک گراف سه بخشی کامل است که بخش های آن
-a و b و c
-راس و در کل
-:math:`a+b+c`
-راس دارد.
+Similar to the k-partite graph defined above, but with the added condition that 
+every pair of vertices **u** and **v** from different subsets are connected by an edge. 
+Complete k-partite graphs are denoted by :math:`K_{a_1,a_2,...,a_k}`. For example, 
+:math:`K_{a,b,c}` is a complete 3-partite graph with subsets of sizes **a**, **b**, and **c**, 
+totaling :math:`a+b+c` vertices.
 
-گراف
-:math:`K_{3,5}`
+Graph :math:`K_{3,5}`
 
 .. figure:: /_static/dot/K_3_5.svg
-   :width: 60%
-   :align: center
-   :alt: complete multipartite graph
+ :width: 60%
+ :align: center
+ :alt: complete multipartite graph
 
-گراف
-:math:`K_{2,2,2}`
+Graph :math:`K_{2,2,2}`
 
 .. figure:: /_static/dot/K_2_2_2.svg
-   :width: 60%
-   :align: center
-   :alt: complete multipartite graph
+ :width: 60%
+ :align: center
+ :alt: complete multipartite graph
 
-گراف ستاره ( Star )
+Star Graph
 ---------------------
-به گراف G که یک راس u به تمامی راس های دیگر یال دارد و راس های دیگر فقط به
-u
-یال دارند، استار گویند.
-گراف استار چون حالت خاصی از گراف دو بخشی کامل است، به شکل
-:math:`K_{1,n}`
-نمایش داده می شود که
-:math:`n`
-یال و
-:math:`n+1`
-راس دارد.
+A graph **G** where one vertex **u** is connected to all other vertices, and all other vertices 
+are only connected to **u**, is called a **star graph**. Since it is a special case of a complete 
+bipartite graph, it is denoted by :math:`K_{1,n}`, having **n** edges and **n+1** vertices.
 
 .. figure:: /_static/star_graph.png
-   :width: 100%
-   :align: center
-   :alt: star graph
+ :width: 100%
+ :align: center
+ :alt: star graph
 
-گراف مکعب k بعدی (Cube)
+k-dimensional Hypercube (Cube)
 -------------------------
-تمام رشته باینری های به اندازه k را در نظر بگیرید. هر راس گراف را متناظر با یکی از این رشته ها می کنیم به طوری که هر رشته دقیقا یک بار متناظر شده باشد.
-حال بین دو راس یال می گذاریم اگر و تنها اگر در رشته های متناظرشون دقیقا در یک رقم تفاوت داشته باشند.
-برای مثال اگر k = 3 باشد گراف به شکل زیر می شود.
+Consider all binary strings of length **k**. Each vertex in the graph corresponds to a unique 
+binary string. Two vertices are connected by an edge if and only if their corresponding strings 
+differ in exactly one digit. For example, when **k = 3**, the graph looks like this:
 
 .. figure:: /_static/dot/Q_3.svg
-   :width: 50%
-   :align: center
-   :alt: hypercube
+ :width: 50%
+ :align: center
+ :alt: hypercube
 
-این گراف ها را به صورت 
-:math:`Q_k` نشان می دهند.
-:math:`Q_1`
-شبیه یک خط و
-:math:`Q_2`
-شبیه یک مربع و
-:math:`Q_3`
-شبیه یک مکعب است. گراف
-:math:`Q_k`
-را می توان با دو کپی از
-:math:`Q_{k-1}`
-و قرار دادن یال بین رئوس متناظر این دو، ایجاد کرد. این خاصیت می تواند
-به اثبات خاصیت های این گراف کمک کند. اگر کد باینری را به عنوان مختصات
-k بعدی
-در نظر بگیرید، گراف
-:math:`Q_k`
-تشکیل یک مکعب
-k بعدی
-به حجم (به معنای تعمیم یافته آن) واحد می دهد که کنج آن منطبق
-با محور های مختصات است.
+These graphs are denoted by :math:`Q_k`.  
+- :math:`Q_1` resembles a line.  
+- :math:`Q_2` resembles a square.  
+- :math:`Q_3` resembles a cube.  
 
+The graph :math:`Q_k` can be constructed by connecting two copies of :math:`Q_{k-1}` 
+with edges between corresponding vertices. This property helps in proving other properties 
+of the graph. If the binary strings are interpreted as coordinates in **k-dimensional** space, 
+:math:`Q_k` forms a unit **k-dimensional** hypercube aligned with the coordinate axes.
