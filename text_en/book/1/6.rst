@@ -1,52 +1,51 @@
-همبندی، یال برشی و راس برشی
+Connectivity, Cut Edge, and Cut Vertex
 ==============================
 
-همبندی
+Connectivity
 -------
-گراف 
+A graph 
 G
-همبند است اگر به ازای هر دو راس 
+is **connected** if for every pair of vertices 
 u
-و 
-v یک مسیر از 
-u به 
-v وجود داشته باشد.
-در غیر این صورت ناهمبند است. هر گراف ناهمبند اجتماعی از چند گراف همبند است که به هر کدام از آن ها **مولفه** نیز میگویند. 
-واضح است که یک گراف همبند دارای یک مولفه است.
+and 
+v, there exists a path from 
+u to 
+v.
+Otherwise, it is **disconnected**. Every disconnected graph is a collection of several connected graphs, each of which is called a **component**. 
+Clearly, a connected graph has exactly one component.
 
-اگر راس ها را مثل یک توپ و یال ها را مثل یک نخ در نظر بگیرید، مولفه های گراف را می توان
-با دست از هم جدا کرد اما راس های هر مولفه با نخ به هم متصل هستند.
+If we imagine vertices as balls and edges as strings, the components of the graph can be 
+physically separated by hand, but the vertices within each component remain connected by strings.
 
-راس برشی 
+Cut Vertex 
 ----------
-در گراف 
-G به راس 
+In graph 
+G, a vertex 
 v 
-برشی گفته می شود اگر با حذف آن به تعداد مولفه های همبندی اضافه شود.
+is called a **cut vertex** if removing it increases the number of connected components.
 
-یال برشی 
+Cut Edge 
 ----------
-در گراف 
-G به یال 
-e برشی گفته می شود اگر با حذف آن به تعداد مولفه های همبندی اضافه شود.
+In graph 
+G, an edge 
+e is called a **cut edge** if removing it increases the number of connected components.
 
-گراف k همبند
+k-Connected Graph
 ----------------
 
-به گراف 
-k 
-Gهمبند میگویند اگر بیش از 
-k راس داشته باشد و با حذف 
+A graph 
+G
+is called **k-connected** if it has more than 
+k vertices and cannot be disconnected by removing 
 x 
-(x<k)
-راس نتوان آن را ناهمبند کرد. 
-به این ترتیب 
-:math:`\kappa (G)` تعریف می شود ماکسیمم 
-k که 
-G را 
-k همبند می کند، به عبارت دیگر کمترین تعداد راسی که نیاز است تا با حذف آن ها گراف ناهمبند و یا راس تنها شود.
+vertices (where x < k). 
+The **connectivity** of G, denoted as 
+:math:`\kappa (G)`, is defined as the maximum 
+k for which 
+G is 
+k-connected. In other words, it is the minimum number of vertices whose removal disconnects the graph or reduces it to a single vertex.
 
-بلوک
+Block
 -----
-به یک زیرگراف ماکسیمال از 
-G که راس برشی نداشته باشد گویند.
+A **block** is a maximal subgraph of 
+G that contains no cut vertices.
