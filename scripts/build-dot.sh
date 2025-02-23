@@ -9,3 +9,5 @@ do
   x="$(basename "$f" .neato)";
   neato -Tsvg $f -o "text/_static/dot/$x.svg"
 done
+rm -rf text_en/_static/dot
+cp -r text/_static/dot text_en/_static/

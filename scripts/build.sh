@@ -17,6 +17,7 @@ node scripts/contributors.mjs
 cd text_en
 make html
 cd ..
+rm -r text_en/_static/dot
 cp -r text_en/_build/html _build/en
 
 cd _build
