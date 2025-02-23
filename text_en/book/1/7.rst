@@ -1,47 +1,39 @@
-گراف دو بخشی
+Bipartite Graph
 ===============
 
-همان طور که در قسمت های قبل خواندیم،
-گراف دو بخشی که حالت خاصی از گراف k بخشی است،
-گرافی است که بتوان رئوس آن را به دو دسته افراز کرد، به طوری که درون هر دسته
-هیچ یالی نباشد و تمام یال ها بین دسته ها باشند.
+As we have read in previous sections,
+a bipartite graph, which is a special case of a k-partite graph,
+is a graph whose vertices can be partitioned into two sets such that there are no edges within each set,
+and all edges are between the two sets.
 
-ارتباط با دور فرد
---------------------
-یک گراف دوبخشی است اگر و تنها اگر دور فرد نداشته باشد. یک طرف این قضیه واضح است
-چون اگر یک گراف دور فرد داشته باشد، آن گاه در هر افراز به دو دسته، یک دسته بیش از
-نیمی از رئوس این دور را خواهد داشت و در نتیجه درون آن دسته یال پیدا می شود و یعنی
-گراف دو بخشی نیست.
+Relation to Odd Cycles
+---------------------
+A graph is bipartite if and only if it contains no odd cycles. One direction of this theorem is obvious:
+if a graph has an odd cycle, then in any partition into two sets, one set will contain more than half of the vertices
+of this cycle, resulting in edges within that set, meaning the graph is not bipartite.
 
-پس به سراغ قسمت دوم می رویم. اگر دور فرد نداشته باشد، می دانیم زوجیت طول مسیر های بین دو راس
-همواره ثابت است، برای اثبات این مطلب، فرض کنید بین دو راس هم مسیر زوج یالی و هم
-مسیر فرد یالی وجود داشته باشد. با چسباندن این دو مسیر به هم یک گشت بسته فرد یالی به دست می آید
-و در قسمت قبل دیدیم که اگر گشت بسته فرد یالی در گراف وجود داشته باشد، دور فرد نیز وجود دارد
-که این مطلب با فرض در تناقض است.
+Now, let us consider the other direction. If the graph has no odd cycles, we know that the parity (even/odd) of the path lengths
+between any two vertices remains constant. To prove this, assume there exist both an even-length path and an odd-length path
+between two vertices. Combining these two paths would create a closed walk of odd length.
+In previous sections, we saw that if a closed walk of odd length exists in a graph, then an odd cycle must also exist,
+which contradicts our assumption.
 
-در ادامه فرض می کنیم که گراف همبند است، زیرا اگر همبند نباشد، می توان حکم را برای
-مولفه های آن ثابت کرد و نتیجه گرفت که هر مولفه دو بخشی است و سپس بخش اول هر مولفه
-را به عنوان بخش یک و بخش دوم را به عنوان بخش دو معرفی می کنیم.
+Next, we assume the graph is connected. If it is not connected, the theorem can be proven for each connected component separately.
+We can then conclude that each component is bipartite and assign the first part of each component as "Part 1"
+and the second part as "Part 2."
 
-یک راس دلخواه را در نظر بگیرید. چون گراف همبند است، این راس یا به هر کسی مسیر فرد یالی
-دارد و یا مسیر زوج یالی. رئوس با مسیر فرد را درون دسته یک و رئوس با مسیر زوج را
-درون دسته دو قرار می دهیم. برای این که نشان دهیم گراف با این دسته ها دو بخشی است، برهان
-خلف می زنیم و فرض می کنیم که درون یک دسته یال وجود داشته باشد. در آن صورت
-هم مسیر فرد از راس اولیه به راس ها وجود خواهد داشت و هم مسیر زوج، که تناقض است.
+Choose an arbitrary vertex. Since the graph is connected, this vertex will have either an odd-length path or an even-length path
+to every other vertex. Place vertices with odd-length paths from the initial vertex into "Set 1" and those with even-length paths
+into "Set 2." To prove that the graph is bipartite with these sets, we use proof by contradiction:
+assume there exists an edge within one set. This would imply the existence of both an odd-length path and an even-length path
+from the initial vertex to the endpoints of this edge, leading to a contradiction.
 
-وجود زیرگراف دوبخشی با نیمی از یال ها
------------------------------------------
-هر گراف
-:math:`m`
-یالی، زیر گرافی دارد که بیش از
-:math:`\frac{m}{2}`
-یال دارد. برای اثبات، بزرگ ترین زیر گراف فراگیر دو بخشی را در نظر بگیرید. یک راس
-را در نظر بگیرید که بیش از نیمی از یال هایش در سمت خودش باشند. اگر چنین
-راسی وجود نداشته باشد جمع درجات رئوس در زیر گراف بیش تر مساوی نصف جمع در حالت
-عادی یعنی بیشتری مساوی
-m
-است که از این مطلب حکم نتیجه می شود.
+Existence of a Bipartite Subgraph with Half the Edges
+-----------------------------------------------------
+Every graph with :math:`m` edges contains a bipartite subgraph with more than :math:`\frac{m}{2}` edges.
+To prove this, consider the largest spanning bipartite subgraph. Suppose there exists a vertex where more than half
+of its edges are within its current partition. If no such vertex exists, the sum of degrees in the subgraph
+would be at least half the sum of degrees in the original graph (i.e., at least :math:`m`), from which the claim follows.
 
-اما اگر چنین راسی وجود داشته باشد، آن راس را به بخش دیگر می بریم و یال های سمت خودش
-که بیش از نصف درجه اش و در نتیجه بیش از حالت قبل است، که با فرض اکسترمال
-در تناقض است.
+However, if such a vertex exists, move it to the other partition. This increases the number of edges in the subgraph
+by more than half of its degree, contradicting the assumption of maximality.
