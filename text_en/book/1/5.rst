@@ -1,65 +1,39 @@
-زیرگراف ها
+Subgraphs
 ===============
 
-زیرگراف یک گراف، زیر مجموعه ای از رئوس و زیر مجموعه ای از یال های بین آن رئوس را
-داشته باشد.
+A subgraph of a graph consists of a subset of vertices and a subset of edges between those vertices.
 
-زیر گراف القایی
+Induced Subgraph
 -------------------
-زیرگراف القایی یک زیر گراف است که رئوسش یک زیر مجموعه از رئوس گراف اصلی و یال
-هایش تمام یال های میان آن رئوس است. هر گراف
-:math:`n`
-راسی،
-:math:`2^n`
-زیرگراف القایی دارد.
+An induced subgraph is a subgraph whose vertices form a subset of the original graph's vertices, and its edges include **all** edges between those vertices. An n-vertex graph has :math:`2^n` induced subgraphs.
 
-زیرگراف فراگیر
+Spanning Subgraph
 ----------------
-زیرگراف فراگیر یک زیرگراف است که رئوسش تمام رئوس گراف و یال هایش یک زیر مجموعه دلخواه
-از یال ها باشد. هر گراف
-:math:`m`
-یالی،
-:math:`2^m`
-زیرگراف فراگیر دارد.
+A spanning subgraph is a subgraph that includes **all** vertices of the original graph and any subset of its edges. An m-edge graph has :math:`2^m` spanning subgraphs.
 
-چند نکته
+Some Notes
 -----------
-- تنها زیرگراف فراگیر القایی، خود گراف است.
-- تعداد زیرگراف های یک گراف بستگی به شکل گراف دارد
+- The only spanning induced subgraph is the graph itself.
+- The number of subgraphs of a graph depends on its structure.
 
-افراز گراف
+Graph Partitioning
 ------------
-منظور از افراز گراف، ارائه چند زیرگراف است به طوری که یال های این زیر گراف ها
-اشتراک نداشته باشند و همه یال های گراف پوشانده شده باشند. به عبارت دیگر
-هر یال از گراف دقیقا در یک زیرگراف آمده باشد. به افراز می توانید مانند دسته بندی یا
-رنگ آمیزی یال ها نگاه کنید. شکل زیر، افراز گراف
-:math:`K_4`
-به دو گراف
-:math:`P_4`
-است:
+Graph partitioning refers to dividing a graph into several subgraphs such that:
+- Their edges do not overlap.
+- All edges of the original graph are covered. 
+
+In other words, every edge of the graph belongs to exactly one subgraph. You can think of partitioning as categorizing or edge-coloring. The figure below shows a partitioning of the graph :math:`K_4` into two :math:`P_4` graphs:
 
 .. figure:: /_static/dot/K_4_to_P_4.svg
-   :width: 30%
-   :align: center
-   :alt: افراز گراف k4 به p4
+ :width: 30%
+ :align: center
+ :alt: افراز گراف k4 به p4
 
 
-عدد استقلال و عدد خوشه ای
+Independence Number and Clique Number
 ---------------------------
-بزرگ ترین زیر گراف القایی که هیچ یالی نداشته باشد، بزرگترین مجموعه مستقل نامیده می شود
-و به اندازه راس های آن، عدد استقلال گراف می گویند و آن را با
-:math:`\alpha`
-یا
-:math:`\alpha (G)`
-نمایش می دهند. (حرف یونانی آلفا خوانده می شود)
+- The largest induced subgraph with no edges is called the **maximum independent set**. The number of vertices in this set is called the **independence number** of the graph, denoted by :math:`\alpha` or :math:`\alpha(G)` (the Greek letter "alpha").
 
-بزرگ ترین زیر گراف القایی که بین هر دو راسش یال باشد و به عبارتی دیگر یک گراف
-کامل باشد، بزرگترین خوشه‌ی گراف نامیده می شود
-و به اندازه راس های آن، عدد خوشه ای گراف می گویند و آن را با
-:math:`\omega`
-یا
-:math:`\omega (G)`
-نمایش می دهند.
-(حرف یونانی اومگا خوانده می شود)
+- The largest induced subgraph where every pair of vertices is connected by an edge (i.e., a complete graph) is called the **maximum clique**. The number of vertices in this clique is called the **clique number** of the graph, denoted by :math:`\omega` or :math:`\omega(G)` (the Greek letter "omega").
 
-این دو تعریف تعاریف مهمی هستند و مسائل جالبی حول آن ها مطرح می شود.
+These are important definitions, and many interesting problems revolve around them.
