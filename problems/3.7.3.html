@@ -1,0 +1,102 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/3/7" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>سوال 3.7.3 (!): <button id="b3x7x3" onclick="swapButton('3x7x3')">حل کردم</button></h1>
+
+<p>یک دسته کارت که روی آن $2n$ عدد از $0$ تا $2n-1$
+عمل بر زدن را اینطور تعریف میکنیم :
+ابتدا کارت ها را به دسته ی $n$ کارتی تقسیم میکنیم . سپس به ترتیب یک کارت از دسته ی اول و یک یک کارت از دسته ی دوم بر میداریم و این کار را تا اتمام کارت ها ادامه میدهیم تا ترتیب جدیدی بدست بیاید . به این کار بُر زدن میگوییم .
+الف) ثابت کنید بعد از تعدادی محدود از بر زدن به ترتیب اولیه کارت ها میرسیم
+ب) برای
+$n=10$
+چند بار باید عمل بر زدن را تکرار کنیم تا به دسته کارت اولیه برسیم ؟</p>
+
+<script>
+  const toggle = (id, txt) => {
+    const b = document.getElementById('b'+id);
+    const isSolved = window.getComputedStyle(document.body, null).getPropertyValue('background-color') === 'rgb(238, 255, 238)';
+    if (b.innerText === 'نمایش') {
+      if (txt && !isSolved) alert(txt);
+      b.innerText = 'پنهان کردن';
+    } else {
+      b.innerText = 'نمایش';
+    }
+    document.getElementById(id).classList.toggle('hidden');
+  };
+</script>
+
+
+<div>
+  <a href="https://github.com/shaazzz/GTOI/blob/master/problems/3/7/3.yaml">
+    ویرایش و بهبود در گیت هاب
+  </a>
+</div>
+<h1>برگرد به <a href="3.7.html">بخش 3.7</a></h1>
+<script>
+document.body.id = "d3x7x3";
+</script>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

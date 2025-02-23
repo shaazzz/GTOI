@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/8/5" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="8.5.html">بخش 8.5</a></h1><ul><li><a href=https://codeforces.com/contest/339/problem/D>Xenia and Bit Operations</a></li><li><a href=https://codeforces.com/contest/292/problem/E>Copying Data</a></li><li><a href=https://codeforces.com/contest/609/problem/F>Frogs and mosquitoes</a></li><li><a href=https://codeforces.com/contest/594/problem/D>REQ</a></li><li><a href=https://codeforces.com/contest/220/problem/E>Little Elephant and Inversions</a></li><li><a href=https://codeforces.com/contest/338/problem/E>Optimize!</a></li><li><a href=https://codeforces.com/contest/459/problem/D>Pashmak and Parmida's problem</a></li><li><a href=https://codeforces.com/contest/501/problem/D>Misha and Permutations Summation</a></li><li><a href=https://codeforces.com/contest/474/problem/F>Ant colony</a></li><li><a href=https://codeforces.com/contest/61/problem/E>Enemy is weak</a></li><li><a href=https://codeforces.com/contest/515/problem/E>Drazil and Park</a></li><li><a href=https://codeforces.com/contest/540/problem/E>Infinite Inversions</a></li><li><a href=https://codeforces.com/contest/356/problem/A>Knight Tournament</a></li><li><a href=https://codeforces.com/contest/455/problem/E>Function</a></li><li><a href=https://codeforces.com/contest/380/problem/C>Sereja and Brackets</a></li><li><a href=https://codeforces.com/contest/19/problem/D>Points</a></li><li><a href=https://codeforces.com/contest/351/problem/D>Jeff and Removing Periods</a></li><li><a href=https://codeforces.com/contest/52/problem/C>Circular RMQ</a></li><li><a href=https://codeforces.com/contest/580/problem/E>Kefa and Watch</a></li><li><a href=https://codeforces.com/contest/115/problem/E>Linear Kingdom Races</a></li><li><a href=https://codeforces.com/contest/558/problem/E>A Simple Task</a></li><li><a href=https://codeforces.com/contest/610/problem/E>Alphabet Permutations</a></li><li><a href=https://codeforces.com/contest/446/problem/C>DZY Loves Fibonacci Numbers</a></li><li><a href=https://codeforces.com/contest/121/problem/E>Lucky Array</a></li><li><a href=https://codeforces.com/contest/438/problem/D>The Child and Sequence</a></li><li><a href=https://codeforces.com/contest/240/problem/F>TorCoder</a></li><li><a href=https://codeforces.com/contest/145/problem/E>Lucky Queries</a></li><li><a href=https://codeforces.com/contest/482/problem/B>Interesting Array</a></li><li><a href=https://codeforces.com/contest/242/problem/E>XOR on Segment</a></li><li><a href=https://codeforces.com/contest/383/problem/C>Propagating tree</a></li><li><a href=https://codeforces.com/contest/516/problem/D>Drazil and Morning Exercise</a></li><li><a href=https://codeforces.com/contest/375/problem/D>Tree and Queries</a></li><li><a href=https://codeforces.com/contest/597/problem/C>Subsequences</a></li><li><a href=https://codeforces.com/contest/343/problem/D>Water Tree</a></li><li><a href=https://codeforces.com/contest/173/problem/E>Camping Groups</a></li><li><a href=https://codeforces.com/contest/500/problem/E>New Year Domino</a></li><li><a href=https://codeforces.com/contest/56/problem/E>Domino Principle</a></li><li><a href=https://codeforces.com/contest/474/problem/E>Pillars</a></li><li><a href=https://codeforces.com/contest/276/problem/E>Little Girl and Problem on Trees</a></li><li><a href=https://codeforces.com/contest/369/problem/E>Valera and Queries</a></li><li><a href=https://codeforces.com/contest/610/problem/D>Vika and Segments</a></li><li><a href=https://codeforces.com/contest/301/problem/D>Yaroslav and Divisors</a></li><li><a href=https://codeforces.com/contest/396/problem/C>On Changing Tree</a></li><li><a href=https://codeforces.com/gym/101992/problem/L>Reflection</a></li><li><a href=https://codeforces.com/gym/101962/problem/I>Colonial Mansions</a></li><li><a href=https://codeforces.com/gym/101879/problem/G>Running a penitentiary</a></li><li><a href=https://codeforces.com/gym/101741/problem/J>Subsequence Sum Queries</a></li><li><a href=https://www.spoj.com/problems/ADAGF/>Ada and Greenflies</a></li><li><a href=https://www.spoj.com/problems/ADATREE/>Ada and Trees</a></li><li><a href=https://devskill.com/CodingProblems/ViewProblem/283>Big Binary Game</a></li><li><a href=https://devskill.com/CodingProblems/ViewProblem/315>Sanvi and chocolates-2</a></li><li><a href=https://www.spoj.com/problems/BGSHOOT/>Shoot and kill</a></li><li><a href=https://www.spoj.com/problems/KGSS/>Maximum Sum</a></li><li><a href=https://www.spoj.com/problems/GSS1/>Can you answer these queries I</a></li><li><a href=https://www.spoj.com/problems/KQUERY/>K-query</a></li><li><a href=https://www.spoj.com/problems/KQUERYO/>K-Query Online</a></li><li><a href=https://www.spoj.com/problems/NAJ0001/>Divisible Number Sum</a></li><li><a href=https://www.spoj.com/problems/PRMQUER/>Prime queries</a></li><li><a href=https://www.spoj.com/problems/EC_DIVS/>Divisors</a></li><li><a href=https://www.spoj.com/problems/DCEPC11I/>Impossible Boss</a></li><li><a href=https://www.spoj.com/problems/QUE2/>Queue (Pro)</a></li><li><a href=https://www.spoj.com/problems/SBO/>MAXIMUM RARITY</a></li><li><a href=https://www.spoj.com/problems/GOODE/>Good Debugging</a></li><li><a href=https://www.spoj.com/problems/CNTPRIME/>Counting Primes</a></li><li><a href=https://www.spoj.com/problems/SEGSQRSS/>Sum of Squares with Segment Tree</a></li><li><a href=https://www.spoj.com/problems/MON2012/>Monkey and apples</a></li><li><a href=https://www.spoj.com/problems/PARSUMS/>Nonnegative Partial Sums</a></li><li><a href=https://www.spoj.com/problems/THRBL/>Catapult that ball</a></li><li><a href=https://www.spoj.com/problems/HORRIBLE/>Horrible Queries</a></li><li><a href=https://www.spoj.com/problems/MULTQ3/>Multiples of 3</a></li><li><a href=https://www.spoj.com/problems/PERMPATT/>Check 1324</a></li><li><a href=https://www.spoj.com/problems/ADABERRY/>Ada and Mulberry</a></li><li><a href=https://toph.co/p/maintain-the-queue>Maintain the Queue</a></li><li><a href=https://codeforces.com/problemset/problem/311/D>Interval Cubing</a></li><li><a href=https://codeforces.com/contest/1180/problem/E>Serge and Dining Room</a></li><li><a href=https://codeforces.com/contest/1187/problem/D>Subarray Sorting</a></li><li><a href=https://codeforces.com/contest/914/problem/D>Bash and a Tough Math Puzzle</a></li><li><a href=https://codeforces.com/contest/915/problem/E>Physical Education Lessons</a></li><li><a href=https://codeforces.com/contest/911/problem/G>Mass Change Queries</a></li><li><a href=https://codeforces.com/contest/895/problem/E>Eyes Closed</a></li><li><a href=https://codeforces.com/contest/877/problem/E>Danil and a Part-time Job</a></li><li><a href=https://codeforces.com/problemset/problem/756/C>Nikita and stack</a></li><li><a href=https://codeforces.com/contest/739/problem/C>Alyona and towers</a></li><li><a href=https://codeforces.com/contest/718/problem/C>Sasha and Array</a></li><li><a href=https://codeforces.com/contest/750/problem/E>New Year and Old Subsequence</a></li><li><a href=https://codeforces.com/contest/759/problem/C>Nikita and stack</a></li><li><a href=https://codeforces.com/contest/763/problem/E>Timofey and our friends animals</a></li><li><a href=https://codeforces.com/contest/765/problem/F>Souvenirs</a></li><li><a href=https://codeforces.com/contest/633/problem/G>Yash And Trees</a></li><li><a href=https://codeforces.com/contest/785/problem/E>Anton and Permutation</a></li><li><a href=https://codeforces.com/contest/786/problem/B>Legacy</a></li><li><a href=https://codeforces.com/contest/803/problem/G>Periodic RMQ Problem</a></li><li><a href=https://codeforces.com/contest/794/problem/F>Leha and security system</a></li><li><a href=https://codeforces.com/contest/811/problem/E>Vladik and Entertaining Flags</a></li><li><a href=https://codeforces.com/contest/817/problem/F>MEX Queries</a></li><li><a href=https://codeforces.com/contest/816/problem/B>Karen and Coffee</a></li><li><a href=https://codeforces.com/contest/834/problem/D>The Bakery</a></li><li><a href=https://codeforces.com/contest/869/problem/E>The Untended Antiquity</a></li><li><a href=https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2397>Ahoy, Pirates!</a></li><li><a href=https://www.spoj.com/problems/GSS3/>Can you answer these queries III</a></li><li><a href=https://codeforces.com/problemset/problem/1234/D>Distinct Characters Queries</a></li><li><a href=https://codeforces.com/problemset/problem/920/F>SUM and REPLACE</a></li><li><a href=https://oj.uz/problem/view/COCI17_deda>Deda</a></li><li><a href=https://cses.fi/problemset/task/1143>Hotel Queries</a></li><li><a href=https://cses.fi/problemset/task/1736>Polynomial Queries</a></li><li><a href=https://cses.fi/problemset/task/1735>Range Updates and Sums</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

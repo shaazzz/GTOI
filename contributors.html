@@ -1,0 +1,82 @@
+
+<html>
+  <head>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  </head>
+  <body dir="rtl">
+    <div id="body-top">
+      <a><i class="fa fa-users"></i>&nbsp; مشارکت کنندگان</a>
+      <a style="float: left; padding-right: 20px;" href="/" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+      <a style="float: left; padding-right: 20px;" href="/problems" id="problems-link"><i class="fa fa-question"></i>&nbsp; سوالات</a>    
+    </div>
+    <div>
+    افراد زیادی زحمت کشیده اند و وقت و انرژی خود را به پای این کتاب ریخته اند. حتی
+    کسانی که یک خط از کتاب را اصلاح کرده اند اگر نبودند کتاب به این نقطه ای که اکنون
+    در آن قرار دارد نمی رسید. ممکن است برخی به صورت گمنام مشارکت کرده باشند یا به دلیل
+    اشتباهی از ما، اسم آن ها در این فهرست نیامده باشد. اما ما قدردان زحمات همه آنان هستیم.
+    <h2>آمار</h2>
+    <h3>نویسندگان</h3>
+    <a href="https://hkalbasi.github.io/"><span style="color:hsl(0,100%,50%)">حمیدرضا کلباسی</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(30,100%,50%)">شایان پردیس</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(60,100%,50%)">علی توسلی</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(90,100%,50%)">متین انصاری پور</span></a>،<a href="https://codeforces.com/profile/Amoo_Safar"><span style="color:hsl(120,100%,50%)">علی صفری</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(150,100%,50%)">مهدی قائم پناه</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(180,100%,50%)">ارشیا دادرس</span></a>،<a href="https://codeforces.com/profile/AliShahali1382"><span style="color:hsl(210,100%,50%)">علی شاه‌علی</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(240,100%,50%)">علی پاشا منتصری</span></a>،<a href="https://codeforces.com/profile/KMAASZRAA"><span style="color:hsl(270,100%,50%)">کسری مظاهری</span></a>،<a href="https://codeforces.com/profile/_Seyed37_"><span style="color:hsl(330,100%,50%)">محمد امین هاشمی</span></a>
+    <canvas id="text-chart"></canvas>
+    <h3>گرد آورندگان سوال</h3>
+    <a href="https://hkalbasi.github.io/"><span style="color:hsl(0,100%,50%)">حمیدرضا کلباسی</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(30,100%,50%)">شایان پردیس</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(60,100%,50%)">علی توسلی</span></a>،<a href="https://codeforces.com/profile/AliShahali1382"><span style="color:hsl(210,100%,50%)">علی شاه‌علی</span></a>،<a href="https://codeforces.com/profile/KMAASZRAA"><span style="color:hsl(270,100%,50%)">کسری مظاهری</span></a>،<a href="https://shaazzz.ir"><span style="color:hsl(300,100%,50%)">پوریا جلالی</span></a>،<a href="https://codeforces.com/profile/_Seyed37_"><span style="color:hsl(330,100%,50%)">محمد امین هاشمی</span></a>
+    <table style="width:100%">
+      <tr>
+        <th style="width:50%">سوالات تئوری</th>
+        <th style="width:50%">سوالات کد</th>
+      </tr>
+      <tr>
+        <td><canvas id="problem-chart"></canvas></td>
+        <td><canvas id="code-chart"></canvas></td>
+      </tr>
+    </table>
+    <script defer>
+      const cf = function(context) {
+        var index = context.dataIndex;
+        var len = context.dataset.data.length;
+        return 'hsl('+(index/len*360)+',100%,50%)';
+      };
+      var ctx = document.getElementById('text-chart').getContext('2d');
+      Chart.defaults.global.display = false;
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: [22,21,8,8,3,3,2,2,1,1,0,24]
+          }],
+          labels: ["حمیدرضا کلباسی","شایان پردیس","علی توسلی","متین انصاری پور","علی صفری","مهدی قائم پناه","ارشیا دادرس","علی شاه‌علی","علی پاشا منتصری","کسری مظاهری","پوریا جلالی","محمد امین هاشمی"],
+        },
+        options: {legend:{display: false}},
+      });
+      var ctx = document.getElementById('problem-chart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: [40,5,0,0,0,0,0,0,0,0,8,65]
+          }],
+          labels: ["حمیدرضا کلباسی","شایان پردیس","علی توسلی","متین انصاری پور","علی صفری","مهدی قائم پناه","ارشیا دادرس","علی شاه‌علی","علی پاشا منتصری","کسری مظاهری","پوریا جلالی","محمد امین هاشمی"],
+        },
+        options: {legend:{display: false}},
+      });
+      var ctx = document.getElementById('code-chart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            backgroundColor: cf,
+            data: [4,13,4,0,0,0,0,11,0,30,0,426]
+          }],
+          labels: ["حمیدرضا کلباسی","شایان پردیس","علی توسلی","متین انصاری پور","علی صفری","مهدی قائم پناه","ارشیا دادرس","علی شاه‌علی","علی پاشا منتصری","کسری مظاهری","پوریا جلالی","محمد امین هاشمی"],
+        },
+        options: {legend:{display: false}},
+      });
+    </script>
+    </div>
+  </body>
+</html>
+  

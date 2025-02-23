@@ -1,0 +1,178 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/1/1" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 1.1</h1>
+<p>در این قسمت 12 سوال وجود دارد
+
+<div id="d1x1x1">
+  <h2>سوال <a href="1.1.1.html">1.1.1</a> (-) <button id="b1x1x1" onclick="swapButton('1x1x1')">حل کردم</button> </h2>
+  
+  <p>در گراف زیر، درجه هر راس، تعداد راس ها، تعداد یال ها و
+$\delta , \Delta$
+را مشخص کنید.</p>
+<p><img src="/_static/dot/Apple_Pineapple.svg" alt=""></p>
+
+</div>
+
+<div id="d1x1x2">
+  <h2>سوال <a href="1.1.2.html">1.1.2</a>  <button id="b1x1x2" onclick="swapButton('1x1x2')">حل کردم</button> </h2>
+  
+  <p>در یک مهمانی، ثابت کنید یا سه نفر وجود دارند که دو به دو با هم آشنا هستند
+و یا سه نفر وجود دارند که دو به دو با هم غریبه هستند.</p>
+
+</div>
+
+<div id="d1x1x3">
+  <h2>سوال <a href="1.1.3.html">1.1.3</a> (-) <button id="b1x1x3" onclick="swapButton('1x1x3')">حل کردم</button> </h2>
+  
+  <p>در یک مهمانی برخی با هم دست می دهند. از آن ها می خواهیم تا روی یک کاغذ بنویسند که با چند نفر دست داده اند و سپس اعداد نوشته شده را با هم جمع می زنیم. ثابت کنید حاصل به دست آمده یک عدد زوج است.</p>
+
+</div>
+
+<div id="d1x1x4">
+  <h2>سوال <a href="1.1.4.html">1.1.4</a>  <button id="b1x1x4" onclick="swapButton('1x1x4')">حل کردم</button> </h2>
+  
+  <p>ابتدا یک گراف ۸ راسی بکشید که درجه تمام رئوس آن سه باشد، سپس ثابت کنید که نمی توان هیچ گراف ۹ راسی کشید که درجه تمام رئوس آن ۳ باشد.</p>
+
+</div>
+
+<div id="d1x1x5">
+  <h2>سوال <a href="1.1.5.html">1.1.5</a> (!) <button id="b1x1x5" onclick="swapButton('1x1x5')">حل کردم</button> </h2>
+  
+  <p>در یک گراف دلخواه، ثابت کنید $$ \delta \le \frac{2e}{n} \le \Delta $$</p>
+
+</div>
+
+<div id="d1x1x6">
+  <h2>سوال <a href="1.1.6.html">1.1.6</a> (+) <button id="b1x1x6" onclick="swapButton('1x1x6')">حل کردم</button> </h2>
+  
+  <p>شیرین و فرهاد در دو سمت یک رشته کوه ایستاده اند. در این سوال ما رشته کوه
+را یک خط شکسته تعریف می کنیم که همواره بالای محور ایکس ها قرار دارد و
+دو سر آن (که شیرین و فرهاد در آن جا ایستاده اند) روی محور ایکس ها و در
+ارتفاع صفر قرار دارند. شیرین و فرهاد می خواهند همواره هم ارتفاع یک دیگر
+باشند و به هم برسند. آن ها می توانند روی رشته کوه عقب و جلو بروند. به کمک
+مدل سازی به گراف، ثابت کنید که آن ها همواره می توانند به هم برسند.</p>
+<p><img src="/_static/p1_1_6.png" alt="یک مثال"></p>
+
+</div>
+
+<div id="d1x1x7">
+  <h2>سوال <a href="1.1.7.html">1.1.7</a> (!) <button id="b1x1x7" onclick="swapButton('1x1x7')">حل کردم</button> </h2>
+  
+  <p>اثبات یا رد کنید:</p>
+<ul>
+<li>حذف یک راس از درجه $\Delta$ نمی تواند میانگین درجات را زیاد کند</li>
+<li>حذف یک راس از درجه $\delta$ نمی تواند میانگین درجات را کم کند</li>
+</ul>
+
+</div>
+
+<div id="d1x1x8">
+  <h2>سوال <a href="1.1.8.html">1.1.8</a> (+) <button id="b1x1x8" onclick="swapButton('1x1x8')">حل کردم</button> </h2>
+  
+  <p>یک مثلث داریم که درون آن چند نقطه قرار داده شده است و سپس شکل مثلث بندی شده
+است، یعنی هیچ ناحیه ای درون مثلث وجود ندارد که مثلث نباشد. هر نقطه از این شکل
+با یکی از رنگ های آبی، قرمز و سبز رنگ شده است. می دانیم نقاط مثلث اصلی رنگ های
+متفاوتی دارند. ثابت کنید یکی از مثلث های کوچک وجود دارد که رئوس آن نیز رنگ های
+متفاوتی داشته باشند.</p>
+<p><img src="/_static/p1_1_8.png" alt="یک مثال"></p>
+
+</div>
+
+<div id="d1x1x9">
+  <h2>سوال <a href="1.1.9.html">1.1.9</a>  <button id="b1x1x9" onclick="swapButton('1x1x9')">حل کردم</button> </h2>
+  
+  <p>مثال نقضی برای گزاره زیر بیارید:</p>
+<ul>
+<li>در یک جمع با حداقل دو نفر آشنا که هر دو نفر با تعداد یکسانی آشنا در جمع هیچ آشنای مشترکی ندارند، یک نفر دقیقا با یک آشنا در جمع وجود دارد.</li>
+</ul>
+
+</div>
+
+<div id="d1x1x10">
+  <h2>سوال <a href="1.1.10.html">1.1.10</a>  <button id="b1x1x10" onclick="swapButton('1x1x10')">حل کردم</button> </h2>
+  
+  <p>نشان دهید تعداد یال های یک گراف ساده حداکثر برابر جمع اعداد 1 تا n - 1 است.</p>
+
+</div>
+
+<div id="d1x1x11">
+  <h2>سوال <a href="1.1.11.html">1.1.11</a>  <button id="b1x1x11" onclick="swapButton('1x1x11')">حل کردم</button> </h2>
+  
+  <p>رابطه بین دلتا کوچک و دلتا بزرگ گراف G و مکمل گراف G را مشخص کنید.</p>
+
+</div>
+
+<div id="d1x1x12">
+  <h2>سوال <a href="1.1.12.html">1.1.12</a>  <button id="b1x1x12" onclick="swapButton('1x1x12')">حل کردم</button> </h2>
+  
+  <p>تعداد گراف های با رئوس ${1..n}$ که درجه تمام رئوس زوج هستند را بشمارید. دو گراف متفاوت در نظر گرفته می شوند اگر در یکی از آن ها دو راس به هم یال داشته باشند و در دیگری یال نداشته باشند.</p>
+
+</div>
+
+<h1>برگرد به <a href="1.html">بخش 1</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>
