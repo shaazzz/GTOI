@@ -1,4 +1,4 @@
-ماتریس ها
+Matrix
 =========
 .. toctree::
         :maxdepth: 6

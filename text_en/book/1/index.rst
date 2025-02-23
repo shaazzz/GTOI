@@ -1,5 +1,5 @@
-تعاریف اولیه
-=======
+Basic definitions
+=======================
 
 .. toctree::
 	:maxdepth: 6

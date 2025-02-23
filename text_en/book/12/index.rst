@@ -1,5 +1,5 @@
-همبندی
-=========
+Connectivity
+===============
 .. toctree::
         :maxdepth: 6
 

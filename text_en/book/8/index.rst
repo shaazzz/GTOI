@@ -1,5 +1,5 @@
-داده ساختار های درختی
-=========
+Tree data structures
+========================
 .. toctree::
         :maxdepth: 6
 

@@ -1,5 +1,5 @@
-گراف جهت‌دار
-=======
+Directed graph
+==================
 
 .. toctree::
 	:maxdepth: 6

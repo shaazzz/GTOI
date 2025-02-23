@@ -1,5 +1,5 @@
-مسائل np و np کامل
-=====================
+NP and NP-complete problems
+===============================
 
 .. toctree::
         :maxdepth: 6

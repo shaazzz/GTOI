@@ -1,5 +1,5 @@
-مباحث ویژه
-=========
+Extra topics
+===============
 .. toctree::
         :maxdepth: 6
 

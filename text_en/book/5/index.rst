@@ -1,5 +1,5 @@
-تور اویلری و دور همیلتونی
-================
+Euler circuit and hamiltonian cycle
+========================================
 .. toctree::
 	:maxdepth: 6
 	

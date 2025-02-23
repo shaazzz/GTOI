@@ -1,4 +1,4 @@
-Lca
+LCA
 =========
 .. toctree::
         :maxdepth: 6
