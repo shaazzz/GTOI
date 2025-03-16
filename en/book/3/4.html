@@ -1,0 +1,744 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>مولفه‌های قویا همبند &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Directed graph" href="index.html" />
+        <link rel="next" title="تشخیص دور داشتن گراف جهت دار" href="5.html" />
+        <link rel="prev" title="گراف جهت‌دار بدون دور" href="3.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Directed graph</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; مولفه‌های قویا همبند</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        
+            <a href="../../_sources/book/3/4.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>مولفه‌های قویا همبند<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<section id="id2">
+<h2>مفاهیم اولیه<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id3">
+<h3><strong>تعریف 3.4.1 (جفت راس قویا همبند)</strong><a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در گراف جهت‌­دار به جفت راس
+<span class="math notranslate nohighlight">\((v, u)\)</span>
+قویا همبند گوییم اگر و تنها اگر مسیری از
+<span class="math notranslate nohighlight">\(v\)</span>
+به
+<span class="math notranslate nohighlight">\(u\)</span>
+و مسیری از
+<span class="math notranslate nohighlight">\(u\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+وجود داشته باشد.</p>
+<p>به عنوان مثال در شکل 1، راس­‌های 2 و 4 یک جفت راس قویا همبند هستند.</p>
+</section>
+<section id="id4">
+<h3><strong>تعریف 3.4.2 (گراف قویا همبند)</strong><a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>گراف قویا همبند، گراف جهت­‌داری است که هر جفت راس آن قویا همبند باشند (شکل 1).</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/scc_1.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/scc_1.png" style="width: 50%;" /></a>
+</figure>
+</section>
+<section id="strongly-connected-component-scc">
+<h3><strong>تعریف 3.4.3 (مولفه قویا همبند (strongly connected component یا به اختصار scc))</strong><a class="headerlink" href="#strongly-connected-component-scc" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>یک مولفه قویا همبند در گراف جهت­‌دار
+<span class="math notranslate nohighlight">\(G\)</span>
+، زیرمجموعه­‌ای از رئوس
+<span class="math notranslate nohighlight">\(G\)</span>
+می­‌باشند که در زیرگراف القایی آن­‌ها تشکیل یک گراف قویا همبند را دهد و همچنین ماکسیمال باشد، یعنی نتوان راس دیگری به آن اضافه کرد.</p>
+</section>
+<section id="id5">
+<h3><strong>لم 3.4.4</strong><a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت لم:</strong> هر راس
+<span class="math notranslate nohighlight">\(v\)</span>
+در گراف جهت­‌دار
+<span class="math notranslate nohighlight">\(G\)</span>
+، تنها در یک مولفه قویا همبند یکتا قرار دارد.</p>
+<p><strong>اثبات:</strong> از برهان خلف استفاده می­‌کنیم. فرض کنید که
+<span class="math notranslate nohighlight">\(v\)</span>
+در دو مولفه قویا همبند
+<span class="math notranslate nohighlight">\(H\)</span>
+و
+<span class="math notranslate nohighlight">\(L\)</span>
+قرار دارد و
+<span class="math notranslate nohighlight">\(u\)</span>
+راسی در
+<span class="math notranslate nohighlight">\(L\)</span>
+باشد که در
+<span class="math notranslate nohighlight">\(H\)</span>
+قرار ندارد. چون
+<span class="math notranslate nohighlight">\(u\)</span>
+و
+<span class="math notranslate nohighlight">\(v\)</span>
+در یک مولفه قویا همبند قرار دارند، در نتیجه از هر راسی در
+<span class="math notranslate nohighlight">\(H\)</span>
+می­‌توان با مسیری به
+<span class="math notranslate nohighlight">\(v\)</span>
+آمد و سپس با مسیری به
+<span class="math notranslate nohighlight">\(u\)</span>
+رفت و همچنین با مسیری از
+<span class="math notranslate nohighlight">\(u\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+آمد و با مسیری به هر راس دلخواه در
+<span class="math notranslate nohighlight">\(H\)</span>
+رفت. پس درنتیجه می­‌توان راس
+<span class="math notranslate nohighlight">\(u\)</span>
+را به مولفه
+<span class="math notranslate nohighlight">\(H\)</span>
+اضافه کرد که این با ماکسیمال بودن
+<span class="math notranslate nohighlight">\(H\)</span>
+در تناقض است. از تناقض حاصل درستی حکم نتیجه می‌­شود.</p>
+</section>
+<section id="id6">
+<h3><strong>نتیجه 3.4.5</strong><a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>می­‌توان هر گراف جهت‌­دار
+<span class="math notranslate nohighlight">\(G\)</span>
+را به مولفه‌­های قویا همبند افراز کرد. شکل 2 گراف جهت­‌داری را نمایش می­‌دهد که مولفه‌­های قویا همبند آن مشخص شده­‌اند.</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/scc_2.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/scc_2.png" style="width: 50%;" /></a>
+</figure>
+</section>
+<section id="id7">
+<h3><strong>تعریف 3.4.6 (گراف معکوس)</strong><a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>گراف معکوس
+<span class="math notranslate nohighlight">\(G\)</span>
+، گرافی است که از معکوس کردن جهت یال‌های گراف
+<span class="math notranslate nohighlight">\(G\)</span>
+بدست می‌آید. توجه کنید یک گراف قویا همبند است اگر و تنها اگر معکوس آن نیز قویا همبند باشد.</p>
+</section>
+</section>
+<section id="id8">
+<h2>بدون دور بودن مولفه‌­های قویا همبند<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id9">
+<h3><strong>تعریف 3.4.7 (گراف فشرده شده مولفه­های قویا همبند)</strong><a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>فرض کنید
+<span class="math notranslate nohighlight">\(G\)</span>
+، یک گراف جهت­‌دار دلخواه باشد و گراف جهت­‌دار
+<span class="math notranslate nohighlight">\(H\)</span>
+گرافی باشد که هر راس آن متناظر با یک مولفه قویا همبند در
+<span class="math notranslate nohighlight">\(G\)</span>
+است و هر مولفه قویا همبند در
+<span class="math notranslate nohighlight">\(G\)</span>
+به دقیقا یک راس در
+<span class="math notranslate nohighlight">\(H\)</span>
+متناظر شود. اگر
+<span class="math notranslate nohighlight">\(v\)</span>
+راسی در
+<span class="math notranslate nohighlight">\(H\)</span>
+باشد، مولفه قویا همبند متناظر با راس
+<span class="math notranslate nohighlight">\(v\)</span>
+در
+<span class="math notranslate nohighlight">\(G\)</span>
+را با
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+نمایش می‌­دهیم. اگر
+<span class="math notranslate nohighlight">\(v\)</span>
+و
+<span class="math notranslate nohighlight">\(u\)</span>
+دو راس از
+<span class="math notranslate nohighlight">\(H\)</span>
+باشند، به ازای هر یال جهت‌­دار از رئوس
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+به رئوس
+<span class="math notranslate nohighlight">\(F(u)\)</span>
+، یالی جهت­‌دار از
+<span class="math notranslate nohighlight">\(v\)</span>
+به
+<span class="math notranslate nohighlight">\(u\)</span>
+قرار دارد و همچنین هر یالی که از
+<span class="math notranslate nohighlight">\(v\)</span>
+به
+<span class="math notranslate nohighlight">\(u\)</span>
+است، متناظر با یالی از رئوس
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+به رئوس
+<span class="math notranslate nohighlight">\(F(u)\)</span>
+می­‌باشد. در این صورت به
+<span class="math notranslate nohighlight">\(H\)</span>
+، یک گراف فشرده شده مولفه‌­های قویا همبند
+<span class="math notranslate nohighlight">\(G\)</span>
+می‌­گوییم.</p>
+</section>
+<section id="id10">
+<h3><strong>قضیه 3.4.8</strong><a class="headerlink" href="#id10" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت قضیه:</strong> هر گراف فشرده شده مولفه­‌های قویا همبند، دور ندارد.</p>
+<p><strong>اثبات:</strong> فرض کنید
+<span class="math notranslate nohighlight">\(G\)</span>
+یک گراف جهت‌­دار دلخواه است و
+<span class="math notranslate nohighlight">\(H\)</span>
+، گراف فشرده شده مولفه­‌های قویا همبند
+<span class="math notranslate nohighlight">\(G\)</span>
+باشد.از برهان خلف استفاده می‌­کنیم. فرض کنید
+<span class="math notranslate nohighlight">\(H\)</span>
+دور داشته باشد و دو راس مانند
+<span class="math notranslate nohighlight">\(v\)</span>
+و
+<span class="math notranslate nohighlight">\(u\)</span>
+از
+<span class="math notranslate nohighlight">\(H\)</span>
+در یک دور قرار داشته باشند. چون از هر راس در یک مولفه قویا همبند به هر راس آن مولفه مسیر هست، پس در نتیجه می‌­توان از هر راس در
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+به هر راس در
+<span class="math notranslate nohighlight">\(F(u)\)</span>
+رفت و همچنین از هر راس در
+<span class="math notranslate nohighlight">\(F(u)\)</span>
+به هر راس در
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+مسیری جهت­‌دار وجود دارد (چرا؟) که یعنی رئوس
+<span class="math notranslate nohighlight">\(F(v)\)</span>
+و
+<span class="math notranslate nohighlight">\(F(u)\)</span>
+باید در یک مولفه قویا همبند قرار بگیرند که این با فرض ماکسیمال بودن مولفه‌­های قویا همبند در تناقض است. پس در نتیجه
+<span class="math notranslate nohighlight">\(H\)</span>
+دور ندارد و حکم اثبات می‌­شود.</p>
+</section>
+<section id="id11">
+<h3><strong>نتیجه 3.4.9</strong><a class="headerlink" href="#id11" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>طبق قضیه 3.3.2، می­‌توان رئوس هر گراف فشرده شده مولفه­‌های قویا همبند را توپولوژیک سورت کرد. پس در نتیجه می‌­توان مولفه­‌های قویا همبند هر گراف جهت‌داری را به صورت توپولوژیک سورت کنار هم قرار دهیم، یعنی به این صورت که جهت همه یال­‌هایی که بین دو مولفه متفاوت باشند، به یک سمت باشند (شکل 3).</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/scc_3.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/scc_3.png" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+<section id="id12">
+<h2>پیدا کردن مولفه­‌های قویا همبند<a class="headerlink" href="#id12" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>حال قصد داریم الگوریتمی با پیچیدگی زمانی مناسب برای پیدا کردن مولفه­‌های قویا همبند یک گراف ارائه دهیم.</p>
+<section id="id13">
+<h3><strong>الگوریتم کساراجو</strong><a class="headerlink" href="#id13" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>شرح:</strong> ابتدا روی کل گراف
+<span class="math notranslate nohighlight">\(DFS\)</span>
+می­‌زنیم و هربار هنگام خروج از هر راس آن را در یک پشته می‌­اندازیم (توجه کنید هر چه از راسی دیرتر خارج شویم، در پشته بالاتر قرار می‌گیرد). حال گراف معکوس را درنظر می­‌گیریم و در هر مرحله از بین تمام راس‌های دیده نشده، راسی که در پشته بالاتر از بقیه قرار دارد (مانند
+<span class="math notranslate nohighlight">\(v\)</span>
+) را برداشته و از آن در گراف معکوس،
+<span class="math notranslate nohighlight">\(DFS\)</span>
+می‌­زنیم و
+<span class="math notranslate nohighlight">\(v\)</span>
+و تمام راس­‌هایی که دیده می‌­شوند (از طریق
+<span class="math notranslate nohighlight">\(DFS\)</span>
+زدن از راس
+<span class="math notranslate nohighlight">\(v\)</span>
+) را در یک مولفه جدید قرار می‌­دهیم و این کار را تا پیدا شدن تمام مولفه­‌های قویا همبند ادامه می‌­دهیم. توجه کنید که هنگام
+<span class="math notranslate nohighlight">\(DFS\)</span>
+زدن بر روی گراف معکوس، زمانی که راسی دیده می‌­شود، آن را به عنوان دیده شده علامت زده و در سری‌­های بعد از آن
+<span class="math notranslate nohighlight">\(DFS\)</span>
+نمی­‌زنیم و یا به آن وارد نمی‌­شویم.</p>
+<p><strong>اثبات درستی:</strong> برای اثبات این الگوریتم, ابتدا به لم زیر که مشابه آن را در بخش قبل داشتیم توجه کنید.</p>
+<p>تعریف می‌کنیم
+<span class="math notranslate nohighlight">\(f(v)\)</span>
+به معنای زمان تمام شدن پیمایش برای راس
+<span class="math notranslate nohighlight">\(v\)</span>
+. به عبارتی داریم موقعیت یک راس را در پشته مشخص می‌کنیم(هر چه
+<span class="math notranslate nohighlight">\(f(v)\)</span>
+بیشتر باشد, راس در پشته در جایگاه پایین‌تری قرار می‌گیرد).</p>
+<p><strong>لم ۱:</strong> اگر
+<span class="math notranslate nohighlight">\(f(u) &gt; f(v)\)</span>
+و به عبارتی راس
+<span class="math notranslate nohighlight">\(u\)</span>
+در پشته, بالا تر از راس
+<span class="math notranslate nohighlight">\(v\)</span>
+باشد, و همچنین مسیری از
+<span class="math notranslate nohighlight">\(v\)</span>
+به
+<span class="math notranslate nohighlight">\(u\)</span>
+باشد, آنگاه مسیری از
+<span class="math notranslate nohighlight">\(u\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+نیز وجود دارد.</p>
+<p><strong>برهان لم۱:</strong> از برهان خلف استفاده می‌کنیم. فرض کنید مسیری از
+<span class="math notranslate nohighlight">\(v\)</span>
+به
+<span class="math notranslate nohighlight">\(u\)</span>
+است و  هیچ مسیری از
+<span class="math notranslate nohighlight">\(u\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+نباشد.</p>
+<p>آنگاه چون ما در ابتدا راس
+<span class="math notranslate nohighlight">\(u\)</span>
+را در پیمایش دیده‌ایم(چرا؟) و مسیری از
+<span class="math notranslate nohighlight">\(u\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+نیست, پس هیچگاه راس
+<span class="math notranslate nohighlight">\(v\)</span>
+را پیمایش نمیکنیم, مگر اینکه پیمایش راس
+<span class="math notranslate nohighlight">\(u\)</span>
+تمام شود. از طرفی اگر پیمایش راس
+<span class="math notranslate nohighlight">\(u\)</span>
+تمام شود و هنوز راس
+<span class="math notranslate nohighlight">\(v\)</span>
+را ندیده باشیم, نتیجه می‌شود که اول
+<span class="math notranslate nohighlight">\(u\)</span>
+به پشته اضافه می‌شود و بعد
+<span class="math notranslate nohighlight">\(v\)</span>
+به عبارتی
+<span class="math notranslate nohighlight">\(f(u) &lt; f(v)\)</span>
+که این خلاف فرض است. پس لم ثابت شد!</p>
+<p>حال توجه داشته باشید در هنگام پیمایش گراف معکوس, روی معکوس یال‌ها حرکت می‌کنیم. یعنی عضو بالای پشته که راس
+<span class="math notranslate nohighlight">\(v\)</span>
+باشد را برمی‌داریم و روی همه راس‌هایی مثل
+<span class="math notranslate nohighlight">\(x\)</span>
+که از
+<span class="math notranslate nohighlight">\(x\)</span>
+به
+<span class="math notranslate nohighlight">\(v\)</span>
+مسیر هست پیمایش می‌کنیم. در این‌صورت طبق لم۱، راس
+<span class="math notranslate nohighlight">\(v\)</span>
+هم به راس
+<span class="math notranslate nohighlight">\(x\)</span>
+مسیر دارد!</p>
+<p>پس
+<span class="math notranslate nohighlight">\(v\)</span>
+و همه رئوسی که در پیمایش گراف معکوس از
+<span class="math notranslate nohighlight">\(v\)</span>
+دیده شدند در یک مولفه قرار می‌گیرند!</p>
+<p>از طرفی هیچ راس دیگری در این مولفه نیست. زیرا در غیر این صورت اگر راس دیگری در این مولفه قرار می‌گرفت، باید حداقل یک مسیر به
+<span class="math notranslate nohighlight">\(v\)</span>
+می‌داشت و جزو ر‌ئوس دیده‌شده از
+<span class="math notranslate nohighlight">\(v\)</span>
+شمرده می‌شد.</p>
+</section>
+<section id="id14">
+<h3><strong>پیچیدگی الگوریتم</strong><a class="headerlink" href="#id14" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در الگوریتم بالا صرفا ۲ بار از
+<span class="math notranslate nohighlight">\(DFS\)</span>
+استفاده کردیم, در نتیجه پیچیدگی الگوریتم برابر با
+<span class="math notranslate nohighlight">\(O(n + m)\)</span>
+است که
+<span class="math notranslate nohighlight">\(m, n\)</span>
+به ترتیب تعداد راس‌ها و یال‌ها می‌باشند.</p>
+</section>
+<section id="id15">
+<h3><strong>لم 3.4.10</strong><a class="headerlink" href="#id15" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت لم:</strong> الگوریتم کساراجو، مولفه‌های قویا همبند را به ترتیب توپولوژیک سورت آن‌ها آن‌ها پیدا می‌کند.</p>
+<p><strong>اثبات:</strong> به استقرا بر روی تعداد مولفه‌های قویا همبند حکم را ثابت می‌کنیم. به ازای یک مولفه که درستی حکم بدیهی است. حال اگر فرض بر درستی حکم به ازای
+<span class="math notranslate nohighlight">\(n-1\)</span>
+مولفه باشد، حکم را به ازای
+<span class="math notranslate nohighlight">\(n\)</span>
+مولفه ثابت می‌کنیم. اگر به مولفه اولی که در الگوریتم پیدا می‌کنیم (مانند
+<span class="math notranslate nohighlight">\(H\)</span>
+) از مولفه دیگری مانند
+<span class="math notranslate nohighlight">\(L\)</span>
+یالی وارد شود، در این صورت در گراف معکوس، از
+<span class="math notranslate nohighlight">\(H\)</span>
+به
+<span class="math notranslate nohighlight">\(L\)</span>
+یال هست و چون در الگوریتم،
+<span class="math notranslate nohighlight">\(L\)</span>
+بعد از
+<span class="math notranslate nohighlight">\(H\)</span>
+پیدا می‌شود، پس در هنگام پیمایش
+<span class="math notranslate nohighlight">\(H\)</span>
+در گراف معکوس، باید تعدادی از راس‌های
+<span class="math notranslate nohighlight">\(L\)</span>
+دیده شوند و در
+<span class="math notranslate nohighlight">\(H\)</span>
+قرار گیرند در صورتی که مولفه‌ها نمی‌توانند اشتراک داشته باشند. پس در نتیجه مولفه اولی که پیدا می‌کنیم یالی از سمت مولفه‌های دیگر به آن وارد نمی‌شود و اولین مولفه در توپولوژیک سورت می‌باشد. حال طبق فرض استقرا باقی مولفه‌ها نیز به ترتیب توپولوژیک سورت پیدا می‌شوند (چرا؟) و حکم اثبات می‌شود.</p>
+</section>
+<section id="id16">
+<h3><strong>پیاده‌سازی الگوریتم</strong><a class="headerlink" href="#id16" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>توجه کنید انتها کد، مولفه ها را به ترتیب توپولوژیک سورت آن‌ها خروجی می‌دهیم.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">/// tedad ras ha va yal ha</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gr</span><span class="p">[</span><span class="n">MX</span><span class="p">],</span><span class="w"> </span><span class="n">back_gr</span><span class="p">[</span><span class="n">MX</span><span class="p">],</span><span class="w"> </span><span class="n">comp</span><span class="p">[</span><span class="n">MX</span><span class="p">];</span><span class="w"> </span><span class="c1">/// vector mojaverat, vector mojaverat(yal haie barax), moalefe haie ghavian hamband</span>
+<span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sk</span><span class="p">;</span><span class="w"> </span><span class="c1">/// moratab kardan ras ha barhasbe tamam shodan dfs</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">mark</span><span class="p">[</span><span class="n">MX</span><span class="p">];</span><span class="w"> </span><span class="c1">/// array mark baraie check kardane dide shodan ras ha</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">){</span><span class="w">  </span><span class="c1">/// dfs mamoli!</span>
+<span class="w">    </span><span class="n">mark</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="o">:</span><span class="w"> </span><span class="n">gr</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mark</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"></span>
+<span class="w">                   </span><span class="n">dfs</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">sk</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">back_dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="p">){</span><span class="w">  </span><span class="c1">/// dfs roie yal haie barax!</span>
+<span class="w">    </span><span class="n">mark</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">comp</span><span class="p">[</span><span class="n">cnt</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="o">:</span><span class="w"> </span><span class="n">back_gr</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mark</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"></span>
+<span class="w">                    </span><span class="n">back_dfs</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">cnt</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"> </span><span class="c1">/// shomare ras ha 0-based hast.</span>
+<span class="w">                </span><span class="n">gr</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"> </span><span class="c1">/// in vector yal ha ra zakhire mikonad</span>
+<span class="w">                </span><span class="n">back_gr</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"> </span><span class="c1">/// in vector barax yal ha ra zakhire mikonad</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mark</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">                    </span><span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">fill</span><span class="p">(</span><span class="n">mark</span><span class="p">,</span><span class="w"> </span><span class="n">mark</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">/// chon mikhahim dfs jadid bezanim, mark ra 0 mikonim.</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">sk</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"> </span><span class="c1">/// stack kheili kond ast. dar inja serfan baraie dark behtar stack estefade shode. behtar ast az vector estefade konid.</span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mark</span><span class="p">[</span><span class="n">sk</span><span class="p">.</span><span class="n">top</span><span class="p">()]){</span><span class="w"></span>
+<span class="w">                        </span><span class="n">back_dfs</span><span class="p">(</span><span class="n">sk</span><span class="p">.</span><span class="n">top</span><span class="p">(),</span><span class="w"> </span><span class="n">cnt</span><span class="p">);</span><span class="w"> </span><span class="c1">/// yek moalefe ra peida mikonim</span>
+<span class="w">                        </span><span class="n">cnt</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="n">sk</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// moalefe hara be tartib topo sort eshan chap mikonim</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cnt</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"> </span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="3.html" style="float:left;" title="گراف جهت‌دار بدون دور" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="5.html" style="float:right;" title="تشخیص دور داشتن گراف جهت دار" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at مارس 16, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>
