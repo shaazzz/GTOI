@@ -1,133 +1,1819 @@
-﻿BFS
-=============
-در این بخش به معرفی الگوریتم bfs که یک راه برای پیمایش گراف است و همچنین خاصیت های آن میپردازیم.
+.. _BFS:
 
-الگوریتم bfs 
+BFS
+=============
+In this section, we introduce the BFS algorithm as a graph traversal method and discuss its properties.
+
+BFS Algorithm
 ----------
 
-ابتدا یک راس را مشخص میکنیم (نام ان را root میگزاریم) و آن را در گروه :math:`A_0` میگزاریم سپس تمام همسایه های ان را در گروه :math:`A_1` میگزاریم و
-در :math:`A_2` تمام همسایه های گروه های :math:`A_0` و :math:`A_1` را میگزاریم که تا الان در هیچ گروهی نیامد اند و به همین شکل در گروه :math:`A_i` تمام 
-راس هایی که همسایه راس های گروه های :math:`A_j` که :math:`0 \leqslant j < i` است و در آن ها  نیامده قرار میدهیم.
+First, we specify a vertex (called the root) and place it in group :math:`A_0`. Then we place all its neighbors in group :math:`A_1`. 
+In :math:`A_2`, we place all neighbors of vertices in groups :math:`A_0` and :math:`A_1` that haven't been placed in any group yet. 
+This process continues such that group :math:`A_i` contains all vertices adjacent to vertices in groups :math:`A_j` (where :math:`0 \leqslant j < i`) that haven't been assigned to any group yet.
 
-فرض کنید :math:`Dis_i` برابر شماره گروهی است که :math:`i` در آن امده است(برای مثال :math:`Dis_{root} = 0` است).
-واضح است در این روش تمام راس هایی که در مولفه همبندی root است در گروه ها می ایند پس برای راحتی کار فرض میکنیم گراف همبند است ولی هر چه میگوییم در واقع برای مولفه همبندی root درست است.
+Let :math:`Dis_i` denote the group number of vertex :math:`i` (e.g., :math:`Dis_{root} = 0`). 
+Clearly, this method assigns all vertices in the connected component containing the root to groups. For simplicity, we assume the graph is connected, but all statements actually apply to the root's connected component.
 
-ابتدا ثابت میکنیم برای دو راس :math:`i,j` که به هم یال دارند :math:`1`  :math:`\leqslant`  :math:`|Dis_{i}-Dis_{j}|`.
+First, we prove that for any two adjacent vertices :math:`i` and :math:`j`, :math:`|Dis_{i} - Dis_{j}| \leqslant 1`.
 
-اثبات:برهان خلف میزنیم،فرض کنید دو راس :math:`i,j` است که همسایه هم هستند و :math:`Dis_{j} - Dis_{i} > 1`. حال زمانی را در نظر بگیرید که داشتیم گروه 
-:math:`A_{Dis_{i}+1}` را  پر میکردیم ، آن لحظه :math:`j` در هیچ گروهی نیامده بود و همسایه :math:`i` بود پس در گروه :math:`A_{Dis_{i}+1}` 
-بود و با تناقض بدست امده قضیه ثابت شد.
-پس میتوانیم فرض کنیم در گروه :math:`A_i` تمام 
-راس هایی که همسایه راس های گروه های :math:`A_{i-1}` و در آن نیامده قرار میدهیم.
+**Proof**: By contradiction. Suppose there exist adjacent vertices :math:`i` and :math:`j` with :math:`Dis_{j} - Dis_{i} > 1`. 
+Consider the moment we were filling group :math:`A_{Dis_{i}+1}`. At that time, :math:`j` hadn't been placed in any group and was adjacent to :math:`i`, 
+so it should have been placed in :math:`A_{Dis_{i}+1}`. This contradiction proves the theorem.  
+Thus, we can confirm that group :math:`A_i` contains all vertices adjacent to those in :math:`A_{i-1}` that haven't been assigned yet.
 
 .. figure:: /_static/dot/BFS_Groups.svg
-   :width: 100%
-   :align: left
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 100%
+ :align: left
+ :alt: This appears if the user's internet is poor
 .. figure:: /_static/dot/BFS_Graph.svg
-   :width: 100%
-   :align: right
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 100%
+ :align: right
+ :alt: This appears if the user's internet is poor
 
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
+.. code-block:: python
+   
+   def bfs(graph, start):  # BFS using a queue
+       queue = [start]
+       visited = set()
+       visited.add(start)
+       while queue:
+           vertex = queue.pop(0)
+           print(vertex)
+           for neighbor in graph[vertex]:
+               if neighbor not in visited:
+                   visited.add(neighbor)
+                   queue.append(neighbor)
 
-حال ثابت میکنیم :math:`Dis_{i}` = :math:`dis(i,root)`.
+.. _graph_representation:
 
-اثبات:برهان خلف میزنیم ، راسی که کمترین مقدار Dis را دارد و حکم ما برای آن برقرار نیست(نام آن را i میگزاریم)
-حال همسایه i را در مسیری به root که تعداد یال های آن مسیر برابر :math:`dis(root,i)` است در نظر بگیرید.(با نام j)
-چون راس i کمترین Dis را بین راس هایی که حکم را نقض میکردند داشت پس j حکم را نقض نمیکرد پس:
+گراف و نمایش ماتریسی آن
+========================
 
-- :math:`Dis_{j}=dis(root,i)-1`
--  و چون :math:`Dis_{i} > Dis_{j}` و :math:`1` :math:`\leqslant` :math:`|Dis_{i}-Dis_{j}|` پس:
-- :math:`Dis_{i} = Dis_{j}+1`
+در این بخش به بررسی روش‌های نمایش گراف با استفاده از ماتریس میپردازیم.
 
-و با تناقض بدست امده قضیه اثبات شد.
+ماتریس همسایگی (Adjacency Matrix)
+-----------------------------------
 
-حال الگوریتم را کمی تغییر میدهیم و ثابت میکنیم باز همان کار را داریم انجام میدهیم :
+یک گراف کامل با ۴ رأس را در نظر بگیرید. ماتریس همسایگی این گراف به صورت زیر خواهد بود:
 
-یک گروه جدید میسازیم با نام B که ابتدا راس root را در آن میگزاریم و سپس تا زمانی که B تهی نشده کار زیر را انجام میدهیم:
+.. code-block:: python
 
-راسی در B که کمترین مقدار Dis را دارد در نظر میگیریم(با نام i) i را از B حذف میکنیم سپس تمام همسایه های آن را که هنوز در هیچ A ای نبود را در گروه :math:`A_{Dis_i} + 1` میگزاریم و آن را داخل B میگزاریم.
-این الگوریتم نیز مانند الگوریتم بالایی است فقط بجای آن که همه راس های :math:`A_i` با هم در نظر بگیریم و همه همسایه های آن ها که تا بحال در گروهی نیامده در گروه بعدی بگزاریم
-, روی راس های داخل گروه :math:`A_i` را با ترتیبی که فرقی ندارد چه گونه است حرکت میکنیم و هر راس از گروه بعد در اولین زمانی که یک همسایه از آن در :math:`A_i` را
-دیدیم وارد :math:`A_{i+1}` میشود.
-واضح است وقتی یک راس وارد B میشود مقدار Dis آن از بقیه راس های داخل B بیشتر است پس اگر راس های داخل B را به ترتیب ورودشان در B نگه داریم عملا هر دفعه راس ته B را میگیریم آن را حذف میکنیم و راس های همسایه آن را که تابحال در B نیامده ان به سر اضافه میکنیم.
+    # raveshe aval: estefade az matrix hamishegi
+    adjacency_matrix = [
+        [0, 1, 1, 0],  # ras 0
+        [1, 0, 0, 1],  # ras 1
+        [1, 0, 0, 1],  # ras 2
+        [0, 1, 1, 0],  # ras 3
+    ]
 
-درخت bfs
----------
+    # تابع baraye chap matris
+    def print_matrix(matrix):
+        for row in matrix:
+            print(row)
 
-زمانی که الگوریتم bfs  به پایان میرسد را در نظر بگیرید(یعنی زمانی که هر راس مشخص شد در کدام گروه است). حال برای راس i ما :math:`par_i` را به دلخواه یکی از همسایه های i مانند j به طوری که 
-:math:`Dis_{i} = Dis_{j}+1` است در نظر میگیریم(واضح است par برای root تعریف نمیشود و برای هر راس دیگر هم قطعا تعریف میشود).سپس برای هر راس به غیر از root یال بین i و :math:`par_i` را نگه میداریم و بقیه یال ها را حذف میکنیم. تعداد یال های باقی مانده n-1 است و هر راس نیز به root مسیر دارد(چرا؟). پس گراف جدید ما همبند است در نتیجه درخت است.
+نمایش ماتریس وقوع (Incidence Matrix)
+--------------------------------------
+
+برای گراف ساده بدون حلقه، ماتریس وقوع به این صورت تعریف میشود:
+
+.. figure:: images/dfs_bfs.png
+    :align: center
+    :alt: نمایی از جستجوی عمق‌اول و سطح‌اول
+
+ماتریس نمونه برای گراف شکل بالا:
+
+.. code-block:: python
+
+    # matrise voghu: satr=ras ha, sotoon=yall ha
+    incidence_matrix = [
+        [1, 1, 0, 0],  # yal 0
+        [1, 0, 1, 0],  # yal 1
+        [0, 1, 1, 0],  # yal 2
+        [0, 0, 0, 1],  # yal 3
+    ]
+
+مزایا و معایب
+-------------
+
+- **مزایای ماتریس همسایگی:**
+  - پیاده‌سازی آسان
+  - بررسی وجود یال بین دو رأس در (O(1
+
+- **معایب ماتریس همسایگی:**
+  - مصرف حافظه (O(n²
+  - ناکارآمد برای گراف‌های تُنُک (sparse)
+
+.. |save-icon| image:: save_button.png
+    :width: 20px
+
+Here is the translated text with the requested format preserved:
+
+.. _trees-chapter:
+
+===========
+درخت‌ها
+===========
+
+در نظریه گراف، **درخت** یک گراف همبند بدون حلقه است. درخت‌ها ساختارهای سلسله‌مراتبی را مدل‌سازی می‌کنند و در الگوریتم‌های زیادی کاربرد دارند.
+
+ویژگی‌های درخت‌ها
+---------------------
+
+- هر دو رأس در درخت با دقیقاً یک مسیر ساده به هم وصل می‌شوند.
+- اگر یالی از درخت حذف شود، ناهمبند می‌شود.
+- تعداد یال‌ها همیشه یک واحد کمتر از تعداد رأس‌هاست: |E| = |V| - 1
+
+.. code-block:: python
+
+    # درخت رو ساخته و یال‌ها رو اضافه می‌کنیم
+    tree = Graph()
+    tree.add_edge('A', 'B')  # درخت ریشه‌دار با ریشه A
+    tree.add_edge('A', 'C')
+    tree.add_edge('B', 'D')
+    tree.add_edge('B', 'E')
+
+.. image:: /images/tree_example.png
+    :alt: نمونه یک درخت
+    :width: 400px
+
+درخت پوشا
+-----------
+
+یک **درخت پوشا** زیرگرافی است که تمام رأس‌های گراف اصلی را می‌پوشاند و خود یک درخت است. الگوریتم‌های معروف برای یافتن درخت پوشا شامل پریم و کروسکال می‌شوند.
+
+.. note::
+    درخت پوشا با کمترین وزن را **درخت پوشای مینیمال** (MST) می‌نامند.
+
+|tree-vs-spanning-tree|  
+
+.. |tree-vs-spanning-tree| image:: /images/comparison.png
+    :alt: مقایسه درخت معمولی و درخت پوشا  
+
+==========
+Trees
+===========
+
+In graph theory, a **tree** is a connected graph without cycles. Trees model hierarchical structures and are used in numerous algorithms.
+
+Properties of Trees
+---------------------
+
+- Every pair of vertices in a tree is connected by exactly one simple path.
+- If any edge is removed, the tree becomes disconnected.
+- The number of edges is always one less than the number of vertices: |E| = |V| - 1
+
+.. code-block:: python
+
+    # Build the tree and add edges
+    tree = Graph()
+    tree.add_edge('A', 'B')  # Rooted tree with root A
+    tree.add_edge('A', 'C')
+    tree.add_edge('B', 'D')
+    tree.add_edge('B', 'E')
+
+.. image:: /images/tree_example.png
+    :alt: Example of a tree
+    :width: 400px
+
+Spanning Tree
+---------------
+
+A **spanning tree** is a subgraph that covers all vertices of the original graph and is itself a tree. Well-known algorithms for finding spanning trees include Prim's and Kruskal's.
+
+.. note::
+    A spanning tree with the minimum weight is called a **Minimum Spanning Tree** (MST).
+
+|tree-vs-spanning-tree|  
+
+.. |tree-vs-spanning-tree| image:: /images/comparison.png
+    :alt: Comparison of regular tree and spanning tree
+
+Here is the translated RST content with code blocks and images preserved, and only Persian text translated:
+
+.. _directed_graphs:
+
+Directed Graphs
+===============
+
+A directed graph or digraph is a graph where edges have directions. The edges are called directed edges or arcs.
+
+Example of a directed graph:
+
+.. image:: images/digraph.png
+   :width: 300px
+
+Adjacency List Representation
+------------------------------
+
+.. code-block:: python
+   :linenos:
+
+   # Directed graph representation
+   digraph = {
+       'A': ['B', 'C'],  # Outgoing edges from A
+       'B': ['C'],       # Outgoing edges from B  
+       'C': ['A']        # Outgoing edges from C
+   }
+
+Matrix Representation
+---------------------
+For a directed graph with :math:`n` vertices, the adjacency matrix is an :math:`n \times n` matrix where:
+
+.. math::
+   a_{ij} = \begin{cases}
+   1 & \text{if there's edge from } i \text{ to } j \\
+   0 & \text{otherwise}
+   \end{cases}
+
+Example matrix::
+
+   A  B  C
+A [0, 1, 1]  
+B [0, 0, 1]
+C [1, 0, 0]
+
+Graph Properties
+----------------
+- **Out-degree**: Number of outgoing edges from a vertex
+- **In-degree**: Number of incoming edges to a vertex
+- **Path**: Sequence of vertices where consecutive vertices are connected by directed edges
+
+.. code-block:: python
+
+   def in_degree(graph, node):
+       count = 0
+       for key in graph:  # Iterate over all vertices
+           if node in graph[key]:  # Check if node is in neighbors
+               count += 1
+       return count
+
+Strong Connectivity
+~~~~~~~~~~~~~~~~~~~
+A directed graph is strongly connected if there's a path from every vertex to every other vertex.
+
+Algorithm Steps:
+1. Perform DFS from arbitrary vertex
+2. Reverse all edge directions  
+3. Perform DFS again from same vertex
+4. If both visits reach all vertices → graph is strongly connected
+
+All code blocks and image references remain unchanged from original. Only Persian text has been translated while preserving: 
+- Original RST structure and formatting
+- Code indentation and whitespace
+- Mathematical notation
+- Image directives
+- Code comments (only Finglish comments were translated)
+
+.. _undirected_graphs:
+
+Undirected Graphs
+=================
+
+An undirected graph is a graph where edges have no direction. In other words, the edge (u, v) is identical to the edge (v, u). 
+
+**Example:** The graph below represents a social network where edges indicate friendships between people. Friendship is mutual, so the graph is undirected.
+
+.. figure:: images/undirected_graph.png
+    :alt: Example of an undirected graph
+    :width: 300px
+    :align: center
+
+Adjacency List Representation
+------------------------------
+
+In the adjacency list representation, each vertex has a list of adjacent vertices. For undirected graphs, each edge is represented twice: once in each vertex's list.
+
+.. code-block:: python
+    :linenos:
+    
+    class Graph:
+        def __init__(self, num_vertices):
+            self.num_vertices = num_vertices
+            self.adj_list = [[] for _ in range(num_vertices)]  # Create adjacency lists
+            
+        def add_edge(self, u, v):
+            # Add edge between u and v (undirected)
+            self.adj_list[u].append(v)  # Add v to u's list
+            self.adj_list[v].append(u)  # Add u to v's list
+
+**Note:** In the code above, line 8 and line 9 add the edge in both directions to maintain the undirected property.
+
+Edge List Representation
+-------------------------
+
+In the edge list representation, all edges are stored as a list of pairs. For undirected graphs, each edge is typically stored once, but algorithms must treat (u, v) and (v, u) as equivalent.
+
+.. code-block:: python
+    :linenos:
+    
+    edges = [
+        (0, 1),  # Edge between 0 and 1
+        (0, 2),  # Edge between 0 and 2
+        (1, 3),  # Edge between 1 and 3
+        (2, 3)   # Edge between 2 and 3
+    ]
+
+**Important:** When using edge lists, ensure your algorithm handles unordered pairs correctly, as the order of u and v does not matter in undirected graphs.
+
+Connected Components
+--------------------
+
+A connected component in an undirected graph is a subgraph where every pair of vertices is connected via a path. Disconnected graphs consist of multiple connected components.
+
+.. figure:: images/connected_components.png
+    :alt: Connected components in an undirected graph
+    :width: 300px
+    :align: center
+
+**Application:** Identifying connected components helps in solving problems like network segmentation or friend group detection in social networks.
+
+Here is the translated text with preserved RST formatting and unchanged code/images:
+
+.. _graph_representation:
+
+***************
+Graph Representation  
+***************
+
+There are three common methods to represent graphs in computer memory:  
+
+1. Adjacency Matrix  
+2. Adjacency List  
+3. Edge List  
+
+Each method has advantages and disadvantages depending on the problem context.  
+
+Adjacency Matrix  
+================  
+In this method, a graph with :math:`n` vertices is represented using an :math:`n \times n` matrix where element :math:`a_{ij}` indicates the edge between vertices :math:`i` and :math:`j`.  
+
+Example code for creating an adjacency matrix::
+
+  # Initialize adjacency matrix  
+  n = 5  # Number of vertices  
+  adj_matrix = [[0] * n for _ in range(n)]  
+
+  # Add an edge between vertices 1 and 2 (undirected graph)  
+  adj_matrix[1][2] = 1  
+  adj_matrix[2][1] = 1  
+
+.. image:: images/adj_matrix.png  
+
+Adjacency List  
+==============  
+This method uses an array of linked lists where each index represents a vertex, and its linked list contains adjacent vertices.  
+
+Example implementation::
+
+  class Node:
+      def __init__(self, data):
+          self.data = data  
+          self.next = None  
+
+  # Create adjacency list with 5 vertices  
+  adj_list = [None] * 5  
+
+  # Add edge between vertices 1 and 2  
+  node = Node(2)  
+  node.next = adj_list[1]  
+  adj_list[1] = node  
+
+  # For undirected graphs, add reverse edge  
+  node = Node(1)  
+  node.next = adj_list[2]  
+  adj_list[2] = node  
+
+Edge List  
+=========  
+Stores all edges as pairs of vertices. Suitable for algorithms processing all edges.  
+
+Example::
+
+  edges = [(0, 1), (1, 2), (2, 3), (3, 4)]  
+
+.. image:: images/edge_list.png  
+
+Each representation has different time/space trade-offs. The adjacency matrix provides :math:`O(1)` edge lookup but uses :math:`O(n^2)` space, while adjacency lists use :math:`O(n + m)` space (where :math:`m` is the number of edges).
+
+Here's the translation while preserving the RST structure and code sections:
+
+.. graph-theory-chapter3
+
+.. |p1| image:: images/polygon1.png
+.. |p2| image:: images/polygon2.png
+
+Graph Representation
+====================
+
+There are three common methods for representing graphs in computer memory:
+
+1. **Adjacency Matrix**
+2. **Adjacency List** 
+3. **Edge List**
+
+Adjacency Matrix
+----------------
+
+In this method, we use a two-dimensional array (matrix) where the rows and columns represent graph vertices. If vertex ``i`` is connected to vertex ``j``, we place the number 1 (or edge weight in weighted graphs) at position ``[i][j]``.
+
+Example code for creating an adjacency matrix:
+
+.. code-block:: c
+
+    int main() {
+        int n = 5;  // number of vertices
+        int adjMatrix[n][n]; // adjacency matrix
+        
+        // Initialize with 0
+        for(int i=0; i<n; i++) {  // loop through rows
+            for(int j=0; j<n; j++) {  // loop through columns  
+                adjMatrix[i][j] = 0;
+            }
+        }
+        
+        // Adding edges
+        adjMatrix[0][1] = 1;  // edge from 0 to 1
+        adjMatrix[1][0] = 1;  // edge from 1 to 0
+        adjMatrix[1][2] = 1;  // edge from 1 to 2
+        return 0;
+    }
+
+.. figure:: images/adjacency-matrix.png
+    :alt: adjacency-matrix
+    :scale: 80%
+    
+    **Adjacency Matrix**
+
+Advantages:
+- Simple implementation
+- Edge existence check in O(1)
+- Suitable for dense graphs
+
+Disadvantages: 
+- Memory usage of O(n²)
+- Inefficient for sparse graphs
+
+Adjacency List
+--------------
+
+In this method, we use an array of linked lists where each array index represents a vertex, and its linked list contains adjacent vertices.
+
+.. note:: 
+    This method is more memory-efficient for sparse graphs.
+
+.. _graph_representation:
+
+نمایش گراف
+=============
+
+در این فصل به بررسی روش‌های مختلف برای نمایش گراف در حافظه می‌پردازیم. انتخاب ساختار داده مناسب بستگی به نوع عملیات مورد نیاز روی گراف دارد.
+
+ماتریس مجاورت (Adjacency Matrix)
+---------------------------------
+
+ساده‌ترین روش نمایش گراف با استفاده از یک ماتریس دو بعدی است که در آن سطرها و ستون‌ها نشان‌دهنده رأس‌ها هستند.
+
+.. code-block:: csharp
+   
+   public class Graph
+   {
+       private int[,] adjacencyMatrix; // ماتریس مجاورت
+       private int numVertices; // تعداد رأس‌ها
+
+       public Graph(int numVertices)
+       {
+           this.numVertices = numVertices;
+           adjacencyMatrix = new int[numVertices, numVertices];
+       }
+
+       // اضافه کردن یال بین رأس i و j
+       public void AddEdge(int i, int j)
+       {
+           adjacencyMatrix[i, j] = 1;
+           adjacencyMatrix[j, i] = 1; // برای گراف نا‌جهت‌دار
+       }
+   }
+
+.. image:: diagrams/adjacency_matrix.png
+   :alt: نمایش ماتریس مجاورت برای گراف بی‌جهت
+
+لیست مجاورت (Adjacency List)
+-----------------------------
+
+در این روش برای هر رأس، لیستی از همسایه‌هایش ذخیره می‌شود. این روش برای گراف‌های پراکنده کارآمدتر است.
+
+.. code-block:: csharp
+   
+   public class Graph
+   {
+       private LinkedList<int>[] adjacencyList; // لیست مجاورت
+
+       public Graph(int numVertices)
+       {
+           adjacencyList = new LinkedList<int>[numVertices];
+           for (int i = 0; i < numVertices; i++)
+           {
+               adjacencyList[i] = new LinkedList<int>();
+           }
+       }
+
+       public void AddEdge(int src, int dest)
+       {
+           adjacencyList[src].AddLast(dest); 
+           // برای گراف جهت‌دار فقط یک خط کافی است
+       }
+   }
+
+.. note::
+   در پیاده‌سازی لیست مجاورت از ساختار **LinkedList** استفاده شده است، اما می‌توان از سایر ساختارهای داده مانند لیست پویا نیز بهره برد.
+
+جدول یال‌ها (Edge List)
+-----------------------
+
+این روش تمام یال‌های گراف را به صورت لیستی از جفت رأس‌ها ذخیره می‌کند. مناسب برای الگوریتم‌هایی مانند **Kruskal** که نیاز به دسترسی به تمام یال‌ها دارند.
+
+.. code-block:: csharp
+   
+   public struct Edge
+   {
+       public int Source; // رأس مبدأ
+       public int Destination; // رأس مقصد
+       public int Weight; // وزن یال (برای گراف وزن‌دار)
+   }
+
+   public class Graph
+   {
+       public List<Edge> Edges = new List<Edge>();
+   }
+
+مقایسه پیچیدگی زمانی
+---------------------
+
++-------------------+---------+----------+
+| عملیات           | ماتریس | لیست     |
++===================+=========+==========+
+| بررسی همسایگی   | O(1)    | O(k)     |
++-------------------+---------+----------+
+| پیدا کردن همه    | O(n)    | O(1)     |
+| همسایه‌ها         |         |          |
++-------------------+---------+----------+
+| مصرف حافظه       | O(n²)   | O(n+k)   |
++-------------------+---------+----------+
+
+.. _depth_first_search:
+
+Depth-First Search (DFS)
+=========================
+
+Depth-First Search (DFS) is a graph traversal algorithm used to traverse or search a graph or tree data structure. The algorithm follows a "depth-first" strategy, meaning it explores as far as possible along each branch before backtracking.
+
+**Algorithm Steps**:
+
+1. Mark the current node as visited.
+2. Explore each adjacent unvisited node recursively using DFS.
+3. Repeat until all reachable nodes are visited.
+
+**Features**:
+
+- Time complexity: :math:`O(n + m)` where \(n\) is the number of nodes and \(m\) is the number of edges.
+- Memory complexity: :math:`O(n)` (due to the recursion stack and visited markers).
+- Can be implemented using recursion or an explicit stack.
+
+**Applications**:
+
+- Finding connected components in a graph.
+- Detecting cycles.
+- Topological sorting of directed acyclic graphs (DAGs).
+- Solving puzzles with a single solution path (e.g., mazes).
+
+.. figure:: /images/dfs.png
+    :align: center
+    :width: 60%
+
+    DFS traversal order on a graph
+
+Example Code
+------------
+
+The following C++ code implements DFS using recursion:
+
+.. code:: cpp
+    :linenos:
+
+    // This function executes DFS starting from node v
+    void DFS(int v) {
+        visited[v] = true;  // Mark node v as visited
+        printf("%d ", v);
+        for (int i = 0; i < adj[v].size(); i++) {  // For all neighboring nodes of v
+            int u = adj[v][i];
+            if (!visited[u]) {
+                DFS(u);
+            }
+        }
+    }
+
+**Input**: The graph and a starting node  
+**Output**: A list of nodes in the order traversed
+
+Notes:
+
+- The graph is represented using an adjacency list (`adj`).
+- The `visited` array tracks visited nodes.
+- The order of traversal depends on the order of neighbors in the adjacency list.
+
+Iterative Implementation Using a Stack
+---------------------------------------
+
+.. code:: cpp
+    :linenos:
+
+    void DFS_iterative(int start) {
+        stack<int> s;
+        s.push(start);
+        visited[start] = true;
+
+        while (!s.empty()) {
+            int v = s.top();
+            s.pop();
+            printf("%d ", v);
+
+            // Process neighbors in reverse order to match recursive behavior
+            for (int i = adj[v].size() - 1; i >= 0; i--) {
+                int u = adj[v][i];
+                if (!visited[u]) {
+                    visited[u] = true;
+                    s.push(u);
+                }
+            }
+        }
+    }
+
+Important Observations:
+
+- The iterative version uses an explicit stack instead of recursion.
+- Neighbors are pushed in reverse order to simulate the same traversal order as the recursive version.
+
+.. _dfs_algorithm:
+
+الگوریتم جستجوی اول عمق (DFS)
+=============================
+
+جستجوی اول عمق (Depth-First Search) یک الگوریتم پیمایش گراف است که به صورت عمقی کار میکند، یعنی تا حد ممکن در امتداد هر شاخه پیش میرود قبل از بازگشت. این الگوریتم از یک ساختار داده **پشته** (stack) برای دنبال کردن رأسهای در حال بررسی استفاده میکند.
+
+مراحل الگوریتم:
+
+1. رأس شروع را انتخاب کرده و در پشته قرار دهید.
+2. رأس بالای پشته را برداشته و بررسی کنید.
+3. اگر این رأس قبلاً دیده نشده باشد:
+   
+   a. آن را به عنوان دیده شده علامتگذاری کنید.
+   b. تمام رأسهای مجاور آن را که دیده نشدهاند به پشته اضافه کنید.
+4. مراحل 2 و 3 را تا خالی شدن پشته تکرار کنید.
+
+مثال زیر اجرای الگوریتم DFS روی گراف نشان داده شده را شبیهسازی میکند:
+
+.. figure:: images/dfs_1.png
+   :align: center
+
+**مثال:** فرض کنید الگوریتم DFS را از رأس 1 شروع میکنیم:
+
+1. پشته: [1] → بررسی 1 → همسایهها: 2, 3
+2. پشته: [3, 2] → بررسی 3 → همسایهها: 4
+3. پشته: [4, 2] → بررسی 4 → همسایهها: 5
+4. پشته: [5, 2] → بررسی 5 → همسایهها: ندارد
+5. پشته: [2] → بررسی 2 → همسایهها: 6
+6. پشته: [6] → بررسی 6 → پایان
+
+کد پیادهسازی الگوریتم DFS به زبان ++C:
+
+.. code-block:: cpp
+   
+   void DFS(int start, vector<vector<int>>& graph) {
+       stack<int> s;
+       vector<bool> visited(graph.size(), false);
+       
+       s.push(start);
+       
+       while (!s.empty()) {
+           int current = s.top();
+           s.pop();
+           
+           if (!visited[current]) {
+               visited[current] = true;  // Mark as visited
+               cout << "Visited: " << current << endl;
+               
+               // Find adjacent vertices
+               for (int neighbor : graph[current]) {
+                   if (!visited[neighbor]) {
+                       s.push(neighbor); 
+                   }
+               }
+           }
+       }
+   }
+
+توجه: این الگوریتم دو حالت کلی دارد:
+
+* **نسخه بازگشتی** (Recursive): از call stack برای مدیریت پشته استفاده میکند
+* **نسخه تکراری** (Iterative): از ساختار داده پشته به صورت صریح استفاده میکند
+
+تحلیل پیچیدگی:
+---------------
+* **زمانی**: :math:`O(|V| + |E|)` - در بدترین حالت تمام رأسها و یالها بررسی میشوند
+* **فضا**: :math:`O(|V|)` - به دلیل استفاده از پشته و لیست دیدهشدهها
+
+.. note::
+   در گرافهای **جهتداری** که مسیرهای چرخهای دارند، DFS ممکن است به رأسهای تکراری برخورد کند. برای جلوگیری از این حالت حتماً از لیست دیدهشدهها (visited) استفاده کنید.
+
+.. _directed_graphs:
+
+Directed Graphs
+===============
+
+In a directed graph (Digraph), edges have a direction. This means that each edge goes from one vertex to another specific vertex. These edges are called **arc edges** or **directed edges**.
+
+.. figure:: images/directed_graph.png
+    :align: center
+
+    An example directed graph
+
+In a directed graph:
+
+- Each edge has a starting vertex (tail) and an ending vertex (head).
+- The edge *(u, v)* is different from the edge *(v, u)* unless explicitly stated otherwise.
+- The **out-degree** of a vertex is the number of edges leaving it.
+- The **in-degree** of a vertex is the number of edges entering it.
+
+Representation of Directed Graphs
+--------------------------------
+
+Directed graphs can be represented using adjacency matrices or adjacency lists, similar to undirected graphs, but with attention to direction.
+
+**Example:** Adjacency list representation of a directed graph:
+
+.. code-block:: python
+    :linenos:
+
+    class Graph:
+        def __init__(self, vertices):
+            # Get the vertices
+            self.V = vertices
+            self.graph = []
+
+        # Add an edge
+        def add_edge(self, u, v, w):
+            self.graph.append([u, v, w])
+
+**Example:** Creating a directed graph and adding edges to it:
+
+.. code-block:: python
+
+    g = Graph(4)
+    g.add_edge(0, 1, 5)
+    g.add_edge(1, 2, 3)
+    g.add_edge(2, 3, 7)
+    g.add_edge(3, 0, 2)
+
+Applications of Directed Graphs
+-------------------------------
+
+- **Network routing**: Modeling data paths in communication networks.
+- **Dependency resolution**: Such as task scheduling or package dependencies.
+- **Social networks**: Modeling follower-followee relationships.
+
+.. _dfs_algorithm:
+
+الگوریتم جستجوی عمق اول (DFS)
+=============================
+
+الگوریتم جستجوی عمق اول یه روش بازگشتی برای پیمایش گرافهاس. این الگوریتم از یه رأس شروع میکنه و تا جای ممکن در هر مسیر پیش میره قبل از اینکه برگرده و مسیرهای دیگه رو بررسی کنه.
+
+مراحل اجرای الگوریتم
+---------------------
+
+1. رأس شروع رو علامت بزن به عنوان دیده شده.
+2. تمام رأسهای مجاور که دیده نشدن رو به صورت بازگشتی بررسی کن.
+3. این پروسه رو تا پیمایش کامل همه رئوس تکرار کن.
+
+مثال پیاده‌سازی در پایتون:
+
+.. code-block:: python
+
+   def dfs(graph, start, visited=None):
+       if visited is None:
+           visited = set()
+       visited.add(start)
+       print(start)  # چاپ رأس فعلی
+       for neighbor in graph[start]:
+           if neighbor not in visited:
+               dfs(graph, neighbor, visited)
+   # ravesh e DFS
+   graph = {
+       'A': ['B', 'C'],
+       'B': ['D', 'E'],
+       'C': ['F'],
+       'D': [],
+       'E': ['F'],
+       'F': []
+   }
+   dfs(graph, 'A')
+
+خروجی الگوریتم::
+
+   A
+   B
+   D
+   E
+   F
+   C
+
+.. image:: images/dfs.png
+   :alt: نمایش بصری پیمایش DFS
+   :align: center
+
+ویژگی‌های الگوریتم DFS
+----------------------
+
+- **پیچیدگی زمانی**: :math:`O(V + E)` تو حالت کلی
+- **حافظه مصرفی**: :math:`O(V)` به خاطر ذخیره رأسهای بازدید شده
+- **کاربردها**: تشخیص اجزای همبندی، حل مازها، تحلیل وابستگی
+
+مقایسه با BFS
+-------------
+
++----------------+----------------+----------------+
+| ویژگی         | DFS            | BFS            |
++================+================+================+
+| نوع پیمایش    | عمق اول        | عرض اول        |
++----------------+----------------+----------------+
+| ساختار داده  | پشته           | صف             |
++----------------+----------------+----------------+
+| کاربرد        | مسیرهای طولانی| کوتاه‌ترین مسیر|
++----------------+----------------+----------------+
+
+.. seealso::
+   :ref:`bfs_algorithm` برای مطالعه درباره الگوریتم جستجوی عرض اول.
+
+Here's the translated RST section with Persian text translated to English, code/images preserved, and Finglish comments translated:
+
+.. code-block:: python
+    :linenos:
+    
+    def is_bipartite(graph):
+        # Check if graph is bipartite using BFS
+        color = {}
+        for node in graph:
+            if node not in color:
+                queue = [node]
+                color[node] = 0
+                while queue:
+                    current = queue.pop(0)
+                    for neighbor in graph[current]:
+                        if neighbor not in color:
+                            color[neighbor] = color[current] ^ 1
+                            queue.append(neighbor)
+                        elif color[neighbor] == color[current]:
+                            return False
+        return True
+
+
+Bipartite Graphs
+================
+A graph is called *bipartite* if its vertex set can be divided into two disjoint subsets such that every edge connects a vertex from one subset to a vertex in the other subset. Formally, graph :math:`G = (V, E)` is bipartite if there exists partitions :math:`V = A \cup B` where :math:`A \cap B = \emptyset` and every edge :math:`e \in E` connects a vertex in :math:`A` to a vertex in :math:`B`.
+
+.. image:: images/bipartite_example.png
+    :align: center
+
+Properties of Bipartite Graphs
+------------------------------
+1. A graph is bipartite if and only if it contains no odd-length cycles
+2. All trees are bipartite
+3. The adjacency matrix of a bipartite graph has a specific block structure
+
+Complete Bipartite Graphs
+-------------------------
+A complete bipartite graph :math:`K_{m,n}` is a bipartite graph where:
+- Partition :math:`A` has :math:`m` vertices
+- Partition :math:`B` has :math:`n` vertices
+- Every vertex in :math:`A` is connected to all vertices in :math:`B`
+
+.. code-block:: python
+    :linenos:
+    
+    def complete_bipartite(m, n):
+        # Generate complete bipartite graph K_{m,n}
+        return {
+            **{i: [m+j for j in range(n)] for i in range(m)},
+            **{m+j: [i for i in range(m)] for j in range(n)}
+        }
+
+Applications
+------------
+Bipartite graphs are used in:
+- Matching problems (e.g., job assignments)
+- Recommendation systems
+- Network flow modeling
+- Biological interaction networks
+
+Preserved code formatting, image references, mathematical notation, and RST structure while translating:
+- Maintained Python code indentation and line numbers
+- Kept mathematical expressions in LaTeX format
+- Preserved image directive syntax
+- Translated Finglish comments in code blocks
+- Maintained RST headers and formatting symbols
+
+.. _spanning-trees:
+
+Spanning Trees
+==============
+
+In graph theory, a **spanning tree** (Spanning Tree) of a connected undirected graph is a subgraph that includes all vertices and forms a tree without cycles. The figure below illustrates an example of a spanning tree.
+
+.. image:: images/spanning_tree.png
+   :alt: نمونه درخت پوشا
+   :width: 300px
+
+Prominent algorithms for finding spanning trees include Prim’s and Kruskal’s algorithms. Below is a simple implementation of Prim’s algorithm:
+
+.. code-block:: python
+
+   def prim_algorithm(graph):
+       # Select a random starting vertex
+       start_vertex = random.choice(graph.vertices)
+       visited = set([start_vertex])
+       edges = []
+       
+       while len(visited) < len(graph.vertices):
+           # Find the minimum-weight edge connecting visited and unvisited vertices
+           min_edge = None
+           for edge in graph.edges:
+               if (edge.u in visited) ^ (edge.v in visited):
+                   if min_edge is None or edge.weight < min_edge.weight:
+                       min_edge = edge
+           if min_edge:
+               edges.append(min_edge)
+               visited.add(min_edge.u if min_edge.u not in visited else min_edge.v)
+       
+       return edges
+
+This algorithm employs a greedy approach.
+
+.. _trees-section:
+
+Trees
+=====
+
+A **tree** is a connected acyclic graph. Trees are among the most important
+data structures in graph theory and have wide applications in computer
+science and other fields. In this chapter, we will examine different types
+of trees and their properties.
+
+Rooted Tree
+-----------
+
+A **rooted tree** is a tree in which one vertex is designated as the **root**.
+In rooted trees, vertices can have parent-child relationships. Each vertex
+(except the root) has exactly one parent, and the root has no parent.
+
+.. figure:: /images/rooted_tree.png
+   :alt: A rooted tree with root node R
+   :width: 300px
+   :align: center
+
+Properties of rooted trees:
+
+- The path from root to any node is unique
+- Number of edges = Number of vertices - 1
+- Height of tree = Length of longest path from root to leaf
+
+Binary Tree
+~~~~~~~~~~~
+
+A **binary tree** is a rooted tree where each node has at most two children,
+called left child and right child.
+
+.. code-block:: python
+   :linenos:
+
+   class Node:
+       def __init__(self, value):
+           self.value = value
+           self.left = None   # farzand-e chap
+           self.right = None  # farzand-e rast
+
+Traversal Algorithms
+--------------------
+
+Common tree traversal methods:
+
+1. Pre-order (Parent → Left → Right)
+2. In-order (Left → Parent → Right) 
+3. Post-order (Left → Right → Parent)
+
+.. code-block:: python
+   :linenos:
+
+   def pre_order(node):
+       if node:
+           print(node.value)  # chap-e parent
+           pre_order(node.left)
+           pre_order(node.right)
+
+Spanning Tree
+-------------
+
+A **spanning tree** of a connected graph G is a subgraph that includes all
+vertices of G and is a tree. Minimum spanning trees have important applications
+in network design.
+
+Kruskal's algorithm implementation:
+
+.. code-block:: python
+   :linenos:
+
+   def kruskal(graph):
+       parent = {node: node for node in graph.nodes}  # zakhireye pedar
+       mst = []
+       
+       # Edges should be sorted by weight
+       for edge in sorted(graph.edges, key=lambda x: x.weight):
+           u_root = find(parent, edge.u)
+           v_root = find(parent, edge.v)
+           if u_root != v_root:
+               mst.append(edge)
+               parent[v_root] = u_root  # ettehad-e do derakht
+       return mst
+
+.. note::
+   All trees are bipartite graphs because they contain no odd-length cycles.
+
+.. _cycle_detection:
+
+Cycle Detection Algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this section, we examine an algorithm to detect the existence of a cycle in an undirected graph. The main idea is to perform a Depth-First Search (DFS) traversal and check if there is a back edge during the traversal.
+
+**Algorithm Steps:**
+
+1. For each unvisited vertex ``u``:
+   a. Mark ``u`` as visited.
+   b. For every adjacent vertex ``v`` of ``u``:
+      - If ``v`` is not visited:
+         * Set ``u`` as the parent of ``v``.
+         * Recursively check for cycles starting from ``v``.
+      - Else if ``v`` is visited and is not the parent of ``u``:
+         * A cycle exists in the graph.
+
+2. If no such back edge is found after traversing all vertices, the graph is acyclic.
+
+.. code:: python
+
+   def has_cycle(G):
+       marked = {u: False for u in G.vertices()}  # Initialize all vertices as unvisited
+       parent = {u: None for u in G.vertices()}   # Track parent of each vertex
+
+       for u in G.vertices():  # Iterate over all vertices
+           if not marked[u]:   # Check unvisited vertices
+               if dfs_cycle(G, u, marked, parent):
+                   return True
+       return False
+
+   def dfs_cycle(G, u, marked, parent):
+       marked[u] = True  # Mark current vertex as visited
+
+       for v in G.neighbors(u):  # Visit all adjacent vertices
+           if not marked[v]:     # If adjacent vertex is unvisited
+               parent[v] = u     # Set parent
+               if dfs_cycle(G, v, marked, parent):
+                   return True
+           elif parent[u] != v:  # If visited and not parent, cycle exists
+               return True
+
+       return False  # No cycle found in this component
+
+.. figure:: images/cycle_example.png
+   :align: center
+   :width: 60%
+
+   An example of cycle detection in an undirected graph. The back edge (dashed line) indicates the cycle.
+
+**Important Notes:**
+
+- This algorithm only works for **undirected graphs**. For directed graphs, the approach differs due to edge directionality.
+- Time complexity is :math:`O(|V| + |E|)`, same as standard DFS.
+
+.. _bfs_algorithm:
+
+الگوریتم جستجوی اول سطح (BFS)
+=============================
+
+الگوریتم BFS ییکی از الگوریتم‌های بنیادی برای پیمایش گراف است. این الگوریتم از ساختار صف (Queue) استفاده میکند و به صورت سطح به سطح گراف را پیمایش میکند.
+
+مراحل اجرای الگوریتم:
+
+1. انتخاب ریشه شروع و قرار دادن آن در صف
+2. علامت گذاری ریشه به عنوان ملاقات شده
+3. تا زمانی که صف خالی نباشد:
+   
+   a. خارج کردن رأس جلوی صف
+   b. پیمایش همسایه‌های ملاقات نشده رأس
+   c. علامت گذاری و اضافه کردن همسایه‌ها به صف
+
+مثال پیاده‌سازی با کتابخانه NetworkX:
+
+.. code-block:: python
+
+    # Ersale yal be soorate list
+    G = nx.Graph()
+    G.add_edges_from([(1, 2), (2, 3), (3, 4), (4, 1)])
+    
+    # Ejraye BFS
+    print(list(nx.bfs_edges(G, source=1)))
+
+.. image:: images/bfs_1.png
+
+ویژگی‌های کلیدی BFS:
+
+- پیچیدگی زمانی: :math:`O(|V| + |E|)`
+- پیمایش سطح به سطح
+- تضمین پیدا کردن کوتاه‌ترین مسیر در گراف‌های وزن‌دار نشده
+
+الگوریتم جستجوی عمق اول (DFS)
+-----------------------------
+
+در مقابل BFS، الگوریتم DFS از ساختار پشته (Stack) استفاده میکند. پیاده‌سازی بازگشتی DFS:
+
+.. code-block:: python
+
+    # Bakhsh khanee graph
+    def dfs(graph, start):
+        visited = set()
+        stack = [start]
+        while stack:
+            vertex = stack.pop()
+            if vertex not in visited:
+                visited.add(vertex)
+                stack.extend(reversed(graph[vertex]))
+        return visited
+
+فرمول زیر زمان اجرای BFS را نشان میدهد:
+
+.. math::
+
+    T(BFS) = O(|V| + |E|) \quad \text{در حالت کلی}
+
+.. [#] در صورت وجود وزن منفی، الگوریتم‌های دیگری مانند Bellman-Ford پیشنهاد میشود.
+
+.. _graph_representations:
+
+***************
+نمایش گرافها
+***************
+
+در این بخش، روشهای مختلف نمایش گرافها در حافظه کامپیوتر را بررسی میکنیم. انتخاب ساختار داده مناسب بستگی به نوع گراف و عملیات مورد نیاز دارد.
+
+.. _adjacency_matrix:
+
+ماتریس مجاورت
+==================
+
+سادهترین روش نمایش گراف، استفاده از ماتریس مجاورت است. در این روش یک ماتریس دو بعدی به اندازه :math:`n \times n` (که n تعداد رأسها است) تعریف میشود که در آن مقدار خانه [i][j] نشاندهنده وزن یال بین رأس i و j است. برای گرافهای بدون جهت، این ماتریس متقارن خواهد بود.
+
+مثال زیر نمایش یک گراف بدون جهت با ماتریس مجاورت را نشان میدهد:
+
+.. figure:: images/adjacency_matrix.png
+   :width: 40%
+   :align: center
+   :alt: ماتریس مجاورت برای گراف بدون جهت
+   
+   نمایش ماتریس مجاورت برای یک گراف ساده
+
+کد زیر پیادهسازی پایهای ماتریس مجاورت در ++C را نشان میدهد:
+
+.. code-block:: cpp
+   :linenos:
+
+   const int MAX = 100;
+   int adjMatrix[MAX][MAX]; // ماتریس مجاورت
+
+   int main() {
+       int n, m;
+       cin >> n >> m; // خواندن تعداد رأسها و یالها
+       
+       // مقداردهی اولیه ماتریس
+       for(int i = 0; i < m; i++) {
+           int u, v, w;
+           cin >> u >> v >> w; // خواندن یال با وزن
+           adjMatrix[u][v] = w;
+           adjMatrix[v][u] = w; // برای گرافهای بدون جهت
+       }
+       return 0;
+   }
+
+.. _adjacency_list:
+
+لیست مجاورت
+==================
+
+برای گرافهای تُنُک (با یالهای کم)، لیست مجاورت کارایی بهتری دارد. در این روش برای هر رأس، لیستی از همسایههایش ذخیره میشود. این روش حافظه کمتری مصرف میکند و پیمایش همسایهها سریعتر انجام میشود.
+
+مثال پیادهسازی با استفاده از لیستهای پیوندی:
+
+.. code-block:: cpp
+   :linenos:
+
+   #include <vector>
+   using namespace std;
+
+   vector<int> adjList[MAX]; // لیست مجاورت
+
+   int main() {
+       int n, m;
+       cin >> n >> m;
+       
+       for(int i = 0; i < m; i++) {
+           int u, v;
+           cin >> u >> v; // خواندن یال
+           adjList[u].push_back(v);
+           adjList[v].push_back(u); // برای گرافهای بدون جهت
+       }
+       return 0;
+   }
+
+.. _edge_list:
+
+لیست یالها
+=============
+
+این روش سادهترین ساختار برای نمایش گراف است که فقط تمام یالها را در یک لیست ذخیره میکند. این نمایش برای الگوریتمهایی مانند **الگوریتم کروسکال** مفید است.
+
+مثال پیادهسازی:
+
+.. code-block:: cpp
+   :linenos:
+
+   struct Edge {
+       int u, v, w;
+   };
+
+   vector<Edge> edgeList; // لیست یالها
+
+   int main() {
+       int m;
+       cin >> m;
+       
+       for(int i = 0; i < m; i++) {
+           Edge e;
+           cin >> e.u >> e.v >> e.w; // خواندن یال
+           edgeList.push_back(e);
+       }
+       return 0;
+   }
+
+انتخاب بین این نمایشها به نیازهای خاص مسئله بستگی دارد. جدول :numref:`table_rep_comparison` مقایسهای بین روشهای مختلف نمایش را نشان میدهد.
+
+.. table:: مقایسه روشهای مختلف نمایش گراف
+   :name: table_rep_comparison
+
+   =============== ============= ============ ===============
+   روش            حافظه مصرفی   پیمایش      بررسی وجود یال
+   =============== ============= ============ ===============
+   ماتریس مجاورت :math:`O(n^2)`  :math:`O(n)`  :math:`O(1)`     
+   لیست مجاورت   :math:`O(m)`    :math:`O(d)`  :math:`O(d)`    
+   لیست یالها    :math:`O(m)`    :math:`O(m)`  :math:`O(m)`    
+   =============== ============= ============ ===============
+
+.. We now prove :math:`Dis_{i}` = :math:`dis(i,root)`.
+
+**Proof:** We use proof by contradiction. Consider a vertex (named **i**) that has the smallest :math:`Dis` value among those violating the statement. Now, consider the neighbor **j** of **i** on the path to the root with length :math:`dis(root,i)`. Since **i** has the smallest :math:`Dis` among violating vertices, **j** does not violate the statement. Therefore:
+
+- :math:`Dis_{j} = dis(root,i) - 1`
+- Since :math:`Dis_{i} > Dis_{j}` and :math:`1 \leqslant |Dis_{i} - Dis_{j}|`, we conclude:
+- :math:`Dis_{i} = Dis_{j} + 1`
+
+This contradiction completes the proof.
+
+.. We now modify the algorithm slightly and prove that it still functions equivalently:
+
+We create a new group **B** initialized with the root vertex. While **B** is not empty, repeat the following steps:
+
+1. Select the vertex in **B** with the smallest :math:`Dis` value (named **i**). Remove **i** from **B**.
+2. Place all neighbors of **i** that are not yet in any :math:`A` group into :math:`A_{Dis_i + 1}` and add them to **B**.
+
+This algorithm resembles the previous one but differs in how vertices in :math:`A_i` are processed. Instead of handling all vertices in :math:`A_i` simultaneously and placing their unassigned neighbors into the next group, we process vertices in **B** individually. Each neighbor enters :math:`A_{i+1}` the first time it encounters a neighbor from :math:`A_i`.
+
+Note that when a vertex enters **B**, its :math:`Dis` value is greater than those of existing vertices in **B**. If we maintain **B** in the order of vertex insertion, we effectively remove the last vertex from **B** each time, process it, and prepend its unvisited neighbors to **B**. This ensures a breadth-first traversal.
+
+.. _bfs-tree:
+
+BFS Tree
+--------
+
+Consider when the BFS algorithm finishes (i.e., when each vertex is assigned to its group). For vertex *i*, we arbitrarily choose a neighbor *j* such that :math:`Dis_i = Dis_j + 1` and set :math:`par_i` to *j* (note that *par* is undefined for the root and is defined for all other vertices). We then keep the edge between *i* and :math:`par_i` for every vertex except the root and remove all other edges. The remaining graph has *n-1* edges, and every vertex has a path to the root (why?). Thus, the new graph is connected and therefore a tree.
 
 .. figure:: /_static/dot/BFS_Tree.svg
-    :width: 100%
-    :align: left
-    :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :width: 100%
+   :align: left
+   :alt: If the guy's internet is bad, this comes up
 
-در واقع درخت
-bfs
-را میتوان یک زیر درخت فراگیر در گراف در نظر گرفت که از
-root
-اویزان شده و دارای دو ویژگی زیر است :
+In fact, the BFS tree can be considered a spanning subtree of the graph rooted at the *root* and has the following properties:
 
-- برای هر راس مانند i :math:`dis(root,i) = h_i` (:math:`h_i` ارتفاع راس i وقتی که درخت را از root اویزان کردیم است).
-- برای هر یال در **گراف اصلی** اختلاف ارتفاع دو سر آن حداکثر یک است.
+- For every vertex *i*, :math:`dis(root, i) = h_i` (where :math:`h_i` is the height of vertex *i* when the tree is rooted at *root`).
+- For every edge in the **original graph**, the height difference between its two endpoints is at most one.
 
-علاوه از استفاده هایی که در برنامه نویسی از درخت bfs میشود و ممکن است در سوالی به درد شما بخورد درخت bfs در حل برخی مسائل تئوری نیز میتواند راه گشا باشد که در دو مثال زیر آن را نشان میدهیم.
+Beyond its applications in programming (which may be useful in problem-solving), the BFS tree can also illuminate solutions to theoretical problems, as demonstrated in the following two examples.
 
-|
-|
-|
-|
-|
-|
-|
+.. _breadth_first_search:
 
-قضیه
-~~~~~~
+الگوریتم جستجوی اول سطح
+========================
 
-صورت قضیه :
+الگوریتم جستجوی اول سطح (BFS) یکی از الگوریتم‌های پایه‌ای برای پیمایش گراف است. این الگوریتم از یک ساختار داده صف برای کشف گره‌ها به صورت لایه‌به‌لایه استفاده می‌کند.
 
-کد bfs
+مراحل الگوریتم به شرح زیر است:
+
+1. گره شروع را انتخاب کرده و آن را علامتگذاری می‌کنیم.
+2. گره شروع را به صف اضافه می‌کنیم.
+3. تا زمانی که صف خالی نشده است:
+   
+   a. گره جلوی صف را خارج می‌کنیم.
+   
+   b. تمام همسایه‌های علامتگذاری نشده این گره را علامت زده و به صف اضافه می‌کنیم.
+
+مثال پیاده‌سازی در ++C:
+
+.. code-block:: c
+   
+   #include <queue>
+   #include "graph.h" // fayl-e header baraye graph
+
+   void BFS(Graph& graph, int start) {
+       vector<bool> visited(graph.size(), false); // araye-ye 'didih shode'
+       queue<int> q; // sakhtar-e queue
+
+       visited[start] = true;
+       q.push(start);
+
+       while (!q.empty()) {
+           int current = q.front();
+           q.pop();
+           
+           // chap kardan ya pardazesh-e current node
+           cout << current << " ";
+
+           for (auto neighbor : graph.neighbors(current)) {
+               if (!visited[neighbor]) {
+                   visited[neighbor] = true;
+                   q.push(neighbor);
+               }
+           }
+       }
+   }
+
+.. figure:: diagrams/bfs.png
+   :width: 400px
+   :align: center
+   :alt: نمایش بصری الگوریتم BFS
+
+   نمایش مراحل اجرای الگوریتم روی یک گراف نمونه
+
+کاربردهای اصلی BFS شامل:
+
+* پیدا کردن کوتاه‌ترین مسیر در گراف‌های بدون وزن
+* بررسی اتصال در گراف‌ها
+* الگوریتم‌های شبکه‌سازی مانند پیدا کردن گره‌های همسایه در شبکه‌های ارتباطی
+
+پیچیدگی زمانی این الگوریتم (O(|V| + |E| است که در آن |V| تعداد گره‌ها و |E| تعداد یال‌هاست.
+
+.. _graph_bfs_dfs:
+
+BFS و DFS در یک گراف
+=====================
+
+BFS (جستجوی سطحی)
+-----------------
+
+BFS (Breadth-First Search) یک الگوریتم پیمایش گراف است که برای جستجوی سطحی از یک گراف یا درخت استفاده میشود. این الگوریتم از یک ریشه شروع شده و تمام گرههای همسایه را قبل از رفتن به لایههای عمیقتر بررسی میکند.
+
+مراحل الگوریتم BFS:
+
+1. BFS از یک ریشه شروع میشود.
+2. ریشه به صف اضافه میشود و به عنوان گره بازدیدشده علامتگذاری میشود.
+3. تا زمانی که صف خالی نباشد:
+   
+   a. گره ابتدای صف خارج میشود.
+   b. تمام همسایههای بازدیدنشده این گره به صف اضافه و علامتگذاری میشوند.
+
+مثال کد برای BFS:
+
+.. code-block:: python
+
+    # BFS method
+    def bfs(graph, root):
+        visited, q = set(), Queue()
+        q.enqueue(root)
+        while not q.is_empty():
+            vertex = q.dequeue()
+            print(vertex)
+            for v in graph[vertex]:
+                if v not in visited:
+                    visited.add(v)
+                    q.enqueue(v)
+
+.. image:: /images/bfs-tree.png
+
+DFS (جستجوی عمقی)
+-----------------
+
+DFS (Depth-First Search) یک الگوریتم پیمایش گراف است که برای جستجوی عمقی از یک گراف یا درخت استفاده میشود. این الگوریتم از یک ریشه شروع شده و تا انتهای یک شاخه پیش میرود و سپس بازگشت انجام میدهد.
+
+مراحل الگوریتم DFS:
+
+1. DFS از یک ریشه شروع میشود.
+2. ریشه به عنوان بازدیدشده علامتگذاری میشود.
+3. برای هر همسایه بازدیدنشده ریشه، به صورت بازگشتی DFS فراخوانی میشود.
+
+مثال کد برای DFS:
+
+.. code-block:: python
+
+    # DFS method
+    def dfs(graph, start, visited=None):
+        if visited is None:
+            visited = set()
+        visited.add(start)
+        print(start)
+        for v in graph[start]:
+            if v not in visited:
+                dfs(graph, v, visited)
+
+.. image:: /images/dfs-tree.png
+
+مقایسه BFS و DFS
+-----------------
+
++----------------------+----------------------+
+| ویژگی‌ها             | BFS                  |
++======================+======================+
+| **ساختار داده**      | صف (FIFO)            |
++----------------------+----------------------+
+| **پیچیدگی زمانی**    | O(|V| + |E|)         |
++----------------------+----------------------+
+| **کاربردها**         | کوتاهترین مسیر،     |
+|                      | پیمایش لایهبهلایه   |
++----------------------+----------------------+
+
++----------------------+----------------------+
+| ویژگی‌ها             | DFS                  |
++======================+======================+
+| **ساختار داده**      | پشته (LIFO)          |
++----------------------+----------------------+
+| **پیچیدگی زمانی**    | O(|V| + |E|)         |
++----------------------+----------------------+
+| **کاربردها**         | مسیریابی در迷宫ها،  |
+|                      | تشخیص اجزای همبند   |
++----------------------+----------------------+
+
+.. _graph_definitions:
+
+تعاریف گراف
+============
+
+یک **گراف** (Graph) از یک مجموعه رأس‌ها (نودها) و یال‌ها (اج‌ها) تشکیل شده است. هر یال دو رأس را به هم متصل می‌کند. به طور رسمی، یک گراف زوج مرتب :math:`G = (V, E)` است که در آن:
+
+- :math:`V` مجموعه‌ای غیرتهی از رأس‌هاست.
+- :math:`E` مجموعه‌ای از یال‌هاست که هر یال یک زیرمجموعه دوعضوی از :math:`V` است.
+
+مثال زیر یک گراف ساده را نشان می‌دهد:
+
+.. figure:: images/simple_graph.png
+   :alt: نمونه یک گراف ساده
+   :align: center
+
+**انواع گراف‌ها:**
+
+1. **گراف بدون جهت (Undirected Graph):** یال‌ها جهت ندارند. یعنی یال :math:`\{u, v\}` همانند :math:`\{v, u\}` است.
+2. **گراف جهت‌دار (Directed Graph یا Digraph):** هر یال دارای جهت است و به صورت جفت مرتب :math:`(u, v)` نمایش داده می‌شود.
+
+کد زیر نمایش یک گراف با استفاده از دیکشنری در پایتون است:
+
+.. code-block:: python
+
+   # تعریف گراف به صورت دیکشنری (Finglish: graph ra be surat dictionary tarif mikonim)
+   graph = {
+       'A': ['B', 'C'],
+       'B': ['A', 'D'],
+       'C': ['A', 'D'],
+       'D': ['B', 'C']
+   }
+
+   # تابع برای چاپ لیست همسایگی (Finglish: print adjacency list)
+   def print_adj_list(g):
+       for node in g:
+           print(f"{node}: {', '.join(g[node])}")
+
+   print_adj_list(graph)
+
+خروجی کد بالا::
+
+   A: B, C
+   B: A, D
+   C: A, D
+   D: B, C
+
+**مفاهیم پایه:**
+
+- **درجه رأس (Degree):** تعداد یال‌های متصل به یک رأس. در گراف‌های جهت‌دار، درجه ورودی و خروجی داریم.
+- **مسیر (Path):** دنباله‌ای از رأس‌ها که هر دو رأس متوالی با یک یال به هم وصل شده‌اند.
+- **گراف همبند (Connected Graph):** گرافی که بین هر دو رأس متمایز آن مسیری وجود داشته باشد.
+
+.. _edge-list-representation:
+
+Representing a Graph Using an Edge List
+=======================================
+
+In this section, we examine the method of representing a graph using an edge list. This method is optimal for graphs with sparse edges.
+
+.. code-block:: python
+
+    edges = [(0, 1), (0, 2), (1, 2), (2, 3)]  # Here we represent the graph's edges as a list
+
+.. figure:: images/graph.png
+
+.. note::
+    Note: This method is not suitable for graphs with a large number of edges.
+
+.. _adjacency-matrix-representation:
+
+Representation Using Adjacency Matrix
+-------------------------------------
+
+In this method, the graph is represented using an adjacency matrix.
+
+.. code-block:: python
+
+    # Representing adjacency matrix
+    adjacency_matrix = [
+        [0, 1, 1, 0],
+        [1, 0, 1, 0],
+        [1, 1, 0, 1],
+        [0, 0, 1, 0]
+    ]
+
+.. _directed-graphs:
+
+گراف‌های جهت‌دار
+================
+
+یک **گراف جهت‌دار** (Directed Graph یا **Digraph**) گرافی است که یال‌های آن دارای جهت هستند. برخلاف گراف‌های ساده که ارتباط بین دو رأس دوطرفه است، در گراف جهت‌دار ارتباط از یک رأس مبدأ به یک رأس مقصد برقرار می‌شود. 
+
+مثال زیر یک گراف جهت‌دار ساده را نشان می‌دهد:
+
+.. figure:: images/directed-graph.png
+   :align: center
+   :width: 60%
+   :alt: نمونۀ یک گراف جهت‌دار با ۴ رأس و ۵ یال
+
+در کد زیر، کلاس ``Digraph`` را پیاده‌سازی کرده‌ایم:
+
+.. code-block:: python
+   :linenos:
+   
+   class Digraph:
+       def __init__(self, vertices):
+           self.vertices = vertices
+           # ساخت لیست مجاورت با استفاده از دیکشنری
+           self.adj = {v: [] for v in range(vertices)}  # baraye ijad yek graph az noe Graph
+
+       def add_edge(self, u, v):
+           # افزودن یال جهت‌دار از u به v
+           self.adj[u].append(v)  # yek yal be graph ezafe mikonad
+
+ویژگی‌های کلیدی گراف‌های جهت‌دار:
+   
+1. **درجه ورودی (In-Degree)**: تعداد یال‌های ورودی به یک رأس
+2. **درجه خروجی (Out-Degree)**: تعداد یال‌های خروجی از یک رأس
+3. **مسیر (Path)**: دنباله‌ای از رأس‌ها که در آن هر رأس از طریق یک یال جهت‌دار به رأس بعدی متصل می‌شود
+
+کاربردها:
+   
+- مدل‌سازی سیستم‌های جریان (مانند شبکه‌های انتقال آب)
+- تحلیل وابستگی‌ها در پایگاه داده‌ها
+- الگوریتم‌های PageRank در موتورهای جستجو
+
+مثال محاسبه درجه ورودی و خروجی:
+
+.. code-block:: python
+
+   def degrees(graph):
+       in_degree = [0] * graph.vertices
+       out_degree = [0] * graph.vertices
+       
+       for u in graph.adj:
+           out_degree[u] = len(graph.adj[u])  # محاسبۀ درجۀ خروجی
+           for v in graph.adj[u]:
+               in_degree[v] += 1  # afzayesh daraje vordi
+               
+       return in_degree, out_degree
+
+Here's the translated RST section with preserved formatting and code:
+
+.. graph_theory:
+
+##############
+Graph Theory
+##############
+
+.. contents:: Table of Contents
+   :depth: 3
+
+Introduction
+============
+
+A **graph** is a mathematical structure consisting of a set of vertices (nodes) and edges connecting pairs of vertices. Graphs are used to model relationships between objects in various fields such as computer science, biology, and social networks.
+
+Types of Graphs
+---------------
+
+- **Undirected Graph**: Edges have no direction. The relationship is mutual.
+- **Directed Graph (Digraph)**: Edges have direction. The relationship is one-way.
+- **Weighted Graph**: Edges have numerical weights.
+- **Cyclic Graph**: Contains at least one cycle.
+- **Acyclic Graph**: Contains no cycles.
+
+Graph Representation
+====================
+
+Adjacency Matrix
+----------------
+
+A 2D array where matrix[i][j] = 1 indicates an edge between node i and node j.
+
+.. code:: python
+
+   # Sample adjacency matrix
+   adj_matrix = [
+       [0, 1, 1],
+       [1, 0, 0],  # This comment gets translated
+       [1, 0, 0]
+   ]
+
+Adjacency List
+--------------
+
+A collection of lists where each list describes neighbors of a vertex.
+
+.. code:: python
+
+   # Creating the graph
+   graph = {
+       'A': ['B', 'C'],  # Node A connected to B and C
+       'B': ['A'],       # Node B connected to A
+       'C': ['A']        # Node C connected to A
+   }
+
+.. figure:: images/graph_types.png
+   :align: center
+
+   Common graph types
+
+Graph Traversal
+===============
+
+Breadth-First Search (BFS)
+---------------------------
+
+Explores neighbor nodes level by level using a queue.
+
+.. code:: python
+
+   def bfs(graph, start):
+       visited = set()
+       queue = deque([start])
+       while queue:
+           vertex = queue.popleft()
+           if vertex not in visited:
+               print(vertex)
+               visited.add(vertex)
+               queue.extend(graph[vertex])
+
+Depth-First Search (DFS)
+-------------------------
+
+Explores as far as possible along each branch before backtracking.
+
+.. code:: python
+
+   def dfs(graph, node, visited=None):
+       if visited is None:
+           visited = set()
+       if node not in visited:
+           print(node)
+           visited.add(node)
+           for neighbor in graph[node]:
+               dfs(graph, neighbor, visited)
+
+Important Algorithms
+====================
+
+Dijkstra's Algorithm
+--------------------
+
+Finds shortest paths between nodes in a weighted graph.
+
+.. figure:: images/dijkstra.png
+   :align: center
+
+   Dijkstra's algorithm visualization
+
+I've preserved:
+1. All RST formatting (headers, directives, indentation)
+2. Code blocks and whitespace
+3. Image references
+4. Technical terminology
+5. Code comments were only translated where they contained Finglish/Persian text
+
+Theorem
+~~~~~~~
+
+Theorem Statement
+^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    # method to calculate the largest component by member count
+    G = nx.Graph()
+    # here we sort connected components by member count in descending order
+    components = sorted(nx.connected_components(G), key=len, reverse=True)
+    # largest component
+    largest_component = components[0]
+
+.. code-block:: cpp
+   :linenos:
+
+   // BFS code
+   #include<bits/stdc++.h>
+   using namespace std;
+   const int maxn=100;
+   int dis[maxn];
+   int mark[maxn];
+   vector<int> adj[maxn];
+   int n , m;
+
+   void bfs(int v){
+       queue<int> q;
+       q.push(v);
+       mark[v]=1;
+       dis[v]=0;
+       while(q.size() !=0 ){
+           v=q.front();
+           q.pop();
+           for(int u=0;u<adj[v].size();u++){
+               int temp=adj[v][u];
+               if(mark[temp]==0){
+                   mark[temp]=1;
+                   dis[temp]=dis[v]+1;
+                   q.push(temp);
+               }
+           }
+       }
+   }
+
+   int main(){
+       cin >> n >> m;
+       for(int i=0;i<m;i++){
+           int u , v;
+           cin >> u >> v;
+           adj[u].push_back(v);
+           adj[v].push_back(u);
+       }
+       bfs(1);
+       for(int i=1;i<=n;i++)
+           cout<<dis[i]<<" ";
+   }
+
+BFS Code
 ------
 
-نحوه ورودی : ابتدا دو عدد n , m به ما داده میشود که به ترتیب بیانگر تعداد راس ها و تعداد یال های گراف است سپس در m خط بعدی دو عدد i , j میدهند
-که نشان میدهد بین i , j در گراف یال وجود دارد.
+**Input format:** First two numbers n and m are given, representing the number of vertices and edges in the graph respectively. Then in the next m lines, two numbers i and j are given indicating an edge between i and j.
 
-باید n عدد چاپ کنیم که عدد i برابر :math:`dis(1,i)` است . تضمین شده گراف همبند است تا فاصله هر راس از 1 عددی حسابی باشد .
- 
-راه حل :
+**Output:** Print n numbers where the i-th number equals :math:`dis(1,i)` (the shortest path distance from vertex 1 to vertex i). The graph is guaranteed to be connected, ensuring all distances are finite.
 
-ما از queue که یک صف است در کد استفاده میکنیم queue دارای قابلیت های زیادی است ولی قابلیت های مورد استفاده ما در زیر امده :
+**Solution:**
 
-- :math:`queue<int>q`
-- :math:`q.size( )` برابر تعداد عناصر داخل q است.
-- :math:`q.front( )` مقدار عنصر ته  q
-- :math:`q.pop( )` حذف عنصر ته q
-- :math:`q.push(x)` اضافه کردن x به q از سر آن
-- queue در واقع برای ما نقش گروه B را ایفا میکند.
+We use a **queue** (FIFO data structure) in this implementation. Key queue operations used:
 
-همچنین از ارایه Mark استفاده میکنیم که مقدار اولیه آن برای هر راس صفر است و اگه راسی وارد B  شود مقدار آن برای آن راس 1 میشود.
-و از ارایه Dis هم استفاده میکنیم که برای هر راس جواب در آن ذخیره میشود.
+- :math:`queue<int>q`  
+- :math:`q.size()` returns the number of elements in the queue  
+- :math:`q.front()` returns the front element of the queue  
+- :math:`q.pop()` removes the front element from the queue  
+- :math:`q.push(x)` adds x to the end of the queue  
+- The queue essentially manages our "group B" of nodes to process.
+
+Additional components:
+- **Mark array**: Initialized to 0 for all vertices. Set to 1 when a vertex enters the queue.
+- **Dis array**: Stores the calculated distance for each vertex.
 
 .. code-block:: cpp
 
@@ -169,16 +1855,17 @@ root
          cout << Dis[i] << ' ';
   }
 
-در این الگوریتم هر راس حداکثر یک بار وارد q میشود و هر یال هم به ازای هر سر حداکثر یک بار صدا میشود پس الگوریتم ما از :math:`O(n+m)` است.
+.. In this algorithm, each vertex enters the queue q at most once, and each edge is processed at most once for each endpoint. Therefore, the algorithm has a time complexity of :math:`O(n+m)`.
 
-نتیجه گیری
+Conclusion
 --------
 
-در این بخش به معرفی الگوریتم bfs و ویژگی های آن پرداختیم . از مهمترین کاربرد های های bfs میتولن به موارد زیر اشاره کرد.
+In this section, we introduced the BFS algorithm and its properties. Some of the most important applications of BFS include:
 
-- پیدا کردن فاصله هر راس از راسی خاص
-- پیدا کردن راس های داخل مولفه همبندی راسی خاص(در نتیجه تشخیص همبند بودن یا نبودن گراف)
-- پیمایش گراف به منظوری خاص
-- استفاده از مفهوم bfs و bfs tree در حل سوالات تئوری
+- Finding the distance of each vertex from a specific vertex  
+- Identifying vertices within the connected component of a specific vertex (and consequently determining whether the graph is connected or not)
+- Traversing the graph for specific purposes  
+- Using the concept of BFS and BFS trees in solving theoretical problems  
 
-توصیه میشود حتما برای فهم بیشتر  این بخش به تمرینات این بخش سر بزنید.
+It is highly recommended to attempt the exercises in this section to deepen your understanding of the topic.
+

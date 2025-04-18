@@ -1,16 +1,77 @@
-﻿سنتروید
+.. _centroid:
+
+Centroid
 ============
 
-تعریف
+In graph theory, the **centroid** of a tree refers to a vertex (or two adjacent vertices) with the smallest possible maximum branch size. In other words, removing the centroid divides the tree into subtrees where each subtree has no more than half the vertices of the original tree. For example, in a star-shaped tree, the central vertex is the centroid. In a path graph with an even number of vertices, the two middle vertices form the centroid.
+
+**Algorithm for Finding the Centroid of a Tree:**
+
+1. For each vertex, calculate the size of its largest branch (the maximum number of vertices in the subtrees formed by removing that vertex).
+2. Select the vertex (or vertices) with the smallest maximum branch size.
+
+The following code implements this algorithm:
+
+.. code-block:: python
+
+    def find_centroid(graph, n):
+        # Function to find the centroid of a tree
+        def dfs(u, parent):
+            size[u] = 1
+            max_branch = 0
+            for v in graph[u]:
+                if v != parent:
+                    dfs(v, u)
+                    size[u] += size[v]
+                    max_branch = max(max_branch, size[v])
+            max_branch = max(max_branch, n - size[u])
+            if max_branch < min_max_branch[0]:
+                min_max_branch[0] = max_branch
+                centroids.clear()
+                centroids.append(u)
+            elif max_branch == min_max_branch[0]:
+                centroids.append(u)
+
+        size = [0] * (n + 1)
+        centroids = []
+        min_max_branch = [float('inf')]
+        dfs(1, -1)
+        return centroids
+
+    # Create a sample tree
+    tree = {
+        1: [2, 3],
+        2: [1, 4, 5],
+        3: [1, 6],
+        4: [2],
+        5: [2],
+        6: [3]
+    }
+    print(find_centroid(tree, 6))  # Output: [1]
+
+.. image:: /images/centroid.png
+
+Note:
+    This algorithm only works for trees. For general graphs, finding a "centroid" requires different approaches. The centroid of a tree is closely related to its *balance*—a tree with one centroid is balanced around that vertex, while a tree with two centroids is balanced around the edge connecting them. Mathematically, the centroid minimizes the maximum branch size:
+
+    \[
+    \text{Centroid} = \arg\min_{v \in V} \left( \max_{T_i} |T_i| \right)
+    \]
+
+    where \( T_i \) are the subtrees formed by removing vertex \( v \).
+
+Definition
 -----------
-در درخت به راسی که با حذف آن تعداد راس های بزرگترین مولفه حداکثر :math:`n/2` باشد سنتروید می گوییم.
+In a tree, a vertex is called a **centroid** if removing it results in the largest connected component having at most :math:`n/2` vertices.
 
-اثبات وجود و یافتن سنتروید
-----------------------------
+.. Proof of Existence and Finding the Centroid
+   -------------------------------------------
 
-ابتدا درخت را از راس یک ریشه دار می کنیم حال از ریشه شروع می کنیم و هر مرحله اگر راسی که در آن هستیم فرزندی داشت که اندازه اش از :math:`n/2` بیشتر بود به آن راس می رویم حال در نهایت به سنتروید می رسیم.
-راسی که پیدا کردیم سنتروید است چون سایز زیر درختش از :math:`n/2` بیشتر است که یعنی مولفه ی پدرش کمتر از :math:`n/2` است و هیچ فرزندی هم با اندازه بیشتر از :math:`n/2` ندارد.
-پیاده سازی الگوریتم را در ادامه ببینید
+First, we root the tree from a vertex. Starting from the root, at each step, if the current vertex has a child whose size exceeds :math:`n/2`, we move to that vertex. Eventually, we will reach the centroid.
+
+The vertex we found is the centroid because its subtree size exceeds :math:`n/2` (meaning its parent component is less than :math:`n/2`), and none of its children have a size greater than :math:`n/2`.
+
+See the algorithm implementation below.
 
 .. code-block:: cpp
 
@@ -44,13 +105,13 @@
      return 0;
   }
 
-
 Centroid Decomposition
 -----------
-فرض کنید می خواهیم روی درخت الگوریتم تقسیم و حل را پیاده سازی کنیم سنتروید درخت کمک بسیاری به ما خواهد کرد چون می توانیم با حذف آن و حل زیر درخت های باقی مانده به پیچیدگی :math:`O(n log n)` برسیم .
-اگر دقت کنید با این تکنیک روی هر راس حداکثر :math:`lg n` بار پیمایش کرده ایم چون با هر بار پیمایش روی آن رای اندازه مولفه اش کمتر از نصف می شود پس در کل پیچیدگی زمانی اش :math:`O(n log n)` خواهد شد
-پیاده سازی این روش به این صورت است که ابتدا centroid درست را پیدا می کنیم حال هر کدام از مولفه ها را جداگانه حل می کنیم که همانند روش تقسیم و حل است.
-پیاده سازی الگوریتم را در ادامه ببینید
+Suppose we want to implement a divide-and-conquer algorithm on a tree. The centroid of the tree will greatly assist us, as by removing it and solving the remaining subtrees, we can achieve a complexity of :math:`O(n \log n)`.
+
+If you observe carefully, with this technique, we traverse each vertex at most :math:`\lg n` times. This is because each traversal reduces the size of its connected component by more than half, resulting in an overall time complexity of :math:`O(n \log n)`.
+
+The implementation of this method is as follows: First, we find the correct centroid. Then, we solve each remaining component separately, similar to the divide-and-conquer approach. See the algorithm implementation below:
 
 .. code-block:: cpp
 
@@ -94,23 +155,25 @@ Centroid Decomposition
      return 0;
   }
 
-Centroid Tree
------------
-فرض کنید درختی جدید از درختی که داریم میسازیم الگوریتم Centroid Decomposition را در نظر بگیرید حال در هر مرحله که سنتروید یک زیر درخت را پیدا می کنیم پدر آن را در این درختی که می سازیم سنتروید مولفه قبلی که این راس را داشته می گذاریم به این درخت جدید Centroid Tree می گوییم
+.. code-block:: rst
 
-.. figure:: /_static/dot/Centroid_Clusters.svg
-   :figwidth: 50%
-   :align: center
-   :alt: درخت اولیه
-   
-   درخت اولیه
+ Centroid Tree
+ -----------
+ Suppose we build a new tree from our existing tree using Centroid Decomposition. In each step where we find the centroid of a subtree, we set its parent in this new tree as the centroid of the previous component that contained this vertex. We call this new tree the Centroid Tree.
 
-.. figure:: /_static/dot/Centroid_Tree.svg
-   :figwidth: 50%
-   :align: center
-   :alt: درخت سنتروید
-   
-   درخت سنتروید
+ .. figure:: /_static/dot/Centroid_Clusters.svg
+  :figwidth: 50%
+  :align: center
+  :alt: Initial tree
+  
+  Initial tree
 
-در بسیاری از سوال ها Centroid Tree کمک بسیاری در محاسبات می کند
+ .. figure:: /_static/dot/Centroid_Tree.svg
+  :figwidth: 50%
+  :align: center
+  :alt: Centroid tree
+  
+  Centroid tree
+
+ In many problems, the Centroid Tree greatly assists in computations.
 

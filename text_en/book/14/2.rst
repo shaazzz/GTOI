@@ -1,100 +1,87 @@
-دنباله درجه ای
+Degree Sequence
 ====================
 
-گرافی
+Consider an
 :math:`n`
-راسی مانند
-:math:`G`
-را در نظر بگیرید.
+-vertex graph
+:math:`G`.
 
-فرض کنید درجه راس
+Suppose the degree of vertex
 :math:`i`
-را به صورت 
-:math:`d_{i}`
-نشان دهیم. آنگاه به دنباله
+is denoted by
+:math:`d_{i}`. Then the sequence
 :math:`d_{1}, d_{2}, ..., d_{n}`
-دنباله درجه‌ای گراف
-:math:`G`
-می‌گوییم.
+is called the **degree sequence** of graph
+:math:`G`.
 
-
-دنباله گرافیک
+Graphic Sequence
 -----------------
-به دنباله‌ی
-:math:`d_{1}, d_{2}, ..., d_{n}`
-یک دنباله گرافیک گوییم، اگر گرافی ساده
-:math:`n`
-راسی مانند
-:math:`G`
-وجود داشته باشد، که دنباله درجه راس های آن،‌ برابر با دنباله فوق باشد.
+We call the sequence 
+:math:`d_{1}, d_{2}, ..., d_{n}` 
+a **graphic sequence**, if there exists a simple graph 
+:math:`G` 
+with 
+:math:`n` 
+vertices such that the degree sequence of its vertices equals the above sequence.
 
-
-الگوریتم هاول حکیمی
+Havel-Hakimi Algorithm
 ---------------------
 
-این الگوریتم برای تشخیص دنباله های گرافیک به کار می رود. این الگوریتم یک الگوریتم
-حریصانه است و هر بار، راس بزرگترین درجه را به راس های با درجه های بزرگ بعدی وصل
-می کند و اگر در یک مرحله، مجبور شدیم به یک راس درجه صفر یال وصل کنیم، یعنی دنباله
-ما گرافیک نیست. درستی این الگوریتم حریصانه معادل این قضیه است که یک دنباله مرتب شده
+This algorithm is used to determine graphic sequences. It is a greedy algorithm
+and each time connects the vertex with the largest degree to the vertices with the next largest degrees.
+If at any step, we are forced to connect an edge to a vertex of degree zero, it means the sequence
+is not graphic. The correctness of this greedy algorithm is equivalent to the theorem that a sorted sequence
 :math:`d_{1}, d_{2}, ..., d_{n}`
-که در آن
+where
 :math:`d_{1} \ge d_{2} \ge ... \ge d_{n}`
-گرافیک است اگر و تنها اگر
+is graphic if and only if the sequence
 :math:`d_{2} - 1 , d_{3} -1 , ... d_{d_1+1} -1, d_{d_1+2}, ... , d_{n}`
-گرافیک باشد.
+is graphic.
 
-جابه جایی دوتایی
-~~~~~~~~~~~~~~~~~~
-در راستای اثبات قضیه هاول حکیمی، تعریف می‌کنیم عملیات جابه‌جایی دوتایی را بین 4 راس
-:math:`a, b, c, d`
-به این‌صورت که فرض کنید بین
-:math:`a, b`
-و
-:math:`c, d`
-یال باشد و بین
-:math:`a, c`
-و
-:math:`b, c`
-یالی نباشد.
+2-Switch
+~~~~~~~~
+In the course of proving the Havel-Hakimi theorem, we define a 2-switch operation between four vertices 
+:math:`a, b, c, d` 
+as follows: Assume edges exist between 
+:math:`a, b` 
+and 
+:math:`c, d`, 
+but no edges exist between 
+:math:`a, c` 
+and 
+:math:`b, d`. 
 
-در این‌صورت، یال های
-:math:`a, b`
-و
-:math:`c, d`
-را از گراف حذف می‌کنیم و یال های
-:math:`a, c`
-و
-:math:`b, c`
-را اضافه می‌کنیم. برای درک بهتر، به شکل زیر توجه کنید.
+In this case, we remove the edges 
+:math:`a, b` 
+and 
+:math:`c, d` 
+from the graph, and add the edges 
+:math:`a, c` 
+and 
+:math:`b, d`. 
+For better understanding, refer to the figure below.
 
 .. figure:: /_static/2-switch.png
-   :width: 80%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 80%
+ :align: center
+ :alt: This appears if the internet is poor
 
-نکته مهم این تبدیل این است که با اجرای آن، دنباله درجه ای گراف بدون تغییر باقی
-می ماند.
+The crucial point about this transformation is that applying it preserves the degree sequence of the graph.
 
-اثبات قضیه
-~~~~~~~~~~~
-یک سمت این قضیه، بدیهی است چون اگر دنباله
-:math:`d_{2} - 1 , d_{3} -1 , ... d_{d_1+1} -1, d_{d_1+2}, ... , d_{n}`
-گرافیک باشد با در نظر گرفتن گراف متناظر آن و اضافه کردن یک راس، می توان
-نشان داد که دنباله اصلی نیز گرافیک بوده است.
+Proof of the Theorem
+~~~~~~~~~~~~~~~~~~~~
 
-حال سمت دیگر را اثبات می کنیم. طبق فرض دنباله اصلی گرافیک است و ما باید
-ثابت کنیم که دنباله
-:math:`d_{2} - 1 , d_{3} -1 , ... d_{d_1+1} -1, d_{d_1+2}, ... , d_{n}`
-نیز گرافیک است. بین تمام گراف هایی که دنباله درجه ای برابر با دنباله ما
-دارند، آن را در نظر بگیرید که راس شماره یک به بیشترین تعداد راس از
-:math:`v_{2} , v_{3} , ... v_{d_1+1}`
-که از این به بعد آن ها را رئوس خوب و بقیه را رئوس بد می نامیم 
-وصل باشد. اگر راس شماره یک به تمامی رئوس خوب وصل باشد، با حذف آن گراف مورد
-نظر ساخته می شود و حکم برقرار است. در غیر این صورت، یکی از رئوس خوب که به راس
-یک متصل نیست را در نظر بگیرید و یک راس بد که به راس یک متصل هست را نیز در نظر
-بگیرید. اگر راس خوب همسایه ای داشته باشد که مجاور راس بد نباشد، می توان روی این
-چهار راس یک عملیات جابه جایی دوتایی اجرا کرد و به این ترتیب تعداد رئوس خوب مجاور
-راس یک یک واحد زیاد می شود که با فرض اکسترمال در تناقض است. در غیر این صورت، تمام
-مجاور های راس خوب مجاور راس بد نیز هستند و علاوه بر آن راس بد مجاور راس شماره یک
-نیز هست. پس درجه راس بد از راس خوب اکیدا بیشتر است که با فرض مرتب شده بودن درجات
-در تناقض است. بنابراین حکم ثابت شد و یعنی دنباله خواسته شده درجه ای است.
+One direction of this theorem is trivial: if the sequence  
+:math:`d_{2} - 1 , d_{3} -1 , ... d_{d_1+1} -1, d_{d_1+2}, ... , d_{n}`  
+is graphic, then by considering its corresponding graph and adding a vertex, we can show that the original sequence is also graphic.
+
+Now we prove the converse. By assumption, the original sequence is graphic, and we must prove that the sequence  
+:math:`d_{2} - 1 , d_{3} -1 , ... d_{d_1+1} -1, d_{d_1+2}, ... , d_{n}`  
+is also graphic. Among all graphs with a degree sequence equal to ours, consider one where vertex number 1 is connected to the maximum number of vertices from  
+:math:`v_{2} , v_{3} , ... v_{d_1+1}`  
+(henceforth called *good vertices*; the rest will be called *bad vertices*).  
+
+If vertex number 1 is connected to all good vertices, removing it will construct the desired graph, and the claim holds. Otherwise, consider a good vertex not connected to vertex 1 and a bad vertex connected to vertex 1. If the good vertex has a neighbor that is not adjacent to the bad vertex, we can perform a double-swap operation on these four vertices, thereby increasing the number of good vertices adjacent to vertex 1 by one – contradicting the extremal assumption.  
+
+If not, all neighbors of the good vertex are also adjacent to the bad vertex. Furthermore, the bad vertex is adjacent to vertex 1. Thus, the degree of the bad vertex is strictly greater than that of the good vertex, contradicting the assumption that degrees are sorted. Therefore, the claim is proved, meaning the desired sequence is graphic.
+

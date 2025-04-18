@@ -1,59 +1,54 @@
-منقبض کردن
+Contraction
 ===============
 
-منقبض کردن یک دور عملی در گراف است که در آن یک دور را در نظر می گیریم و به جای رئوس
-آن یک راس می گذاریم و به ازای هر راسی که در بیرون دور به یکی از راس های این دور یال داشته
-باشد یالی بین این راس و راس جدیدی که گذاشتیم قرار می دهیم.
+Contraction is an operation in graph theory where we consider a cycle in a graph, replace its vertices with a single new vertex, and for every vertex outside the cycle that was connected to any vertex in the cycle, we create an edge between that external vertex and the new vertex.
 
-انتخاب مناسب برای منقبض کردن
+Suitable Choice for Contraction
 ------------------------------
 
-دوری که می خواهیم منقبض کنیم بهتر است یالی درون خودش نداشته باشد و بعد از منقبض کردن آن
-گراف همچنان ساده بماند. برای مثال مثلث در یک گراف بدون بادبادک یا کمر گراف اگر بیش از
-چهار راس داشته باشد این خواص را دارند و در نتیجه کاندید مناسبی برای منقبض کردن هستند.
+The cycle we wish to contract should preferably contain no internal edges, so that after contraction, the graph remains simple. For example, triangles in a kite-free graph or the girth of a graph (if it has more than four vertices) possess these properties and are thus suitable candidates for contraction.
 
-یک مثال
----------
-یک گراف ساده داریم که دور هایش اشتراک یالی ندارند و
-:math:`2n+1`
-راس دارد. بیشینه میزان یال های این گراف چیست؟
+An Example
+----------
+Consider a simple graph whose cycles do not share edges and has :math:`2n+1` vertices. What is the maximum number of edges in this graph?
 
-
-پاسخ
+Answer
 :math:`3n`
-است.
 
-مثال
-~~~~~~
-برای مثالی با این میزان یال، می توانید یک راس را در وسط گراف بگذارید و به ازای
-هر دو راس، یک مثلث که شامل این راس هست نیز بسازید.
+Example
+~~~~~~~
+As an example with this number of edges, you can place a vertex at the center of the graph and create a triangle containing this vertex for every pair of vertices.
 
-اثبات بیشینه بودن
-~~~~~~~~~~~~~~~~~~
-در این جا با استقرا ثابت می کنیم که در هر گرافی که دور هایش اشتراک یالی ندارند، 
-:math:`2m \le 3n-1`
-برقرار است.
-کوچک ترین مثال نقض این قضیه را در نظر بگیرید. این گراف نمی تواند بدون دور باشد چون در این
-صورت تعداد یال هایش از راس هایش کمتر است و یعنی حکم برایش برقرار است. واضح است که دور
-های این گراف نمی توانند وتر داشته باشند. (یعنی یالی درون آن ها وجود داشته باشد) چون
-در این صورت دو دور با اشتراک یالی به وجود می آید. و هم چنین یک راس نمی تواند به دو راس
-از یک دور یال داشته باشد. پس یکی از دور های این گراف را منقبض می کنیم. گراف همچنان ساده
-می ماند و می توان نشان داد که دور هایش همچنان اشتراک یالی ندارند. (این مطلب را ثابت کنید
-تا روی انقباض شهود بگیرید. ) و چون کوچک ترین مثال نقض را در نظر گرفته بودیم، در گراف جدید
-حکم برقرار است. اگر دوری به طول k را منقبض کرده باشیم، k یال و
-:math:`k-1`
-راس از گراف حذف می شوند. پس داریم:
+.. _proof-of-maximality:
 
-.. math:: 2(m - k) \le 3(n - k + 1) - 1
+Proof of Maximality
+~~~~~~~~~~~~~~~~~~~
+Here we prove by induction that in any graph whose cycles share no common edges,  
+the inequality :math:`2m \le 3n-1` holds.  
 
-و از قبل می دانستیم که:
+Consider the smallest counterexample to this theorem. This graph cannot be acyclic, because in that case,  
+its number of edges would be less than its number of vertices, meaning the inequality holds.  
+Clearly, the cycles of this graph cannot have chords (i.e., edges inside them),  
+as this would create two cycles sharing an edge. Additionally, a vertex cannot have edges to two vertices  
+of the same cycle.  
 
-.. math:: 2m > 3n - 1
+Now, contract one of the cycles in this graph. The graph remains simple, and it can be shown that  
+its cycles still share no edges. (Prove this to gain intuition about contraction.)  
+Since we assumed the smallest counterexample, the inequality holds for the contracted graph.  
+If a cycle of length *k* is contracted, *k* edges and :math:`k-1` vertices are removed from the graph.  
+Thus, we have:  
 
-از این دو گزاره در می یابیم که:
+.. math:: 2(m - k) \le 3(n - k + 1) - 1  
 
-.. math:: 2k < 3(k + 1)
+From the original assumption, we know:  
 
-که یعنی دوری که حذف کردیم کم تر از ۳ راس داشته که در گراف های ساده ممکن نیست. از این مطلب
-به تناقض می رسیم. با کمی دقت می توان دریافت که برابری تنها زمانی رخ می دهد که k دقیقا برابر
-3 باشد و این یعنی تمام دور های گراف مثلث باشند. (همانگونه که مثال ما این شرط را داشت)
+.. math:: 2m > 3n - 1  
+
+Combining these two inequalities yields:  
+
+.. math:: 2k < 3(k - 1)  
+
+This implies that the contracted cycle had fewer than 3 vertices, which is impossible in simple graphs.  
+This leads to a contradiction. Closer inspection reveals that equality occurs only when *k* is exactly 3,  
+meaning all cycles in the graph are triangles (as seen in our earlier example).
+

@@ -1,27 +1,29 @@
-الگوریتم پیدا کردن قطر درخت
-===========================
+Algorithm for Finding the Diameter of a Tree
+============================================
 
-یکی دیگر از مسائلی که در حالت کلی گراف np است اما در درخت ها به سادگی حل می شود مسئله پیدا کردن بلندترین مسیر است! از آنجایی که در درخت ها مسیر بین هر دو راس یکتا است می توان نتیجه گرفت قطر درخت همان بلندترین مسیر درخت می باشد. در این بخش روش های پیدا کردن قطر درخت را با پیچیدگی زمانی :math:`O(n)` بررسی می کنیم.
+Another problem that is NP-hard for general graphs but can be easily solved for trees is finding the longest path! Since the path between any two vertices in a tree is unique, it can be concluded that the diameter of the tree is its longest path. In this section, we explore methods for finding the diameter of a tree with a time complexity of :math:`O(n)`.
 
-استفاده از dp
+Using DP
 -------------------
 
-درخت را از راس 1 ریشه دار کنید. با استفاده از برنامه نویسی پویا دو متغیر زیر را به ازای هر راس :math:`u` به دست می آوریم.
+Root the tree at vertex 1. Using dynamic programming, we compute the following two variables for each vertex :math:`u`:
 
-- مقدار :math:`dp_u` برابر است با بیشترین فاصله راس :math:`u` با یک راس درون زیردرخت خود :math:`u`. 
-- مقدار :math:`ans_u` برابر است با اندازه قطر در زیردرخت :math:`u`.
+- :math:`dp_u` represents the maximum distance from vertex :math:`u` to any vertex within its subtree.
+- :math:`ans_u` represents the diameter of the subtree rooted at :math:`u`.
 
-واضح است که جواب مسئله برابر است با :math:`ans_1`. حالا تنها مسئله باقی مانده این است که چگونه این دو متغیر را به دست آوریم.
+Clearly, the final answer to the problem is :math:`ans_1`. The remaining task is to determine how to compute these two variables.
 
-برای به دست آوردن :math:`dp_u` کافی است توجه کنید که در اولین حرکت از :math:`u` به یکی از بچه هایش می رویم. پس باید به بچه ای برویم که مقدار :math:`dp` آن بیشینه است. 
+**Computing** :math:`dp_u`:  
+Observe that the first move from :math:`u` must be to one of its children. Therefore, we choose the child with the maximum :math:`dp` value. Thus, :math:`dp_u = 1 + \max(\text{dp of children})`.
 
-برای به دست آوردن :math:`ans_u` حالت بندی کنید که راس :math:`u` درون قطر باشد یا نباشد.
+**Computing** :math:`ans_u`:  
+We consider two cases based on whether vertex :math:`u` lies on the diameter or not:
 
-- اگر راس :math:`u` درون قطر نباشد مقدار :math:`ans_u` برابر با بیشینه :math:`ans` بچه های :math:`u` خواهد بود زیرا که قطر کاملا درون یکی از بچه ها خواهد بود.
-- در غیر اینصورت اگر راس :math:`u` انتهای قطر باشد جواب برابر با :math:`dp_u` خواهد بود.
-- در غیر اینصورت راس :math:`u` باید وسط یک مسیر باشد. حالت بندی کنید که دو سر آن به کدام یکی از بچه ها برود. اگر به بچه :math:`a, b` برود جواب برابر با :math:`2 + dp_a + dp_b` خواهد بود. پس کافیست :math:`a, b` را دو بچه ای انتخاب کنیم که مقدار :math:`dp` آن ها بیشینه است.
+- If :math:`u` **is not** on the diameter, then :math:`ans_u` equals the maximum :math:`ans` among its children (since the diameter must be entirely within one of the subtrees).
+- If :math:`u` **is an endpoint** of the diameter, the answer would be :math:`dp_u`.
+- If :math:`u` **lies on the path** between two endpoints, we consider two children :math:`a` and :math:`b` that contribute to this path. The diameter becomes :math:`2 + dp_a + dp_b`. Therefore, we select the two children with the largest :math:`dp` values.
 
-در کد زیر در :math:`mx1, mx2` به ترتیب راس های با بیشترین :math:`dp` را نگه داری می کنیم.
+In the code below, :math:`mx1` and :math:`mx2` store the first and second largest :math:`dp` values among the children, respectively.
 
 .. code-block:: cpp
     
@@ -50,35 +52,35 @@
         ans[u] = max(ans[u], 2 + dp[mx1] + dp[mx2]);
     }
 
+.. Thus, we were able to devise an algorithm that finds the diameter of a tree with a time complexity of :math:`O(n)`.
 
-پس توانستیم الگوریتمی ارائه دهیم که با پیچیدگی زمانی :math:`O(n)` قطر درخت را پیدا می کند.
+.. _dfs-up-down:
 
 dfs up/down
 -----------------------
 
-گاهی هدف ما به دست آوردن یک متغیر مثل :math:`dp` به ازای هر راس درخت است اما حساب کردن مقدار :math:`dp_u` نیاز به داشتن مقدار :math:`dp` تمام مجاور های راس :math:`u` (و نه فقط بچه های :math:`u`) دارد.
+Sometimes our goal is to compute a variable like :math:`dp` for each node of a tree, but calculating :math:`dp_u` requires knowing the :math:`dp` values of all adjacent nodes of :math:`u` (not just its children).
 
-ساده ترین مثال برای معرفی این تکنیک مسئله پیدا کردن بیشترین فاصله از هر راس است. فرض کنید می خواهیم به ازای هر راس :math:`u` خروج از مرکز این راس را داشته باشیم. جواب راس :math:`u` را :math:`ans_u` بگیرید. برای به دست آوردن جواب یک راس می توان به راحتی درخت را از این ارتفاع آویزان کرد و در :math:`O(n)` ارتفاع درخت را حساب کرد. اما آیا می توان مسئله را به ازای تمام راس با هم در :math:`O(n)` حل کرد؟
+The simplest example to introduce this technique is the problem of finding the maximum distance from each node. Suppose we want to compute the eccentricity of each node :math:`u`, which we'll call :math:`ans_u`. To find the answer for a single node, we can simply root the tree at that node and compute its height in :math:`O(n)`. But can we solve the problem for all nodes together in :math:`O(n)`?
 
-اولین مشکل ما این است که چون حساب کردن جواب یک راس به داشتن جواب مجاور هایش نیاز دارد نمی دانیم که محاسبه را از کجا شروع کنیم!
+The first challenge is that since calculating the answer for a node depends on its neighbors' answers, we don't know where to start the computation!
 
-درخت را از راس :math:`u` ریشه دار کنید. شکاندن مسئله به دو بخش می تواند مفید باشد. فرض کنید :math:`dpDown_u` برابر است با بیشترین فاصله از راس :math:`u` به راسی درون زیردرخت راس :math:`u`. همچنین :math:`dpUp_u` برابر است با بیشترین فاصله از راس :math:`u` به راسی خارج از زیردرخت راس :math:`u` (یعنی در اولین گام باید به پدر :math:`u` برویم). واضح است که جواب راس :math:`u` برابر با بیشینه دو عدد :math:`dpDown_u` و :math:`dpUp_u` است.
+Root the tree at node :math:`u`. Breaking the problem into two parts can be helpful. Let :math:`dpDown_u` be the maximum distance from node :math:`u` to any node in its subtree. Also, let :math:`dpUp_u` be the maximum distance from node :math:`u` to any node outside its subtree (i.e., we must first move to :math:`u`'s parent). Clearly, the answer for node :math:`u` is the maximum of :math:`dpDown_u` and :math:`dpUp_u`.
 
-همانطور که در قسمت بالا بررسی کردیم :math:`dpDown_u` را می توان از روی :math:`dpDown` بچه های راس :math:`u` حساب کرد.
+As discussed earlier, :math:`dpDown_u` can be computed from the :math:`dpDown` values of :math:`u`'s children.
 
-برای حساب کردن :math:`dpUp_u` توجه کنید که بعد از اینکه از :math:`u` به پدر :math:`u` رفتیم می توانیم دو راه در پیش بگیریم.
+To compute :math:`dpUp_u`, note that after moving from :math:`u` to its parent :math:`par`, we have two options:
 
-- می توانیم باز هم به بالا برویم. در اینصورت جواب برابر با :math:`1 + dpUp_{par}` است(فرض کنید :math:`par` پدر راس :math:`u` است).
-- می توانیم به پایین برویم یعنی به یکی از برادر های :math:`u` مثل :math:`w` بریم. سپس باید پایین برویم. در اینصورت جواب برابر با :math:`2 + dpDown_w` می باشد.
+1. **Move further upward**: In this case, the answer is :math:`1 + dpUp_{par}` (assuming :math:`par` is the parent of :math:`u`).
+2. **Move downward**: Go to one of :math:`u`'s siblings, say :math:`w`, then descend. Here, the answer is :math:`2 + dpDown_w`.
 
-نکته کلیدی این است که نیاز نیست هر بار تمام برادر های :math:`u` را بررسی کنیم که راس با :math:`dpDown` بیشینه (همان :math:`w` را پیدا کنیم). کافی است به ازای :math:`par` تنها یک بار دو بچه ای که :math:`dpDown` آن ها بیشینه است را به دست بیاوریم. همواره راس :math:`w` یکی از دو بچه :math:`par` است که :math:`dpDown` آنها بیشینه است. (چرا؟)
+The key insight is that we don't need to check all siblings of :math:`u` every time to find the sibling :math:`w` with the maximum :math:`dpDown`. For each parent :math:`par`, it's sufficient to precompute the two children with the largest :math:`dpDown` values. The node :math:`w` will always be one of these two children. (Why?)
 
+Now we understand how to compute the variables, but an unresolved issue remains: **What order should we follow for computation?** Calculating :math:`dpDown` requires values from children, while calculating :math:`dpUp` requires values from the parent. Which should we compute first?
 
-پس فهمیدیم که به چه صورت باید متغیر ها را به دست بیاوریم. اما همچنان یک مشکل حل نشده باقی مانده است. به چه ترتیبی باید به دست آوردن مقادیر را انجام دهیم. برای به دست آوردن :math:`dpDown` نیاز داریم که مقادیر بچه ها و برای به دست آوردن :math:`dpUp` نیاز داریم که مقادیر پدر را داشته باشیم. پس از کدام یک باید شروع کنیم؟
+The answer is simple yet clever: We can compute the values in two phases. First, compute all :math:`dpDown` values using a **dfsDown**, then compute all :math:`dpUp` values using a **dfsUp**! The key is that in **dfsDown**, children's values are computed before the current node's value. In **dfsUp**, however, the parent's value is computed first, and then children's values are derived from the parent.
 
-جواب ساده و هوشمندانه است. می توانیم طی دومرحله مقادیر را به دست بیاوریم. یک بار :math:`dpDown` ها را با استفاده از dfsDown و سپس :math:`dpUp` ها را با استفاده از dfsUp به دست بیاوریم! نکته اینجاست که در dfsDown ابتدا مقدار بچه ها به دست می آیند سپس مقدار راس فعلی. اما در dfsUp ابتدا مقدار پدر به دست می آید سپس مقدار بچه ها از روی پدر به دست می آیند!
-
-توجه کنید که در تابع dfsUp وقتی روی یک راس هستیم فرض کرده ایم که :math:`dpUp` آن راس به دست آمده است و سپس :math:`dpUp` بچه های آن را به دست می آوریم.
+Note that in the **dfsUp** function, when processing a node, we assume its :math:`dpUp` value has already been computed, and then we compute the :math:`dpUp` values of its children.
 
 .. code-block:: cpp
   
@@ -123,31 +125,28 @@ dfs up/down
      }
   }
 
-
-یک الگوریتم ساده تر
+A Simpler Algorithm
 ---------------------------
-قطر درخت یک خاصیتی دارد که به ما کمک می کند تا آن را ساده تر پیدا کنیم. آن
-خاصیت این است: دور ترین راس نسبت به هر راس، سر یکی از خطر های درخت است.
+The diameter of a tree has a property that helps us find it more simply. This 
+property is: **the farthest vertex from any vertex is one end of a diameter of the tree**.
 
-برای اثبات، درخت را از این راس ریشه دار کنید. یکی از قطر های درخت را در
-نظر بگیرید. این قطر که یک مسیر هم هست، دقیقا یک راس دارد که نزدیک ترین راس
-به ریشه است. (پایین ترین جد مشترک سر و ته مسیر) اگر دور ترین راس مورد نظر
-ما درون ریزدرخت این راس باشد، یکی از شاخه ها را حذف می کنیم و شاخه مربوط به
-این راس را اضافه می کنیم و طول مسیر کوچک تر نمی شود پس هم چنان قطر می ماند. حالت
-دیگر ممکن نیست چون در این صورت از راس دورتر نسبت به جد مشترک شروع کرده و به این
-راس می رویم و قطر بزرگ تری پیدا می شود که تناقض است. پس این راس سر یکی از قطر
-های درخت است.
+To prove this, root the tree from an arbitrary vertex. Consider one of the 
+diameters of the tree (which is also a path). This diameter/path has exactly 
+one vertex that is closest to the root (the lowest common ancestor of the 
+path's endpoints). If the farthest vertex from our initial vertex lies within 
+the subtree of this common ancestor, we can remove one branch and add the 
+branch corresponding to this vertex. The path length does not decrease, so it 
+remains a diameter. The other case is impossible because starting from a 
+vertex farther from the common ancestor and moving to this vertex would create 
+a longer diameter, which is a contradiction. Thus, this vertex must be one 
+end of a diameter of the tree.
 
-از این خاصیت می توان استفاده کرد و قطر درخت را پیدا کرد. تابعی می نویسیم که
-یک راس ورودی بگیرد و به کمک الگوریتم دی اف اس یکی از دور ترین رئوس نسبت به این
-راس را برگرداند. این تابع را از یک راس دلخواه اجرا می کنیم و نتیجه را
-:math:`u`
-می نامیم. یکبار هم این تابع را از
-:math:`u`
-اجرا می کنیم و نتیجه را
-:math:`v`
-می نامیم. چون از قضیه بالا می دانستیم که راس
-:math:`u`
-سر یکی از قطر های درخت است، پس مسیر
-:math:`uv`
-یکی از قطر های درخت است.
+Using this property, we can find the tree's diameter. We write a function that 
+takes a vertex as input and returns one of the farthest vertices from it using 
+BFS. We run this function from an arbitrary vertex and call the result 
+:math:`u`. Then, we run the same function again starting from 
+:math:`u` and call the result 
+:math:`v`. From the above theorem, since 
+:math:`u` is one end of a diameter, the path 
+:math:`uv` is a diameter of the tree.
+

@@ -1,37 +1,11 @@
-راه خطی برای LCA
-===================
+A Linear Approach to LCA
+========================
 
-در بخش قبل دیدیم که چگونه می توان مسائل
-LCA و RMQ
-را به هم تبدیل کرد. اگر توجه کنید وقتی که
-LCA را به RMQ
-تبدیل می کنیم، آرایه ای ساخته می شود که اختلاف اعضایش دقیقا یک واحد است. این مساله خاص
-را در زمان خطی حل می کنیم که از آن نتیجه می شود که
-LCA و RMQ
-نیز در زمان
-:math:`O(n+q)`
-حل می شوند. توجه کنید که این راه ارزش تئوری دارد و با توجه به پیچیدگی پیاده سازی
-و ضریب بالا، در عمل استفاده نمی شود.
+In the previous section, we saw how LCA and RMQ problems can be converted into each other. If you notice, when converting LCA to RMQ, an array is constructed where the difference between consecutive elements is exactly one unit. This specific problem can be solved in linear time, which implies that LCA and RMQ can also be solved in :math:`O(n+q)` time. Note that this approach has theoretical value and is not used in practice due to its implementation complexity and high constants.
 
-در این راه آرایه را به دسته های
-:math:`\frac{lg(n)}{2}`
-تایی تقسیم می کنیم. چون اختلاف هر دو عضو متوالی دقیقا ۱ است، این آرایه از لحاظ
-ساختار در کل
-:math:`2^{\frac{lg(n)}{2}} = \sqrt{n}`
-حالت ممکن می تواند داشته باشد. برای هر کدام از زیر بازه های
-این حالات عضو مینیمم را به دست می آوریم که با پیاده سازی خوب پیچیدگی زمانی و حافظه ای
-:math:`O(\sqrt{n} * lg^2(n))`
-خواهد داشت.
-برای هر بازه نیز به دست بیاورید که شبیه کدام یک از رادیکال حالت ممکن است. این کار
-نیز در زمان خطی قابل اجراست.
-سپس هر دسته را یک عضو از یک آرایه جدید بگیرید و روی آن یک جدول پراکنده مشابه آن چه
-در بخش قبل بررسی کردیم بسازید. این کار نیز در زمان
-:math:`O(\frac{2*n}{lg(n)}*lg(\frac{2*n}{lg(n)})) = O(n)`
-قابل اجراست.
+In this approach, we divide the array into chunks of size :math:`\frac{\lg(n)}{2}`. Since the difference between any two consecutive elements is exactly 1, this array can have at most :math:`2^{\frac{\lg(n)}{2}} = \sqrt{n}` possible structural states. For each of these sub-intervals, we precompute the minimum element, which with a good implementation will result in :math:`O(\sqrt{n} \cdot \lg^2(n))` time and memory complexity. For each interval, we also determine which of the :math:`\sqrt{n}` possible states it resembles. This step can also be done in linear time.
 
-حال می خواهیم به پرسش ها پاسخ دهیم. یک بازه را در نظر بگیرید. یا کاملا
-درون یکی از دسته های کوچک می افتد که جواب آن را از قبل حساب کرده ایم.
-و یا سر آن درون یک بازه و ته آن درون بازه ای دیگر است. دسته های وسط که کامل
-درون بازه افتاده اند را به کمک جدول پراکنده ای که حساب کردیم عضو کمینه اش را حساب کنید.
-دو بازه سر و ته را نیز مانند حالت اول عمل کنید. سپس عضو کمینه بین این سه کاندید
-را حساب کنید. این عضو جواب شماست.
+Next, we treat each chunk as an element of a new array and build a sparse table over it, similar to what we discussed in the previous section. This step can be done in :math:`O\left(\frac{2n}{\lg(n)} \cdot \lg\left(\frac{2n}{\lg(n)}\right)\right) = O(n)` time.
+
+Now, let’s address how to answer queries. Consider a given range. It either falls entirely within one of the small chunks (whose answer we have precomputed) or spans across partial chunks. For the middle chunks that lie entirely within the range, compute their minimum using the prebuilt sparse table. For the partial chunks at the start and end of the range, handle them as in the first case. Finally, compute the minimum among these three candidates. This minimum will be the answer.
+

@@ -1,78 +1,154 @@
-قضایا ی مینماکس
-=================
+Minimax Theorems
+================
 
-در این بخش تعدادی قضیه را بررسی می کنیم که بیان می کنند مینیمم یک مقدار برابر است با ماکسیمم یک مقدار دیگر. تعدادی از این قضیه ها در هر گرافی برقرار است و تعدادی دیگر تنها در گراف دوبخشی برقرار هستند.
+In this section, we examine several theorems stating that the minimum of one quantity equals the maximum of another. Some of these theorems hold in any graph, while others hold only in bipartite graphs.
 
-ابتدا این علائم را قرار داد می کنیم‌ :
+First, we establish the following notations:
 
 +------------------------+-----------------------+
-|:math:`\alpha`          | ماکسیمم مجموعه مستقل  |
+|:math:`\alpha`          | Maximum independent set |
 +------------------------+-----------------------+
-|:math:`\alpha^{\prime}` | ماکسیمم تطابق         |
+|:math:`\alpha^{\prime}` | Maximum matching      |
 +------------------------+-----------------------+
-|:math:`\beta`           | مینیمم پوشش راسی      |
+|:math:`\beta`           | Minimum vertex cover |
 +------------------------+-----------------------+
-|:math:`\beta^{\prime}`  | مینیمم پوشش یالی      |
+|:math:`\beta^{\prime}`  | Minimum edge cover    |
 +------------------------+-----------------------+
 
-قضیه های برقرار در هر گرافی
+.. theorems-valid-in-every-graph:
+Theorems Valid in Every Graph
 ---------------------------
 
-:math:`\alpha + \beta = n`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this section, we examine fundamental theorems that hold true for all graphs.
 
-مکمل یک مجموعه مستقل یک پوشش راسی و مکمل یک پوشش راسی یک مجموعه مستقل است(چرا؟). در نتیجه اگر ماکسیمم مجموعه مستقل را در نظر بگیرید مکمل آن مینیمم پوشش راسی است و بالعکس.
+Handshaking Lemma
+~~~~~~~~~~~~~~~~~
+The sum of all vertex degrees in a graph is equal to twice the number of edges:
 
-:math:`\alpha^{\prime} + \beta^{\prime} = n`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. math::
+    \sum_{v \in V} \deg(v) = 2|E|
 
-ابتدا باید فرض کنیم که گراف راس تنها ندارد زیرا در غیراینصورت پوشش یالی برای این گراف تعریف نمی شود.
+**Proof**  
+Suppose we count all edge endpoints. Each edge contributes 2 to the total count, hence :math:`2|E|`. This must equal the sum of degrees. ∎
 
-حالا مینیمم پوشش یالی را در نظر بگیرید.
+.. code-block:: python
+    :linenos:
+    
+    def calculate_degrees(graph):
+        # Calculate degree of each vertex
+        degrees = {}
+        for v in graph.vertices:  # در اینجا رأس‌های گراف را پیمایش می‌کنیم
+            degrees[v] = len(graph.neighbors(v))
+        return degrees
+    
+    # Example usage
+    G = Graph()
+    G.add_edges([(1,2), (2,3), (1,3)])
+    print(calculate_degrees(G))  # Output: {1: 2, 2: 2, 3: 2}
 
-در ابتدا می توان نتیجه گرفت در این مجموعه یالی دور وجود ندارد (در اینصورت با حذف یکی از یال های دور به مجموعه کوچک تری رسید که همچنان پوشش یالی است). پس هر مولفه همبندی آن یک درخت است.
+.. note::  
+    In any graph, the number of vertices with odd degree is always even. This is a direct consequence of the Handshaking Lemma.
 
-سپس می توان نتیجه گرفت در هیچکدام از درخت ها فاصله بیشتر از 2 وجود ندارد (چرا؟). پس هر کدام از درخت ها یک ستاره هستند.
+Euler's Theorem
+~~~~~~~~~~~~~~~
+A connected graph contains an Eulerian trail if and only if it has exactly 0 or 2 vertices of odd degree.
 
-تعداد ستاره ها :math:`n-\beta^{\prime}` می باشد. و می توان از هر ستاره دقیقا یک یال را انتخاب کرد و یک تطابق تشکیل داد که اندازه آن کمتر مساوی تطابق ماکسیمم است. یعنی :math:`n-\beta^{\prime} \leq \alpha^{\prime}` در نتیجه :math:`n \leq \alpha^{\prime} + \beta^{\prime}`.
+.. image:: images/eulerian_graph.png
+    :width: 300px
+    :align: center
 
-حالا تطابق ماکسیمم را در نظر بگیرید.
+.. warning::  
+    This theorem applies only to **undirected graphs**. For directed graphs, the conditions differ.
 
-هر راسی مثل :math:`u` که با تطابق ماکسیمم پوشش داده نمی شود را در نظر بگیرید. تمام مجاور های :math:`u` باید با تطابق ماکسیمم پوشش داده شود (چرا؟) و چون راس تنها نداریم :math:`u` حداقل یک مجاور دارد.
+.. math::
+   \alpha + \beta = n
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-حالا یک پوشش یالی می سازیم. ابتدا تمام یال های تطابق را به آن اضافه می کنیم. سپس به ازای هر راسی که با تطابق ماکسیمم پوشش داده نشده یکی از یال های مجاورش را به پوشش راسی اضافه می کنیم. حالا پوشش راسی به اندازه :math:`n - \alpha^{\prime}` داریم زیرا که :math:`\alpha^{\prime}` یال اولیه هر کدام دو راس را پوشش دادند و بقیه یال ها هر کدام یک راس را پوشش دادند. :math:`n-\alpha^{\prime} \geq \beta^{\prime}` در نتیجه :math:`n \geq \alpha^{\prime} + \beta^{\prime}`.
+The complement of an independent set is a vertex cover, and the complement of a vertex cover is an independent set (Why?). Therefore, if we consider the maximum independent set, its complement will be the minimum vertex cover, and vice versa.
 
-در نهایت دو قسمت بالا حکم را نتیجه می دهند.
+.. math:: \alpha^{\prime} + \beta^{\prime} = n
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, we must assume the graph has no isolated vertices, as otherwise an edge cover cannot be defined for such a graph.
+
+Now consider a minimal edge cover. 
+
+First, we can conclude this set contains no cycles (if it did, removing one edge from the cycle would yield a smaller set that is still an edge cover). Therefore, each connected component is a tree.
+
+Next, we can conclude none of the trees have a distance greater than 2 (Why?). Hence, each tree is a star.
+
+The number of stars is :math:`n-\beta^{\prime}`. We can select exactly one edge from each star to form a matching whose size is less than or equal to the maximum matching. That is, :math:`n-\beta^{\prime} \leq \alpha^{\prime}`, hence :math:`n \leq \alpha^{\prime} + \beta^{\prime}`.
+
+Now consider the maximum matching.
+
+Take any vertex :math:`u` not covered by the maximum matching. All neighbors of :math:`u` must be covered by the maximum matching (Why?), and since there are no isolated vertices, :math:`u` has at least one neighbor.
+
+We construct an edge cover as follows: First, add all edges of the matching to it. Then, for each vertex not covered by the maximum matching, add one of its adjacent edges to the edge cover. Now we have an edge cover of size :math:`n - \alpha^{\prime}`, because the initial :math:`\alpha^{\prime}` edges each covered two vertices, and the remaining edges each covered one vertex. Thus :math:`n-\alpha^{\prime} \geq \beta^{\prime}`, leading to :math:`n \geq \alpha^{\prime} + \beta^{\prime}`.
+
+Finally, combining the two parts above proves the theorem.
 
 :math:`\beta \geq \alpha^{\prime}`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-تطابق ماکسیمم را در نظر بگیرید. تنها برای اینکه یال های مربوط به این تطابق را پوشش دهید به :math:`\alpha^{\prime}` راس نیاز دارید. (هر راس حداکثر می تواند یکی از آن ها را پوشش دهد). پس :math:`\beta \geq \alpha^{\prime}`.
+Consider a maximum matching. To cover the edges of this matching, you need :math:`\alpha^{\prime}` vertices. (Each vertex can cover at most one of them). Therefore, :math:`\beta \geq \alpha^{\prime}`.
 
+Theorems Holding in Bipartite Graphs
+------------------------------------
 
-قضیه های برقرار در گراف دوبخشی
---------------------------------
+.. code-block:: python
 
-:math:`\alpha^{\prime} = \beta`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def is_bipartite(graph):
+        # Check if graph is bipartite using BFS
+        color = {}
+        for node in graph:
+            if node not in color:
+                queue = [node]
+                color[node] = 0
+                while queue:
+                    v = queue.pop(0)
+                    for neighbor in graph[v]:
+                        if neighbor in color:
+                            if color[neighbor] == color[v]:
+                                return False
+                        else:
+                            color[neighbor] = 1 - color[v]
+                            queue.append(neighbor)
+        return True
 
-در قسمت بالا داشتیم :math:`\beta \geq \alpha^{\prime}` پس هر پوشش راسی بزرگتر مساوی یک تطابق است. پس اگر یک تطابق پیدا کنیم که برابر با یک پوشش راسی باشد در اینصورت حکم را ثابت کردیم همچنین آن تطابق ماکسیمم خواهد بود و آن پوشش راسی مینیمم خواهد بود.
+.. image:: /images/bipartite.png
 
-یک پوشش راسی مینیمم را در نظر بگیرید. فرض کنید گراف دو بخشی ما دارای دوبخش :math:`X,Y` است و مجموعه راس های پوشش راسی ما :math:`X1 \cup Y1` است که :math:`X1` از بخش :math:`X` و :math:`Y1` از بخش :math:`Y` می باشد همچنین :math:`X2=X-X1, Y2=Y-Y1`.
+**قضیه ۱:** هر گراف دوبخشی فاقد چرخه‌های فردطول است. برعکس، هر گراف بدون چرخه‌های فردطول یک گراف دوبخشی است.
 
-حالا گرافی که تنها شامل راس های :math:`X1,Y2` باشند را در نظر بگیرید. می خواهیم یک تطابق کامل از :math:`X1` به :math:`Y2` پیدا می کنیم (یعنی کل راس های :math:`X1` درون تطابق باشند).
+**Theorem 1:** Every bipartite graph contains no odd-length cycles. Conversely, every graph without odd-length cycles is bipartite.
 
-برقرار بودن شرط هال را برای پیدا کردن یک تطابق کامل از :math:`X1` به :math:`Y2` بررسی می کنیم. فرض کنید :math:`S \subseteq X1` ادعا می کنیم :math:`|S| \leq |n(S)|` برقرار است. فرض کنید برقرار نباشد یعنی :math:`|S| > |n(S)|` آنگاه اگر مجموعه :math:`S` را از پوشش راسی حذف کنیم و مچموعه :math:`n(S)` را به پوشش راسی اضافه کنیم همچنان همه یال ها پوشانده می شوند و به یک پوشش راسی کوچکتر رسیدیم که با مینیمم بودن پوشش راسی فعلی در تناقض است. پس شرط هال برقرار است.
+.. code-block:: python
 
-مشابها می توان یک تطابق کامل از :math:`Y1` به :math:`X2` پیدا کرد. که نتیجه می دهد ما تطابقی پیدا کردیم که اندازه آن برابر با پوشش راسی است.
+    # in ra taghir nade (don't change this line)
+    print("Bipartite check result:", is_bipartite(graph))  
+
+**نتیجه‌گیری:** از این قضیه می‌توان برای تشخیص دوبخشی بودن گراف با جستجوی چرخه‌های فردطول استفاده کرد.
+
+**Conclusion:** This theorem can be used to detect bipartiteness of a graph by searching for odd-length cycles.
+
+.. code-block:: text
+
+    :math:`\alpha^{\prime} = \beta`
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    In the previous section, we had :math:`\beta \geq \alpha^{\prime}`, meaning every vertex cover is at least as large as a matching. Thus, if we find a matching equal in size to a vertex cover, we will have proven the claim. Moreover, such a matching will be maximum, and the vertex cover will be minimum.
+
+    Consider a minimal vertex cover. Suppose our bipartite graph has partitions :math:`X` and :math:`Y`, and the vertex cover is :math:`X_1 \cup Y_1`, where :math:`X_1 \subseteq X` and :math:`Y_1 \subseteq Y`. Let :math:`X_2 = X - X_1` and :math:`Y_2 = Y - Y_1`.
+
+    Now consider the subgraph induced by the vertices :math:`X_1` and :math:`Y_2`. We aim to find a **complete matching** from :math:`X_1` to :math:`Y_2` (i.e., every vertex in :math:`X_1` is included in the matching).
+
+    To verify Hall's condition for finding a complete matching from :math:`X_1` to :math:`Y_2`, suppose :math:`S \subseteq X_1`. We claim :math:`|S| \leq |N(S)|` holds. Assume for contradiction that :math:`|S| > |N(S)|`. If we remove set :math:`S` from the vertex cover and add :math:`N(S)` to it, all edges remain covered, resulting in a smaller vertex cover. This contradicts the minimality of the original vertex cover. Hence, Hall's condition is satisfied.
+
+    Similarly, a complete matching from :math:`Y_1` to :math:`X_2` can be found. This implies the existence of a matching whose size equals that of the vertex cover.
 
 :math:`\beta^{\prime} = \alpha`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-از بخش های قبل داشتیم‌ که :math:`\alpha^{\prime} = \beta` و  :math:`n - \alpha = \beta` و :math:`n - \beta^{\prime} = \alpha^{\prime}` برقرارند.
+From the previous sections, we have that :math:`\alpha^{\prime} = \beta`, :math:`n - \alpha = \beta`, and :math:`n - \beta^{\prime} = \alpha^{\prime}` hold.  
 
-در نتیجه :math:`n - \alpha = n - \beta^{\prime}` پس :math:`\alpha = \beta^{\prime}`.
-
-
-
+Therefore, :math:`n - \alpha = n - \beta^{\prime}`, hence :math:`\alpha = \beta^{\prime}`.
 

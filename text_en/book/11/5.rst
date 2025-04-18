@@ -1,45 +1,85 @@
-هش درخت
+.. _tree_hash:
+
+Tree Hash
 ============
 
-در این قسمت چک کردن تساوی دو درخت را بررسی می کنیم. فرض کنید دو درخت :math:`T_1` و :math:`T_2` به ما داده شده است و می خواهیم الگوریتمی خطی ارائه دهیم که بررسی کند :math:`T_1,T_2` با هم برابر هستند یا خیر. منظور از برابری در اینجا این است که اگر شماره راس ها را در نظر نگیریم بتوان دو درخت را طوری کشید که شکل آن ها عینا یکسان شود.
+In this section, we examine the problem of checking the equality of two trees. Suppose we are given two trees :math:`T_1` and :math:`T_2`, and we want to provide a linear-time algorithm to check whether :math:`T_1` and :math:`T_2` are equal. Here, "equality" means that if we ignore vertex labels, the two trees can be drawn such that their shapes are completely identical.
 
-تبدیل به برابری دو درخت ریشه دار
----------------------------------
+.. _conversion-to-equality-of-two-rooted-trees:
 
-فرض کنید می دانیم راس :math:`u_1` از درخت :math:`T_1` قرار است برابر با راس :math:`u_2` از درخت :math:`T_2` شود. آنگاه می توانیم برابر بودن دو درخت ریشه دار را بررسی کنیم که به نظر می رسد ساده تر از مسئله فعلی باشد.
+Conversion to Equality of Two Rooted Trees
+------------------------------------------
 
-پس حالا اگر بتوانیم مسئله برابری دو درخت ریشه دار :math:`n` راسی را در :math:`O(f(n))` حل کنیم راه حلی داریم که مسئله فعلی را در :math:`O(n \times f(n))` حل می کند. تنها کافیست :math:`u_1` را یک راس ثابت در نظر بگیریم و روی :math:`u_2` حالت بندی کنیم.
+Assume we know that vertex :math:`u_1` from tree :math:`T_1` must correspond to vertex :math:`u_2` from tree :math:`T_2`. Then we can check the equality of two rooted trees, which appears simpler than the current problem.
 
-ایده کلیدی در اینجا این است که :math:`u_1,u_2` را با ویژگی خاصی انتخاب کنیم که تعداد راس های درخت با این ویژگی کم باشد. مثلا اگر :math:`u_1` را یک برگ در نظر بگیریم آنگاه :math:`u_2` نیز باید برگ باشد پس به جای :math:`n` بار حالت بندی روی :math:`u_2` کافی است به تعداد برگ های :math:`T_2` بار حالت بندی کنیم.
+Thus, if we can solve the equality problem for two rooted *n*-node trees in :math:`O(f(n))`, we will have a solution that solves the current problem in :math:`O(n \times f(n))`. It suffices to fix :math:`u_1` as a constant vertex and enumerate over possible :math:`u_2`.
 
-در قسمت های قبل یاد گرفتیم که هر درخت حداکثر 2 سنتروید دارد. در نتیجه اگر ویژگی مورد نظر را سنتروید بودن در نظر بگیریم کافی است :math:`u_1` را یکی از سنتروید های درخت :math:`T_1` در نظر بگیریم و برای :math:`u_2` روی تمام سنتروید های درخت :math:`T_2` حالت بندی کنیم (که حداکثر 2 تا هستند). پس توانستیم مسئله را در :math:`O(f(n))` حل کنیم.
+The key idea here is to select :math:`u_1` and :math:`u_2` with a specific property such that the number of nodes with this property is small. For example, if we consider :math:`u_1` to be a leaf, then :math:`u_2` must also be a leaf. Instead of enumerating over all :math:`n` possibilities for :math:`u_2`, it suffices to enumerate over the leaves of :math:`T_2`.
 
-حل مسئله برابری دو درخت ریشه دار
-------------------------------------
+In previous sections, we learned that every tree has at most **2 centroids**. Therefore, if we choose the desired property to be "being a centroid", it suffices to fix :math:`u_1` as one of the centroids of tree :math:`T_1` and enumerate over all centroids of tree :math:`T_2` (of which there are at most 2). This reduces the problem to :math:`O(f(n))` complexity.
 
-فرض کنید :math:`r_1` ریشه درخت :math:`T_1` و :math:`r_2` ریشه درخت :math:`T_2` باشد و حالا می خواهیم برابری این دو درخت را بررسی کنیم. در ابتدا اگر تعداد بچه های :math:`r_1,r_2` مساوی نباشند که دو درخت به وضوح نابرابرند. در صورت مساوی بودن تعداد بچه ها باید بفهمیم که هر کدام از بچه های :math:`r_1` به کدام یک از بچه های :math:`r_2` متناظر شده است. اگر این موضوع را بفهمیم می توان به صورت بازگشتی مسئله را حل کرد به اینصورت که به ازای تمام بچه های :math:`r_1` باید برابری زیردرخت آن با زیردرخت راس متناظرش در درخت :math:`T_2` را بررسی کنیم.
+.. code-block:: python
+   :linenos:
+   
+   def is_equal(t1, t2):
+       # Check equality of two rooted trees t1 and t2
+       if len(t1.children) != len(t2.children):  # Agar tedad farzandan motafavet bashad
+           return False
+       
+       # Morattab sazi farzandan bar asas reshte parantezi
+       c1 = sorted(t1.children, key=lambda x: x.bracket_string)  
+       c2 = sorted(t2.children, key=lambda x: x.bracket_string)
+       
+       for i in range(len(c1)):
+           if not is_equal(c1[i], c2[i]):  # Barresi bazgashti barabari
+               return False
+       return True
 
-به عبارتی باید دنباله بچه های :math:`r_1,r_2` را به طریقی جایگشت بدهیم سپس به ازای هر :math:`i` برابری زیردرخت بچه :math:`i` ام :math:`r_1,r_2` را بررسی می کنیم.
+Solving the Problem of Rooted Tree Equality
+-------------------------------------------
 
-حالا از این ایده استفاده می کنیم که ترتیب بچه های هر راس را بر حسب ویژگی خاصی مرتب کنیم. در اینصورت دیگر نیاز نیست تمام جایگشت های بچه های :math:`r_1,r_2` را بررسی کنیم و تنها کافیست ترتیب فعلی را بررسی کنیم.
+Let :math:`r_1` be the root of tree :math:`T_1` and :math:`r_2` be the root of tree :math:`T_2`. We want to determine if these two trees are equal. First, if the number of children of :math:`r_1` and :math:`r_2` differ, the trees are clearly unequal. If they have the same number of children, we need to determine which child of :math:`r_1` corresponds to which child of :math:`r_2`. Once this mapping is established, we can solve the problem recursively by verifying the equality of each child subtree of :math:`r_1` with its corresponding subtree in :math:`T_2`.
 
-به هر درخت ریشه دار مثل :math:`T` با ریشه :math:`r` یک دنباله از پرانتزگذاری ها را نسبت می دهیم. به اینصورت که ابتدا زیردرخت مربوط به بچه های :math:`r` را به صورت بازگشتی حساب می کنیم سپس بچه های :math:`r` را بر اساس ترتیب کتابخانه ای (lexicographical order) رشته آن ها مرتب می کنیم. **این همان ترتیب ثابتی است که می خواستیم به بچه های هر راس نسبت بدهیم.** در نهایت دنباله پرانتز گذاری :math:`T` به صورت :math:`S = (S_1S_2...S_k)` می باشد که :math:`S_i` ها دنباله پرانتزگذاری مربوط به زیردرخت بچه :math:`i` ام :math:`r` است.
+In other words, we need to permute the sequence of children of :math:`r_1` and :math:`r_2` in some way, then verify the equality of the :math:`i`-th child subtree of :math:`r_1` with that of :math:`r_2`.
 
-می توانید بررسی کنید که دو درخت ریشه دار با هم برابر هستند اگر و تنها اگر دنباله پرانتزگذاری نسبت داده شده به آن دو با هم برابر باشند.
+The key idea is to sort the children of each node based on a specific characteristic. This eliminates the need to check all permutations of children - we simply compare them in this canonical order.
+
+We assign a parenthesis sequence to each rooted tree :math:`T` with root :math:`r`. First, we recursively compute the parenthesis sequences for each child subtree of :math:`r`. Then, we sort :math:`r`'s children based on the lexicographical order of their corresponding strings. **This establishes the fixed ordering we wanted to assign to the children of each node.** Finally, the parenthesis sequence of :math:`T` is formed as :math:`S = (S_1S_2...S_k)`, where :math:`S_i` is the parenthesis sequence of the :math:`i`-th child subtree of :math:`r`.
+
+It can be shown that two rooted trees are equal if and only if their corresponding parenthesis sequences are identical.
 
 .. figure:: /_static/dot/Hash_Tree.svg
    :width: 30%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet connection is poor, this placeholder appears
 
-محاسبه هش درخت ریشه دار
+.. code-block:: python
+
+    MOD = 10**18 + 3
+    P = 10**9 + 7
+    
+    def dfs(u, par):
+        h = []
+        # find children
+        for v in adj[u]:
+            if v != par:
+                h.append(dfs(v, u))
+        # sort hashes and calculate parent's hash
+        h.sort()
+        res = 1
+        for i in range(len(h)):
+            res += h[i] * pow(P, i + 1, MOD)
+            res %= MOD
+        return res
+
+Rooted Tree Hash Calculation
 -----------------------------
 
-از آنجایی که کار کردن با یک رشته (چسباندن دو رشته به هم یا چک کردن تساوی دو رشته) نیاز به :math:`O(n)` عملیات دارد ما را به فکر می اندازد تا به جای اینکه به هر راس یک رشته نسبت دهیم، به هر راس یک عدد نسبت دهیم که هر عدد نماینده یک رشته باشد!
+Since working with strings (concatenating two strings or checking equality of two strings) requires :math:`O(n)` operations, this makes us think of assigning each vertex a number representing a string instead of directly working with strings!
 
-پس از منطق بالا استفاده می کنیم و به عدد مربوط به هر راس را به اینصورت به دست خواهیم آورد. ابتدا اعداد بچه ها را به دست می آوریم سپس آن ها را مرتب کرده و با فرض اینکه :math:`H_1,...,H_k` باشند عدد ما برابر با  :math:`H = 1 + \sum H_i \times P^i` به پیمانه :math:`M` خواهد بود که :math:`M, P` دو عدد اول تصادفی هستند. به این تکنیک هش کردن (hash) می گویند. از آنجایی که :math:`M,P` اعداد تصادفی هستند می توان فرض کرد اعداد به دست آمده تصادفی هستند و احتمال اینکه به دو درخت متفاوت اعداد یکسان نسبت دهیم بسیار ناچیز خواهد بود. (برای اطمینان می توان با :math:`M,P` های بیشتر این کار را انجام داد تا احتمال خراب شدن کار کم و کمتر شود).
+Using the above logic, we calculate the number for each vertex as follows: First, we obtain the numbers for the children, then sort them. Assuming they are :math:`H_1,...,H_k`, our number will be :math:`H = 1 + \sum H_i \times P^i` modulo :math:`M`, where :math:`M` and :math:`P` are two random prime numbers. This technique is called hashing. Since :math:`M` and :math:`P` are random numbers, we can assume the resulting numbers are random, and the probability of assigning the same number to two different trees will be extremely low. (To be more confident, we can use more :math:`M` and :math:`P` pairs to make the failure probability increasingly smaller).
 
-پیاده سازی الگوریتمی که بیان کردیم به این صورت می باشد :
+The implementation of the algorithm we described is as follows:
 
 .. code-block:: cpp
 
@@ -73,5 +113,4 @@
       cout << calc(1) << "\n"; // hash derakht rishe dar az 1
       return 0;
   }
-
 

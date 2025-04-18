@@ -1,10 +1,29 @@
-الگوریتم های راس و یال برشی
-===========================
-پیدا کردن یال برشی
---------------------
-برای پیدا کردن یال برشی، ابتدا بر روی گراف الگوریتم DFS را اجرا می کنیم. در هنگام اجرا شدن الگوریتم DFS به ازای هر راس u یک مقدار dp[u] نگه می داریم که برابر است با کمترین ارتفاعی که به آن backedge از بین رئوس زیر درخت راس u داریم. مقدار dp[u] برای هر راس این گونه حساب می شود که مقدار یک راس برابر با کمترین مقدار فرزندان آن راس و ارتفاع backedge های خود آن راس می باشد. حال یک یال بین راس v و parent[v] برشی است اگر و تنها اگر dp[v] مقدارش کمتر از ارتفاع v نباشد. یعنی یالی در زیر درخت v وجود نداشته باشد که به راسی بالا تر از v وصل باشد.
+Vertex and Edge Cut Algorithms
+=============================
 
-زمان اجرای این الگوریتم O(n+m) است که در آن n نشان دهنده تعداد راس ها و m نشان دهنده تعداد یال ها است.
+In graph theory, cut vertices (articulation points) and cut edges (bridges) play a crucial role in analyzing network connectivity. A cut vertex is a node whose removal increases the number of connected components, while a cut edge is a link whose removal does the same.
+
+To find these points and edges, various algorithms exist – the most famous being Tarjan's algorithm. This algorithm uses DFS (Depth-First Search) and two key properties for each vertex: ``index`` (discovery time) and ``low_link`` (the lowest index reachable from that vertex through DFS edges).
+
+.. code:: c
+
+   typedef struct {
+       int index; // vertex number
+       int low_link; // vertex's lowest root
+       bool onStack; // is on the stack?
+   } TarjanNode;
+
+.. figure:: images/tarjan.png
+
+Applications of these algorithms include identifying critical nodes in computer networks, analyzing social network vulnerabilities, and detecting communities in complex systems.
+
+Finding Bridge Edges
+--------------------
+To find bridge edges, we first run the DFS algorithm on the graph. While running the DFS algorithm, for each vertex u, we maintain a value ``dp[u]`` which equals the lowest height reachable via back edges from vertices in the subtree of u. The value ``dp[u]`` for each vertex is calculated as the minimum value among its children's values and the height of its own back edges.
+
+An edge between vertex v and its parent ``parent[v]`` is a bridge if and only if the value of ``dp[v]`` is not less than the height of v. This means there is no edge in the subtree of v that connects to a vertex above v.
+
+The runtime of this algorithm is O(n + m), where n represents the number of vertices and m represents the number of edges.
 
 .. code-block:: cpp
 
@@ -54,11 +73,11 @@
         return 0;
     }
 
-پیدا کردن راس برشی
---------------------
-در این قسمت نیز به مانند یال برشی مقدار dp[u] را با همان تعریف برای راس u به دست می آوریم. حال یک راس برشی است اگر وقتی آن را جدا می کنیم گراف به بیش از یک مولفه تقسیم شود بنابراین در درخت DFS که ساختیم راس v برشی است اگر مقدار dp همه فرزندانش بیشتر از مقدار ارتفاع راس v بود یعنی یالی به بالای آن نداشت. توجه کنید که ریشه زمانی برشی است که درجه یک نباشد.
+Finding Articulation Points
+----------------------------
+In this section, similar to finding bridges, we compute the dp[u] value using the same definition for vertex u. A vertex is an articulation point if removing it splits the graph into more than one component. Therefore, in the DFS tree we constructed, a vertex *v* is an articulation point if the dp value of all its children is greater than the height (depth) of vertex *v*, meaning no back edge exists to a higher ancestor. Note that the root is an articulation point if its degree is not one.
 
-زمان اجرای این الگوریتم نیز O(n+m) است.
+The time complexity of this algorithm is also O(n + m).
 
 .. code-block:: cpp
 
@@ -105,3 +124,4 @@
                 cout << u << " ";
         return 0;
     }
+

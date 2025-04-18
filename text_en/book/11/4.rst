@@ -1,58 +1,59 @@
-هافمن کدینگ
+Huffman Coding
 ============
 
-فرض کنید یک دنباله از حروف داریم که تشکیل یک متن داده است. حالا می خواهیم هر حرف را به دنباله ای از 0,1 ها تبدیل کنیم به طوریکه دوباره قابل بازیابی به حروف باشد. به طور معمول این کار با کد اسکی (ascii code) انجام می شود که هر حرف را به دنباله ای 8 تایی از 0,1 ها تناظر می دهد. اما در حقیقت ما در متن از همه حروف به یک اندازه استفاده نمی کنیم (مثلا در کلمات انگلیسی از حرف s به دفعات بیشتر از حرف z استفاده می شود). به همین دلیل اگر بخواهیم طول رشته 0,1 حاصل را کم کنیم استفاده از کد اسکی ایده خوبی نخواهد بود. به طور شهودی باید به حروف پرتکرار رشته دودویی با طول کم و با حروفی که کمتر ظاهر می شوند رشته دودویی با طول بیشتر نسبت بدهیم.
+Suppose we have a sequence of characters that form a text. Now we want to convert each character into a sequence of 0s and 1s such that it can be reconstructed back into characters. Typically, this is done using ASCII code which maps each character to an 8-bit sequence of 0s and 1s. However, in practice, we do not use all characters equally in a text (for example, in English words, the letter 's' is used more frequently than 'z'). Therefore, using ASCII code would not be ideal if we want to minimize the length of the resulting binary string. Intuitively, we should assign shorter binary sequences to high-frequency characters and longer binary sequences to less frequently occurring characters.
 
-تناظر حروف به 0,1
+.. Correspondence of letters to 0,1
 --------------------
 
-به فرایند تبدیل دنباله ای از حروف به دنباله ای از 0,1 ها رمزگذاری می گوییم و به برعکس این فرایند (یعنی تبدیل دنباله 0,1 ها به دنباله حروف) رمزگشایی می گوییم.
+The process of converting a sequence of letters into a sequence of 0s and 1s is called **encoding**, and the reverse process (i.e., converting a sequence of 0s and 1s into letters) is called **decoding**.
 
-اولین سوالی که در ذهنمان پیش می آید این است که چگونه هر حرف را به یک دنباله دودویی تناظر دهیم تا عملیات رمزگشایی به صورت یکتا و درست انجام شود؟ یک ایده هوشمندانه در اینجا استفاده از درخت ها است. یک درخت ریشه دودویی تعریف می کنیم و به آن درخت رمزگذاری می گوییم که خاصیت های زیر را دارد.
+The first question that arises is: How do we uniquely map each letter to a binary sequence to ensure decoding is unambiguous and correct? A clever idea here is to use trees. We define a rooted binary tree called an **encoding tree** with the following properties:
 
-- هر راس این درخت حداکثر دو بچه دارد. به ازای هر راس روی یال های این راس که به بچه هایش می رود عدد 0,1 نوشته ایم (0 برای بچه چپ و 1 برای بچه راست).
+- Each node in this tree has at most two children. On the edges from each node to its children, we write 0 and 1 (0 for the left child and 1 for the right child).
 
-- هر برگ این درخت (ریشه هیچگاه برگ محسوب نمی شود) متناظر با یکی از حروف الفبای ما  خواهد بود.
+- Each leaf of this tree (the root is never considered a leaf) corresponds to one of the letters in our alphabet.
 
-در اینصورت به ازای هر حرف :math:`x` الفبا فرض کنید :math:`u` برگ متناظر با :math:`x` باشد. در اینصورت دنباله 0,1 هایی که از ریشه تا راس :math:`u` می بینیم را متناظر با حرف :math:`x` قرار دهید.
+For each letter :math:`x` in the alphabet, let :math:`u` be the leaf corresponding to :math:`x`. Then the sequence of 0s and 1s observed along the path from the root to node :math:`u` is assigned as the correspondence for letter :math:`x`.
 
-حالا چگونه می توان یک متن دودویی را رمزگشایی کرد؟ کافی است ابتدا یک مهره را روی راس ریشه قرار دهید و شروع به خواندن متن دودویی کنید. سپس اگر 0 دیدید به یال سمت چپ بروید و اگر 1 دیدید به یال سمت راست بروید تا زمانی که به یک برگ برسید که به یک حرف متناظر شده است. و به این معنی است که حرف اول متنمان همان حرفی است که به آن رسیدیم. (دقت کنید که هیچ راس غیربرگی به حروف متناظر نشده پس اولین حرف متن نمی توانسته هیچ حرف دیگری باشد). سپس دوباره مهره را به ریشه برگردانید و دوباره شروع به خواندن رشته دودویی کنید تا حرف دوم رشته اصلی را متوجه شوید. با ادامه این فرایند می توان رشته را رمزگشایی کرد. اگر در این فرایند ها مهره می خواست به یالی برود که وجود ندارد‌ (مثلا اگر 0 نوشته شده بود ولی یال سمت چپ نداشتیم) یا اگر در آخر کار مهره روی ریشه نباشد به این معنی است که متن دودویی ما اشتباه است و هیچ متنی وجود ندارد که بعد از رمزگذاری به این رشته تبدیل شود.
+Now, how do we decode a binary text? Start by placing a marker on the root node and begin reading the binary text. If you read 0, move to the left child, and if you read 1, move to the right child. Continue this until you reach a leaf, which corresponds to a letter. This letter is the first character of the original text. (Note that no non-leaf node is mapped to a letter, so the first character cannot be anything else.) Then reset the marker to the root and repeat the process to decode the next character. By continuing this process, the entire string can be decoded. If during this process the marker attempts to follow a non-existent edge (e.g., reading 0 but no left child exists) or if the marker does not end on the root after decoding, the binary text is invalid, meaning no original text could produce it through encoding.
 
 .. figure:: /_static/derakht_ramz.png
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: If the internet is crappy, this appears
 
-یک درخت کمینه
-----------------
+.. code-block:: rst
 
-حال با دانستن اینکه می توان تناظر حروف به رشته های دودویی را با ساختن یک درخت رمزگذاری انجام داد، به مسئله اصلی بر می گردیم. حالا هدف ما این است که یک درخت رمزگذاری ارائه دهیم که طول رشته دودویی رمزشده مان را کمینه کند.
+ A Minimum Tree
+ ----------------
 
-به صورت دقیق تر فرض کنید می خواهیم درخت رمزگذاری ارائه دهیم که متن :math:`s` را به دنباله دودویی :math:`p` تبدیل کند به طوریکه طول :math:`p` کمینه شود. فرض کنید از حرف :math:`i` ام :math:`c_i` تا در رشته :math:`s` داشته باشیم. حالا طول :math:`p` برابر با :math:`\sum h_i \times c_i` خواهد بود پس می خواهیم این مقدار را کمینه کنیم.
+ Now that we know the correspondence between characters and binary strings can be established by constructing an encoding tree, we return to the main problem. Our goal now is to provide an encoding tree that minimizes the length of the encoded binary string.
 
-فرض کنید درخت رمزگذاری مورد نظر :math:`T` باشد. به چند نکته زیر توجه کنید :
+ More precisely, suppose we want to design an encoding tree that converts text :math:`s` into binary sequence :math:`p` such that the length of :math:`p` is minimized. Let the frequency of the :math:`i`-th character be :math:`c_i` in string :math:`s`. The length of :math:`p` will then be :math:`\sum h_i \times c_i`, so we want to minimize this sum.
 
-- اگر حرف ها را بر اساس تعداد تکرار های آن ها (:math:`c_i`) از کم به زیاد مرتب کنیم :math:`h_i` ها از زیاد به کم مرتب خواهند بود. (در غیر اینصورت می توانیم راس متناظر به دو حرف را جا به جا کنیم تا طول :math:`p` کم تر شود). 
-- تمام برگ ها برادر دارند (مگر اینکه تنها یک برگ داشته باشیم). در غیراینصورت می توان آن برگ را حدف کرد حرفی که به آن نسبت داده شده را به پدرش نسبت دهیم. در اینصورت طول :math:`p` کم می شود.
-- اگر دو برگ :math:`a` و :math:`b` در یک ارتفاع باشند می توان حرف هایی که به :math:`a,b` نسبت داده شده را با هم جا به جا کرد و تغییری در اندازه :math:`p` ایجاد نمی شود.
+ Let the desired encoding tree be :math:`T`. Note the following points:
 
-پس می توان نتیجه گرفت اگر دو حرفی که تعداد تکرار های آن ها کمینه است را :math:`x,y` در نظر بگیریم آن ها در پایین ترین ارتفاع درخت هستند.همچنین می توان راس های نسبت داده شده به آن ها را طوری جا به جا کرد که آن دو برادر باشند!
+ - If we sort the characters by their frequencies (:math:`c_i`) from least to most frequent, their depths :math:`h_i` will be sorted from greatest to least. (Otherwise, we could swap the nodes corresponding to two characters to reduce the length of :math:`p`).
+ - All leaves have siblings (unless there's only one leaf). Otherwise, we could delete such a leaf and assign its character to its parent, thereby reducing the length of :math:`p`.
+ - If two leaves :math:`a` and :math:`b` are at the same depth, we can swap their assigned characters without changing the length of :math:`p`.
 
-پس حالت بهینه ای وجود دارد که برگ های متناظر با :math:`x,y` دو برادر در پایین ترین ارتفاع درخت باشند. فرض کنید ارتفاع راس متناظر با :math:`x,y` برابر با :math:`h` باشد. از آنجایی که رشته دودویی متناظر به :math:`x,y` تنها در یک رقم آخر (یعنی رقم :math:`h` ام) با هم تفاوت دارند پس می توان فهمید رقم :math:`h` ام آن دو روی هم :math:`c_x + c_y` بار آمده است.
+ Thus, we conclude that if :math:`x` and :math:`y` are the two characters with the smallest frequencies, they reside at the deepest level of the tree. Moreover, their corresponding nodes can be rearranged to be siblings!
 
-در ادامه می توان دو حرف :math:`x` و :math:`y` را حذف کرد و یک حرف جدید مثلا :math:`z` تعریف کرد که به جای :math:`x,y` می آید و قرار است راس متناظر با :math:`z` همان پدر مشترک :math:`x,y` باشد پس حالا از تعداد حروف الفبا ای که داشتیم یکی کم کردیم و می توان مسئله را بازگشتی برای آن ها حل کرد. اگر جواب مسئله جدید (مینیمم طول :math:`p`) را :math:`ans ^ {\prime}` فرض کنید جواب مسئله فعلی ما :math:`ans = ans ^ {\prime} + c_x + c_y` خواهد بود. 
+ Hence, there exists an optimal configuration where the leaves corresponding to :math:`x` and :math:`y` are siblings at the deepest level. Suppose their depth is :math:`h`. Since their binary codes differ only in the last digit (the :math:`h`-th position), the :math:`h`-th digit contributes :math:`c_x + c_y` to the total length.
 
-همچنین می توانید ببینید که درخت بهینه :math:`T` که به صورت وجودی آن را فرض کرده بودیم در طی مراحل الگوریتم خود به خود ساخته خواهد شد!
+ We can now remove characters :math:`x` and :math:`y`, replacing them with a new character :math:`z` (represented by their parent node). This reduces the alphabet size by one, allowing us to solve the problem recursively. If the minimal length for the new problem is :math:`ans^{\prime}`, then the solution for the original problem is :math:`ans = ans^{\prime} + c_x + c_y`.
 
-.. figure:: /_static/huffman.png
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ Notably, the optimal tree :math:`T` we postulated will be automatically constructed during the algorithm's steps!
 
+ .. figure:: /_static/huffman.png
+  :width: 50%
+  :align: center
+  :alt: If the internet sucks, this appears
 
-پس الگوریتم به اینصورت است که در هر مرحله دو حرفی که کمترین تعداد تکرار را دارند (مثلا :math:`x,y`) با هم ترکیب کرده و یک حرف جدید جایگزین آن می کنیم که تعداد تکرار های آن :math:`c_x + c_y` است و سپس :math:`c_x + c_y` را به جواب اضافه می کنیم.
+ Thus, the algorithm works as follows: at each step, combine the two characters with the smallest frequencies (say :math:`x` and :math:`y`), replace them with a new character having frequency :math:`c_x + c_y`, and add :math:`c_x + c_y` to the total answer.
 
-پیاده سازی این الگوریتم را می توانید در ادامه ببینید. 
+ The implementation of this algorithm can be seen below.
 
 .. code-block:: cpp
 

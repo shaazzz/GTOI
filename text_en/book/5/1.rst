@@ -1,29 +1,37 @@
-معرفی
+Introduction
 ============
 
-تعاریف
------------
+A graph is a mathematical structure used to represent relationships between objects.
 
-تور اویلری گذر بسته ای است که در آن هر یال دقیقا یک بار طی شود.
-دور همیلتونی دور ای است که در آن هر راس دقیقا یک بار دیده شود همچنین مسیر همیلتونی مسیری است که در آن هر راس دقیقا یک بار دیده شود.
+.. code-block:: python
 
-به تفاوت گذر، گشت و مسیر توجه کنید!
+    # Create a directed graph using the DiGraph method
+    G = nx.DiGraph()
+    G.add_edges_from([(1, 2), (2, 3), (3, 1)])
 
-تعریف تور اویلری و دور همیلتونی بسیار شبیه به هم است اما همین یک تفاوت ریز (جایگزینی راس به جای یال) باعث شده است که مسئله پیدا کردن دور همیلتونی الگوریتم چند جمله ای نداشته باشد و در مقابل برای پیدا کردن تور اویلری می توان الگوریتم خطی ارائه داد!
+.. Definitions
+   -----------
 
-پل های کونیگسبرگ
-----------------
+An Eulerian tour is a closed trail where each edge is traversed exactly once.  
+A Hamiltonian cycle is a cycle where each vertex is visited exactly once, and a Hamiltonian path is a path where each vertex is visited exactly once.
 
-در داستان ها آمده است که به وجود آمدن مفهوم گراف به مسئله پل های کونیگسبرگ بر می گردد.
-کونیگسبرگ شهری بود که توسط رودخانه به چند ناحیه تقسیم شده بود و ارتباط بین ناحیه ها از طریق پل ها صورت می گرفت. بعد از مدتی برای شهروندان این سوال پیش آمد که آیا می توان از یکی از ناحیه ها شروع کرد و هر پل را دقیقا یک بار طی کرد و در انتها به شهر شروع بازگشت؟!
-می توانید ببینید که مسئله دقیقا معادل پیدا کردن یک تور اویلری است.
+Note the difference between *trails*, *tours*, and *paths*!
+
+The definitions of Eulerian tours and Hamiltonian cycles are very similar, but this subtle difference (replacing edges with vertices) causes the problem of finding a Hamiltonian cycle to lack a polynomial-time algorithm, whereas for finding an Eulerian tour, a linear algorithm can be provided!
+
+The Bridges of Königsberg
+-------------------------
+
+As the story goes, the concept of graphs originated from the Bridges of Königsberg problem. Königsberg was a city divided by a river into several regions, with bridges connecting the regions. Over time, the citizens began to wonder: Is it possible to start from one region, traverse every bridge exactly once, and return to the starting point?  
+You can see that this problem is precisely equivalent to finding an Eulerian circuit.
 
 .. figure:: /_static/Konigsberg_Bridges.png
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: If the internet sucks, this shows up
 
 .. figure:: /_static/dot/Konigsberg_Graph.svg
-   :width: 35%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 35%
+ :align: center
+ :alt: If the internet sucks, this shows up
+

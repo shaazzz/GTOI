@@ -1,29 +1,28 @@
 De Bruijn sequence
 ==========
 
-آیا می توان دور یک دایره :math:`2^n` ارقام 0 و 1 نوشت به طوریکه اگر تمام بازه های متوالی به طول :math:`n` را در نظر بگیریم کل اعداد باینری :math:`n` بیتی را تولید کند؟
+Is it possible to arrange :math:`2^n` digits of 0 and 1 around a circle such that considering all consecutive intervals of length :math:`n`, they generate all :math:`n`-bit binary numbers?
 
-تبدیل به دور همیلتونی
+Conversion to Hamiltonian Cycle
 ------------------
 
-اولین ایده ما برای مدل سازی این گراف به این شکل است :
+Our first idea for modeling this problem is as follows:
 
-یک گراف :math:`2^n` راسی می سازیم که هر راس آن با یک رشته :math:`n` تایی از 0 و 1 ها است. و راس :math:`a` به راس :math:`b` یال جهت دار دارد اگر بتوان رقم آخر رشته :math:`a` را حذف کرد سپس یک حرف به اول آن اضافه کرد به طویکه رشته :math:`b` حاصل شود. حالا سوال معادل با پیدا کردن یک دور همیلتونی در گرافی که ساختیم می باشد!
+We construct a graph with :math:`2^n` vertices where each vertex corresponds to an :math:`n`-length binary string. There is a directed edge from vertex :math:`a` to vertex :math:`b` if by removing the last digit of string :math:`a` and adding one digit to its beginning, we obtain string :math:`b`. Now the problem becomes equivalent to finding a Hamiltonian cycle in this graph!
 
-در اینجا به بن بست می خوریم زیرا که برای تشخیص اینکه یک گراف دور همیلتونی وجود دارد یا خیر روشی نداریم.
+Here we reach an impasse, as we have no general method to determine whether a graph contains a Hamiltonian cycle.
 
-تبدیل به تور اویلری
+Conversion to Eulerian Tour
 -----------------
 
-یک گراف :math:`2^{n-1}` راسی می سازیم که هر راس آن معادل با یک رشته :math:`n-1` تایی از 0 و 1 ها است. هر راس مانند :math:`u` دقیقا دو خروجی دارد. خروجی که عدد 0 روی آن نوشته شده است به راس :math:`w` می رود به طوریکه اگر حرف آخر رشته :math:`u` را حذف کنیم و به اول آن 0 را اضافه کنیم رشته حاصل همان رشته :math:`w` خواهد بود. خروجی که روی آن عدد 1 نوشته شده است را هم می توان به شیوه مشابه تعریف کرد.
+We construct a graph with :math:`2^{n-1}` vertices where each vertex corresponds to an :math:`(n-1)`-length binary string. Each vertex :math:`u` has exactly two outgoing edges. The edge labeled 0 connects to vertex :math:`w` such that if we remove the last digit of string :math:`u` and prepend 0, the resulting string equals :math:`w`. The edge labeled 1 is defined similarly.
 
-تفاوت اصلی گراف قبلی با این گراف این است که در گراف قبل هر بازه :math:`n` تایی از 0 و 1 های دور دایره معادل با یک راس گراف بود. ولی در اینجا معادل با یک یال گراف است. و مسئله را به پیدا کردن تور اویلری در گراف تبدیل کردیم. (می توان ثابت کرد که همانطور که درجه خروجی هر راس 2 است درجه ورودی هر راس هم 2 است همچنین گراف زمینه همبند است پس گراف اویلری می باشد).
+The key difference from the previous graph is that in the first approach, each :math:`n`-length interval on the circle corresponded to a vertex, while here it corresponds to an edge. This transforms the problem into finding an Eulerian tour in the graph. (It can be proven that since each vertex has out-degree 2, in-degree 2, and the underlying graph is connected, the graph is Eulerian).
 
-حالا اگر یک تور اویلری از گراف را پیدا کنید و ارقام روی یال های آن را به ترتیب دور دایره بنویسید چینش مطلوب ما حاصل خواهد شد!
+Now if you find an Eulerian tour in the graph and write the edge labels sequentially around the circle, you will obtain our desired arrangement!
 
 .. figure:: /_static/dot/De_Bruijn_Graph.svg
-   :width: 40%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
-
+ :width: 40%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 

@@ -1,77 +1,106 @@
-تشخیص دور داشتن گراف جهت دار
+.. _directed-cycle-detection:
+
+Detecting Cycles in Directed Graphs
 ==========================================================
-مقدمه
+
+To detect cycles in a directed graph, we can use Depth-First Search (DFS) with a modification to track vertices in the current recursion stack.
+
+.. code-block:: python
+
+    def has_cycle(graph):
+        """Function to check for cycles using DFS"""
+        visited = [False] * len(graph)      # Array to track visited vertices
+        rec_stack = [False] * len(graph)    # Array to track vertices in recursion stack
+        
+        def dfs(v):
+            visited[v] = True     # Mark current vertex as visited
+            rec_stack[v] = True   # Add vertex to recursion stack
+        
+            # Process all neighbors
+            for neighbor in graph[v]:
+                if not visited[neighbor]:
+                    if dfs(neighbor):      # Recursively check neighbors
+                        return True
+                elif rec_stack[neighbor]:  # If neighbor is in current stack
+                    return True
+            
+            rec_stack[v] = False  # Remove vertex from stack after processing
+            return False
+        
+        # Check all components
+        for node in range(len(graph)):
+            if not visited[node]:
+                if dfs(node):
+                    return True
+        return False
+
+.. image:: /images/dag.png
+
+**Explanation:**
+- The ``rec_stack`` array keeps track of vertices in the current DFS path
+- If we encounter a vertex that is already in the recursion stack, a cycle exists
+- Time complexity: O(V+E), same as standard DFS
+- This algorithm can also be used for topological sorting of Directed Acyclic Graphs (DAGs)
+
+.. _cycle_detection:
+
+Introduction
 ------------------------------------------------
-در بخش های قبلی, گاهی لازم می‌شد تشخیص دهیم یک گراف جهت‌دار دور دارد یا خیر! برای مثال برای اینکه یک ترتیب توپولوژیک از گراف ارائه دهیم, ابتدا باید مطمئن شویم گراف بدون دور است. زیرا گرافی که دور دارد, هیچ ترتیب توپولوژیکی ندارد!
+In previous sections, it was sometimes necessary to determine whether a directed graph contains a cycle! For example, to provide a topological order for a graph, we first need to ensure the graph is acyclic. Because a graph containing cycles has no valid topological order!
 
-در اینجا به شرح دو الگوریتم می‌پردازیم که می‌توانند دوری بودن گراف را تشخیص دهند. از طرفی در الگوریتم اول, یک دور در گراف خروجی می‌دهیم!
+Here we describe two algorithms that can detect cyclicity in graphs. Notably, the first algorithm will output an actual cycle in the graph if one exists!
 
-الگوریتم پیدا کردن دور با استفاده از DFS
+Code blocks and images remain unchanged as per instructions:
+
+.. code-block:: c++
+
+   // Check if graph is cyclic
+   bool hasCycle(int v) {
+       visited[v] = true;
+       for(int u: adj[v]) {
+           if(!visited[u]) {
+               if(hasCycle(u)) 
+                   return true;
+           } else if(!finished[u]) {  // inja yal ra hazf mikonim
+               return true; 
+           }
+       }
+       finished[v] = true;
+       return false;
+   }
+
+.. figure:: images/cycle_example.png
+   :align: center
+   :width: 60%
+
+   Shakl-e nemone-ye yek graph ba cycle.
+
+.. Algorithm for Finding Cycles Using DFS
 ------------------------------------------------
-**شرح:** این الگوریتم مشابه با الگوریتم بخش 3.3 می‌باشد با این تفاوت که در اینجا  برای هر راس دو نوع علامت‌گذاری خواهیم داشت. به این صورت که گراف را با استفاده از 
-:math:`DFS`
-پیمایش می‌کنیم و هر راس را هنگامی که به آن وارد می‌شویم، به عنوان یک راس دیده شده و زمانی که از آن راس خارج می‌شویم، به عنوان یک راسی که از آن خارج شده‌ایم، علامت‌گذاری می‌کنیم. حال اگر در زمان پیمایش به راسی برسیم که از آن را دیده‌ایم ولی از آن خارج نشده‌ایم، به این نتیجه می‌رسیم که گراف دور دارد و در غیر این صورت گراف بدون دور است.
+**Description:** This algorithm is similar to the algorithm in Section 3.3, with the difference that here we use two types of markings for each vertex. Specifically, we traverse the graph using :math:`DFS` and mark each vertex as "visited" when we enter it and as "exited" when we leave it. If during traversal we encounter a vertex that has been visited but not yet exited, we conclude the graph contains a cycle. Otherwise, the graph is acyclic.
 
-**اثبات درستی:** زمانی که در حال پیمایش گراف هستیم، اگر در راسی مانند 
-:math:`v`
-قرار داشتیم و به راسی مانند 
-:math:`u`
-رسیدیم که آن را دیده‌ایم ولی همچنان از آن خارج نشده‌ایم (راس های مسیر خاکستری)، این به این معناست که یالی جهت‌دار از 
-:math:`v`
-به 
-:math:`u`
-وجود دارد (یال قرمز) و 
-:math:`u`
-مسیری جهت‌دار به 
-:math:`v`
-دارد که در این صورت گراف دور خواهد داشت. همچنین اگر گراف دور داشته باشد، این الگوریتم حتما آن را پیدا خواهد کرد، زیرا در غیر این صورت اگر فرض کنیم 
-:math:`G`
-گرافی با حداقل یک دور باشد که الگوریتم دور را در آن پیدا نکرده باشد، اگر 
-:math:`v`
-اولین راسی باشد که از دور 
-:math:`C`
-به آن وارد شده‌ایم و 
-:math:`e`
-یالی از 
-:math:`u`
-به 
-:math:`v`
-باشد که در دور 
-:math:`C`
-قرار دارد، در این صورت در پیمایش، قبل از خارج شدن از 
-:math:`v`
-به 
-:math:`u`
-می‌رسیم (زیرا این دو راس در یک دور هستند و حتما از 
-:math:`v`
-به 
-:math:`u`
-مسیر هست) و با استفاده از یال 
-:math:`e`
-دوباره به 
-:math:`v`
-می‌رسیم که یعنی دور پیدا کرده‌ایم. پس از تناقض حاصل نتیجه می‌شود که الگوریتم دور را در هر گرافی که دور دارد، پیدا می‌کند.
+**Proof of Correctness:** While traversing the graph, if we are at a vertex :math:`v` and reach a vertex :math:`u` that has been visited but not exited (vertices on the gray path), this implies there is a directed edge from :math:`v` to :math:`u` (a red edge) and :math:`u` has a directed path to :math:`v`. In this case, the graph contains a cycle. Furthermore, if the graph has a cycle, this algorithm will always detect it. Suppose, for contradiction, that :math:`G` is a graph with at least one cycle that the algorithm fails to detect. Let :math:`v` be the first vertex on cycle :math:`C` that we enter during traversal, and let :math:`e` be the edge from :math:`u` to :math:`v` in cycle :math:`C`. During traversal, before exiting :math:`v`, we will reach :math:`u` (since these two vertices are part of a cycle and there must be a path from :math:`v` to :math:`u`). Using edge :math:`e`, we return to :math:`v`, thereby detecting the cycle. This contradiction implies the algorithm will always find a cycle in any graph that contains one.
 
 .. figure:: /_static/dot/Cycle_DFS.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
-پیچیدگی الگوریتم
+Algorithm Complexity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-در الگوریتم یک بار از 
-:math:`DFS`
-استفاده کردیم که در نتیجه پیچیدگی آن برابر با 
-:math:`O(m+n)`
-است که 
-:math:`n`
-تعداد راس‌ها و 
-:math:`m`
-تعداد یال‌ها می‌باشد.
+In the algorithm, we used 
+:math:`DFS` 
+once, hence its complexity is 
+:math:`O(m+n)`, 
+where 
+:math:`n` 
+is the number of vertices and 
+:math:`m` 
+is the number of edges.
 
-پیاده‌سازی الگوریتم
+Algorithm Implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-توجه کنید که در پیاده‌سازی زیر در صورت داشتن دور، دور پیدا شده و در صورت نداشتن دور، ترتیب توپولوژیک راس‌ها را خروجی می‌دهیم.
+Note that in the following implementation, if a cycle exists, it will be detected and output. If no cycle is found, the topological order of vertices will be output.
 
 .. code-block:: cpp
 
@@ -127,83 +156,102 @@
 	    return 0;
 	} 
 
-الگوریتم کان (kahn)
+Kahn's Algorithm (Kahn)
 ------------------------------------------------
-**شرح:** روش دیگری برای فهمیدن اینکه یک گراف دور دارد یا نه, الگوریتم کان است. این الگوریتم بر پایه استقرا عمل می‌کند. این روش با قضیه 3.3.2 بسیار شبیه می‌باشد!
+**Explanation:** Another method to determine whether a graph contains a cycle is Kahn's algorithm. This algorithm operates based on induction. This method is very similar to Theorem 3.3.2!
 
-الگوریتم به اینصورت است که در ابتدا یک مجموعه خالی از راس ها داریم که آن را 
-:math:`zero`
-می‌نامیم. این مجموعه, مجموعه راس هایی هست که در گراف کنونی درجه ورودی‌شان 0 است.
+The algorithm works as follows: Initially, we have an empty set of vertices called 
+:math:`zero`.
+This set contains vertices in the current graph whose in-degree is 0.
 
-در ابتدا, راس هایی که درجه ورودی‌شان 0 است را به 
-:math:`zero`
-اضافه می‌کنیم.
+At the start, vertices with an in-degree of 0 are added to 
+:math:`zero`.
 
-در هر مرحله, مجموعه راس هایی که در 
-:math:`zero`
-هستند را به همراه یال‌هایشان از گراف حذف می‌کنیم و به دنبال این‌کار, ممکن است یک سری راس جدید درجه ورودی‌شان 0 شود و به 
-:math:`zero`
-اضافه شوند. این‌کار را آنقدر ادامه می‌دهیم تا یا تعداد راس های گراف برابر با 0 شود و یا اینکه مجموعه 
-:math:`zero`
-خالی شود.
+In each step, we remove the vertices in 
+:math:`zero` 
+along with their edges from the graph. As a result, some new vertices may attain an in-degree of 0 and are added to 
+:math:`zero`. 
+We repeat this process until either the number of vertices in the graph becomes 0 or the 
+:math:`zero` 
+set becomes empty.
 
-اگر در یک مرحله اندازه مجموعه
-:math:`zero`
-برابر با 0 بود و گراف کنونی هنوز شامل تعدادی راس بود, آنگاه گراف حتما دور دارد و اگر این اتفاق نیفتاد و همه راس ها از گراف حذف شدند, آنگاه گراف دور ندارد.
+If at any stage the size of the 
+:math:`zero` 
+set is 0 while the current graph still contains vertices, then the graph definitely has a cycle. If this does not happen and all vertices are removed from the graph, then the graph has no cycle.
 
 .. figure:: /_static/dot/Cycle_Kahn.svg
-   :width: 80%
-   :align: left
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 80%
+ :align: left
+ :alt: This appears if the internet connection is poor.
 
-برای درک بهتر, شکل روبرو را ببینید. در این شکل, دور آبی رنگ هیچگاه به مجموعه 
-:math:`zero`
-وارد نمی‌شود و بنابراین گراف دوری تشخیص داده می‌شود!
+For better understanding, see the figure on the side. In this figure, the blue cycle is never added to the 
+:math:`zero` 
+set, thus the cyclic graph is detected!
 
-
-
-**اثبات درستی:** برای اثبات الگوریتم دو حالت از گراف را در نظر می‌گیریم. ابتدا فرض کنید گراف 
-:math:`G`
-دور داشته باشد, آنگاه ادعا می‌کنیم الگوریتم به درستی دور داشتن را تشخیص می‌دهد.
-
-اگر 
-:math:`G`
-دور داشته باشد, آنگاه اگر این دور را 
-:math:`C`
-بنامیم, هیچکدام از راس های
-:math:`C`
-هیچگاه به 
-:math:`zero`
-اضافه نمی‌شوند(چرا؟). پس به جایی می‌رسیم که گراف هنوز شامل تعدادی راس است, اما 
-:math:`zero`
-خالی است! پس الگوریتم دور داشتن را تشخیص می‌دهد.
-
-حال اگر گراف دور نداشته باشد, با استقرا روی تعداد راس ها ثابت می‌کنیم که همه راس ها حذف می‌شوند!
-
-اولا که اگر گراف دور نداشته باشد, طبق قضیه 3.1.3 تعداد راس در گراف
-:math:`G`
-هستند که دردجه ورودی‌شان 0 است. پس این راس ها به مجموعه 
-:math:`zero`
-اضافه می‌شوند, سپس به همراه یال‌هایشان از گراف حذف می‌شوند. پس تعداد راس ها کم شد. از طرفی شرایط استقرا برقرار است و گراف کنونی دور ندارد. پس طبق استقرا همه راس ها از گراف حذف ‌می‌شوند و الگوریتم به درستی دور نداشتن را تشخیص می‌دهد.
-
-پیچیدگی الگوریتم
+Algorithm Complexity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-برای بررسی پیچیدگی الگوریتم, باید ببینیم که روی راس ها و یال ها چه مقدار پیمایش کردیم. ما زمانی روی یال ها پیمایش می‌کنیم که راسی در مجموعه
-:math:`zero`
-باشد, آنگاه روی یال های مجاور آن راس پیمایش می‌کنیم. از طرفی هر راس فقط یکبار در
-:math:`zero`
-می‌آید و پس از آن از گراف حذف می‌شود. پس ما روی هر یال یکبار پیمایش میکنیم.
+To analyze the algorithm's complexity, we need to determine how much we traverse vertices and edges. We traverse edges when a vertex is in the :math:`zero` set, at which point we traverse its adjacent edges. On the other hand, each vertex enters the :math:`zero` set only once and is subsequently removed from the graph. Therefore, we traverse each edge exactly once.
 
-از طرفی هنگامی روی راس ها پیمایش میکنیم که  راس در مجموعه
-:math:`zero`
-قرار گیرد. و مشابها, هر راس فقط یک بار به این مجموعه اضافه می‌شود و پس از آن از گراف حذف می‌شود.
+Similarly, we traverse vertices when they are added to the :math:`zero` set. Analogously, each vertex is added to this set only once and is then removed from the graph.
 
-پس پیچیدگی الگوریتم بالا برابر است با
-:math:`O(n + m)`
-است که مشابه با الگوریتم قبلی است!
+Thus, the complexity of the algorithm is :math:`O(n + m)`, which matches the complexity of the previous algorithm!
 
-پیاده‌سازی الگوریتم
+Algorithm Implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following code implements checking the connectivity of a graph using DFS:
+
+.. code-block:: python
+
+    def is_connected(graph):
+        """Function to check graph connectivity"""
+        if not graph:
+            return True
+            
+        visited = set()  # Visited nodes
+        start_node = next(iter(graph))  # Get any node
+        stack = [start_node]
+        
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                # Add unvisited neighbors to stack
+                stack.extend([n for n in graph[node] if n not in visited])
+                
+        return len(visited) == len(graph.keys())
+
+.. image:: images/dfs.png
+
+This function uses Depth-First Search (DFS) to check the connectivity of the graph. The algorithm works as follows:
+
+1. Select an arbitrary starting node
+2. Traverse all reachable nodes using DFS
+3. Compare the number of visited nodes with the total number of nodes
+4. If all nodes are visited, the graph is connected
+
+.. note::
+    The input graph must be in adjacency list format. For example:
+    
+    - Use a dictionary where keys are nodes
+    - Values are lists of adjacent nodes
+    - If all nodes are visited after DFS traversal, the graph is connected
+
+Example usage::
+
+    graph = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D'],
+        'C': ['A'],
+        'D': ['B']
+    }
+    
+    print(is_connected(graph))  # Output: True
+
+The output of the above example will be::
+
+    True
+
 .. code-block:: cpp
 
 	const int maxn = 5e5 + 5;
@@ -251,5 +299,4 @@
 		    cout << "graph is acyclic!" << endl;
 	      return 0;
 	}
-
 

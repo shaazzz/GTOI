@@ -1,268 +1,217 @@
-فاصله در درخت و گراف
-==========================
+Distance in Trees and Graphs
+============================
 
-در این بخش با معرفی فاصله در گراف به بررسی تعریف های مرتبط با فاصله چه در حالت کلی و چه در حالت خاص آن(یعنی در درخت) میپردازیم. در درخت ها صحبت در مورد فاصله به مراتب راحت تر از گراف در حالت کلی است چرا که همانطور که در بخش قبل بررسی کردیم در درخت مسیر بین هر دو راس یکتا است.
+In this section, by introducing the concept of distance in graphs, we examine related definitions of distance both in the general case and specifically in trees. Discussing distance in trees is considerably easier than in general graphs, because as we analyzed in the previous section, the path between any two vertices in a tree is unique.
 
-فاصله چیست؟
+What is Distance?
 --------------------
 
-دو راس :math:`u,v` در گراف را در نظر بگیرید. فاصله این دو راس طول (تعداد یال ها) کوتاه ترین مسیر بین این دو راس تعریف می شود.
+Consider two vertices :math:`u,v` in a graph. The distance between these two vertices is defined as the length (number of edges) of the shortest path between them.
 
-نکته : اگر دو راس در دو مولفه همبندی جدا باشند فاصله آن ها بینهایت است.
+Note: If two vertices are in two separate connected components, their distance is infinite.
 
-فاصله دو راس :math:`u,v` را به صورت :math:`d(u,v)` نشان میدهند.
+The distance between two vertices :math:`u,v` is denoted as :math:`d(u,v)`.
 
-قطر 
+Diameter
 -----------
 
-تعریف : قطر گراف برابر است با
-:math:`Max_{u,v} d(u,v)`
-یا به عبارتی ماکسیمم فاصله دو به دو راس ها در گراف.
+Definition: The diameter of a graph is equal to  
+:math:`Max_{u,v} d(u,v)`,  
+or in other words, the maximum distance between any pair of vertices in the graph.
 
-توجه کنید که قطر بلندترین مسیر نیست و در واقع بلند ترین **فاصله** است ولی در درخت بلندترین مسیر و قطر یکی است زیرا اگر دو سر بلندترین مسیر را بگیرید
-چون بین آن دو دقیقا یک مسیر وجود دارد و بلندترین مسیر , آن مسیر است در واقع طول بلندترین مسیر برابر فاصله آن دو راس است پس قطر برابر بلندترین مسیر است.
-تفاوت بلند ترین مسیر و قطر جایی به چشم می اید که در حالت کلی  پیدا کردن قطر یک گراف از اوردر چند جمله ای حل میشود ولی پیدا کردن بلند ترین مسیر یک مسئله NP است.
+Note that the diameter is not the longest **path**, but rather the longest **distance**. However, in a tree, the longest path and the diameter coincide. If you take the two endpoints of the longest path in a tree, there is exactly one path between them. Since this path is the longest possible, its length equals the distance between those two vertices. Thus, the diameter equals the length of the longest path.
 
-خروج از مرکز
+The distinction between the longest path and the diameter becomes significant in general graphs: finding the diameter of a graph can be solved in polynomial time, whereas finding the longest path is an NP-hard problem.
+
+Eccentricity
 --------------------
 
-اگر نام راس را :math:`u` در نظر بگیریم خروج از مرکز :math:`u` برابر ماکسیمم :math:`d(u,v)` به ازای همه :math:`v` هاست.
+If we consider the vertex name as :math:`u`, the eccentricity of :math:`u` equals the maximum :math:`d(u,v)` for all vertices :math:`v`.
 
-گراف اگر درخت باشد و درخت را از :math:`u` اویزان کنیم خروج از مرکز :math:`u` میشود ارتفاع راسی که بیشترین ارتفاع را در درخت دارد.
+If the graph is a tree and we root the tree at :math:`u`, the eccentricity of :math:`u` becomes the height of the vertex with the maximum height in the tree.
 
-خروج از مرکز راس :math:`u` را با  :math:`\varepsilon{(u)}`  نشان میدهند.
+The eccentricity of vertex :math:`u` is denoted by :math:`\varepsilon{(u)}`.
 
-قضیه 2.2.1
+.. _theorem-2-2-1:
+
+Theorem 2.2.1
 ------------------
 
-صورت قضیه : در درخت خروج از مرکز یک راس برابر ماکسیمم فاصله آن از دو سر قطر است.
+**Theorem Statement**: In a tree, the eccentricity of a vertex equals the maximum distance from that vertex to the two endpoints of the diameter.
 
-اثبات : برهان خلف میزنیم. فرض کنید راس ما :math:`a`  است و دو سر قطر هم راس های :math:`u , v` هستند . و راسی که فاصله اش با :math:`a` برابر :math:`\varepsilon(a)` است :math:`b` نام دارد . واضح هم است :math:`a` اگر یکی از دو سر قطر بود حکم درست است پس فرض میکنیم هیج یک از دو سر قطر نیست.
+**Proof**: We use proof by contradiction. Let vertex :math:`a` be our target vertex, and let :math:`u, v` be the two endpoints of the diameter. Let vertex :math:`b` be the vertex whose distance from :math:`a` is :math:`\varepsilon(a)` (the eccentricity of :math:`a`). If :math:`a` were one of the diameter's endpoints, the statement would trivially hold. Thus, assume :math:`a` is neither endpoint.
 
-درخت را از :math:`a` آویزان میکنیم. فرض کنید راس :math:`mh` راسی با بیشترین ارتفاع باشد که سه راس :math:`b,u,v` داخل زیر درخت آن هستند.
-چون :math:`mh` بیشترین ارتفاع از پدر های مشترک این سه راس دارد یعنی یا :math:`mh = b` است یا بچه ای از :math:`mh` که جد :math:`b` است در زیر درختش حداقل یکی از دو راس 
-:math:`u , v` را ندارد.که یعنی :math:`mh = lca(u,b)`  or :math:`lca(v,b)` .بدون از دست دادن کلیت مسئله فرض کنید :math:`mh = lca(u,b)`. حال ثابت میکنیم :math:`d(b,u)` > :math:`d(u,v)`
-با اثبات این بخش با تناقض بدست امده در طول قطر قضیه اثبات میشود.
+Hang the tree from :math:`a`. Let :math:`mh` be the vertex with the greatest height such that all three vertices :math:`b, u, v` lie in its subtree. Since :math:`mh` is the highest common ancestor of these three vertices, either :math:`mh = b` or one of :math:`mh`'s children (which is an ancestor of :math:`b`) lacks at least one of :math:`u` or :math:`v` in its subtree. This implies :math:`mh = \text{lca}(u, b)` or :math:`\text{lca}(v, b)`. Without loss of generality, assume :math:`mh = \text{lca}(u, b)`. We now prove :math:`d(b, u) > d(u, v)`, which will lead to a contradiction with the diameter's maximality.
 
-- :math:`d(b,u)` > :math:`d(u,v)`
-- :math:`mh = lca(b,u)` :math:`\longrightarrow`  :math:`h(b)+h(u)-2×h(Mh)` > :math:`d(u,v)`
-- اگر :math:`mh \neq lca(u,v)` هم باشد باز جد مشترکشان است پس :math:`d(u,v)` :math:`\leqslant` :math:`h(u)+h(v)-2×h(mh)` 
-- در نتیجه 
-  :math:`h(B) + h(u) - 2×h(mh) > h(u) + h(v) - 2×h(mh) \longrightarrow h(B) > h(u)`
-  که فرض سوال است پس عبارت درست است. با تناقض بدست امده قضیه اثبات شد.
+- **Step 1**: Show :math:`d(b, u) > d(u, v)`.
+- **Step 2**: Since :math:`mh = \text{lca}(b, u)`, we have :math:`d(b, u) = h(b) + h(u) - 2 \times h(mh)`.
+- **Step 3**: Even if :math:`mh \neq \text{lca}(u, v)`, it remains a common ancestor, so :math:`d(u, v) \leq h(u) + h(v) - 2 \times h(mh)`.
+- **Step 4**: Combining these: 
+  
+  .. math::
+     h(b) + h(u) - 2 \times h(mh) > h(u) + h(v) - 2 \times h(mh) \implies h(b) > h(v).
+  
+  This contradicts the assumption that :math:`v` is an endpoint of the diameter (and thus has maximal height). Hence, the theorem is proven.
 
-شعاع و مرکز
+Radius and Center
 --------------------
 
-به راسی که مینیمم خروج از مرکز را را در بین راس های گراف دارد مرکز گراف گوییم و به خروج از مرکز آن شعاع گراف.
+A vertex which has the minimum eccentricity among the graph's vertices is called the graph's center, and its eccentricity is called the graph's radius.
 
-قضیه 2.2.2
+.. _theorem-2-2-2:
+
+Theorem 2.2.2
 -------------------
 
-- الف) در درخت اگر قطر برابر :math:`Q` باشد شعاع برابر :math:`\lceil{Q/2}\rceil` است.
-- ب) در درخت اگر :math:`Q` فرد باشد دو راس وسط مسیر دو سر قطر مرکز هستند و اگر زوج باشد راس وسط قطر.
+a) In a tree, if the diameter is :math:`Q`, then the radius is :math:`\lceil{Q/2}\rceil`.
 
-اثبات : در ابتدا ثابت میکنیم راسی که در مسیر دو سر قطر نیست نمیتواند مرکز باشد. راسی مانند :math:`u` را در نظر بگیرید که در مسیر دو سر قطر نیست و راس :math:`v` را راسی از مسیر دو سر قطر در نظر بگیرید که فاصله اش با
-:math:`u` مینیمم است با توجه به قضیه 2.2.1 میتوان فهمید :math:`\varepsilon{(u)} = \varepsilon{(v)} + d(u,v)` پس :math:`u` قطعا مرکز نیست.
-حال بیایبد راس های درون مسیر دو سر قطر را از یک سر قطر به ترتیب شماره گزاری کنید(یعنی از 0 تا :math:`Q`. طبق  قضیه 2.2.1 میدانیم راس خروج از مرکز راس :math:`i` ام در مسیر دو سر قطر برابر :math:`max(i,Q-i)`
-است.میدانیم مینیمم عبارت بالا زمانی است که :math:`i , Q-i` کمترین اختلاف را با هم داشته باشند پس
+b) In a tree, if :math:`Q` is odd, the two middle vertices of the diameter path are the centers. If :math:`Q` is even, the middle vertex of the diameter is the center.
 
-- اگر :math:`Q` زوج باشد جواب میشود  :math:`max(Q - Q/2 , Q/2)` = :math:`Q/2`  پس شعاع برابر :math:`Q/2` است و تنها مرکز هم راس وسط قطر است (راس :math:`Q/2` مسیر دو سر قطر.
-- اگر :math:`Q` فرد باشد شعاع میشود  :math:`max((Q-1)/2 , (Q+1)/2)` = :math:`(Q+1)/2`  و تنها راس هایی در مسیر در سر قطر که چنین ویژگی دارد راس های :math:`(Q-1)/2,(Q+1)/2`  مسیر دو سر قطر هستند.
+**Proof**: First, we prove that a vertex not lying on the diameter path cannot be a center. Consider a vertex :math:`u` not on the diameter path, and let :math:`v` be a vertex on the diameter path whose distance to :math:`u` is minimal. According to Theorem 2.2.1, we have :math:`\varepsilon{(u)} = \varepsilon{(v)} + d(u,v)`. Thus, :math:`u` cannot be a center.
 
-سنتروید
+Now, number the vertices along the diameter path sequentially from one end (i.e., from 0 to :math:`Q`). By Theorem 2.2.1, the eccentricity of the :math:`i`-th vertex on the diameter path is :math:`\max(i, Q-i)`. The minimum of this expression occurs when :math:`i` and :math:`Q-i` have the smallest possible difference. Therefore:
+
+- If :math:`Q` is even, the solution is :math:`\max(Q - Q/2, Q/2) = Q/2`. Hence, the radius is :math:`Q/2`, and the only center is the middle vertex of the diameter path (vertex :math:`Q/2`).
+- If :math:`Q` is odd, the radius becomes :math:`\max((Q-1)/2, (Q+1)/2) = (Q+1)/2`. The only vertices on the diameter path satisfying this condition are the :math:`(Q-1)/2`-th and :math:`(Q+1)/2`-th vertices, which are the two middle vertices of the diameter path.
+
+Centroid
 -------------------
 
-به راسی در گراف که مجموع فاصله هایش از دیگر راس ها مینیمم است سنتروید گراف میگویند . به مانند تعاریف بالا سنتروید در درخت نیز دارای ویژگی جالبی است که در قضیه زیر آمده.
+A vertex in a graph whose sum of distances to all other vertices is minimized is called the **centroid** of the graph. Similar to the previous definitions, the centroid in a tree also has an interesting property, which is stated in the following theorem.
 
-قضیه 2.2.3
+.. _theorem-2-2-3:
+
+Theorem 2.2.3
 -----------------
 
-- الف) در درخت یک راس سنتروید است اگر و تنها اگر وقتی او را از درخت حذف کنیم سایز هر مولفه کمتر مساوی :math:`n/2` باشد.
-- ب) در درخت حداکثر دو سنتروید داریم و اگر دو تا باشند گراف زوج راسی است و ان دو به هم یال دارند .
+a) A vertex is a centroid in a tree if and only if, when removed, the size of every connected component is at most :math:`n/2`.
 
-اثبات : راس ها را شماره گزاری میکنیم و :math:`a_i` برابر مجموع فاصله های راس :math:`i` از دیگر راس های خواهد بود.حال ابتدا بخش اگر الف را اثبات میکنیم. فرض کنید سنتروید راس :math:`u` باشد و وقتی ان را حذف کنیم 
-مولفه همبندی با سایز بیشتر از
-:math:`n/2`
-بوجود بیاید حال میگویم راسی که از ان مولفه با
-:math:`u`
-همسایه است را در نظر بگیرید و نام آن را
-:math:`v`
-بگزارید . فاصله
-:math:`v`
-از راس های داخل این مولفه همبندی 
-یکی کمتر از فاصله
-:math:`u`
-از ان ها است و برای دیگر راس ها هم فاصله آن یکی بیشتر از فاصله
-:math:`u`
-است پس
-:math:`a_v = a_u - sz + (n-sz)`
-که :math:`sz` برابر سایز آن مولفه همبندی است.
-و چون
-:math:`sz > n/2 \longrightarrow n - 2 \times sz < 0 \longrightarrow a_v > a_u`
-با تناقض بدست امده اگر الف اثبات شد.
+b) A tree has at most two centroids. If there are two, the graph has an even number of vertices, and the two centroids are adjacent.
 
-حال ثابت میکنم هر دو راسی مانند
-:math:`i , j`
-که ویژگی اگر بخش الف را دارند در ان ها
-:math:`a_i = a_j`
-و چون میدانیم سنتروید ما ویژگی اگر الف را دارد پس همه راس ها با ویژگی اگر الف سنتروید هستند.
-درخت را از راس
-:math:`i`
-اویزان میکنیم.حال یک متغیر به نام
-:math:`A`
-داریم که وقتی روی راس
-:math:`z`
-هستیم
-:math:`A = a_z`
-و اول کار :math:`A = a_i` حال از راس ریشه یعنی :math:`i` به سمت راس :math:`j` حرکت میکنیم
-(یعنی در واقع مسیر بین این دو راس را با شروع از
-:math:`i`
-طی میکنیم) حال زمانی که از یک راس به بچه اش میرویم
-:math:`A`
-به اندازه سایز زیر درخت بچه اش کم میشود
-و به اندازه تعداد راس های منهای سایز زیر درخت بچه اش به
-:math:`A`
-اضافه میشود.
-ما میدانیم سایز زیر درخت
-:math:`j`
-بیشترمساوی از
-:math:`n/2`
-است زیرا وقتی
-:math:`j`
-را از درخت حذف کنیم سایز مولفه همبندی که پدرش در آن قرار دارد طبق فرض کمتر مساوی
-:math:`n/2`
-است پس تعداد راس های که در این مولفه نیستند(با احتساب :math:`j`)
-بیشتر مساوی
-:math:`n/2`
-است. پس سایز زیر درخت تمام جد های
-:math:`j`
-که ما طی کردیم هم این بیشتر مساوی بیشتر مساوی
-:math:`n/2`
-است پس میتوان نتیجه گرفت مقدار
-:math:`A`
-همیشه یا کمتر میشود یا تغییر نمیکند.
-پس
-:math:`a_i \geq a_j`
-. اگر ما درخت را از
-:math:`j`
-هم اویزان کنیم و مسیر بین ان دو را طی کنیم به نتیجه
-:math:`a_j \geq a_i`
-میرسیم که در نتیجه
-:math:`a_i = a_j`
-است.
+**Proof**  
+We label the vertices and let :math:`a_i` denote the sum of distances from vertex :math:`i` to all other vertices. First, we prove the "if" part of (a). Assume vertex :math:`u` is a centroid. If removing :math:`u` results in a connected component with size greater than :math:`n/2`, consider the neighbor of :math:`u` in this component, say :math:`v`. The distance from :math:`v` to vertices within this component is one less than the distance from :math:`u` to them, while its distance to other vertices is one more than that of :math:`u`. Thus, :math:`a_v = a_u - sz + (n - sz)`, where :math:`sz` is the size of this component. Since :math:`sz > n/2`, we have :math:`n - 2 \times sz < 0`, implying :math:`a_v < a_u`. This contradicts the minimality of :math:`a_u` for a centroid, thereby proving (a).
 
-حال به اثبات بخش ب میرویم فرض کنید دو راس :math:`i,j` سنتروید هستند و درخت را از  :math:`i` اویزان کردیم و داریم الگوریتم بالا را طی میکنیم حال میگوییم وقتی از یک راس به بچه اش میرویم :math:`A` در صورتی تغییر نمیکند
-که سایز زیر درخت بچه دقیقا برابر :math:`n/2` باشد و چون سایز زیر درخت :math:`j` بیشتر مساوی از :math:`\lceil{n/2}\rceil` است پس باید برای آن که :math:`A` در کل مسیر تغییر نکند :math:`j` بچه 
-:math:`i` باشد و سایز زیر درختش  دقیقا :math:`n/2` باشد . پس درخت زوج راسی است زیرا سایز زیر درخت :math:`j` بیشتر مساوی :math:`\lceil{n/2}\rceil` است و سایز زیر درخت بچه های 
-:math:`i` باید کمتر مساوی :math:`\lfloor{n/2}\rfloor` باشد پس باید :math:`\lfloor{n/2}\rfloor = \lceil{n/2}\rceil ` باشد پس :math:`n` زوج است.
-همچنین فهمیدیم در بالا هر دو سنتروید با هم همسایه اند پس واضح است که حداکثر میتوانیم دو سمنترید داشته باشیم و اگر نه دور داریم.
- 
+Next, we prove that any two vertices :math:`i` and :math:`j` satisfying the "if" condition in (a) must have :math:`a_i = a_j`. Since all centroids satisfy this condition, they must share the same :math:`a_i` value. Root the tree at vertex :math:`i`. Define a variable :math:`A` such that at vertex :math:`z`, :math:`A = a_z`. Initially, :math:`A = a_i`. Traverse the path from :math:`i` to :math:`j`. When moving from a parent to its child, :math:`A` decreases by the size of the child’s subtree and increases by the number of vertices outside this subtree. Since the size of :math:`j`'s subtree (when rooted at :math:`i`) is at least :math:`n/2` (as removing :math:`j` leaves its parent’s component with size at most :math:`n/2`), the size of all ancestors’ subtrees along this path is also at least :math:`n/2`. Thus, :math:`A` either decreases or remains constant, yielding :math:`a_i \geq a_j`. Repeating this process by rooting at :math:`j` gives :math:`a_j \geq a_i`. Hence, :math:`a_i = a_j`.
 
-مجموع فاصله ها
+For part (b), assume two centroids :math:`i` and :math:`j` exist. Root the tree at :math:`i` and traverse the path to :math:`j`. For :math:`A` to remain unchanged during traversal, the size of the child’s subtree must equal :math:`n/2`. Since the size of :math:`j`'s subtree is at least :math:`\lceil{n/2}\rceil`, :math:`j` must be a direct child of :math:`i` with subtree size exactly :math:`n/2`. This requires :math:`\lfloor{n/2}\rfloor = \lceil{n/2}\rceil`, implying :math:`n` is even. Additionally, the two centroids must be adjacent. Thus, a tree can have at most two centroids, and if two exist, the graph has an even number of vertices with the centroids adjacent. This precludes cycles, completing the proof.
+
+Sum of Distances
 -----------------------
 
-فرض کنید در مسئله ای هدف مینیمم یا ماکسیمم کردن مجموع فاصله بین هر دو راس است فرض کنید به این مجموع چگالی گراف بگوییم. به صورت شهودی هر چه چگالی گراف کمتر باشد گراف جمع و جور تر و هر چه چگالی گراف بیشتر باشد گراف پهن و پخش تر است.
+Assume in a problem the goal is to minimize or maximize the sum of distances between every pair of vertices. Let's call this sum the **graph density**. Intuitively, the lower the graph density, the more compact the graph is, and the higher the graph density, the more spread out and expansive the graph becomes.
 
-در ضمن برای اینکه فاصله تعریف شده باشد فرض کنید موضوع بحث ما گراف های همبند می باشد.
+Additionally, for distance to be well-defined, we assume our subject of discussion is connected graphs.
 
-کمینه کردن چگالی گراف
+.. image:: images/graph-density.png
+    :alt: Graph with different densities
+    :align: center
+
+.. Minimizing Graph Density
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-فاصله بین دو راس حداقل 1 است. و در گراف :math:`K_n` فاصله بین هر دو راس دقیقا 1 است. پس کمترین چگالی ممکن در گراف :math:`K_n` به دست می آید که برابر با :math:`n \choose 2` می باشد.
+The distance between two vertices is at least 1. In the graph :math:`K_n`, the distance between any two vertices is exactly 1. Therefore, the minimal possible density is achieved in the graph :math:`K_n`, which equals :math:`n \choose 2`.
 
-حالا اگر دامنه بحث را به درخت ها محدود کنیم مسئله کمی سخت تر می شود. اما همچنان می توان اینگونه استنتاج کرد.
+If we restrict the domain of discussion to trees, the problem becomes slightly more complex. However, we can still infer the following:
 
-- دقیقا :math:`n-1` جفت از راس ها هستند که فاصله اشان دقیقا 1 است. زیرا درخت :math:`n-1` یال دارد.
-- هر جفتی از راس ها که به همدیگر یال ندارند دارای فاصله حداقل 2 هستند.
+- Exactly :math:`n-1` pairs of vertices have a distance of exactly 1. This is because a tree has :math:`n-1` edges.
+- Every pair of vertices not connected by an edge has a distance of at least 2.
 
-در نتیجه کمترین چگالی ممکن حداقل :math:`2 \times {n \choose 2} - (n-1)` می باشد و تنها مثالی که در حالت این کران صدق می کند حالتی است که فاصله بین هر دو راس **حداکثر** برابر با 2 است. تنها درختی که این ویژگی را دارد ستاره می باشد (همانطور که در عکس می بینید). زیرا که اگر در این گراف دو برگ باشند که پدر مشترک نداشته باشند در اینصورت فاصله آنها حداقل 3 خواهد بود.
+Thus, the minimal possible density is at least :math:`2 \times {n \choose 2} - (n-1)`. The only example satisfying this bound is the case where the distance between any two vertices is **at most** 2. The only tree with this property is the star graph (as shown in the figure). This is because if two leaves in this graph do not share a common parent, their distance will be at least 3.
 
 .. figure:: /_static/dot/S_7.svg
-  :width: 50%
-  :align: center
-  :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :width: 50%
+   :align: center
+   :alt: This appears if the internet connection is poor
 
-بیشینه کردن چگالی گراف
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: python
+   :linenos:
 
-در این حالت توجه کنید که اگر یالی را حذف کنیم و حذف این یال گراف را ناهمبند نکند باید اینکار را بکنیم. زیرا که حذف یال باعث بیشتر شدن چگالی می شود (چرا؟). پس گرافی که چگالی آن بیشینه است را باید در میان درخت ها جست و جو کرد (زیرا همانطور که گفتیم همه یال های آن باید برشی باشد).
+   def compute_density(graph):
+       # vertices_count = تعداد راس ها
+       vertices_count = graph.vertices_count()
+       # edges_count = تعداد یال ها
+       edges_count = graph.edges_count()
+       return edges_count / vertices_count
 
-حالا یک راس خاص مثل :math:`u` را در نظر بگیرید. ادعا می کنیم جمع فواصل همه راس ها از :math:`u` حداکثر برابر با :math:`n \choose 2` است.
+Maximizing Graph Density
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-برای اثبات فرض کنید درخت را از :math:`u` آویزان کرده ایم و به ازای هر ارتفاع می دانیم که چند راس در این ارتفاع قرار دارند و بیشترین ارتفاع :math:`H` باشد. در اینصورت به ازای هر ارتفاعی از 0 تا :math:`H` حداقل یک راس از این ارتفاع باید داشته باشیم. حالا اگر حداقل دو راس در یک ارتفاع داشتیم می توان یکی از آن ها را به ارتفاع بالاتر برد و در اینصورت جمع ارتفاع ها بیشتر خواهد شد. با تکرار این فرایند به حالتی می رسیم که در هر ارتفاع 0 تا :math:`n-1` دقیقا یک راس باشد (یعنی درخت یک مسیر شده) که در این حالت جمع فاصله ها از :math:`u` برابر با :math:`1 + 2 + ... + (n-1) = {n \choose 2}` خواهد بود. پس ثابت کردیم که جمع فاصله ها از هر راس :math:`u` حداکثر :math:`n \choose 2` است.
+In this case, note that if removing an edge does not disconnect the graph, we must do so. Because removing an edge increases the density (why?). Therefore, the graph with maximum density must be sought among trees (since as we stated earlier, all its edges must be bridges).
 
-پس حالا برای اینکه به یک کران برسیم در هر مرحله یک **برگ** را از درخت حذف کنید و جمع فاصله ها از این برگ را محاسبه کنید. جمع تمام مقادیر برابر با چگالی گراف خواهد بود که طبق آنچه گفتیم حداکثر :math:`\sum\limits_{i=1}^{n} {i \choose 2} = {{n+1} \choose 3}` خواهد بود (طبق اتحاد چوشی چی).
+Now consider a specific vertex like :math:`u`. We claim the sum of distances from :math:`u` to all other vertices is at most :math:`n \choose 2`.
 
-می توان نتیجه گرفت تنها گرافی که در حالت تساوی این کران صدق می کند گراف مسیر است.
+To prove this, assume we've rooted the tree at :math:`u`. For each depth level, we know how many vertices exist at that height, with the maximum height being :math:`H`. In this case, we must have at least one vertex at every height from 0 to :math:`H`. Now if there are at least two vertices at the same height, one can be moved to a higher height, thereby increasing the total sum of distances. By repeating this process, we reach a state where exactly one vertex exists at each height from 0 to :math:`n-1` (i.e., the tree becomes a path). In this case, the total sum of distances from :math:`u` will be :math:`1 + 2 + ... + (n-1) = {n \choose 2}`. Thus, we've proven that the sum of distances from any vertex :math:`u` is at most :math:`n \choose 2`.
 
+Therefore, to establish a bound, iteratively remove a **leaf** from the tree and calculate the sum of distances from this leaf. The total sum of all these values equals the graph's density, which according to our earlier reasoning will be at most :math:`\sum\limits_{i=1}^{n} {i \choose 2} = {{n+1} \choose 3}` (by Cauchy's identity).
 
+We can conclude that the only graph achieving equality in this bound is the path graph.
 
-درخت پشتیبانی
-------------------------
+.. _support-tree:
 
-فرض کنید یک شبکه ارتباطی داریم که :math:`n` شهر را به هم وصل می کنند. برای اطمینان یک شبکه ارتباطی پشتیبانی هم آماده کرده ایم که در صورت ایجاد اختلال در شبکه اصلی از شبکه پشتیبانی استفاده کنیم تا ارتباط قطع نشود.
+Support Tree
+------------
 
-به زبان گراف دو درخت :math:`n` راسی :math:`T` و :math:`T ^ {\prime}` داریم. می خواهیم ثابت کنیم در صورتیکه یکی از یال های :math:`T` مثل :math:`uv` قطع شوند می توان یکی از یال های :math:`T ^ {\prime}` مثل :math:`u^{\prime}v^{\prime}` را به درخت :math:`T` اضافه کرد که ساختار همچنان همبند باقی بماند.
+Suppose we have a communication network connecting :math:`n` cities. To ensure reliability, we have prepared a backup communication network so that if the main network fails, we can use the backup to maintain connectivity.
 
-پس فرض کنید :math:`uv` را از :math:`T` حذف کردیم در اینصورت درخت ما دارای دو مولفه همبندی خواهد شد یکی از مولفه ها را آبی و دیگری را قرمز در نظر بگیرید. حالا می توان در درخت :math:`T^{\prime}` مسیری بین :math:`u,v` یافت.
-در این مسیر یالی وجود خواهد داشت که یک سر آن آبی و یک سر آن قرمز باشد (چرا؟). حالا اگر این یال :math:`u^{\prime}v^{\prime}` باشد می توانیم این یال را به :math:`T` اضافه کنیم و دوباره آن را همبند کنیم!
+In graph terms, we have two :math:`n`-vertex trees :math:`T` and :math:`T^{\prime}`. We aim to prove that if an edge :math:`uv` in :math:`T` is disconnected, we can add an edge :math:`u^{\prime}v^{\prime}` from :math:`T^{\prime}` to :math:`T` such that the structure remains connected.
 
+After removing :math:`uv` from :math:`T`, the tree splits into two connected components. Let us color one component blue and the other red. In the tree :math:`T^{\prime}`, there exists a path between :math:`u` and :math:`v`. Along this path, there must be an edge where one endpoint is in the blue component and the other is in the red component (why?). If this edge is :math:`u^{\prime}v^{\prime}`, we can add it to :math:`T` to restore connectivity!
 
-افراز درخت به مسیر ها
+.. Tree Partitioning into Paths
+.. --------------------------------
+
+.. Consider a tree :math:`T`. In this section, our goal is to partition the edges of this tree into the minimum number of paths. For better intuition, imagine removing the edges of the paths one by one from the tree until we obtain an edgeless graph.
+
+.. First, note that after removing each path, only the parity of the degrees at the two endpoints of the path changes. Ultimately, all vertex degrees will be even (zero). Therefore, a vertex with odd degree must be selected as an endpoint an odd number of times, and a vertex with even degree must be selected as an endpoint an even number of times. Hence, if the number of odd-degree vertices in the tree is :math:`X`, we need at least :math:`\frac{X}{2}` paths. (We know that the number of odd-degree vertices in any graph is even, so :math:`X` is even).
+
+.. Now, if at each step we remove a path between two odd-degree vertices, we can achieve the optimal state! We only need to ensure that the two odd-degree vertices belong to the same connected component.
+
+.. The question that arises is: How did the tree property aid us in this process?
+
+.. Ultimately, we used the fact that if a tree has no odd-degree vertices, it has no edges (though this theorem does not hold for general graphs). This is because if a graph has at least two vertices, it will have a leaf with degree 1 (which is odd).
+
+Covering Tree Edges with Paths
 -------------------------------
 
-درخت :math:`T` را در نظر بگیرید. در این قسمت هدف ما این است که یال های این درخت را به کمترین تعداد تعدادی مسیر افراز کنیم. برای شهود بهتر فرض کنید یال های مسیر ها را یکی یکی از درخت حدف می کنیم تا به گرافی بدون یال برسیم.
+In this section, we aim to find the minimum number of paths whose union covers all edges of :math:`T`. This problem is similar to the previous case with the difference that in the previous case, we partitioned edges into paths (i.e., each edge belonged to exactly one path). Here, we have the freedom to allow a path to cover an edge multiple times. It can be concluded that the solution to this problem will be smaller than the previous one.
 
-اول از همه توجه کنید که بعد از حذف هر مسیر تنها زوجیت درجه دو سر مسیر تغییر می کند همچنین در انتها درجه تمام راس ها زوج (صفر) خواهد بود. پس یک راس درجه فرد باید فرد بار و یک راس درجه زوج باید زوج بار به عنوان یک سر مسیر انتخاب شود. پس اگر تعداد راس های درجه فرد درخت :math:`X` باشد آنگاه حداقل :math:`\frac X 2` مسیر نیاز داریم. (می دانیم که تعداد راس های درجه فرد هر گرافی زوج است پس :math:`X` زوج است). 
+At first glance, one realizes that since extending paths does not harm our goal, there exists an optimal solution where both ends of every path are leaves!
 
-حالا اگر در هر مرحله مسیر بین دو راس درجه فرد را حذف کنیم می توانیم به حالت بهینه برسیم! فقط باید توجه داشته باشیم که دو راس درجه فرد ما مربوط به یک مولفه همبندی باشد.
+On the other hand, consider the edge connecting each leaf to its adjacent vertex. Each path can cover at most 2 of these edges. Thus, if there are :math:`X` leaves, we need at least :math:`\frac{X}{2}` paths. Now, we try to achieve this bound. That is, if :math:`X` is even, we cover the tree edges with :math:`\frac{X}{2}` paths, and if :math:`X` is odd, with :math:`\frac{X+1}{2}` paths.
 
-حالا سوالی که پیش می آید این است که درخت بودن طی این فرایند به ما چه کمکی کرد؟
+Hence, we try to iteratively transform the tree after selecting each path into a tree with two fewer leaves (except in the last step when :math:`X` is odd). If this is possible, the number of selected paths will be half the number of leaves, as desired.
 
-در نهایت ما از این موضوع استفاده کردیم که اگر درختی راس درجه فرد نداشته باشد یالی ندارد (اما این قضیه در گراف به صورت کلی برقرار نیست). چرا که اگر تعداد راس های گراف حداقل دو باشد در اینصورت برگی خواهد داشت که درجه آن 1 (و فرد) است.
-
-
-پوشاندن یال های درخت با مسیر ها
--------------------------------
-
-در ابن قسمت می خواهیم کمترین تعداد مسیر را پیدا کنیم که اجتماع آن ها کل یال های :math:`T` را شامل شود. این مسئله مشابه حالت قبل است با این تفاوت که در حالت قبل یال ها را به مسیر ها افراز می کردیم یعنی هر یال متعلق به یک مسیر بود. در اینجا این آزادی را داریم که یک مسیر چند بار یالی را بپوشاند. می توان نتیجه گرفت که جواب این مسئله کمتر از مسئله قبل است.
-
-در نگاه اول متوجه می شوید که چون طولانی کردن مسیر ها ضرری با ما نمی زند پس حالت بهینه ای وجود دارد که دو سر هر مسیر برگ باشد!
-
-از طرف دیگر به ازای هر برگ یالی که از این برگ به راس مجاورش می رود را در نظر بگیرید. هر مسیر حداکثر 2 تا از این یال ها را می پوشاند. پس اگر :math:`X` تا برگ داشته باشیم حداقل :math:`\frac X 2` تا مسیر نیاز داریم حالا تلاش می کنیم تا این کران را بر آورده کنیم. یعنی اگر :math:`X` زوج باشد با :math:`\frac X 2` مسیر و اگر :math:`X` فرد بود با :math:`\frac {X+1} 2` مسیر یال های درخت را بپوشانیم.
-
-پس سعی می کنیم در هر مرحله پس از انتخاب مسیر درختمان را به درختی تبدیل کنیم که تعداد برگ هایش دو تا کمتر است(البته در حالتی که :math:`X` فرد باشد مرحله آخر نمی توانیم اینکار را بکنیم). اگر بتوانیم این کار را بکنیم تعداد مسیر هایی که انتخاب کردیم نصف تعداد برگ ها خواهد بود همانطور که می خواستیم.
-
-دو برگ دلخواه مثل :math:`u,v` را در نظر بگیرید و درخت را از این مسیر آویزان کنید. ابتدا این مسیر را انتخاب کنید (که یال های بین :math:`u,v` را بپوشاند). فرض کنید راس های مسیر ما :math:`a_1,...,a_k` باشد حالا درختی می سازیم که به جای :math:`a_1,...,a_k` یک راس دارد! بین این راس و یک راس مثل :math:`w` یال است اگر و تنها اگر بین :math:`w` و یکی از :math:`a_1,...,a_k` یال باشد.‌ (به صورت شهودی مثل این است که کل راس های مسیر را فشرده کردیم و به یک راس تبدیل کردیم). حالا هر مسیر در گراف جدیدمان معادل با یک مسیر در گراف اولیه است و الان تنها کافیست کل یال ها در درخت جدید را با مسیر ها بپوشانیم! 
+Take two arbitrary leaves :math:`u, v` and consider the tree "hung" from the path between them. First, select this path (which covers the edges between :math:`u` and :math:`v`). Suppose the vertices of this path are :math:`a_1, ..., a_k`. We now construct a new tree where instead of :math:`a_1, ..., a_k`, we have a single vertex! An edge exists between this vertex and a vertex :math:`w` if and only if there was an edge between :math:`w` and any of :math:`a_1, ..., a_k` (intuitively, this is like compressing all vertices of the path into a single vertex). Now, every path in the new graph corresponds to a path in the original graph, and we only need to cover all edges of the new tree with paths!
 
 .. figure:: /_static/dot/Tree_to_Path_1.svg
-  :width: 50%
-  :align: center
-  :alt: درخت اولیه
+ :width: 50%
+ :align: center
+ :alt: درخت اولیه
 
 .. figure:: /_static/dot/Tree_to_Path_2.svg
-  :width: 50%
-  :align: center
-  :alt: درخت پس از فشرده کردن یک یال
+ :width: 50%
+ :align: center
+ :alt: درخت پس از فشرده کردن یک یال
 
-پس در هر مرحله یک مسیر که دو سر آن برگ است را فشرده می کنیم و به صورت یک راس در می آوریم. در هر مرحله تعداد برگ های گراف جدیدمان دو تا کم می شود مگر اینکه راسی که جدید اضافه کردیم (راس فشرده) برگ باشد. در صورتی این اتفاق می افتد که راس های مسیر بین :math:`u,v` همه درجه 2 باشند به جز یکی از آنها که باید درجه 3 باشد. به :math:`u,v` که مسیر بین آن چنین خاصیتی داشته باشد یک زوج ناسازگار می گوییم.
+Thus, in each step, we compress a path connecting two leaves into a single vertex. In each step, the number of leaves in the new graph decreases by two, unless the newly added vertex (the compressed vertex) becomes a leaf. This happens if all vertices on the path between :math:`u` and :math:`v` have degree 2 except one, which must have degree 3. Such a pair :math:`u, v` is called an **incompatible pair**.
 
-پس اگر بتوانیم در هر مرحله دو برگ :math:`u,v` را طوری انتخاب کنیم که زوج ناسازگار نباشند این کار را می کنیم (‌که پس از فشرده سازی از تعداد برگ ها 2 تا کم می کند). اگر نتوانستیم اینکار را بکنیم چه؟ در اینصورت ادعا می کنیم تنها یک راس درجه 3 داریم و باقی راس ها دارای درجه 1 یا 2 هستند (چرا؟). در اینصورت همانطور که در شکل می بینید درخت ما دقیقا 3 برگ خواهد داشت و می توانیم آن را با 2 مسیر بپوشانیم.
+Therefore, if we can select two leaves :math:`u, v` in each step that do not form an incompatible pair, we proceed (reducing the number of leaves by two after compression). What if we cannot? In this case, we claim that the tree has exactly one vertex of degree 3 and all other vertices have degree 1 or 2 (why?). As shown in the figure, such a tree will have exactly 3 leaves and can be covered with 2 paths.
 
 .. figure:: /_static/dot/Tree_to_Path_3.svg
-  :width: 50%
-  :align: center
-  :alt: درخت نهایی
+ :width: 50%
+ :align: center
+ :alt: درخت نهایی
 
-درخت چپانی
+.. _tree-embedding:
+
+Tree Embedding
 ---------------
 
-فرض کنید درختی :math:`n` راسی به نام :math:`T` داریم. همچنین گرافی مثل :math:`G` داریم که :math:`\delta(G) \geq n-1`. می خواهیم ثابت کنیم زیرمجموعه ای از یال های :math:`G` وجود دارد که :math:`T` را بسازد. (به صورت شهودی یک درخت :math:`T` در گراف :math:`G` بتوان پیدا کرد).
+Suppose we have a tree :math:`T` with :math:`n` vertices. We also have a graph :math:`G` such that :math:`\delta(G) \geq n-1`. We aim to prove that there exists a subset of edges in :math:`G` that forms :math:`T` (intuitively, that :math:`T` can be embedded as a subgraph in :math:`G`).
 
-یک برگ دلخواه مثل :math:`u` که تنها مجاور آن :math:`v` است را در نظر بگیرید و :math:`u` را از درخت حذف کنید! سپس به صورت استقرایی درخت :math:`T-u` را در :math:`G` پیدا کنید. حالا می خواهیم یال :math:`uv` را به درختمان اضافه کنیم. فرض کنید راس :math:`v` در گراف :math:`G` متناظر با :math:`v^{\prime}` شده باشد. حالا کافیست از بین مجاور های :math:`v^{\prime}` راسی را انتخاب کنید که قبلا با هیچ راس درخت متناظر نشده است. سپس می توان این راس را متناظر با :math:`u` قرار داد که فرض استقرای ما را ثابت می کند.
+Consider an arbitrary leaf :math:`u` (whose only neighbor is :math:`v`) and remove :math:`u` from the tree! Then, by induction, embed the smaller tree :math:`T-u` into :math:`G`. Now, we want to add the edge :math:`uv` back to our tree. Suppose vertex :math:`v` in the original tree corresponds to vertex :math:`v^{\prime}` in graph :math:`G`. It suffices to select a neighbor of :math:`v^{\prime}` in :math:`G` that has not yet been mapped to any vertex in the embedded tree. This neighbor can then be assigned to :math:`u`, completing the inductive step.
 
-برای یافتن چنین راسی کافیست از فرض :math:`\delta(G) \geq n-1` استفاده کنیم. پس :math:`v^{\prime}` حداقل :math:`n-1` مجاور دارد و حداکثر :math:`n-2` تا از آن ها قبلا به راس های درخت متناظر شده اند. پس یکی از مجاور های :math:`v` تا حالا به راس های درخت متناظر نشده که حالا می توانیم همانطور که گفتیم :math:`u` را به آن متناظر کنیم.
+To find such a vertex, we use the assumption :math:`\delta(G) \geq n-1`. Since :math:`v^{\prime}` has at least :math:`n-1` neighbors and at most :math:`n-2` of them are already mapped to vertices in the embedded tree, at least one neighbor of :math:`v^{\prime}` remains unmapped. We can assign :math:`u` to this neighbor, thereby satisfying the inductive hypothesis.
 
-این مسئله به منظور آشنایی شما با ساختار استقرا پذیر درخت مطرح شد. دیدید که چطور می توان یک برگ از درخت را حذف کرد و فرض استقرا را برای درخت باقی مانده به کار برد.
+This problem illustrates the inductive structure of trees. Observe how removing a leaf allows us to apply the inductive hypothesis to the remaining tree, then extend the embedding by reattaching the leaf.
 

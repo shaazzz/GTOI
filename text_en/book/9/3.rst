@@ -1,164 +1,123 @@
-مسائل np کامل گراف
-=====================
+.. _np-complete-graph-problems:
 
-np
-کامل بودن مساله های خانواده
-sat
-کلیدی برای اثبات
-np کامل و np سخت
-بودن دیگر مسائل است. در این فصل مسائلی از گراف که
-np کامل یا np سخت
-هستند را بررسی می کنیم. روند کار به این شکل است که هر مساله جدید را به یکی از
-مسائلی که قبلا ثابت کرده بودیم در زمان چند جمله ای کاهش می دهیم و به این ترتیب
-np کامل یا سخت
-بودن آن ها اثبات می شود.
+NP-Complete Graph Problems
+===========================
 
-این اثبات ها عموما در مقاله کارپ در سال
-1972
-آمده اند. کارپ در این مقاله ۲۱ مساله
-np
-کامل را معرفی و اثبات کرده است.
+The NP-completeness of the SAT problem family is key to proving the NP-completeness or NP-hardness of other problems. In this chapter, we examine graph problems that are NP-complete or NP-hard. The approach is to polynomially reduce each new problem to one previously proven NP-complete, thereby demonstrating its NP-completeness or NP-hardness.
 
-این اثبات ها چندان سخت نیستند و به عنوان یک تمرین فکری، خوب است که قبل از مطالعه
-راه حل ها، خودتان به مسائل فکر کنید و آن ها را ثابت کنید.
+These proofs primarily originate from Karp's 1972 paper. In this work, Karp introduced and proved 21 NP-complete problems.
 
-بزرگ ترین مجموعه مستقل
+These proofs are not inherently difficult. As a mental exercise, it is beneficial to attempt solving the problems independently before reviewing the solutions.
+
+.. _largest-independent-set:
+
+Largest Independent Set
 -------------------------
-در این قسمت ثابت می کنیم که مساله آیا گراف یک زیرگراف القایی با
-:math:`k`
-راس و بدون یال دارد یا خیر، یک مساله تصمیم
-np
-کامل است که نشان می دهد محاسبه
-:math:`\alpha`
-گراف یک مساله
-np
-سخت است.
+In this section, we prove that the problem of determining whether a graph contains an induced subgraph with 
+:math:`k` 
+vertices and no edges is an NP-complete decision problem, demonstrating that computing 
+:math:`\alpha` 
+(the independence number) of a graph is NP-hard.
 
-این مساله را به مساله
-3sat
-کاهش می دهیم. به ازای هر جمله در ورودی
-3sat
-سه راس متناظر با اعضای آن عبارت بگذارید و آن ها را به هم وصل کنید. سپس
-هر دو راسی که یکی متغیر و دیگری نقیض آن است را به هم وصل کنید. گرافی با
-:math:`3k`
-راس و چند یال ساخته می شود. واضح است که مجموعه مستقل این گراف از
-:math:`k`
-نمی تواند بیشتر باشد. حال این گراف یک مجموعه مستقل به این اندازه دارد
-اگر و تنها اگر مساله اصلی بتواند برقرار شود. چون در هر جمله باید حداقل
-یکی انتخاب شود که مقدارش برابر یک باشد و این اعضای انتخاب شده نمی توانند
-نقیض هم باشند، پس در گراف اصلی به هم یال ندارند و یک مجموعه مستقل تشکیل می دهند.
+We reduce this problem to the 3SAT problem. For each clause in the 3SAT input, create three vertices corresponding to its literals and connect them with edges. Then, connect every pair of vertices where one represents a variable and the other its negation. This constructs a graph with 
+:math:`3k` 
+vertices and several edges. Clearly, the independent set of this graph cannot exceed size 
+:math:`k`. Now, this graph has an independent set of this size 
+**if and only if** the original 3SAT instance is satisfiable. This equivalence holds because exactly one literal from each clause must be selected (assigned a true value), and the chosen literals cannot contain conflicting variables (a variable and its negation), meaning they share no edges in the graph and thus form an independent set.
 
-لازم به ذکر است که اگر
-:math:`k`
-یک عدد ثابت باشد (مثلا مساله این باشد که آیا گراف یک مثلث دارد) آنگاه این مساله
-np کامل
-نیست و راهی چند جمله ای در زمان
-:math:`O(n^k)`
-خواهد داشت.
+It is worth noting that if 
+:math:`k` 
+is a fixed constant (e.g., the problem asks whether a graph contains a triangle), then this problem is 
+**not NP-complete** and can be solved in polynomial time 
+:math:`O(n^k)`.
 
-خوشه گراف و مینیمم پوشش راسی
--------------------------------
-بزرگترین خوشه همان بزرگ ترین مجموعه مستقل گراف مکمل است. بنابراین محاسبه
-:math:`\omega`
-یک گراف هم
-np
-سخت است.
+.. _graph-clique-min-vertex-cover:
 
-کوچک ترین پوشش راسی نیز برعکس بزرگ ترین مجموعه مستقل است. یعنی راس های بیرون
-بزرگ ترین مجموعه مستقل، کوچک ترین مجموعه پوشش راسی را تشکیل می دهد و بلعکس، پس
-:math:`\beta`
-گراف هم یک مساله
-np سخت
-است.
+Graph Clique and Minimum Vertex Cover
+-------------------------------------
+The largest clique is equivalent to the largest independent set in the complement graph. Therefore, calculating 
+:math:`\omega` 
+of a graph is also 
+NP-hard.
 
-عدد رنگی
-----------
-مساله تصمیم آیا این گراف ورودی سه بخشی است، یک مساله
-np کامل
-است. از این مطلب نتیجه می شود که محاسبه عدد رنگی یا
-:math:`\chi`
-گراف یک مساله
-np سخت
-است.
-
-این مساله را نیز به مساله
-3sat
-کاهش می دهیم. گرافی به این شکل می سازیم:
-
-- سه راس درست، غلط و خنثی می سازیم و آن ها را دو به دو به هم وصل می کنیم. این
-  کار را به این دلیل انجام می دهیم که این رئوس همرنگ نشوند و رنگشان نماینده درستی
-  یا غلطی متغیر باشند.
-- به ازای هر متغیر و نقیضش، یک راس می گذاریم و این دو را با یال به هم متصل
-  می کنیم. هم چنین جفت آن ها را به راس خنثی وصل می کنیم تا یکی از دو رنگ درست
-  یا غلط را برگزینند.
-- سپس به ازای هر جمله، یک گجت به گراف اضافه می کنیم. گجت گرافی است که
-  سه یال به بیرون و یک راس نهایی دارد. گجت این خاصیت را دارد که اگر راس های
-  بیرونی آن سه یال همرنگ راس غلط باشند، نمی توان راس نهایی را هم رنگ درست
-  قرار داد و در غیر این صورت، می توان این کار را کرد. به ازای هر جمله سه
-  یال بیرونی گجت را به رئوس مربوط به متغیر وصل می کنیم و راس نهایی را به
-  راس خنثی و غلط وصل می کنیم تا رنگ آن مجبور شود همرنگ راس درست باشد.
-
-به این ترتیب جوابی وجود دارد اگر و تنها اگر گراف را بتوان با سه رنگ رنگ آمیزی
-کرد. تنها نکته ای که باقی می ماند، طراحی گراف گجت است. یک کاندید ممکن برای گراف
-گجت، گراف زیر است.
+The minimum vertex cover is conversely the complement of the largest independent set. That is, vertices outside the 
+largest independent set form the smallest vertex cover, and vice versa. Hence, the 
+:math:`\beta` 
+of a graph is also an 
+NP-hard 
+problem.
 
 .. figure:: /_static/dot/Gadget.svg
-   :width: 50%
-   :align: center
-   :alt: تصویر گراف گجت
+ :width: 50%
+ :align: center
+ :alt: Image of the gadget graph
 
-که در آن سه یال بیرونی با رنگ آبی و راس نهایی با رنگ قرمز معلوم شده است. صحت این
-گراف گجت را خودتان می توانید بررسی کنید. شاید برای شما سوال شود که این گراف از کجا
-ظاهر شد؟ ایده پشت طراحی این گراف این است که هر کدام از مثلث ها مانند یک گیت یای منطقی
-عمل می کنند و با ترکیب دو گیت دو ورودی، یک گیت سه ورودی به دست آورده ایم.
+Chromatic Number
+----------------
+The decision problem of whether an input graph is 3-colorable is an 
+NP-complete 
+problem. From this, it follows that computing the chromatic number 
+:math:`\chi` 
+of a graph is an 
+NP-hard 
+problem.
 
-از فصل های گذشته می دانید که مساله دو رنگ پذیری، بر خلاف مساله سه رنگ پذیری که
-np کامل
-است، در زمان خطی به کمک الگوریتم
-dfs
-قابل حل است.
+We also reduce this problem to the 
+3SAT 
+problem. We construct a graph as follows:
 
-مسیر همیلتونی
+- Create three vertices True, False, and Neutral, and connect them pairwise. 
+  This ensures these vertices cannot share the same color, and their colors will 
+  represent the truth or falsity of variables.
+- For each variable and its negation, place a vertex and connect them with an edge. 
+  Also, connect both to the Neutral vertex so they must choose either the True 
+  or False color.
+- For each clause, add a gadget to the graph. A gadget is a subgraph with 
+  three external edges and a final vertex. The gadget has the property that if 
+  the vertices connected to its three external edges are colored False, the final 
+  vertex cannot be colored True; otherwise, it can. For each clause, we connect 
+  the gadget's three external edges to the corresponding variable vertices and 
+  link the final vertex to the Neutral and False vertices. This forces the final 
+  vertex's color to match the True vertex.
+
+Thus, a solution exists if and only if the graph can be 3-colored. The only remaining 
+detail is designing the gadget graph. A possible candidate is the following graph:
+
+Here, the three external edges are highlighted in blue, and the final vertex 
+in red. You can verify the correctness of this gadget yourself. You may wonder, 
+where did this gadget come from? The design idea is that each triangle acts 
+like a logical OR gate, and by combining two 2-input gates, we obtain a 3-input gate.
+
+From previous chapters, you know the 2-colorability problem—unlike the 
+3-colorability problem, which is 
+NP-complete—can be solved in linear time using the 
+DFS 
+algorithm.
+
+.. _hamiltonian-path:
+
+Hamiltonian Path
 ---------------------
-این مساله را به مساله
-sat
-کاهش می دهیم. به ازای هر جمله، یک راس و به ازای هر متغیر، یک شکل لوزی مانند قرار
-می دهیم.
+We reduce this problem to the sat problem. For each clause, we place a vertex, and for each variable, a diamond-shaped structure.  
 
-بقیه اثبات در
+The remainder of the proof is available at  
 https://www.geeksforgeeks.org/proof-hamiltonian-path-np-complete/
 
-دور همیلتونی
+Hamiltonian Cycle
 ---------------------
-این مساله را به مساله مسیر همیلتونی کاهش می دهیم. یک گراف دلخواه ساده را در نظر
-بگیرید مانند
-:math:`G`
-سپس به آن یک راس اضافه کنید و آن را به تمام رئوس قبلی متصل کنید. گراف جدید را
-:math:`G^{\prime}`
-بنامید. هر مسیر همیلتونی در گراف
-:math:`G`
-را می توان با عبور از راس جدید به یک دور همیلتونی در گراف
-:math:`G^{\prime}`
-تبدیل کرد و هر دور همیلتونی در گراف
-:math:`G^{\prime}`
-با حذف راس جدید به یک مسیر همیلتونی در گراف
-:math:`G`
-تبدیل کرد. بنابراین اگر الگوریتمی داشته باشیم که بتوان با آن دور همیلتونی را
-تشخیص داد، با اضافه کردن یک راس می توان با آن مسیر همیلتونی را نیز تشخیص داد
-و چون مسیر همیلتونی
-np کامل
-است و دور همیلتونی هم به وضوح جز مسائل
-np
-است، دور همیلتونی نیز
-np کامل
-است.
+We reduce this problem to the Hamiltonian path problem. Consider an arbitrary simple graph 
+:math:`G`. Then, add a new vertex to it and connect it to all existing vertices. Call the new graph 
+:math:`G^{\prime}`. Every Hamiltonian path in graph 
+:math:`G` can be converted into a Hamiltonian cycle in graph 
+:math:`G^{\prime}` by traversing the new vertex, and every Hamiltonian cycle in graph 
+:math:`G^{\prime}` can be converted into a Hamiltonian path in graph 
+:math:`G` by removing the new vertex. Therefore, if we have an algorithm to detect a Hamiltonian cycle, we can use it to detect a Hamiltonian path by adding a vertex. Since the Hamiltonian path problem is NP-complete and the Hamiltonian cycle problem is clearly in NP, the Hamiltonian cycle problem is also NP-complete.
 
-بلند ترین مسیر و دور
+.. _longest-path-cycle:
+
+Longest Path and Cycle
 ----------------------
-این مسائل مساله تصمیم نیستند ولی چون تمام مسائل کلاس
-np
-به آن ها کاهیده می شوند (چون مسیر و دور همیلتونی حالت خاص این دو مساله اند) پس
-این مسائل
-np سخت
-هستند.
+These problems are not decision problems, but since all class NP problems  
+are reducible to them (because Hamiltonian path and cycle are special cases  
+of these two problems), therefore these problems are NP-hard.
 

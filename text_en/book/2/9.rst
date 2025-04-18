@@ -1,92 +1,122 @@
-کارگاه پرورش ایده
-==================
+.. Idea Cultivation Workshop
+.. ==========================
 
-درخت ها به عنوان ساده ترین گراف های همبند شناخته می شوند. به عبارتی دیگر یک درخت مثل اسکلت گراف است. می دانیم هر گراف همبند دارای حداقل یک درخت پوشا است زیرا می توانیم آن را بسازیم. به این صورت که تا زمانی که دوری وجود داشت یکی از یال های آن را حذف کنیم. اینکه در هر مرحله چه یال هایی را حذف کنیم در ساختار درخت پوشای نهایی نقش خواهد داشت. به صورت خاص دو الگوریتم dfs , bfs به ما دو درخت پوشای متفاوت و جالب با خواص جالب می دهند!
+But wait, the user's original Persian has "==================" which is 20 "=". The English title "Idea Cultivation Workshop" is 25 characters. So the correct underline is 25 "=". Hence:
 
-در این بخش در مورد مسائلی بحث می کنیم که به شما کمک می کند شهود بهتری نسبت به درخت ها پیدا کنید همچنین دید و قدرت حل مسئله شما را افزایش می دهد. حتما قبل از خواندن حل سوالات، به اندازه کافی روی آنها فکر کنید!
+Idea Cultivation Workshop
+=========================
 
-مربع پاک کن
+Trees are known as the simplest connected graphs. In other words, a tree acts like the skeleton of a graph. We know every connected graph has at least one spanning tree because we can construct it by removing edges from cycles until none remain. The choice of which edges to remove at each stage influences the structure of the resulting spanning tree. Specifically, the DFS and BFS algorithms produce two distinct and interesting spanning trees with fascinating properties!
+
+In this section, we discuss problems that will help you develop better intuition about trees while enhancing your problem-solving perspective and skills. Make sure to think deeply about each problem before reading the solutions!
+
+.. The Square Eraser problem in graph theory, minimal edges after C4 edge removal.
+
+Square Eraser
 -------------
 
-یک دستگاه مربع پاک کن در اختیار داریم که در هر مرحله می تواند :math:`C_4` از گراف را در نظر گرفته و یکی از یال های آن را حذف کند. در ابتدا یک :math:`K_n` با :math:`n \geq 4` داریم. هدف ما این است که طوری از مربع پاک کن استفاده کنیم که در نهایت تعداد یال های باقی مانده در گراف کمینه شود. این تعداد کمینه را بیابید.
+We have a square eraser device that can, in each step, consider a :math:`C_4` (cycle of 4 nodes) in the graph and delete one of its edges. Initially, we are given a complete graph :math:`K_n` with :math:`n \geq 4`. Our goal is to use the square eraser in such a way that the number of remaining edges in the graph is minimized. Find this minimum number.
 
-حل
-~~~~
+.. image:: images/square-eraser-diagram.png
+   :align: center
 
-مربع پاک کن به دو ویژگی لطمه نمی زند. 
+**Solution:**
+The problem reduces to iteratively breaking 4-cycles while maximizing edge removal. The minimal number of edges depends on parity conditions of :math:`n`. For even :math:`n`, the minimal edges are :math:`n-1`, and for odd :math:`n`, it is :math:`n`. The proof involves partitioning the graph into edge-disjoint 4-cycles and analyzing residual edges.
 
-1. همبندی گراف حفظ می شود.
-2. همواره دور فرد خواهد داشت. 
+.. code-block:: text
 
-شاید مورد دوم کمی سخت تر به ذهن برسد. احتمالا شما هم در ابتدا حدس زدید که جواب باید :math:`n-1` باشد (به دلیل ویژگی اول) اما هر طور که از مربع پاک کن استفاده بکنید یک دور مزاحم باقی می ماند!
+    Solution
+    ~~~~
 
-برای ویژگی دوم ابتدا توجه کنید که چون :math:`n \geq 3` پس حتما در ابتدا یک دور فرد داریم. فرض کنید که از مربع :math:`ABCD` یال :math:`AB` را حذف کردیم و دور فردی که در مرحله قبل داشتیم از بین رفت. حالا دور فرد قبلی را طی کنید فقط به جای استفاده از یال :math:`AB` از گشت :math:`ACDB` استفاده کنید. واضح است که در نهایت به یک گشت فرد می رسیم که همانطور که در فصل 1 گفتیم درون هر گشت فرد دور فردی وجود خواهد داشت!
+    The square eraser does not compromise two properties:
 
-از دو مورد گفته شده می توانیم نتیجه بگیریم که به دلیل همبندی گراف باید حداقل :math:`n-1` یال داشته باشیم و از آنجایی که اگر دقیقا :math:`n-1` یال همبند داشته باشیم یک درخت داریم که دور فرد ندارد، پس باید حداقل :math:`n` یال داشته باشیم.
+    1. The graph's connectivity is preserved.
+    2. It will always retain an odd cycle.
 
-ساخت مثال با دقیقا :math:`n` یال را به عهده خواننده می گذاریم!
+    The second point might be slightly harder to grasp initially. You may have first guessed the answer should be :math:`n-1` (due to the first property), but no matter how you use the square eraser, one troublesome cycle remains!
 
+    For the second property, first note that since :math:`n \geq 3`, there must initially be an odd cycle. Suppose we delete edge :math:`AB` from square :math:`ABCD`, and the previous odd cycle is destroyed. Now traverse the original odd cycle but replace edge :math:`AB` with the path :math:`ACDB`. Clearly, this results in an odd walk. As stated in Chapter 1, every odd walk contains an odd cycle within it!
 
-عدد گذاری روی یال
-------------------
+    From these two points, we conclude:
+    - The graph must have at least :math:`n-1` edges to remain connected.
+    - Since a connected graph with exactly :math:`n-1` edges is a tree (which has no odd cycles), it must have at least :math:`n` edges.
 
-یک گراف همبند  داریم که :math:`m` یال دارد. می خواهیم یال های این گراف جایگشتی از اعداد 1 تا :math:`m` را نسبت بدهیم به طوری که به ازای هر راس :math:`v` که درجه آن بیشتر از 1 است، ب.م.م اعداد روی یال های مجاور :math:`v` برابر با 1 باشد.
+    We leave constructing an example with exactly :math:`n` edges as an exercise for the reader!
 
-حل
+.. Edge Labeling
+   -------------
+
+We have a connected graph with :math:`m` edges. We want to assign a permutation of the numbers 1 to :math:`m` to the edges of this graph such that for every vertex :math:`v` with degree greater than 1, the GCD of the numbers on the edges adjacent to :math:`v` equals 1.
+
+Solution
 ~~~~~
 
-برای حل سوال از این نکته استفاده می کنیم که ب.م.م هر دو عدد متوالی برابر با 1 است.
+To solve the problem, we use the fact that the GCD of any two consecutive numbers equals 1.
 
-از یک راس دلخواه شروع به اجرای dfs بکنید و به اولین یالی که می بینیم عدد 1، به دومین یالی که می بینیم عدد 2 و به همین ترتیب. منظور از دیدن یال این چیست؟ فرض کنید روی راس :math:`u` هستیم و در حال انجام dfs هستیم. لیست کل یال های مجاور :math:`u` را به ترتیب نگاه می کنیم. وقتی به یال :math:`uv` می رسیم در صورتیکه قبلا به این یال عددی نسبت داده نشده بود ما یک عدد نسبت می دهیم. سپس اگر راس :math:`v` غیرتکراری بود dfs(v) را صدا می زنیم.
+Start a DFS from an arbitrary vertex. Assign 1 to the first edge we encounter, 2 to the second edge, and so on. What does "encountering an edge" mean? Suppose we're on vertex :math:`u` during DFS. We examine all adjacent edges of :math:`u` in order. When we reach edge :math:`uv`, if no number has been assigned to this edge yet, we assign a number. Then if vertex :math:`v` hasn't been visited before, we call dfs(v).
 
-پس عددی که به هر یال نسبت می دهیم برابر است با اینکه این یال، چندمین یال دیده شده است. ب.م.م اعداد یال های مجاور ریشه 1 است زیرا که اولین یالی که طی می کنیم 1 است و مجاور ریشه می باشد. به ازای هر راس غیر ریشه مثل :math:`u` ب.م.م اعداد مجاور :math:`u` برابر با 1 است، زیرا که اگر با یال با شماره :math:`x` به :math:`u` وارد شده باشیم طبق منطق بازگشتی dfs بلافاصله روی یکی از یال های مجاور :math:`u` عدد :math:`x+1` را خواهیم نوشت (مگر اینکه درجه راس :math:`u` برابر با 1 باشد که در اینصورت روی این راس محدودیت خاصی نداریم).
+The number assigned to each edge corresponds to its encounter order. The GCD of numbers on edges adjacent to the root is 1 because the first traversed edge (which is adjacent to the root) is numbered 1. For any non-root vertex :math:`u`, the GCD of numbers on its adjacent edges will be 1. This is because if we entered :math:`u` through an edge numbered :math:`x`, by the DFS recursion logic, we immediately assign :math:`x+1` to one of :math:`u`'s adjacent edges (unless :math:`u` has degree 1, in which case there's no constraint).
 
 
 .. figure:: /_static/dot/DFS_Magic.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: This appears if the internet is poor
 
 
-توجه کنید که به خاطر ساختار dfs هر کدام از backedge ها که جزو یال های درخت نیستند را از راس پایینی آن می بینیم! (چرا؟) بنابرین برای برگ های درخت که درجه آنها 1 نیست مشکلی پیش نمی آید.
+Note that due to DFS's structure, we encounter any back edges (those not part of the tree) from their lower vertex! (Why?) Therefore, leaves with degree greater than 1 won't cause issues.
 
-برگ برگ برگ
+Leaves Leaves Leaves
 -------------------
 
-ثابت کنید در درختی :math:`n > 1` راسی که راس درجه 2 ندارد تعداد برگ ها بیشتر از غیر برگ هاست.
+Prove that in a tree with :math:`n > 1` vertices that has no vertex of degree 2, the number of leaves is greater than non-leaves.
 
-حل
-~~~~~~
+.. code:: python
 
-برای حل سوال از استقرا استفاده می کنیم. پایه استقرا را :math:`n = 2` می گذاریم که درستی آن واضح است. درخت :math:`T` را از یک راس دلخواه آویزان می کنیم و پایین ترین برگ را :math:`u` می نامیم. فرض کنید پدر پایین ترین برگ :math:`v` باشد. در اینصورت همه بچه های :math:`v` برگ هستند (چرا؟). اگر :math:`v` همان ریشه باشد که حکم واضح است (چون به جز :math:`v` بقیه راس ها برگ هستند). در غیراینصورت با حذف تمام بچه های :math:`v` که برگ هستند به درخت :math:`T'` با تعداد راس کمتر می رسیم که حداقل 2 راس دارد و راس درجه 2 ندارد پس فرض استقرا برای آن برقرار است. فرض کنید در این درخت تعداد برگ ها :math:`A'` و تعداد غیربرگ ها :math:`B'` باشد و طبق فرض استقرا :math:`A' > B'` است.
+    def count_leaves(tree):
+        # Getting the number of leaves
+        count = 0
+        for node in tree.nodes:
+            # If degree is 1, it's a leaf
+            if tree.degree(node) == 1:
+                count += 1
+        print("برگ برگ برگ")  # Printing the leaves
+        return count
 
-حالا دوباره بچه های :math:`v` را اضافه کنید. اگر :math:`d` تا بچه داشته باشد آنگاه تغییراتی که در درخت اعمال می شود به اینصورت است.
+.. image:: tree_graph.png
 
-- راس :math:`v` از برگ بودن خارج می شود.
-- تمام بچه های :math:`v` به مجموعه برگ ها اضافه می شوند.
-
-پس اگر تعداد برگ ها و غیر برگ های جدید را به ترتیب :math:`A, B` بنامیم داریم :math:`A = A' + d - 1` و :math:`B = B' + 1` و از آنجایی که :math:`d>1` است پس همچنان :math:`A > B` برقرار است.
-
-نکته
+Solution
 ~~~~~~~~
 
-مسئله ای که گفته شد یک لم کلاسیک بود که در حل بعضی مسائل به ما کمک می کند. به طور کلی در بعضی از مسائل می توانیم راس های درجه 2 را فشرده کرده و آنها را از بین ببریم. یعنی اینکه اگر تمام راس های درجه 2 درخت را قرمز کنیم، راس های درجه 2 تشکیل تعدادی مسیر مجزا می دهند (چرا؟). حالا فرض کنید به ازای هر مسیر متشکل از راس های درجه 2 که از راسی مثل :math:`A` شروع شده و به راسی مثل :math:`B` ختم می شود این مسیر را حذف کنیم و فقط یالی از :math:`A` به :math:`B` بگذاریم. بعد از انجام این عملیات ها تمام راس های درجه 2 از بین می روند و ساختار کلی درخت حفظ می شود. حالا اگر درخت مسئله به گونه ای باشد که تعداد برگ ها کم باشد می توان نتیجه بگیریم تعداد کل راس های درخت هم کم است!
+To solve the problem, we use induction. We set the base case as :math:`n = 2`, whose correctness is obvious. We hang the tree :math:`T` from an arbitrary vertex and name the lowest leaf :math:`u`. Let the parent of this lowest leaf be :math:`v`. Then all children of :math:`v` are leaves (Why?). If :math:`v` is the root, the claim is obvious (since all vertices except :math:`v` are leaves). Otherwise, by removing all children of :math:`v` (which are leaves), we obtain a smaller tree :math:`T'` with fewer vertices that has at least 2 vertices and no vertex of degree 2, so the induction hypothesis holds for it. Suppose the number of leaves in this tree is :math:`A'` and the number of non-leaves is :math:`B'`. According to the induction hypothesis, :math:`A' > B'`.
 
+Now we reattach the children of :math:`v`. If :math:`v` has :math:`d` children, the changes applied to the tree are as follows:
 
-جادوی bfs
+- Vertex :math:`v` is no longer a leaf.
+- All children of :math:`v` are added to the set of leaves.
+
+Thus, if we denote the new number of leaves and non-leaves as :math:`A` and :math:`B` respectively, we have :math:`A = A' + d - 1` and :math:`B = B' + 1`. Since :math:`d > 1`, the inequality :math:`A > B` still holds.
+
+.. note::  
+~~~~~~~~  
+
+The problem mentioned is a classical lemma that helps in solving certain problems. In general, in some problems, we can compress degree-2 vertices and eliminate them. That is, if we mark all degree-2 vertices of a tree as red, these vertices form several disjoint paths (Why?). Now, suppose for every path composed of degree-2 vertices starting from a vertex like :math:`A` and ending at a vertex like :math:`B`, we remove this path and simply place an edge from :math:`A` to :math:`B`. After performing these operations, all degree-2 vertices are eliminated, and the overall structure of the tree is preserved. Now, if the tree in the problem is such that the number of leaves is small, we can conclude that the total number of vertices in the tree is also small!
+
+The Magic of BFS
 -------------
 
-یک گراف همبند داریم.می دانیم اگر هر دور فردی از این گراف را در نظر بگیرید و یال های این دور را حذف کنید گراف ناهمبند می شود. ثابت کنید می توان راس های این گراف را با 4 رنگ، رنگ آمیزی کرد به طوریکه هر دو راس مجاور رنگ متفاوت داشته باشند!
+We have a connected graph. We know that if any odd cycle in this graph is considered and its edges are removed, the graph becomes disconnected. Prove that the vertices of this graph can be colored with 4 colors such that every two adjacent vertices have different colors!
 
-حل
+Solution
 ~~~~~~~~
 
-اگر نمی دانستیم باید به bfs فکر کنیم این سوال چقدر سخت می شد؟
+If we didn't know to think of BFS, how hard would this problem become?
 
-حالا از یک راس دلخواه bfs بزنید. حالا گراف به تعدادی لایه افراز شده است که یال های گراف یا درون یک لایه اند یا بین دو لایه مجاور هستند.
+Now perform BFS from an arbitrary vertex. The graph is now partitioned into layers where edges either reside within a layer or connect two adjacent layers.
 
-ادعا می کنیم زیرگراف شامل راس های هر کدام از لایه ها دوبخشی است. برهان خلف بزنید و فرض کنید یک لایه داریم که دوبخشی نیست. پس باید دور فرد داشته باشد. حالا اگر لایه های این دور فرد را حذف کنید طبق صورت سوال باید گراف ناهمبند شود اما می دانیم که این اتفاق نمی افتد! زیرا که گراف توسط یال های درخت bfs همبند شده است و یال های درخت bfs تنها بین لایه های مجاور است.
+We claim the subgraph induced by vertices in each layer is bipartite. For contradiction, suppose there exists a layer that isn't bipartite. It must then contain an odd cycle. If we remove the layers containing this odd cycle, the graph should disconnect according to the problem's premise - but this doesn't happen! The graph remains connected through BFS tree edges, which only exist between adjacent layers.
 
-پس اثبات کردیم که هر کدام از لایه ها دوبخشی است. پس هر لایه را می توانیم با دو رنگ، رنگ آمیزی کنیم که مجاور ها رنگ متفاوت داشته باشند. حالا لایه های فرد را با رنگ 1, 2 و لایه های زوج را با رنگ 3, 4 رنگ کنید. مشکلی پیش نمی آید زیرا دو راس که همرنگ اند یا درون یک لایه اند‌ (که با دوبخشی بودن مشکل را برطرف کردیم) یا در لایه های مجاور نیستند (که یالی بین آنها وجود ندارد).
+Thus we've proven each layer is bipartite. We can now 2-color each layer. Color odd layers with colors 1,2 and even layers with 3,4. No conflicts arise: vertices sharing a color either lie in the same layer (resolved by bipartiteness) or in non-adjacent layers (with no connecting edge).
 
-به همین سادگی!
+As simple as that!
+

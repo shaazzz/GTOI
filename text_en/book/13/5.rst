@@ -1,40 +1,44 @@
-جریان بیشینه و تطابق
-======================
+Maximum Flow and Matching
+=========================
 
-با مساله جریان بیشینه در فصل قبل آشنا شدیم. در این جا با یکی از کاربرد های دیگر این مساله که حل مساله تطابق و تعمیم های آن است آشنا می شویم.
+We became familiar with the maximum flow problem in the previous chapter. Here, we will learn about another application of this problem: solving matching problems and their generalizations.
 
-حل مساله تطابق بیشینه در گراف دو بخشی
-----------------------------------------
-این مساله را می توان به کمک مساله جریان بیشینه حل کرد. به این صورت که به گراف دوبخشی دو راس مبدا و مقصد اضافه کنید و راس مبدا را به همه رئوس بخش بالا با ظرفیت یک و رئوس بخش پایین را به راس مقصد با وزن ۱ یال بدهید. به ازای هر یال گراف نیز یک یال با وزن یک از راس بالا به پایین بکشید. ( مانند شکل )
+.. raw:: html
+
+  <!-- Ensure the RST structure is preserved exactly as the original, including any indentation and spacing. -->
+
+Solving the Maximum Matching Problem in Bipartite Graphs
+--------------------------------------------------------
+This problem can be solved using the maximum flow problem. To do this, add two nodes—a **source** and a **sink**—to the bipartite graph. Connect the source node to all nodes in the upper partition with edges of **capacity one**, and connect all nodes in the lower partition to the sink node with edges of **weight 1**. For each edge in the original bipartite graph, draw an edge with **weight one** from the upper node to the lower node (as shown in the figure).
 
 .. figure:: /_static/flow_matching.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: If the internet connection is poor, this appears.
 
-در این گراف بزرگترین تطابق همان جریان بیشینه است.
+In this transformed graph, the **maximum matching** corresponds to the **maximum flow**.
 
+Maximum Weight Matching
+-----------------------
+In this problem, each edge has a value, and the value of a matching is equal to the sum of the values of its edges. Various problems can be posed for weighted matching, such as matching with the maximum value, maximum size matching with the maximum value, or matching with a specific size and maximum value. These problems can be solved using a generalization of the maximum flow problem, which we will examine below. It is advisable that while reading, you try to think about this problem yourself and attempt to solve it before reaching the solution section.
 
-تطابق بیشینه وزن دار
+Flow with Minimum Cost
 ----------------------
-در این مساله هر یال ارزشی دارد و ارزش یک تطابق برابر جمع ارزش یال های آن است. مسائل مختلفی را می توان برای تطابق وزن دار مطرح کرد. مانند تطابق با بیشترین ارزش، تطابق بیشینه با بیشترین ارزش یا تطابق با اندازه خاص و بیشترین ارزش. این مسائل را می توان به کمک تعمیمی از مساله جریان بیشینه که در زیر بررسی می کنیم حل کرد. خوب است که حین خواندن سعی کنید که خودتان به این مساله فکر کنید و قبل از رسیدن به بخش راه حل این سوال آن را حل کرده باشید.
+In this problem, the goal is to find a flow that has the minimum cost. The cost of each flow is equal to the sum of the flow passing through each edge multiplied by the cost of that edge, over all edges. We want to obtain the minimum cost for all integer flow values (from 0 to the maximum flow).
 
-جریان با کمترین هزینه
-----------------------
-در این مساله هدف پیدا کردن جریانی است که کمترین هزینه را داشته باشد. هزینه هر جریان برابر جمع جریان گذرنده از هر یال * هزینه آن یال به ازای تمام یال هاست. می خواهیم به ازای تمام مقادیر صحیح جریان ( از ۰ تا جریان بیشینه ) کمینه هزینه را به دست بیاوریم.
-
-راه حل
+Solution
 ~~~~~~~~
-از روشی مشابه روش فورد فلکرسون که در فصل قبل آموختیم استفاده می‌کنیم. با این تفاوت که به جای انتخاب یک مسیر دلخواه، مسیری که کمترین هزینه را دارد را انتخاب می‌کنیم و سپس یک واحد جریان را از آن می گذرانیم. این کار را تا زمانی که دیگر نتوان جریانی گذراند ادامه می‌دهیم. در هر مرحله هزینه به دست آمده کمینه هزینه ممکن برای آن مقدار جریان است. طبق درستی الگوریتم فورد، این الگوریتم جواب را تا جریان بیشینه به دست می‌آورد.
+We use a method similar to the Ford-Fulkerson method learned in the previous chapter, with the difference that instead of choosing an arbitrary path, we select the path with the least cost and then pass one unit of flow through it. We repeat this process until no more flow can be passed. At each step, the obtained cost represents the minimum possible cost for that amount of flow. According to the correctness of Ford's algorithm, this algorithm achieves the solution up to the maximum flow.
 
-اثبات بهینگی
+Proof of Optimality
 ~~~~~~~~~~~~~~
-مانند اثبات درستی الگوریتم فورد، می‌توان ثابت کرد که در هر مرحله، اگر f مقدار جریان هدف و c هزینه آن باشد و کوتاه ترین مسیر از مبدا به مقصد x باشد، در گراف ساخته شده هم f-1 مقدار جریان هدف باشد، مینیمم هزینه ای که می توان با آن این مقدار جریان را عبور داد، c-x است.
+Similar to the proof of correctness of Ford's algorithm, it can be shown that at each stage, if *f* is the target flow value and *c* is its cost, and the shortest path from the source to the destination is *x*, then in the constructed graph, if *f-1* is the target flow value, the minimum cost with which this amount of flow can be transmitted is *c-x*.
 
-تحلیل پیچیدگی
-~~~~~~~~~~~~~~~~
-برای به دست آوردن کوتاه ترین مسیر، می توان از الگوریتم spfa استفاده کرد ( چون یال منفی داریم نمی توان از الگوریتم دایسترا استفاده کرد. ) که پیچیدگی زمانی :math:`O(E)` دارد. پس پیچیدگی زمانی کل از :math:`O(fE)` است.
+Complexity Analysis
+~~~~~~~~~~~~~~~~~~~
+To obtain the shortest path, the SPFA algorithm can be used (since there are negative edges, Dijkstra's algorithm cannot be used), which has a time complexity of :math:`O(E)`. Therefore, the total time complexity is :math:`O(fE)`.
 
-راه حل تطابق بیشینه وزن دار
------------------------------
-یک گراف مانند بالا می سازیم با این تفاوت که یال های مبدا و مقصد را با ظرفیت بینهایت قرار می‌دهیم و یال های وسط را با ظرفیت یک و هزینه اش را برابر وزن یال قرار می دهیم. سپس با الگوریتم جریان با کمترین هزینه می‌توان تمام مسائل بالا را پاسخ گفت.
+Maximum Weight Matching Solution
+--------------------------------
+We construct a graph similar to the one above with this difference: we set source and destination edges with infinite capacity, and middle edges with capacity one while assigning their cost equal to the edge's weight. Then using the minimum cost flow algorithm, we can solve all the aforementioned problems.
+

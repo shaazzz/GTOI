@@ -1,28 +1,57 @@
 DFS
 =========
 
-الگوریتم dfs یکی از روش های پیمایش گراف است و یکی از ساده ترین و پایه ای ترین الگوریتم های گراف می باشد. این الگوریتم در عین سادگی ویژگی های جالبی دارد و برخلاف تصور در حل مسائل تئوری و عملی کاربرد فراوان دارد!
+The DFS algorithm is one of the graph traversal methods and one of the simplest and most fundamental graph algorithms. Despite its simplicity, it has interesting features, and contrary to common perception, it is widely used in solving theoretical and practical problems!
 
-اولین مسئله
+.. code-block:: python
+   :linenos:
+
+   def DFS(v):
+       visited[v] = True  # v ra didim
+       for u in adjacency[v]:
+           if not visited[u]:
+               DFS(u)
+
+
+First Problem
 -------------
 
-فرض کنید در یک هزارتو گیر کرده اید که به صورت یک گراف است. یعنی در هر راس گراف یک اتاق قرار دارد و هر یال نشان دهنده یک راهرو بین دو اتاق است. همچنین حافظه شما به قدری قوی است که می توانید اگر به یک اتاق تکراری رفتید تشخیص بدهید که این اتاق تکراری است و هنگامی که در یک اتاق هستید تنها می توانید راهرو های مجاور آن را ببینید. همچنین یک نخ به همراه دارید که یک سر آن به اتاقی که اول کار در آن قرار دارید بسته شده است و سر دیگر در دستان شماست. در یکی از راس های گراف گنجی قرار دارد. هدف شما این است که گنج را بیابید. چگونه این کار را انجام می دهید؟
+Suppose you are trapped in a maze represented as a graph. Each vertex of the graph represents a room, and each edge represents a corridor between two rooms. Your memory is strong enough to recognize if you enter a room you've visited before, and when in a room, you can only see its adjacent corridors. You have a thread with you - one end is tied to the starting room, and the other end is in your hand. There's a treasure in one of the graph's vertices. Your goal is to find the treasure. How would you accomplish this?
 
-پیدا کردن گنج به سادگی انجام الگوریتم زیر است. تا زمانی که به گنج نرسیدیم الگوریتم زیر را انجام دهید :
+Finding the treasure can be achieved by following this algorithm until you reach the treasure:
 
-- اگر همه اتاق های مجاور تکراری بودند به اتاقی برو که برای اولین بار از آن به اتاق فعلی آمده ای. (کافی است نخی که دستمان است را دنبال کنیم). 
-- در غیراینصورت به یکی از اتاق های مجاور که تکراری نیست برو.
+- If all adjacent rooms are duplicates, return to the room from which you first entered the current room (simply follow the thread in your hand).
+- Otherwise, go to one of the non-duplicate adjacent rooms.
 
-چرا این الگوریتم مسئله ما را حل می کند؟ نکته اینجاست که زمانی که ما برای اولین بار در یک اتاق قرار می گیریم تمام تلاشمان را می کنیم که از آن اتاق مسیری به گنج پیدا کنیم. در نتیجه وقتی که همه اتاق های مجاور تکراری می شوند و ما نخ را دنبال کرده و بر می گردیم می توان نتیجه گرفت که هیچ مسیری از آن اتاق به گنج وجود ندارد. در نتیجه هیچ گاه دیگر نباید وارد این اتاق شویم. (و این منطق که نباید وارد اتاق تکراری شویم نیز از همینجا ناشی می شود).
+Why does this algorithm solve our problem? The key point is that when we first enter a room, we make every effort to find a path to the treasure from that room. Therefore, when all adjacent rooms become duplicates and we follow the thread back, we can conclude there's no path to the treasure from that room. Hence, we should never enter this room again. (This logic of avoiding duplicate rooms stems from this very reasoning).
 
-می توان با یک دید متفاوت تر هم به مسئله نگاه کرد. به ازای هر یال :math:`uv` اگر یکی از :math:`u,v` را ببینیم قطعا دیگری را نیز خواهیم دید. (زیرا زمانی کارمان با یک راس تمام می شود که تمام مجاور های آن تکراری باشند). در نتیجه اگر یک راس از مولفه همبندی را ببینیم تمام راس های دیگر آن را نیز خواهیم دید.
+Another perspective: For any edge :math:`uv`, if we see one of :math:`u` or :math:`v`, we'll certainly see the other. (Because we only finish working with a vertex when all its neighbors are duplicates). Therefore, if we see one vertex in a connected component, we'll eventually see all other vertices in it.
 
-مولفه های همبندی
-------------------
+Connected Components
+--------------------
 
-گراف :math:`G` به شما ورودی داده شده است. شما باید تعداد مولفه های همبندی این گراف را بیابید.
+You are given a graph :math:`G`. You need to find the number of connected components in this graph.
 
-آنچه در این قسمت بررسی می کنیم تصویری کلی از الگوریتم dfs است. فرض کنید آرایه mark نشان می دهد که چه راس هایی قبلا دیده شده اند و در ابتدای کار تمام خانه های آن false است. حالا الگوریتم ما به اینصورت خواهد بود :
+What we examine in this section provides an overview of the DFS algorithm. Assume the array "mark" indicates which vertices have been previously visited, and all its entries are initially false. Our algorithm will be as follows::
+
+    for each vertex v in G:
+        if mark[v] == false:
+            dfs(v)
+            component_count += 1
+
+.. code-block:: text
+    :linenos:
+
+    dfs(v):
+        mark[v] = true  // we start from here
+        for all neighbors u of v:
+            if mark[u] == false:
+                dfs(u)  // we check all vertices connected to this vertex
+
+.. image:: images/dfs_components.png
+    :align: center
+
+In this approach, we traverse all vertices. Whenever we encounter an unvisited vertex, we perform a DFS from it and increment the component counter. This way, we visit all vertices connected to it, and each complete DFS call corresponds to one connected component.
 
 .. code-block:: cpp
 
@@ -33,117 +62,151 @@ DFS
              dfs(y);
   }
 
-از شهودی که با حل مسئله بالا به دست آوردیم استفاده کنید. وقتی dfs(u) صدا زده می شود الگوریتم تلاش می کند که به صورت بازگشتی تمام راس هایی که با :math:`u` می توان به آن رسید را ببیند سپس dfs(u) به اتمام می رسد و به راسی به نام :math:`par` بر می گردیم که از آن برای اولین بار به :math:`u` رسیده بودیم.
+Use the intuition we gained from solving the previous problem. When dfs(u) is called, the algorithm attempts to recursively visit all vertices reachable from :math:`u`. Then dfs(u) completes, and we return to a vertex called :math:`par` from which we first reached :math:`u`.
 
-در نتیجه می توان دید که پس از اجرای این تابع تمام راس هایی که در مولفه همبندی راس شروع قرار دارند دیده می شوند. پس برای حل مسئله کافیست در هر مرحله راسی مثل :math:`y` را انتخاب کنیم که mark آن false باشد. سپس dfs(y) را اجرا کرده و به جواب مسئله یکی اضافه کنیم.
+Consequently, we can see that after executing this function, all vertices in the connected component of the starting vertex will have been visited. Therefore, to solve the problem, it suffices to select a vertex :math:`y` whose mark is false at each step. Then we execute dfs(y) and increment the problem's solution count by one.
 
+.. code-block:: cpp
+   :linenos:
+   
+   int mark[MAXN];
+   vector<int> adj[MAXN];
+   
+   void dfs(int u, int par) {
+       mark[u] = true;  // mark the node
+       for (auto v : adj[u]) {
+           if (!mark[v]) {  // if not visited
+               dfs(v, u);  // continue DFS
+           }
+       }
+   }
+   
+   int count_components(int n) {
+       int cnt = 0;
+       for (int y = 1; y <= n; y++) {  // iterate through all nodes
+           if (!mark[y]) {  // if node is unmarked
+               cnt++;  // increment component count
+               dfs(y, -1);  // start DFS with parent -1
+           }
+       }
+       return cnt;  // return total components
+   }
 
-درخت dfs
+.. image:: images/dfs_components.png
+   :alt: DFS process for finding connected components
+   :width: 400px
+   :align: center
+
+.. _dfs-tree:
+
+DFS Tree
 -----------------
 
-الگوریتم dfs علاوه بر اینکه گراف ما را پیمایش می کند این پیمایش را به صورت خاصی انجام می دهد! حالا با برخی از ویژگی های جالب این پیمایش آشنا می شویم.
+The DFS algorithm not only traverses our graph but does so in a specific manner! Now we’ll explore some interesting properties of this traversal.
 
-فرض کنید یال های گراف در ابتدا آبی هستند. حالا هر گاه که برنامه در راس :math:`v` بود و با طی کردن یال :math:`uv` به راس جدید :math:`u` می رسید یال :math:`uv` را قرمز کنید.
+Assume the graph's edges are initially blue. Whenever the algorithm is at vertex :math:`v` and traverses edge :math:`uv` to reach a new vertex :math:`u`, we color the edge :math:`uv` red.
 
-در ابتدا توجه کنید که یال های قرمز تشکیل یک درخت می دهند! زیرا هر بار که یک یال قرمز می شود یک سر آن متصل یه راسی است که قبلا ندیده بودیم. پس مثل این است که یکی یکی به این درخت برگ اضافه می کنیم! به این درخت به دست آمده از الگوریتم
-dfs،
-درخت dfs می گوییم. ویژگی جالب dfs این است که وقتی اجرای
-dfs(u)
-شروع می شود راس
-:math:`u`
-در درخت قرمز ها تنها یک برگ است و زمانی که اجرای dfs(u) به پایان می رسد زیردرخت
-:math:`u`
-به طور کامل ساخته شده است.
-پس می بینید که پس از اجرای الگوریتم dfs روی یک گراف همبند، یک درخت فراگیر از این گراف را به دست خواهیم آورد. این درخت فراگیر را از راس شروع ریشه دار کنید.
+First, note that the red edges form a tree! This is because every time a red edge is added, one of its endpoints connects to a previously unseen vertex. Thus, it’s as if we’re adding leaves one by one to this tree! We call this tree generated by the DFS algorithm the **DFS tree**. A fascinating property of DFS is that when the execution of ``dfs(u)`` begins, the vertex :math:`u` is a single leaf in the red tree, and when ``dfs(u)`` terminates, the subtree of :math:`u` is fully constructed. Therefore, after running the DFS algorithm on a connected graph, we obtain a spanning tree of the graph. Root this spanning tree at the starting vertex.
 
-حالا به ویژگی جالبی که روی یال های آبی به دست می آید توجه کنید.
+Now, observe an intriguing property about the remaining blue edges.
 
-به یال :math:`uv` بک اج (back edge) می گوییم اگر یکی از :math:`u,v` جد دیگری باشد. در غیراینصورت به این یال کراس اج (cross edge) می گوییم. البته
-ممکن است بعضا یک دسته تری ادج (tree edge) در نظر بگیرند و یال های خود درخت را تری ادج و یال های دیگر را بک ادج در نظر بگیرند اما ما در اینجا
-همه را بک ادج در نظر می گیریم و به این دو دسته اکتفا می کنیم.
+We call an edge :math:`uv` a **back edge** if one of :math:`u` or :math:`v` is an ancestor of the other. Otherwise, it’s called a **cross edge**. Some classifications might separate **tree edges** (edges of the tree itself) from back edges, but here we consider all non-tree edges as back edges and stick to these two categories.
 
-
-ادعا می کنیم برای هر درخت dfs تمام یال های گراف بک اج هستند!
+**Claim**: For any DFS tree, all edges of the graph are back edges!
 
 .. figure:: /_static/dot/Back_Edge.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: If the internet is terrible, this shows up
 
 
-برای اثبات اینکه تمام یال ها بعد از پیمایش
-dfs
-بک اج هستند یک یال
-:math:`uv`
-دلخواه را در نظر بگیرید. بدون کم شدن از کلیت مسئله فرض کنید در الگوریتم ابتدا به راس
-:math:`u` وارد شده ایم. در اینصورت موقع شروع dfs(u) راس :math:`v` هنوز دیده نشده است. همچنین زمانی که dfs(u) به پایان می رسد راس :math:`v` باید دیده شده باشد (زیرا مجاور راس :math:`u` است). بنابراین اگر درخت dfs را در نظر بگیرید راس :math:`v` باید درون زیردرخت :math:`u` باشد! در نتیجه :math:`u` جد :math:`v` است پس یال :math:`uv` بک اج خواهد بود.
+To prove that all edges become back edges after a DFS traversal, consider an arbitrary edge :math:`uv`. Without loss of generality, assume we first visit vertex :math:`u`. At the start of ``dfs(u)``, vertex :math:`v` has not been visited yet. However, by the time ``dfs(u)`` finishes, vertex :math:`v` must have been visited (since it’s adjacent to :math:`u`). Thus, in the DFS tree, vertex :math:`v` must lie within the subtree of :math:`u`! This implies :math:`u` is an ancestor of :math:`v`, making the edge :math:`uv` a back edge.
 
-در آینده از این قضیه که بعد از اجرای dfs تمام یال ها بک اج هستند استفاده های بسیاری خواهیم کرد!
+Later, we will frequently use this theorem—that all edges become back edges after DFS—in various applications!
 
-مسیر ماکسیمال و dfs
+.. _maximal-path-and-dfs:
+
+Maximal Path and DFS
 -------------------------
 
-در فصل 1 با اثبات هایی که توسط مسیر ماکسیمال انجام می شد آشنا شدیم. در اینجا یاد می گیریم که می توان به جای استفاده از مسیر ماکسیمال از برگ های درخت dfs استفاده کرد(که شهود بسیار قوی تری ایجاد می کند)!
+In Chapter 1, we became familiar with proofs that utilized maximal paths. Here, we will learn that instead of using maximal paths, we can use the leaves of the DFS tree (which provides a much stronger intuition)!
 
-بعد از dfs زدن روی درخت، تعداد بک اج هایی که
-:math:`u`
-راس پایین آن است را
-:math:`back_u`
-می نامیم. توجه کنید که یال های درخت dfs هم طبق تعریف ما بک اج محسوب می شوند. همچنین ارتفاع راس :math:`u` در درخت را :math:`h_u` می نامیم.
+After performing DFS on the tree, the number of back edges where :math:`u` is the lower vertex is denoted by :math:`back_u`. Note that the edges of the DFS tree are also considered back edges according to our definition. Additionally, the height of vertex :math:`u` in the tree is denoted by :math:`h_u`.
 
-دو قضیه زیر به راحتی از ساختار خاص درخت نتیجه می شوند (قضیه دوم با فرض ساده بودن گراف برقرار است).
+The following two theorems are easily derived from the specific structure of the tree (the second theorem holds under the assumption that the graph is simple):
 
 - :math:`\sum back_u = m`
 - :math:`\forall_u back_u \leq h_u`
-مسیر به طول :math:`\delta`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ثابت می کنیم که یک گراف ساده مسیری به طول حداقل :math:`\delta` دارد. کافیست ثابت کنیم ارتفاع درخت dfs حداقل :math:`\delta` است. یک برگ دلخواه مثل :math:`u` را در نظر بگیرید. واضح است که :math:`back_u \geq \delta` در نتیجه :math:`h_u \geq \delta` که حکم ما را به سادگی نتیجه می دهد!
+.. A path of length :math:`\delta`
+.. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-مسیر به طول :math:`\frac m n`
+We prove that a simple graph contains a path of length at least :math:`\delta`. It suffices to prove that the height of the DFS tree is at least :math:`\delta`. Consider an arbitrary leaf such as :math:`u`. It is clear that :math:`back_u \geq \delta`, hence :math:`h_u \geq \delta`, which straightforwardly yields our claim!
+
+.. Path of Length :math:`\frac m n`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ثابت می کنیم که یک گراف ساده مسیری به طول حداقل :math:`\frac m n` دارد. مثل بالا ثابت می کنیم ارتفاع درخت dfs حداقل :math:`\frac m n` است. برای اثبات از برهان خلف استفاده می کنیم. فرض کنید ارتفاع هر راس کمتر از :math:`\frac m n` باشد. داریم :
-:math:`m = \sum back_u \leq \sum h_u < n \times \frac m n = m \Rightarrow m < m`
+We prove that a simple graph contains a path of length at least :math:`\frac m n`. Similar to the previous approach, we prove that the height of the DFS tree is at least :math:`\frac m n`. For the proof, we use contradiction. Assume the height of every vertex is less than :math:`\frac m n`. Then we have:  
 
-که به ما تناقض می دهد. در نتیجه راسی با ارتفاع حداقل :math:`\frac m n` وجود دارد که حکم مسئله ما را ثابت می کند.
+:math:`m = \sum back_u \leq \sum h_u < n \times \frac m n = m \Rightarrow m < m`  
 
-برگ ها و ارتفاع، مجموعه مستقل و طولانی ترین مسیر!
+which leads to a contradiction. Therefore, there exists a vertex with height at least :math:`\frac m n`, proving our claim.
+
+.. Leaves, Height, Independent Sets, and the Longest Path!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-فرض کنید بعد از اعمال الگوریتم dfs ارتفاع درخت برابر با :math:`H` شود(در واقع :math:`H` بیشینه مقدار بین :math:`h_u` ها است). همچنین فرض کنید تعداد برگ ها :math:`S` باشد.
+Suppose after applying the DFS algorithm, the height of the tree becomes :math:`H` (i.e., :math:`H` is the maximum value among all :math:`h_u`). Also, assume the number of leaves is :math:`S`.
 
-در اینجا ثابت می کنیم که :math:`H \times S \geq n-1`.
+Here we prove that :math:`H \times S \geq n-1`.
 
-به ازای هر برگ درخت مسیر این راس تا ریشه را طی کنید و روی هر راس این مسیر به جز ریشه یک سنگ قرار دهید. در اینصورت به ازای هر برگ مثل :math:`u` به تعداد کل سنگ ها :math:`h_u` تا اضافه می شود. از طرفی روی هر راس به جز ریشه حداقل یک سنگ قرار دادیم در نتیجه تعداد کل سنگ ها حداقل :math:`n-1` می باشد. پس می توان نوشت :
+For each leaf in the tree, trace the path from that vertex to the root and place a stone on each vertex of this path except the root. For each leaf like :math:`u`, the total number of stones increases by :math:`h_u`. On the other hand, we have placed at least one stone on each vertex except the root, so the total number of stones is at least :math:`n-1`. Therefore, we can write:
 
 :math:`n-1 \leq \sum h_u \leq H \times S`
 
-که حکم ما را ثابت می کند. اما تا الان از ویژگی خاصی که توسط درخت dfs به دست بیاید استفاده نکردیم! نکته جالب این است که برگ های درخت dfs تشکیل یک مجموعه مستقل می دهند. (زیرا وجود یال بین دو برگ موجب ایجاد کراس اج می شود).
+which proves our claim. However, so far we have not used any specific property obtained from the DFS tree! The interesting point is that the leaves of the DFS tree form an independent set. (Because the existence of an edge between two leaves would create a cross edge.)
 
-در نتیجه اگر اندازه مجموعه مستقل بیشینه :math:`S^{\prime}` باشد در اینصورت :math:`S \leq S^{\prime}` برقرار است.
+Thus, if the size of the maximum independent set is :math:`S^{\prime}`, then :math:`S \leq S^{\prime}` holds.
 
-همینطور اگر اندازه طولانی ترین مسیر این گراف :math:`H^{\prime}` باشد در اینصورت :math:`H \leq H^{\prime}` برقرار است.
+Similarly, if the length of the longest path in this graph is :math:`H^{\prime}`, then :math:`H \leq H^{\prime}` holds.
 
-پس حالا توانستیم به نامساوی جالب :math:`n-1 \leq H \times S \leq H^{\prime} \times S^{\prime}` برسیم!
+Therefore, we now arrive at the interesting inequality: :math:`n-1 \leq H \times S \leq H^{\prime} \times S^{\prime}`!
 
-نکته جالب این است که هر دو مسئله پیدا کردن مچموعه مستقل با بیشترین بیشینه و طولانی ترین مسیر در گراف np هستند! اما با روشی که ارائه دادیم می توانیم یا یک مجموعه مستقل به اندازه حداقل :math:`\sqrt{n-1}` یا یک مسیر به اندازه حداقل :math:`\sqrt{n-1}` ارائه دهیم!
+The noteworthy point is that both problems of finding the maximum independent set and the longest path in a graph are NP-hard! However, with the method we presented, we can either provide an independent set of size at least :math:`\sqrt{n-1}` or a path of length at least :math:`\sqrt{n-1}`!
 
-راس نابرشی
+Non-Cut Vertex
 ~~~~~~~~~~~~~~~~
 
-ثابت می کنیم هر گراف با :math:`n > 1` حداقل دو راس نابرشی دارد.
+We prove that every graph with :math:`n > 1` vertices has at least two non-cut vertices.
 
-کافیست روی گراف dfs بزنید. سپس هر کدام از برگ های درخت dfs یک راس نابرشی خواهند بود (همچنین اگر این دو راس را با هم نیز حذف کنیم گراف ناهمبند نمی شود). زیرا که یال های درخت dfs بقیه گراف را همبند نگه می دارد (و حذف برگ از یک درخت همبندی آن را خراب نمی کند). همچنین هر درخت با :math:`n>1` حداقل دو برگ دارد که حکم ما را ثابت می کند. البته در این مسئله نیازی به استفاده از درخت dfs نبود و هر درخت فراگیر دلخواهی مسئله را برای ما حل می کرد.
+It suffices to perform DFS on the graph. Then each leaf of the DFS tree will be a non-cut vertex (even if we remove both of these vertices, the graph remains connected). This is because the edges of the DFS tree maintain the connectivity of the rest of the graph (and removing a leaf from a tree does not disconnect it). Furthermore, every tree with :math:`n>1` has at least two leaves, which proves our claim. Note that in this problem, using a DFS tree was not strictly necessary—any arbitrary spanning tree would have solved the problem for us.
 
-پیمایش درخت
+Tree Traversal
 --------------------
 
-یکی از حالات خاص مسئله پیمایش گراف، پیمایش درخت ها است. در این قسمت می بینیم که پیمایش درخت ها می تواند با الگوریتم dfs به صورت ساده تر انجام شود. مثلا دیگر به آرایه mark نیازی نداریم. زیرا تنها مجاور یک راس که قبلا دیده شده است پدر این راس می باشد.
+One of the special cases of graph traversal is tree traversal. In this section, we'll see how tree traversal can be implemented more simply using DFS algorithm. For example, we no longer need a mark array since the only adjacent vertex that might have been visited before is the parent of the current vertex.
 
-همچنین می توان همزمان به اجرای dfs اطلاعات دیگری نیز درباره درخت به دست آورد. به عنوان مثال در کد زیر بعد از اجرای dfs روی درخت تعداد راس های زیردرخت هر راس در آرایه sz، و ارتفاع هر راس در آرایه h ذخیره سازی می شوند.
+Additionally, we can simultaneously gather other information about the tree during DFS execution. For instance, in the following code after running DFS on the tree, the number of vertices in each subtree is stored in the sz array, and the height of each vertex is stored in the h array.
 
-توجه کنید که فرض کردیم اندیس راس های درخت از 1 شروع می شوند و راس با اندیس 0 نداریم.
+Note that we assume tree vertices are indexed starting from 1, and there's no vertex with index 0.
+
+.. code-block:: cpp
+
+    int sz[MAX], h[MAX];
+    vector<int> adj[MAX]; // لست مجاورت
+    
+    void dfs(int v, int parent = -1) {
+        sz[v] = 1;
+        for (int u : adj[v]) {
+            if (u != parent) {
+                h[u] = h[v] + 1;
+                dfs(u, v);
+                sz[v] += sz[u];
+            }
+        }
+    }
+    
+    // در برنامه اصلی:
+    // dfs(1);  // farakhani ba rishe 1
 
 .. code-block:: cpp
   

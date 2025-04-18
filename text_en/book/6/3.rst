@@ -1,102 +1,110 @@
-فلوید وارشال
-============
-صورت مسئله
------------
+.. Floyd-Warshall algorithm
+.. ------------------------
 
-یک گراف جهت دار وزن دار 
+Floyd-Warshall
+==============
+
+.. code-block:: python
+   :linenos:
+
+   def floyd_warshall(n, edges):  # Floyd-Warshall algorithm
+       dist = [[float('inf')] * n for _ in range(n)]  # Initialize matrix
+       for i in range(n):
+           dist[i][i] = 0  # Distance to self is zero
+       for u, v, w in edges:
+           dist[u][v] = w  # Assign edge weights
+       
+       for k in range(n):
+           for i in range(n):
+               for j in range(n):
+                   dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])  # Relaxation step
+       return dist
+
+.. figure:: images/fig11.png
+
+The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in a **weighted directed graph**. This algorithm works even with graphs containing **negative weight edges**, provided there are no negative cycles. Its main idea is to gradually improve the shortest path estimates between all pairs through intermediate vertices.
+
+The time complexity of the algorithm is :math:`O(n^3)` and its space complexity is :math:`O(n^2)`, making it suitable for dense graphs where the number of vertices *n* is relatively small. By modifying the condition in the relaxation step to ``dist[i][k] and dist[k][j]`` instead of summing, the algorithm can also be used to determine **reachability** between all pairs of vertices (transitive closure).
+
+Problem Statement
+------------------
+
+We have a directed weighted graph 
 :math:`G`
-داریم. وزن یال های :math:`G` میتواند منفی نیز باشد. میدانیم گراف :math:`G` دور با مجموع وزن منفی ندارد. 
+. The weights of the edges in :math:`G` can also be negative. We know that graph :math:`G` contains no cycles with negative total weight.
 
-در این سوال به ازای هر جفت راس مانند :math:`(u, v)` طول کوتاه ترین مسیر از :math:`u` به :math:`v` را میخواهیم. طول یک مسیر برابر حمع وزن یال های آن است.
+In this problem, for every pair of vertices :math:`(u, v)`, we want the length of the shortest path from :math:`u` to :math:`v`. The length of a path is equal to the sum of its edge weights.
 
-الگوریتم فلوید وارشال
------------------------
-
-برای حل این مسئله ابتدا یک :math:`dp` با ابعاد
-:math:`|V(G)|.|V(G)|.|V(G)|`
-تعریف میکنیم که 
-:math:`dp_{k, i, j}`
-برابر طول کوتاه ترین گشتی از راس :math:`i` به راس :math:`j` است که راس های وسطی آن (راس های مسیر به جز خود :math:`i` و :math:`j`) از بین مجموعه رئوس
-:math:`\lbrace 1, 2, \dots, k \rbrace`
-است.
-
-حال میدانیم طول کوتاه ترین گشت بین 2 راس در گراف :math:`G` برابر طول کوتاه ترین مسیر نیز میباشد چون اگر کوتاه ترین گشت دارای 2 راس تکراری باشد یک دور داریم که طول آن مثبت است (طبق فرض سوال نمیتواند طول دور منفی باشد.) پس میتوان ان را حذف کرد و به یک گشت با طول کمتر رسید که تناقض است.
-
-حال برای پایه های این دپپی میدانیم که :math:`dp_{0, i, i} = 0` و به ازای هر جفت از رئوس مانند 
-:math:`(u, v)`
-دیپی :math:`dp_{0, u, v}` را برابر کوتاه ترین یال از :math:`u` به :math:`v` این دو راس میزاریم. ( اگر یالی از :math:`u` به :math:`v` نبود
-:math:`dp_{0, u, sc} = \infty`
-است).
-
-
-حال برای بدست اوردن :math:`dp_{k, i, j}` دو حالت را در نظر میگیریم یا راس :math:`k` در مسیر بهینه وجود ندارد که جواب در این حالت
-:math:`dp_{k - 1, i, j}`
-است. 
-
-اگر راس :math:`k` در مسیر باشد انگاه مسیر بهینه برابر
-:math:`dp_{k - 1, i, k} + dp_{k - 1, k, j}`
-است چون که ابتدا از راس :math:`i` باید به راس :math:`k` برسیم و سپس از راس :math:`k` به راس :math:`j` برویم و در بین این دو مسیر حتما شماره رئوس از :math:`k` کمتر است.
-
-برای بدست آوردن طول کوتاه ترین مسیر از راس :math:`u` به راس :math:`v` داشتن مقدار :math:`dp_{n, u, v}` کافی است. 
-
-تحلیل اردر
------------
-
-برای اپدیت کردن هر خانه دیپی 
-:math:`\mathcal{O}(1)`
-عملیات انجام داده ایم. میدانیم که دیپی دارای
-:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`
-است. پس در کل 
-:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`
-عملیات انجام داده ایم. اردر حافظه استفاده شده نیز همان
-:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`
-است.
-
-
-بهینه سازی اردر حافظه
+Floyd-Warshall Algorithm
 ------------------------
 
-برای بهینه سازی مقدار حافظه مصرفی، میتوان بعد اول را حذف کرد. در نتیجه اردر حافظه مصرفی برابر 
-:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{2}\right)`
-میشود.
+To solve this problem, we first define a :math:`dp` with dimensions 
+:math:`|V(G)|.|V(G)|.|V(G)|` 
+where 
+:math:`dp_{k, i, j}` 
+equals the length of the shortest walk from vertex :math:`i` to vertex :math:`j`, where the intermediate vertices (vertices in the path except :math:`i` and :math:`j` themselves) are chosen from the set 
+:math:`\lbrace 1, 2, \dots, k \rbrace`.
 
-منظوز این است که یک 
-:math:`for`
-از 1 تا 
-:math:`\left|V\left(G\right)\right|`
-بزنیم و متغیر آن را :math:`k` بنامیم. سپس در هر مرحله
-ازای هر خانه :math:`dp` آن را اپدیت کنیم. منظور از اپدیت کردن این است که مثل حالت عادی روی اینکه راس :math:`k` جزو راس های میانی مسیر هست یا نه حالت بندی کنیم.
+We know that the length of the shortest walk between two vertices in graph :math:`G` is equal to the length of the shortest path. This is because if the shortest walk contains a repeated vertex, it implies the existence of a cycle with positive length (according to the problem's assumption, cycles cannot have negative lengths). This cycle can be removed to obtain a shorter walk, leading to a contradiction.
 
-حال برای اثبات درست بودن میگوییم که بعد هر مرحله حلقه اول تمامی مقادیر درست هستند. اگر ابتدا میگوییم که خانه های دیپی که یکی از بُعد های آن ها برابر
-:math:`k`
-است هیچ گاه تغییری نمی کنند. حال برای آپدیت کردن بقیه خانه های دیپی از مقادیر خانه هایی استفاده میکنیم که حتما یک بُعد از انها :math:`k` است. 
+For the base cases of this dp, we know that :math:`dp_{0, i, i} = 0`. For any pair of vertices :math:`(u, v)`, we set :math:`dp_{0, u, v}` equal to the weight of the shortest edge from :math:`u` to :math:`v` (if no edge exists between :math:`u` and :math:`v`, then :math:`dp_{0, u, sc} = \infty`).
 
-پس با استقرا میتوان ثابت کرد که بعد مرحله  :math:`k` م 
-:math:`dp_{i, j} = dp^{\prime}_{k, i, j}`
-است که 
-:math:`dp^{\prime}`
-همان دیپی بدون بهینه سازی است. پس بعد مرحله :math:`n`م به مقادیر مطلوب خواهیم رسید.
+To compute :math:`dp_{k, i, j}`, we consider two cases:  
+1. Vertex :math:`k` is **not** in the optimal path. In this case, the answer is :math:`dp_{k - 1, i, j}`.  
+2. Vertex :math:`k` **is** in the path. Here, the optimal path length is :math:`dp_{k - 1, i, k} + dp_{k - 1, k, j}`, since we first travel from :math:`i` to :math:`k` and then from :math:`k` to :math:`j`. In both subpaths, the intermediate vertices are guaranteed to have indices less than :math:`k`.
 
-پس با استقرا میتوان ثابت کرد که بعد مرحله  :math:`k` م :math:`dp_{i, j} = dp^{\prime}_{k, i, j}`
-است که 
-:math:`dp^{\prime}`
-همان دیپی بدون بهینه سازی است. پس بعد مرحله  :math:`n`  م به مقادیر مطلوب خواهیم رسید.
+The length of the shortest path from vertex :math:`u` to vertex :math:`v` is given by the value of :math:`dp_{n, u, v}`.
 
-دور منفی
-----------
+Order Analysis
+--------------
 
-ممکن است برایتان سوال شود اگر تضمین نشود که گراف دور منفی دارد یا نه چگونه بفهمیم دور منفی داریم یا نه ؟ برای این هدف ابتدا 
-:math:`dp_{i, i} = 0`
-قرار میدهیم. حال اگر در حین اجرای الگوریتم یکی از خانه های 
-:math:`dp_{i, i} < 0`
-شد انگاه میدانیم یک گشت با طول منفی از :math:`i` به :math:`i` وجود دارد که میدانیم در هر گشت بسته با طول منفی دوری به طول منفی وجود دارد. 
+For updating each DP cell, we perform :math:`\mathcal{O}(1)` operations. We know the DP has a complexity of :math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`. Thus, in total, we perform :math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)` operations. The memory order used is also :math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`.
 
-اگر دور منفی وجود داشت حتما برای راسی مانند :math:`u` در دور منفی حتما
-:math:`dp_{u, u} < 0`
-میشد. چون دور منفی ما طبق تعریف :math:`dp` ما مشکلی ندارد و در 
-:math:`dp_{u, u}`
-تاثیر دارد و انرا منفی میکند.
+.. rst::
+Memory Order Optimization
+-------------------------
 
-طبق دو تا استدلال بالا وجود داشتن دور منفی با داشتن 
+To optimize the memory consumption, we can remove the first dimension. As a result, the memory order complexity becomes 
+:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{2}\right)`.
+
+The idea is to create a 
+:math:`for` 
+loop from 1 to 
+:math:`\left|V\left(G\right)\right|` 
+and name its variable :math:`k`. Then, in each iteration, update every cell of the :math:`dp` array. By "updating", we mean branching based on whether vertex :math:`k` is part of the intermediate vertices in the path, similar to the standard approach.
+
+To prove correctness, we assert that after each iteration of the first loop, all values remain valid. Initially, we note that any :math:`dp` cell with one of its dimensions equal to :math:`k` will never change. When updating other :math:`dp` cells, we use values from cells that necessarily have :math:`k` as one of their dimensions.
+
+Thus, by induction, we can prove that after the :math:`k`-th iteration, 
+:math:`dp_{i, j} = dp^{\prime}_{k, i, j}` 
+where 
+:math:`dp^{\prime}` 
+is the non-optimized version of the DP array. After the :math:`n`-th iteration, we will obtain the desired values.
+
+By induction, it can be proven that after the :math:`k`-th iteration, 
+:math:`dp_{i, j} = dp^{\prime}_{k, i, j}` 
+where 
+:math:`dp^{\prime}` 
+is the non-optimized DP array. Hence, after the :math:`n`-th iteration, we will achieve the target values.
+
+Negative Cycle
+--------------
+
+You may wonder, if it is not guaranteed whether the graph has a negative cycle or not, how can we determine if a negative cycle exists? For this purpose, we first set 
+:math:`dp_{i, i} = 0`. 
+If during the execution of the algorithm, any entry 
 :math:`dp_{i, i} < 0` 
-معادل است. پس کافی است فقط بررسی کنیم در طول فرایند :math:`dp_{i, i}` منفی نشود.
+becomes true, then we know there exists a closed walk of negative length from :math:`i` to :math:`i`, and we know that every closed walk with negative length contains a cycle of negative length.
+
+If a negative cycle exists, then for some vertex :math:`u` in that negative cycle, it must satisfy 
+:math:`dp_{u, u} < 0`. 
+This is because, according to the definition of :math:`dp`, the negative cycle will correctly propagate its effect to 
+:math:`dp_{u, u}` 
+and make it negative.
+
+Based on the above two arguments, the existence of a negative cycle is equivalent to having 
+:math:`dp_{i, i} < 0`. 
+Thus, it is sufficient to check whether any 
+:math:`dp_{i, i}` 
+becomes negative during the process.
+

@@ -1,47 +1,64 @@
 Segment Tree
 ============
-یکی از پرکاربرد ترین داده ساختار های مورد استفاده در المپیاد کامپیوتر بی شک Segment Tree است.
-نوع درخت دودویی آن `Full Binary Tree <https://gtoi.shaazzz.ir/book/8/1.html#full-binary-tree>`_ است.
+Undoubtedly, one of the most widely used data structures in computer Olympiads is the Segment Tree.  
+Its binary tree type is a `Full Binary Tree <https://gtoi.shaazzz.ir/book/8/1.html#full-binary-tree>`_.
 
-با استفاده از این داده ساختار می توان جمع یک بازه از آرایه و بیشترین یا کمترین مقدار یک آرایه را بدست آورد.
+Using this data structure, one can compute the sum of a range in an array and retrieve the maximum or minimum value of an array.
 
-ساختار
+.. _structure:
+
+Structure
 ----------
-هر راس این درخت بیانگر یک بازه از آرایه مورد پرسش است.
-بچه های هر راس (اگر موجود باشد طبیعتاً دو تا است) بازه پدر خود را نصف می کنند یا به عبارت دیگر اگر بازه راسی :math:`[Begin, End)` باشد بازه دو پسر چپ و راست آن به ترتیب :math:`[Begin, Middle)` و :math:`[Middle, End)` است.
-راس های بدون بچه هم حاوی تک عضوی از آرایه است.
+Each node of this tree represents an interval of the queried array.  
+The children of a node (if they exist, there are naturally two) split the parent node's interval in half. In other words, if a node's interval is :math:`[Begin, End)`, the intervals of its left and right children will be :math:`[Begin, Middle)` and :math:`[Middle, End)`, respectively.  
+Leaf nodes (nodes without children) contain a single element of the array.
 
-برای بهتر فهمیدن رابطه ی بین راس ها و بازه ها به شکل زیر نگاه کنید.
+To better understand the relationship between nodes and their intervals, refer to the figure below:
 
-.. figure:: /_static/SegmentTree.png
-   :width: 75%
-   :align: center
-   :alt: Segment Tree
+.. figure:: /_static/SegmentTree.png  
+ :width: 75%  
+ :align: center  
+ :alt: Segment Tree  
 
-در هر کدام از این راس ها یک اطلاعات مشخصی از بازه متناظر آن راس در آرایه در دسترس است که بسته به استفاده ما از این داده ساختار می تواند متفاوت باشد.
-برای نمونه اگر دنبال جمع یک بازه از آرایه هستیم هر کدام از راس ها در خود مجموع بازه متناظرشان را ذخیره می کنند.
+Each node stores specific information about its corresponding interval in the array, which varies depending on the use case of this data structure.  
+For example, if we want to calculate the sum of an interval in the array, each node stores the sum of its corresponding interval.  
 
-برای درک بیشتر از این قسمت به شکل زیر نگاه کنید که چطور هر راس مقداری را ذخیره کرده.
+To better grasp this concept, observe the figure below showing how values are stored in each node:
 
-.. figure:: /_static/construction.png
-   :width: 85%
-   :align: center
-   :alt: Segment Tree
+.. figure:: /_static/construction.png  
+ :width: 85%  
+ :align: center  
+ :alt: Segment Tree  
 
+The height of this tree is :math:`\lg n`, and the maximum number of nodes used is :math:`2n`. Thus, you can store this data structure using :math:`2n` memory.  
+It is worth noting that some implementations allocate :math:`4n` memory. This is because they assign two children (with no attributes) to each leaf node (single-element nodes), effectively doubling the memory usage.  
 
-ارتفاع این درخت :math:`lg n` و تعداد راسی که مورد استفاده قرار می دهد حداکثر :math:`2n` است بنابراین شما با حافظه :math:`2n` می توانید این داده ساختار را ذخیره کنید. لازم به ذکر است که بعضی افراد حافظه :math:`4n` را در نظر می گیرند که بخاطر نوع پیاده سازی برای هر برگ درخت(راس های تک عضوی) دو بچه بدون هیچ مشخصه ای قرار می دهند که باعث می شود حافظه دو برابر شود.
+For node numbering, the root can be assigned index 1. The left and right children of a node :math:`k` are then assigned indices :math:`2k` and :math:`2k + 1`, respectively.
 
-برای شماره گذاری راس ها هم می توان به ریشه عدد یک داد و به بچه های راست و چپ هر راس به ترتیب :math:`2k` و :math:`2k + 1` داد.
-
-الگوریتم
+Algorithm
 ---------
-نحوه اجرای این الگوریتم برای انواع سوال های قابل حل با این داده ساختار تقریبا یکسان است و ما با استفاده از یکی از پرسش های مشهور این داده ساختار، به توضیح این الگوریتم می پردازیم.
+The way this algorithm is executed for various types of problems solvable with this data structure is nearly identical. We will explain the algorithm using one of the well-known questions associated with this data structure.
 
-در ابتدا به ما یک آرایه داده شده و در هر مرحله از ما می خواهند که یا مقدار یک عضو آرایه را تغییر دهیم و یا جمع یک بازه را گزارش دهیم.
+Initially, we are given an array. At each step, we are required to either modify the value of an array element or report the sum of a range.
 
-ساخت
-~~~~~
-برای حل ابتدا Segment Tree را از روی آرایه می سازیم. برای اینکار اول ساختار اصلی Segment Tree را می سازیم و بعد مقدار هر راس را برابر جمع مقدار بچه هایش می گذاریم و مقدار راس های تک عضوی را مقدار عضو متناظر می گذاریم.
+.. _structure:
+
+Structure
+~~~~~~~~~
+First, we build a Segment Tree from the array. To do this, we first construct the main structure of the Segment Tree. Then we set each node's value equal to the sum of its children's values, and set the values of leaf nodes to their corresponding array elements.
+
+.. code-block:: c++
+
+    void build(int node, int l, int r) {
+        if (l == r) {
+            seg[node] = a[l];  // gereftan meghdare avalie
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(2 * node, l, mid);
+        build(2 * node + 1, mid + 1, r);
+        seg[node] = seg[2 * node] + seg[2 * node + 1];  // jahate be dast avordane majmue ye zir majmue ha
+    }
 
 .. code-block:: cpp
 
@@ -56,10 +73,10 @@ Segment Tree
         seg[u] = seg[u * 2] + seg[u * 2 + 1];
     }
 
-تغییر دادن مقدار یک عضو
+Changing the value of an element
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-مقدار تمام راس هایی که بازه آن ها شامل این عضو می شود را تغییر می دهیم. توجه کنید که تعداد این بازه ها حداکثر برابر ارتفاع درخت است چرا که هر طبقه از درخت، آرایه را افراز می کند بنابراین در هر طبقه باید مقدار حداکثر یک راس تغییر کند بنابراین اردر این عملیات :math:`O(lg n)` است.
+We modify the values of all vertices whose intervals contain this element. Note that the number of such intervals is at most equal to the tree's height, as each level of the tree partitions the array. Consequently, at each level, the value of at most one vertex needs to be updated, resulting in an operation order of :math:`O(lg n)`.
 
 .. code-block:: cpp
 
@@ -76,23 +93,29 @@ Segment Tree
             update(i, x, u * 2 + 1, mid, ur);
     }
 
-گزارش دادن جمع یک بازه از آرایه
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _range_sum_report:
 
-از روش بازگشتی استفاده می کنیم و در هر مرحله جمع بازه خواسته شده را با فرض روی راس u بودن بدست می آوریم.
-سه حالت برای بازه خواسته شده و بازه راس u وجود دارد. حالت اول این است که این دو بازه برابر باشند که خب جواب مقدار راس u است. حالت دوم زمانیست که بازه خواسته شده به صورت کامل در بازه یکی از بچه های راس u باشد که آنگاه جواب را در بچه ای که بازه خواسته شده در آن است پیدا می کنیم.
-حال آخر زمانیست که مقداری از بازه خواسته شده در بازه بچه چپ و بقیه آن در بازه بچه راست u باشد، بدین منظور به صورت بازگشتی ابتدا مقدار قسمتی از بازه خواسته شده که در بازه بچه چپ u است را بدست می آوریم و بعد مقدار قسمتی که در بازه بچه راست u است و بعد جمع این دو جواب است.
-برای بدست آوردن جمع بازه خواسته شده کافیست با همین روش از راس یک شروع کنیم.
+Calculating the Sum of a Range in an Array
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-برای فهم بهتر فرض کنید :math:`F(u,ul,ur,l,r)` تابع بازگشتی بالا باشد که با گرفتن راسی که روی آن هستیم و بازه این راس و بازه خواسته شده، جواب را به ما بدهد(با فرض اینکه بازه خواسته شده درون بازه راس u باشد) و :math:`sum[u]` به معنای مقدار ذخیره شده در راس u باشد. خلاصه سه حالت بالا به صورت زیر می شود.
+We use a recursive method where at each step, we calculate the sum of the requested range assuming we're at node u.  
+There are three cases for the relationship between the requested range and the node u's interval.  
 
-.. math:: Middle = (ul + ur) / 2
-.. math:: (ul = l, ur = r) => F(u,ul,ur,l,r) = sum[u]
-.. math:: (r < Middle) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,r)
-.. math:: (l > Middle) => F(u,ul,ur,l,r) = F(2*u,Middle,ur,l,r)
-.. math:: (l < Middle, Middle < r) => F(u,ul,ur,l,r) = F(2*u,ul,Middle,l,Middle) + F(2*u+1,Middle,ur,Middle,r)
+1. **First case**: The two intervals are identical, in which case the answer is the value of node u.  
+2. **Second case**: The requested range is entirely within the interval of one of node u's children. Here, we find the answer in the child containing the requested range.  
+3. **Third case**: Part of the requested range lies in the left child's interval and the rest in the right child's interval. In this case, we recursively calculate the sum of the portion in the left child, then the sum in the right child, and add the two results together.  
 
-اردر این عملیات :math:`O(lg n)` است به این دلیل که در هر طبقه حداکثر ۴ راس در تابع بازگشتی مورد استفاده قرار می گیرند. برای اثبات کافیست توجه کنید که فقط راست ترین و چپ ترین راس های یک طبقه می توانند بچه های خود را صدا کنند و این یعنی در هر طبقه حداکثر ۴ راس صدا زده می شوند.
+To calculate the sum of the requested range, we start this process from the root node (node 1).  
+
+For better understanding, let :math:`F(u, ul, ur, l, r)` be the recursive function described above. It returns the answer given the current node, its interval [ul, ur], and the requested range [l, r] (assuming the requested range is within the node's interval). Here, :math:`sum[u]` represents the value stored in node u. The three cases can be summarized as:  
+
+.. math:: Middle = (ul + ur) / 2  
+.. math:: (ul = l \text{ and } ur = r) \implies F(u, ul, ur, l, r) = sum[u]  
+.. math:: (r \leq Middle) \implies F(u, ul, ur, l, r) = F(2u, ul, Middle, l, r)  
+.. math:: (l \geq Middle) \implies F(u, ul, ur, l, r) = F(2u+1, Middle, ur, l, r)  
+.. math:: (l < Middle < r) \implies F(u, ul, ur, l, r) = F(2u, ul, Middle, l, Middle) + F(2u+1, Middle, ur, Middle, r)  
+
+**Time Complexity**: This operation is :math:`O(\log n)` because at each level of the recursion tree, at most 4 nodes are processed. To prove this, observe that only the leftmost and rightmost nodes at a level may call their children, meaning at most 4 nodes per level are invoked.
 
 .. code-block:: cpp
 
@@ -103,9 +126,14 @@ Segment Tree
         return sum(l, r, u * 2, ul, mid) + sum(l, r, u * 2 + 1, mid, ur);
     }
 
-انتشار با تاخیر (Lazy propagation)
-------------------------------------
-فرض کنید در عملیات اول بجای تغییر یک مقدار، تغییر یک بازه مطرح باشد. به طور مثال به ما بگوید به بازه :math:`L` تا :math:`R` دو واحد اضافه کنیم. اگر بخواهیم تمامی عنصر های این بازه را عوض کنیم کار سخت است و تعداد عملیات هایمان بالا می رود. حال با استفاده از تکنیک انتشار با تاخیر می توانیم تعداد عملیات ها را پایین بیاوریم. به این صورت که به ازای هر راس یک مقدار دیگر هم در نظر می گیریم که بر فرض در آرایه Lazy ذخیره می شود. بازه داده شده برای تغییر را مانند روشی که در عملیات دوم برای بازه خواسته شده انجام دادیم افراز می کنیم به بازه های کوچک تر (روی درخت) و مقدار آرایه Lazy تمامی این راس ها (راس هایی که بازه روی آن ها افراز شده) را عوض می کنیم. و هر هنگام که در کل این الگوریتم بر روی راسی از درخت بودیم Lazy آن را به مقدار خود راس اضافه می کنیم و Lazy آن را به Lazy بچه هایش اضافه می کنیم و بعد آن را صفر می کنیم.
+Delayed Propagation (Lazy Propagation)
+-------------------------------------
+Suppose in the first operation, instead of changing a single value, we need to modify an interval. For example, we're told to add two units to the interval :math:`L` to :math:`R`. Changing all elements in this interval directly would be cumbersome and increase the number of operations. Using the lazy propagation technique, we can reduce the number of operations. For each node, we maintain an additional value stored in a **Lazy** array. 
+
+We partition the given modification interval into smaller sub-intervals (on the segment tree) using the same method as in the second operation (query operation). We then update the **Lazy** array values for all these partitioned nodes. Whenever we access a node in the algorithm, we: 
+1. Add its **Lazy** value to the node's own value
+2. Propagate the **Lazy** value to its children's **Lazy** arrays
+3. Reset the node's **Lazy** value to zero
 
 .. code-block:: cpp
 
@@ -138,3 +166,4 @@ Segment Tree
         int mid = (ul + ur) / 2;
         return sum(l, r, u * 2, ul, mid) + sum(l, r, u * 2 + 1, mid, ur);
     }
+

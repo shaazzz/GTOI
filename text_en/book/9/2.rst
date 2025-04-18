@@ -1,137 +1,93 @@
-اثبات np کامل بودن مساله sat
-==============================
+.. Proof of the NP-Completeness of the SAT Problem
+.. ==============================
 
-در قسمت قبل با تعریف مسائل
-np کامل
-و
-np سخت
-آشنا شدیم. شاید فکر کنید که ممکن نیست مساله
-np کاملی
-وجود داشته باشد اما در این قسمت، ثابت خواهیم کرد که مساله
-sat
-یک مساله
-np کامل
-است. این اثبات، راه را برای اثبات بقیه مسائل
-np کامل
-و
-np سخت
-هموار می کند.
+In the previous section, we became familiar with the definitions of **NP-complete** and **NP-hard** problems. You might think it's impossible for an NP-complete problem to exist, but in this section, we will prove that the **SAT problem** is an NP-complete problem. This proof will pave the way for proving other NP-complete and NP-hard problems.
 
-تعریف مساله ها
-----------------
-در این قسمت چند مساله از خانواده مسائل
-sat
-را می بینیم که در ادامه به آن ها اشاره خواهیم کرد. کلمه
-sat
-مخفف
-satisfiablity
-به معنای توانایی برآورده کردن شرایط است. هر مساله یک مساله تصمیم است که ما باید
-در آن الگوریتمی ارائه کنیم که بررسی کند آیا می توان خروجی ها را به گونه ای قرار داد
-تا ورودی یک شود یا خیر.
+Problem Definitions
+-------------------
+
+In this section, we will examine several problems from the SAT family, which we will discuss later. The term SAT is an abbreviation for "satisfiability," meaning the ability to satisfy conditions. Each problem is a decision problem where we must provide an algorithm to determine whether the outputs can be arranged such that the input evaluates to 1 (true).
 
 **circuit-sat**:
-در این مساله یک مدار منطقی ورودی می گیریم که از گیت های اور و اند و نات تشکیل شده است. این
-مدار تعدادی ورودی و دقیقا یک خروجی دارد. الگوریتم باید تشخیص دهد که آیا ممکن است ورودی
-ها را به گونه ای تنظیم کرد که خروجی برابر یک شود؟
-توجه کنید که مدار هایی که این مساله به عنوان ورودی می گیرد، یک مدار منطقی ترکیبی است
-یعنی دوری وجود ندارد و خروجی یک گیت روی ورودی های آن تاثیر نمی گذارند.
+In this problem, we are given a logical circuit composed of OR, AND, and NOT gates. This circuit has multiple inputs and exactly one output. The algorithm must determine whether there exists an assignment of inputs that makes the output equal to 1. Note that the circuits considered in this problem are *combinational logic circuits*, meaning they contain no cycles, and the output of a gate does not feed back into its inputs.
 
 .. figure:: /_static/logic_circuit.png
-   :width: 90%
-   :align: center
-   :alt: یک مدار منطقی
+ :width: 90%
+ :align: center
+ :alt: یک مدار منطقی
 
 **sat**:
-این مساله حالت خاصی از مساله بالا است که در آن خروجی به یک گیت اند بزرگ متصل است و
-هر پایه از گیت اند، به یک گیت اور بزرگ وصل است که هر پایه از آن، یا به خود ورودی
-وصل است و یا به نقیض ورودی. به عبارت دیگر، یک عبارت به صورت
-:math:`(x_1 \lor x_7 \lor \overline{x_3}) \land ... \land (x_2 \lor \overline{x_1} \lor ... \lor x_7)`
-به شما داده می شود و شما باید تعیین کنید که آیا می توان متغیر ها را با اعداد
-0 و 1
-جایگزین کرد به طوری که نتیجه
-عبارت (علامت شبیه هفت به معنای
-یای منطقی، علامت هشت به معنای و منطقی و
-خط روی متغیر به معنای نقیض منطقی است) برابر یک شود.
+This problem is a special case of the above, where the output is connected to a large AND gate, and each input of this AND gate is connected to a large OR gate. Each input of the OR gate is either a direct input variable or its negation. In other words, you are given an expression of the form:
+:math:`(x_1 \lor x_7 \lor \overline{x_3}) \land ... \land (x_2 \lor \overline{x_1} \lor ... \lor x_7)`.
+You must determine whether the variables can be replaced with 0 or 1 such that the entire expression evaluates to 1. (The symbol resembling a "7" represents logical OR, the symbol resembling an "8" represents logical AND, and the line above a variable represents logical negation.)
 
-**‪3-sat‬**:
-این مساله حالت خاصی از مساله بالا است که در آن، هر پرانتز دقیقا ۳ متغیر دارد. به طور
-مشابه،
-**‪2-sat‬**
-تعریف می شود که در فصل های دیگر با الگوریتم حل آن آشنا می شوید.
+**3-sat**:
+This problem is a special case of SAT where each parenthesis (clause) contains exactly 3 variables. Similarly, **2-sat** is defined, and you will learn about its solving algorithm in later chapters.
 
+.. Proof of NP-Completeness of Circuit-SAT
+   ----------------------------------------
 
-اثبات np کامل بودن circuit-sat
---------------------------------
-یک مساله
-np
-دلخواه را در نظر بگیرید. این مساله، یک تایید کننده در زمان چند جمله ای دارد. هر
-تایید کننده، خود یک مساله تصمیم است. نکته کلیدی این است که هر الگوریتم تصمیم که
-زمان اجرای چند جمله ای داشته باشد را می توان به یک مدار منطقی ترکیبی تبدیل کرد. اگرچه
-اثبات دقیق این مطلب، نیاز به شناخت دقیق تری از الگوریتم دارد و مناسب این کتاب نیست، اما
-می توانید آن را روی مسائل کنار دستتان امتحان کنید. مثلا یک مدار برای تایید کننده مساله
-دور همیلتونی یا مساله عدد رنگی ارائه کنید.
+Take an arbitrary **NP** problem. This problem has a polynomial-time verifier. 
+Every verifier is itself a decision problem. The key insight is that any 
+polynomial-time decision algorithm can be converted into a combinatorial logic 
+circuit. While a rigorous proof of this requires deeper familiarity with 
+algorithms and is beyond the scope of this book, you can experiment with it 
+using familiar problems. For example, try designing a circuit for the verifier 
+of the Hamiltonian cycle problem or the graph coloring problem.
 
-پس تصمیم کننده را به ازای ورودی با طول ثابت، به یک مدار منطقی ترکیبی تبدیل می کنیم
-که تعداد گیت هایش برحسب ورودی، چند جمله ای باشد. حال اگر بتوان به تایید کننده
-ورودی داد که آن را تایید کند، می توان به مدار معادل آن نیز ورودی داد تا خروجی اش
-یک شود. بنابراین جواب مساله اصلی، معادل با نتیجه
-circuit-sat
-روی این مدار است. پس هر مساله در کلاس
-np
-را می توان به مساله
-circuit-sat
-در زمان چند جمله ای کاهش داد و بنابراین مساله
-circuit-sat
-یک مساله
-np کامل
-است.
+Thus, for a fixed input length, we convert the decision procedure into a 
+combinatorial logic circuit whose number of gates grows polynomially with the 
+input size. Now, if we can provide the verifier with an input that satisfies it, 
+we can also feed an input to its equivalent circuit to make its output **1**. 
+Therefore, the solution to the original problem is equivalent to the result of 
+**Circuit-SAT** applied to this circuit. Hence, every problem in the **NP** 
+class can be reduced to **Circuit-SAT** in polynomial time, making 
+**Circuit-SAT** an **NP-complete** problem.
 
-کاهش مساله circuit-sat به sat
--------------------------------
-در این قسمت ثابت خواهیم کرد که مساله
-‪3-sat‬
-نیز یک مساله
-np کامل
-است و از آن نتیجه می شود که حالت کلی تر مساله، یعنی مساله
-sat
-نیز
-np کامل
-است. ابتدا توجه کنید که دقیقا سه متغیره بودن جملات، اهمیت چندانی ندارد زیرا می توان
-جملات را با اضافه کردن متغیر های تکراری بزرگ کرد، مثلا
+.. _circuit-sat_to_sat:
+
+Reducing the circuit-sat Problem to sat
+---------------------------------------
+
+In this section, we will prove that the 3-sat problem is also an NP-complete problem, and consequently, its more general form, the sat problem, is also NP-complete. First, note that the exact three-variable requirement for clauses is not crucial, as clauses can be expanded by adding duplicate variables. For example, 
+
 :math:`(x \lor \overline{y})`
-را به
-:math:`(x \lor \overline{y} \lor \overline{y})`
-تبدیل کرد.
 
-حال یک مدار ترکیبی را در نظر بگیرید. ابتدا تمام گیت های اند یا اور که بیشتر از
-دو ورودی دارند را تبدیل به گیت های دو ورودی کنید. با این کار طول ورودی به صورت
-خطی زیاد می شود که اهمیتی برای ما ندارد. حال به ازای هر دسته از نقاط هم پتانسیل
-(یعنی نقاطی که با سیم به هم متصل هستند)
-یک متغیر در نظر می گیریم. حالا به ازای هر گیت، چند شرط اضافه می کنیم به طوری که
-رفتار گیت را تضمین کند. یعنی شرط ها تنها در صورتی برقرار باشند که خروجی گیت
-متناظر با ورودی های گیت و تابع گیت باشد. برای مثال فرض کنید
-:math:`a`
-و
-:math:`b`
-ورودی های یک گیت اند و
-:math:`x`
-خروجی آن باشد. با اضافه کردن شرط های
-:math:`\overline{a} \lor \overline{b} \lor x`
-و
-:math:`a \lor \overline{x}`
-و
-:math:`b \lor \overline{x}`
-می توانیم تضمین کنیم که مقدار
-:math:`x`
-حتما برابر و منطقی
-:math:`a` و :math:`b`
-باشد. به همین ترتیب می توان برای گیت اور و گیت نات نیز چنین شرط هایی تعریف
-کرد. با اند گرفتن از این شرط ها و خروجی مدار که خود یک متغیر است، می توان یک ورودی برای
-3-sat
-ساخت که حواب داشتنش معادل جواب داشتن همان مدار در
-circuit-sat
-است. پس این مساله و حالت کلی آن یعنی
-sat
-هر دو
-np کامل
-هستند.
+can be converted to 
+
+:math:`(x \lor \overline{y} \lor \overline{y})`.
+
+Now consider a combinational circuit. First, convert all AND or OR gates with more than two inputs into two-input gates. This increases the input size linearly, which is acceptable for our purposes. For each set of equipotential points (i.e., points connected by wires), we assign a variable. Then, for each gate, we add several constraints to enforce the gate’s behavior. These constraints ensure that the gate’s output corresponds to its inputs and its logical function. For example, suppose 
+
+:math:`a` 
+
+and 
+
+:math:`b` 
+
+are the inputs to an AND gate, and 
+
+:math:`x` 
+
+is its output. By adding the constraints 
+
+:math:`\overline{a} \lor \overline{b} \lor x`, 
+
+:math:`a \lor \overline{x}`, 
+
+and 
+
+:math:`b \lor \overline{x}`, 
+
+we guarantee that the value of 
+
+:math:`x` 
+
+is logically equivalent to the AND of 
+
+:math:`a` 
+
+and 
+
+:math:`b`. Similarly, such constraints can be defined for OR and NOT gates. By taking the AND of all these constraints and the circuit’s output (which itself is a variable), we can construct a 3-sat instance whose satisfiability is equivalent to the circuit-sat problem. Thus, both this problem and its general form, sat, are NP-complete.
+

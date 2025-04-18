@@ -1,68 +1,165 @@
-تور اویلری در گراف جهت دار و بی جهت
-=======================================
+Eulerian Tour in Directed and Undirected Graphs
+===============================================
 
-شرط لازم و کافی
--------------------
+An Eulerian tour is a path in a graph that visits every edge exactly once and returns to the starting vertex. The necessary and sufficient conditions for existence of an Eulerian tour differ between directed and undirected graphs.
 
-گراف بدون جهت
-~~~~~~~~~~~~~~~
+**In undirected graphs:**
+- The graph must be connected (except for isolated vertices with degree 0).
+- All vertices must have even degree.
 
-در ابتدا فرض کنید گراف مورد بحث یک گراف بدون جهت است. حالا شرط لازم و کافی وجود داشتن تور اویلری را بررسی می کنیم.
-ابتدا راس های ایزوله گراف را حذف کنید. حالا لازم و کافی است که :‌
+**In directed graphs:**
+- The graph must be strongly connected.
+- For every vertex, the in-degree must equal the out-degree.
 
-- الف) گراف همبند باشد.
-- ب) درجه هر راس زوج باشد.
+.. image:: /images/eulerian_tour.png
 
-ابتدا ثابت می کنیم دو شرط بالا لازم هستند.
+Example code for checking Eulerian tour existence in undirected graphs:
 
-شرط الف به وضوح لازم است چون اگر دو یال در دو مولفه همبندی متفاوت باشد یک گذر نمی تواند همزمان شامل هر دوی آنها باشد.
+.. code-block:: python
 
-برای اثبات لازم بودن شرط ب توجه کنید که هر گاه به یک یال وارد می شویم باید بلافاصله از آن خارج شویم.(در مورد راس شروع دقت کنید) بنابرین تعداد یال های مجاور هر راس باید مضربی از ۲ باشند.
+    def has_eulerian_tour(g):
+        # Check if graph is connected
+        visited = set()
+        start_node = next(iter(g.nodes))  # Get first node
+        stack = [start_node]
+        
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                stack.extend(g.neighbors(node))
+        
+        # Check if all non-zero degree nodes are visited
+        if len(g.nodes) != len(visited):
+            return False
+        
+        # Check if all vertices have even degree
+        for node in g.nodes:
+            if g.degree(node) % 2 != 0:
+                return False
+        return True
 
-حالا ثابت می کنیم دو شرط بالا کافی هستند. برای این کار از استقرا روی تعداد یال ها استفاده می کنیم.
+Example for directed graphs preserves code structure but checks in/out degrees:
 
-ابتدا فرض کنید یک گذر بسته داریم که از راس :math:`start` شروع شده و به همان راس باز می گردد.
+.. code-block:: python
+
+    def has_directed_eulerian(g):
+        # Check strong connectivity (implementation omitted)
+        if not is_strongly_connected(g):
+            return False
+        
+        # Check in-degree equals out-degree for all nodes
+        for node in g.nodes:
+            if g.in_degree(node) != g.out_degree(node):
+                return False
+        return True
+
+Important notes:
+- Eulerian trails (non-cyclic paths) have exactly 0 or 2 vertices with odd degree in undirected graphs
+- The Hierholzer algorithm (complexity O(E)) is used to find actual tours
+- Applications include DNA fragment assembly and waste collection route optimization
+
+Necessary and Sufficient Condition
+-----------------------------------
+
+The following mathematical conditions illustrate fundamental requirements in graph theory:
+
+.. math::
+    \begin{align*}
+        \delta(G) &\geq \frac{n}{2} \quad &&\text{// Necessary condition} \\
+        \forall u,v \in V(G), uv \notin E(G) &\Rightarrow \deg(u) + \deg(v) \geq n \quad &&\text{// Sufficient condition}
+    \end{align*}
+
+If a simple graph of order :math:`n \geq 3` satisfies either of these conditions, it is Hamiltonian. The first condition corresponds to Dirac's theorem, while the second aligns with Ore's theorem. Both guarantee the existence of a Hamiltonian cycle under specified degree constraints.
+
+.. image:: /images/img76.png
+
+Another formulation of these principles is:
+
+.. code-block:: latex
+
+    \begin{align*}
+        \text{Necessary condition: } & \delta(G) \geq \frac{k}{2} \\
+        \text{Sufficient condition: } & \forall u,v \in V(G), uv \notin E(G) \Rightarrow \deg(u) + \deg(v) \geq k
+    \end{align*}
+
+.. Undirected Graph
+   ~~~~~~~~~~~~~~~
+
+First, assume the graph in question is an undirected graph. Now we examine the necessary and sufficient conditions for the existence of an Eulerian tour. First, remove the isolated vertices of the graph. Now the necessary and sufficient conditions are:
+
+- a) The graph must be connected.
+- b) The degree of every vertex must be even.
+
+First, we prove that the above two conditions are necessary.
+
+Condition (a) is clearly necessary because if two edges belong to different connected components, a trail cannot simultaneously include both of them.
+
+To prove the necessity of condition (b), note that whenever we enter a vertex through an edge, we must immediately exit it (note the exception for the starting vertex). Therefore, the number of edges adjacent to each vertex must be a multiple of 2.
+
+Now we prove that the above two conditions are sufficient. For this, we use induction on the number of edges.
+
+First, assume we have a closed trail starting from vertex :math:`start` and returning to the same vertex:
 :math:`a_1 = start, a_2, ..., a_k = start` 
-که لزوما شامل همه یال ها نیست.
+which does not necessarily include all edges.
 
-حالا یال های این گذر را از گراف حذف کنید. گراف به چند مولفه همبندی افراز می شود. به هر مولفه اولین :math:`i` را نسبت دهید که :math:`a_i` درون آن مولفه باشد.
+Now remove the edges of this trail from the graph. The graph decomposes into several connected components. Assign to each component the smallest index :math:`i` such that :math:`a_i` belongs to that component.
 
-حالا شروع به طی کردن گشتی که حذف کردیم بکنید. هر گاه به راس :math:`a_i` رسیدیم به صورت استقرایی تور اویلری مولفه هایی که :math:`i` به آن ها نسبت داده شده است را بسازید و آنها را طی کنید.
+Now begin traversing the removed trail. Whenever we reach vertex :math:`a_i`, recursively construct and traverse the Eulerian tour of the component assigned to index :math:`i`.
 
-در نهایت گشتی که طی کرده ایم تور اویلری گراف ما است!
+Ultimately, the trail we have traversed will be the Eulerian tour of our graph!
 
-تنها یک قسمت از اثبات باقی می ماند. چرا توانستیم فرض کنیم یک گشت بسته شامل :math:`start` وجود دارد؟
+Only one part of the proof remains. Why could we assume the existence of a closed trail containing :math:`start`?
 
-کافیست از :math:`start` شروع کنیم و در هر مرحله اگر در راس :math:`u` باشیم که
-:math:`u \neq start`
-یک یال مجاور :math:`u` را طی کنیم که قبلا طی نشده است و این کار را تا زمانی ادامه دهیم که دوباره به :math:`start` برسیم.
+It suffices to start from :math:`start` and at each step, if we are at vertex :math:`u` where 
+:math:`u \neq start`, 
+traverse an adjacent edge of :math:`u` that has not been traversed before, and continue this until we return to :math:`start`.
 
-چرا چنین یالی وجود دارد؟ زیرا وقتی به راس :math:`u` رسیده ایم فرد بار به این راس وارد شده ایم و زوج بار خارج شده ایم. پس تعداد یال هایی که قبلا طی شده است فرد است و از طرفی طبق فرض درجه هر راس زوج است. پس باید یک یال که قبلا طی نشده است وجود داشته باشد!
+Why does such an edge exist? Because when we reach vertex :math:`u`, we have entered it an odd number of times and exited it an even number of times. Thus, the number of edges already traversed is odd, and by assumption, the degree of every vertex is even. Therefore, there must exist an edge that has not been traversed yet!
 
-گراف جهت دار
+Directed Graph
 ~~~~~~~~~~~~~~~
 
-بررسی تور اویلری در گراف جهت دار بسیار مشابه گراف بدون جهت است. مشابه بالا ابتدا راس های ایزوله را حذف کنید سپس لازم و کافی است که :
+Examining an Eulerian tour in a directed graph is very similar to undirected graphs. Similar to the previous approach, first remove isolated vertices. Then the necessary and sufficient conditions are:
 
-- الف) گراف زمینه (جهت دهی ها را در نظر نگیرید) همبند باشد.
-- ب) :math:`{d^+}_u = {d^-}_u`
+- a) The underlying graph (ignoring edge directions) must be connected.
+- b) :math:`{d^+}_u = {d^-}_u`
 
-در اینجا :math:`{d^+}_u` درجه خروجی راس :math:`u` و :math:`{d^-}_u` درجه ورودی راس :math:`u` می باشد.
+Here, :math:`{d^+}_u` represents the out-degree of vertex :math:`u`, and :math:`{d^-}_u` represents the in-degree of vertex :math:`u`.
 
-اثبات لازم و کافی بودن مشابه اثبات برای گراف های بی جهت انجام می شود.
+The proof of necessity and sufficiency follows similarly to the proof for undirected graphs.
 
-گراف نیم اویلری
-~~~~~~~~~~~~~~~
-هر گرافی که دو راس فرد داشته باشد و بقیه رئوس زوج باشد را نیم اویلری میگویند . زیرا گذر اویلری دارد که راس شروع و پایانش دو راس فرد هستند . 
+.. Semi-Eulerian Graph
+.. ~~~~~~~~~~~~~~~~~~~~
 
-در مورد گراف جهتدار هم به ازای هر راس :math:`u` ، :math:`{d^+}_u = {d^-}_u`به جز دو راس که آن دو راس هم خروجی و ورودیشان تفاضلشان یک است و در یکی خروجی بزرگتر و در دیگری ورودی بزرگتر از خروجی است . 
+Semi-Eulerian Graph
+~~~~~~~~~~~~~~~~~~~
+A graph with exactly two odd-degree vertices and all other vertices of even degree is called **semi-Eulerian**, as it contains an Eulerian trail where the two odd-degree vertices are the starting and ending points.
 
-پیاده سازی
+For directed graphs, a graph is semi-Eulerian if for every vertex :math:`u`, :math:`d^+_u = d^-_u` (in-degree equals out-degree) except for two vertices. For these two vertices: 
+- One has an out-degree exactly one greater than its in-degree.
+- The other has an in-degree exactly one greater than its out-degree.
+
+.. code-block:: python
+   :linenos:
+
+   class Graph:
+       def __init__(self, num_vertices):
+           self.num_vertices = num_vertices
+           # سازنده کلاس گراف
+           self.adj = [[] for _ in range(num_vertices)]
+           
+       def add_edge(self, u, v):
+           # اضافه کردن یال به گراف جهت دار
+           self.adj[u].append(v)
+           # self.adj[v].append(u)  # حذف کامنت برای گراف بی‌جهت
+
+Implementation
 -------------
 
-ابتدا گراف را با لینکد لیست ذخیره سازی می کنیم. در تابع ``add_edge`` (که در اینجا برای گراف جهت دار نوشته شده است) دو راس داده می شود به عنوان ورودی داده می شود و تابع یالی بین آن دو می کشد. (جهت دار یا بی جهت)
+First, we store the graph using an adjacency list. In the ``add_edge`` function (written here for a directed graph), two vertices are given as input and the function creates an edge between them (directed or undirected).
 
-توجه کنید که تفاوت کد پیدا کردن تور اویلری گراف جهت دار و بدون جهت تنها در تابع ``add_edge`` است.
+Note that the difference in code for finding Eulerian tours between directed and undirected graphs lies solely in the ``add_edge`` function.
 
 .. code-block:: cpp
 
@@ -108,17 +205,20 @@
   }
   
   int main(){
-	// graph ra voroodi begirid va baraye har yal add_edge ra seda bezanid
-	// taabe build ra seda bezanid
-	// hala tartib yal ha dar vector ans gharar darad
-  }
 
+.. code-block:: cpp
 
-اگر راس شروع و پایان یکسان نباشند چه؟
-------------------------------------
+	// Take the graph as input and call add_edge for each edge
+	// Call the build function
+	// Now the order of edges is stored in the ans vector
+ }
 
-فرض کنید می خواهید یک گذر پیدا کنید که از راس :math:`a` شروع شده و به راس :math:`b` ختم شود و تمام یال ها را ببینیم و :math:`a \neq b`.
+What if the start and end vertices are not the same?
+--------------------------------------------------
 
-حالا برای تبدیل مسئله جدید به مسئله تور اویلری کافی است یک یال بین :math:`a` و :math:`b` اضافه کنید. (اگر گراف جهت دار بود از :math:`b` به :math:`a`).
+Suppose you want to find a trail that starts at vertex :math:`a` and ends at vertex :math:`b`, covering all edges, with :math:`a \neq b`.
 
-حالا اگر فرض کنید در ابتدا یال جدید را طی می کنیم(در تور اویلری مهم نیست که از کدام یال شروع می کنیم) بقیه گذر همان چیزی است که دنبالش بودیم.(چرا؟) پس توانستیم این مسئله را به مسئله تور اویلری تبدیل کنیم.
+To convert this new problem into an Euler tour problem, it is sufficient to add an edge between :math:`a` and :math:`b`. (If the graph is directed, add the edge from :math:`b` to :math:`a`).
+
+Now, if we assume that we traverse the new edge first (in an Euler tour, it does not matter which edge we start with), the remaining trail is exactly what we were looking for. (Why?) Thus, we have successfully converted this problem into an Euler tour problem.
+

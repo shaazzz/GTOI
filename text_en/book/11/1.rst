@@ -1,37 +1,122 @@
-درخت پوشای کمینه
+Minimum Spanning Tree
 =====================
 
-شرح مساله
---------------
-فرض کنید به ما یک گراف وزن دار داده شده و از ما خواسته شده زیردرخت فراگیری از آن را پیدا کنیم که مجموع وزن یال های آن کمینه باشد.
-در این صورت ما به دنبال زیر درخت پوشای کمینه (Minimum Spanning Tree) آن هستیم.
+.. figure:: images/kruskal-example.*
+   :align: center
 
-چهار الگوریتم زیر را برای حل این مسئله معرفی می کنیم.
+Kruskal's Algorithm
+-------------------
 
-الگوریتم ها
+Algorithm steps:
+
+1. Sort all edges by ascending weight
+2. Select edges one by one from lightest to heaviest
+3. If adding an edge doesn't form a cycle, keep it in the tree
+
+.. code-block:: cpp
+
+    struct Edge {
+        int u, v, weight; 
+        // u: starting node, v: ending node
+    };
+
+    vector<Edge> kruskalMST(vector<Edge>& E, int n) {
+        sort(E);  // Sort edges in increasing order
+        DSU dsu(n); // Disjoint Set Union data structure
+        vector<Edge> result;
+        
+        for(Edge e : E) {
+            if(dsu.find(e.u) != dsu.find(e.v)) {
+                result.push_back(e);
+                dsu.merge(e.u, e.v);
+            }
+        }
+        return result;
+    }
+
+Prim's Algorithm
+----------------
+
+Algorithm steps:
+
+1. Start from an arbitrary node as root
+2. Maintain a priority queue of candidate edges
+3. At each step, add the lightest edge that connects to a new node
+
+.. code-block:: cpp
+
+    vector<pair<int,int>> primMST(vector<vector<pair<int,int>>>& graph) {
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        vector<bool> visited(graph.size());
+        vector<pair<int,int>> mstEdges;
+        
+        pq.push({0, 0}); // {weight, node}
+        while(!pq.empty()) {
+            auto [w, u] = pq.top();
+            pq.pop();
+            if(visited[u]) continue;
+            visited[u] = true;
+            if(u != 0) mstEdges.emplace_back(parent[u], u); 
+            
+            for(auto [v, weight] : graph[u]) {
+                if(!visited[v]) {
+                    parent[v] = u;  // already in the path before this step
+                    pq.push({weight, v});
+                }
+            }
+        }
+        return mstEdges;
+    }
+
+Problem Statement
+-----------------
+Suppose we are given a weighted graph and asked to find a spanning subtree of it with the minimal total edge weight. In this case, we seek its Minimum Spanning Tree (MST).
+
+We introduce the following four algorithms to solve this problem:
+
+1. Kruskal's Algorithm (Kruskal)
+2. Prim's Algorithm (Prim)
+3. Sollin's Algorithm (Sollin)
+4. Borůvka's Algorithm (Borůvka)
+
+Algorithms
 ---------------
 
-کروسکال (Kruskal)
-~~~~~~~~~~
+Kruskal (Kruskal)
+~~~~~~~~~~~~~~~~~~
 
-یال های گراف را بر حسب وزنشان به صورت صعودی مرتب می کنیم راس های گراف را بدون هیچ یالی درون MST نهایی اضافه می کنیم(فرض کنید داریم قدم به قدم MST را می سازیم و در ابتدای کار این MST بدون هیچ یالی است و قرار است یال های آن را اضافه کنیم).
-الگوریتم از اولین یال مرتب شده شروع می کند و در هر مرحله یال انتخاب شده را به MST اضافه می کند اگر در MST با یال های انتخاب شده قبلی دور درست نکند.
-برای فهمیدن اینکه یال انتخاب شده دور تشکیل می دهد یا نه می توانیم از DSU استفاده کنیم.
-اثبات درستی این الگوریتم به کمک برهان خلف است. فرض کنید MST بدست آمده توسط الگوریتم G باشد و MST اصلی H باشد. کم وزن ترین یالی که در H بکار رفته و در G بکار نرفته را در نظر بگیرید. در الگوریتم کروسکال حتماً از روی این یال رد شدیم و این یال باعث ایجاد دور شده بنابراین H دور دارد و این با فرض H متناقض است.
-اردر این الگوریتم :math:`O(mlgn + n)` است.
+We sort the edges of the graph in ascending order based on their weight. We add the vertices of the graph to the final MST without any edges (assume we are building the MST step by step, and at the beginning, this MST has no edges, and we will add the edges incrementally).
 
-پریم (Prim)
-~~~~~~~~~~~
+The algorithm starts with the first sorted edge and in each step adds the selected edge to the MST if it does not form a cycle with the previously selected edges. To determine whether the selected edge forms a cycle, we can use DSU.
 
-به طور کل الگوریتم پریم یک مجموعه از رئوس داریم که در هر مرحله یک راس به آن ها با یک یال اضافه می شود و در آخر مجموعه رئوس با مجموعه رئوس اصلی گراف یکسان می شود.
-برای آشنایی بیشتر با این الگوریتم به دقت به مراحل آن توجه کنید.
+The proof of correctness for this algorithm is by contradiction. Assume the MST obtained by the algorithm is *G*, and the true MST is *H*. Consider the lightest edge used in *H* but not in *G*. In Kruskal's algorithm, we must have encountered this edge and skipped it because it would form a cycle. This implies *H* contains a cycle, which contradicts the assumption that *H* is an MST.
 
-- یک مجموعه ایجاد می کنیم که نمایانگر رئوس موجود در MST در هر مرحله این الگوریتم است.
-- یک مقدار کمترین فاصله برای تمامی راس های گراف ایجاد می کنیم و مقدار تمامی آن ها را برابر بی نهایت می گذاریم(عددی بزرگ) و برای یک راس دلخواه که اولین راس ما در این الگوریتم است مقدار صفر می گذاریم.
-- تا موقعی که مجموعه ما با مجموعه رئوس گراف یکسان نشده این سه کار را انجام می دهیم. در ابتدا یک راس u را انتخاب می کنیم که در مجموعه ما نباشد و کمترین مقدار فاصله را داشته باشد. u را به مجموعه خود اضافه می کنیم و بعد از آن مقدار فاصله تمامی راس های همسایه u را بروز رسانی می کنیم. به این شکل که اگر راس w با یال z به راس u متصل بود و فاصله u به علاوه z کمتر از فاصله w بود فاصله w را برابر فاصله u به علاوه z می کنیم.
+The time complexity of this algorithm is :math:`O(m \log n + n)`.
+
+.. code-block:: cpp
+
+   // Assume we are building the MST step by step
+   struct Edge {
+       int u, v, weight;
+       bool operator<(Edge const& other) {
+           return weight < other.weight;
+       }
+   };
+
+Prim's Algorithm
+~~~~~~~~~~~~~~~
+
+In general, Prim's algorithm maintains a set of vertices, where at each step one vertex is added to the set along with an edge, until finally the vertex set becomes identical to the original graph's vertex set. To better understand this algorithm, carefully observe its steps:
+
+- We create a set representing the vertices present in the MST at each stage of the algorithm.
+- We initialize a minimum distance value for all vertices in the graph, setting all values to infinity (a large number) except for an arbitrary starting vertex which is set to zero.
+- Until our set matches the graph's vertex set, we repeat these three steps: First, select a vertex **u** not in our set that has the smallest distance value. Add **u** to our set, then update the distance values of all neighboring vertices of **u**. Specifically, if vertex **w** is connected to **u** via edge **z**, and **Dis[u] + z** is less than **Dis[w]**, we set **Dis[w] = Dis[u] + z**.
 
 .. math:: Dis [u] + z < Dis [w] => Dis [w] = Dis [u] + z
 
-توضیح آخر درباره ایده الگوریتم پریم این است که در هر مرحله بین مجموعه راسی که ما انتخاب کردیم و مجموعه رئوس دیگر گراف یالی را انتخاب می کنیم که کمترین وزن را داشته باشد.
-اثبات الگوریتم به این شکل است که در هر مرحله ما یالی را بین مجموعه خودمان و مجموعه دیگر رئوس انتخاب می کنیم. اگر این یال انتخاب نشود MST همبند نمی شود که تناقض است و اگر دو یال انتخاب شود MST دور پیدا می کند و باز هم تناقض ایجاد می شود. بنابراین باید یک یال انتخاب شود و برای اینکه کمترین وزن را MST داشته باشد باید کمترین یال انتخاب شود که این همان چیزیست که ما انجام می دهیم.
-اردر این الگوریتم :math:`O(mlgn + n)` است.
+A final note about Prim's algorithm's core idea: At each step, we select the edge with the smallest weight between our chosen vertex set and the remaining vertices in the graph. 
+
+**Proof of the algorithm**: At each step, we select an edge between our set and the remaining vertices. If this edge is not chosen, the MST becomes disconnected (a contradiction). If two edges are chosen, the MST forms a cycle (another contradiction). Thus, exactly one edge must be selected, and to minimize the MST's total weight, the edge with the smallest weight must be chosen—which aligns with the algorithm's behavior.
+
+The complexity of this algorithm is :math:`O(mlgn + n)`.
+

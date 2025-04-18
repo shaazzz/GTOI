@@ -1,22 +1,43 @@
-الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی
-=========================================================
+Exponential Algorithms for Finding Hamiltonian Cycles and Paths
+===============================================================
 
-در این بخش 4 الگوریتم همراه با پیاده سازی را بررسی خواهیم کرد. این 4 الگوریتم بسیار به هم شبیه هستند اما تفاوت های ریزی دارند که باید به این تفاوت ها و ایده اساسی پشت هر کدام توجه فراوان شود.
+In this section, we will examine 4 algorithms along with their implementations. These 4 algorithms are very similar to each other but have subtle differences that require careful attention to these distinctions and the fundamental idea behind each one.
 
-مسیر همیلتونی
---------------
+Hamiltonian Path
+---------------
 
-الگوریتم 1
+Hamiltonian Path Algorithms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    def hamiltonian_path(graph, start, path=[]):
+        # Hamiltonian algorithm implementation goes here
+        path = path + [start]
+        if len(path) == len(graph.nodes):
+            return path
+        for node in graph.neighbors(start):
+            if node not in path:
+                new_path = hamiltonian_path(graph, node, path)
+                if new_path:
+                    return new_path
+        return None
+
+Algorithms for finding Hamiltonian paths attempt to discover a path that visits every vertex in a graph exactly once. One common approach is using **backtracking with pruning** which systematically explores potential paths while eliminating impossible branches early.
+
+.. note::
+    The Hamiltonian path problem is **NP-Complete**, meaning for large graphs, finding an exact solution can be computationally prohibitive. In such cases, heuristic approaches or approximations are often used.
+
+Algorithm 1
 ~~~~~~~~~~~~~
 
-از بخش های قبل متوجه شدیم که شرط لازم و کافی برای برای پیدا کردن دور و مسیر همیلتونی وجود ندارد. به عبارتی این یک مسئله np است و الگوریتم چند جمله ای برای آن وجود ندارد. حالا تلاش می کنیم الگوریتمی نمایی برای آن ارائه دهیم.
+From previous sections, we understood that there is no necessary and sufficient condition for finding Hamiltonian cycles and paths. In other words, this is an NP problem, and no polynomial-time algorithm exists for it. Now we attempt to present an exponential algorithm.
 
-حالا با استفاده از برنامه نویسی پویا :math:`dp_{mask, a, b}` را تعریف می کنیم که یک آرایه boolean می باشد که نشان می دهد آیا با استفاده از راس های عضو مجموعه :math:`mask` مسیری همیلتونی که از راس :math:`a` شروع شود و به راس :math:`b` ختم شود، وجود دارد یا خیر.
+Using dynamic programming, we define :math:`dp_{mask, a, b}` as a boolean array indicating whether there exists a Hamiltonian path using vertices in the set :math:`mask`, starting from vertex :math:`a` and ending at vertex :math:`b`.
 
-برای آپدیت کردن این تابع کافی است روی راس قبل از :math:`b` حالت بندی کنیم. فرض کنید این راس :math:`c` باشد. لازم است :math:`c` عضو مجموعه :math:`mask` باشد همچنین یالی بین :math:`b` و :math:`c` وجود داشته باشد.
-در نهایت برای فهمیدن اینکه مسیر همیلتونی وجود دارد می توان :math:`dp_{2^n-1,i,j}` ها را به ازای همه :math:`i` و :math:`j` های ممکن بررسی کرد.
+To update this function, it suffices to enumerate over the vertex preceding :math:`b`. Let this vertex be :math:`c`. It is necessary for :math:`c` to be a member of the set :math:`mask`, and there must be an edge between :math:`b` and :math:`c`. Finally, to determine the existence of a Hamiltonian path, we can check all :math:`dp_{2^n-1,i,j}` values for all possible :math:`i` and :math:`j`.
 
-پس پیاده سازی الگوریتم به این شکل خواهد بود : 
+Thus, the algorithm implementation will be as follows:
 
 .. code-block:: cpp
 
@@ -65,16 +86,16 @@
       return 0;
   }
 
-همانطور که مشاهده می کنید الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n^3)` ارائه دادیم.
+As you can see, we presented an algorithm with time complexity :math:`O(2^n * n^3)`.
 
-الگوریتم 2
+Algorithm 2
 ~~~~~~~~~~~~~~~~~
 
-حالا می خواهیم با عوض کردن تعریف تابع بازگشتی الگوریتمی بهتر ارائه دهیم.
+Now, we aim to present a better algorithm by modifying the definition of the recursive function.
 
-فرض کنید :math:`dp_{mask,u}` برابر با زیرمجموعه ای از راس ها مثل :math:`mask2` باشد به طوریکه به ازای هر عضو آن مثل :math:`v` مسیری همیلتونی از :math:`u` به :math:`v` در راس های زیرمجموعه :math:`mask` وجود داشته باشد.
+Assume that :math:`dp_{mask,u}` equals a subset of vertices such as :math:`mask2` where for each member :math:`v` in it, there exists a Hamiltonian path from :math:`u` to :math:`v` within the subset of vertices :math:`mask`.
 
-برای آپدیت کردن این تابع بازگشتی باید روی راسی که بعد از :math:`u` می بینیم حالت بندی کنیم. در نهایت برای پیدا کردن جواب مسئله باید :math:`dp_{2^n-1,u}` را به ازای همه :math:`u` های ممکن بررسی کرد.
+To update this recursive function, we must perform state branching based on the vertex that comes after :math:`u`. Ultimately, to find the solution to the problem, we need to check :math:`dp_{2^n-1,u}` for all possible :math:`u`.
 
 .. code-block:: cpp
 
@@ -118,27 +139,84 @@
       return 0;
   }
 
-پس توانستیم پیچیدگی زمانی الگوریتم را به :math:`O(2^n * n^2)` کاهش بدهیم.
+.. code-block:: python
 
+   # تابعی برای پیدا کردن زیرگراف کامل
+   def find_complete_subgraph(graph):
+       # لیست تمام رأس‌ها
+       vertices = list(graph.keys())
+       n = len(vertices)
+       # بررسی تمام زیرمجموعه‌های ممکن
+       for i in range(1, 2**n):
+           subset = [vertices[j] for j in range(n) if (i >> j) & 1]
+           # بررسی کامل بودن زیرگراف
+           is_complete = True
+           for v in subset:
+               for u in subset:
+                   if v != u and u not in graph[v]:
+                       is_complete = False
+                       break
+               if not is_complete:
+                   break
+           if is_complete:
+               print(f"Complete subgraph found: {subset}")
 
-دور همیلتونی
--------------
+Therefore, we succeeded in reducing the algorithm's time complexity to :math:`O(2^n \times n^2)`.
 
-الگوریتم 1
+Hamiltonian Cycle
+-----------------
+
+A **Hamiltonian cycle** is a cycle in a graph that visits every vertex exactly once and returns to the starting vertex. This concept is named after the mathematician William Rowan Hamilton. Determining whether a Hamiltonian cycle exists in a graph is a classic NP-complete problem.
+
+.. code-block:: python
+
+    graph = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D', 'E'],
+        'C': ['A', 'F'],
+        'D': ['B'],
+        'E': ['B', 'F'],
+        'F': ['C', 'E']
+    }
+
+    # Define the graph using a dictionary
+    def hamiltonian_cycle(graph, start, current, visited, path):
+        if len(visited) == len(graph):
+            if start in graph[current]:
+                return path + [start]
+            else:
+                return None
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                result = hamiltonian_cycle(graph, start, neighbor, visited | {neighbor}, path + [current])
+                if result:
+                    return result
+        return None
+
+The code above demonstrates a recursive approach to find a Hamiltonian cycle in a graph represented as a dictionary. The algorithm uses backtracking to explore all possible paths and checks if a valid cycle exists.
+
+.. image:: images/hamiltonian_cycle.png
+    :alt: Example of a Hamiltonian cycle in a graph
+
+### Key Notes:
+- If a graph contains a Hamiltonian cycle, it is called a **Hamiltonian graph**.
+- Unlike Eulerian cycles, there is no simple necessary and sufficient condition for the existence of a Hamiltonian cycle.
+- Practical applications include optimization problems in logistics, circuit design, and DNA sequencing.
+
+Algorithm 1
 ~~~~~~~~~~~~~
 
-برای چک کردن اینکه در گراف دور همیلتونی وجود دارد یا خیر کافی است یک راس دلخواه مثل :math:`a` را در نظر بگیریم. سپس به ازای همه مجاور های راس :math:`a` مثل :math:`b` بفهمیم که آیا مسیر همیلتونی از :math:`a` به :math:`b` وجود دارد یا خیر. (اگر وجود داشت ابتدا مسیر همیلتونی را طی کنید سپس یال :math:`ab` را طی کنید).
+To check whether a graph contains a Hamiltonian cycle, it suffices to choose an arbitrary vertex like :math:`a`. Then for all neighbors of vertex :math:`a`, such as :math:`b`, we determine whether there exists a Hamiltonian path from :math:`a` to :math:`b`. (If such a path exists, first traverse the Hamiltonian path then traverse the edge :math:`ab`).
 
-می توان با استفاده از تابع بازگشتی که در الگوریتم 1 بخش قبل انجام دادیم این کار را انجام داد.
+This can be implemented using the recursive function we described in Algorithm 1 of the previous section.
 
-حالا سعی می کنیم الگوریتم را بهبود ببخشیم. از آنجایی که راس :math:`a` به صورت دلخواه انتخاب شده بود حدس می زنیم که می توان تعریف تابع بازگشتی را تغییر داد تا به الگوریتمی با پیچیدگی زمانی بهتری برسیم.
+Now we try to improve the algorithm. Since vertex :math:`a` was chosen arbitrarily, we conjecture that by redefining the recursive function, we can achieve an algorithm with better time complexity.
 
-تعریف می کنیم :math:`dp_{mask,u}` یک آرایه boolean است که نشان می دهد آیا می توان از راس :math:`u` شروع کرد و تمام رئوس مجموعه :math:`mask` را دید و در نهایت به کوچکترین عضو مجموعه :math:`mask` رسید یا خیر.
+We define :math:`dp_{mask,u}` as a boolean array indicating whether starting from vertex :math:`u`, we can visit all vertices in set :math:`mask` and finally reach the smallest member of set :math:`mask`.
 
-تفاوت این تعریف با تعریف قبل این است که حالا راس انتهایی مسیر همیلتونی از روی :math:`mask` مشخص می شود و نیازی نیست یک بعد اضافه تر به آن اختصاص داد.
+The difference from the previous definition is that now the endpoint of the Hamiltonian path is determined by :math:`mask`, eliminating the need to add an extra dimension to the state.
 
-
-برای آپدیت کردن می توانید روی راس بعد از :math:`u` حالت بندی کنید.
+For updates, you can perform case analysis on the vertex following :math:`u`.
 
 .. code-block:: cpp
 
@@ -187,19 +265,18 @@
       return 0;
   }
 
-پس الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n^2)` رسیدیم.
+So we arrived at an algorithm with time complexity :math:`O(2^n * n^2)`.
 
-الگوریتم 2
+Algorithm 2
 ~~~~~~~~~~~
 
-حالا با الهام گرفتن از الگوریتم 2 بخش قبل پیچیدگی زمانی راه حل را بهبود می دهیم. 
+Now, inspired by Algorithm 2 from the previous section, we improve the time complexity of the solution.
 
-تعریف می کنیم :math:`dp_{mask}` زیرمجموعه ای از راس ها مثل :math:`mask2` است که از هر راس :math:`mask2` مثل :math:`u` می توان شروع کرد و تمام راس های مجموعه :math:`mask` را دید و در نهایت به کوچکترین عضو :math:`mask` رسید.
+We define :math:`dp_{mask}` as a subset of vertices (like :math:`mask2`) where from every vertex :math:`u` in :math:`mask2`, we can start, visit all vertices in the :math:`mask` set, and finally reach the smallest member of :math:`mask`.
 
-برای آپدیت کردن می توان روی راس شروع مسیر همیلتونی حالت بندی کرد.
+To update, we can perform state transitions based on the starting vertex of the Hamiltonian path.
 
-به کد زیر توجه کنید. آرایه :math:`adj\_mask_u` مجموعه راس هایی که مجاور راس :math:`u` هستند را نشان می دهد.
-
+Note the following code. The array :math:`adj\_mask_u` represents the set of vertices adjacent to vertex :math:`u`.
 
 .. code-block:: cpp
 
@@ -247,4 +324,62 @@
 	  cout << "NO\n";
       return 0;
   }
-پس در نهایت به الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n)` رسیدیم.
+
+.. _dynamic_tsp:
+
+مسئله فروشنده دورهگرد (الگوریتم پویا)
+========================================
+
+در فصل قبل دیدیم که چگونه میتوان مسئله TSP را با استفاده از برنامهنویسی پویا حل کرد. در این بخش میخواهیم پیادهسازی و تحلیل این الگوریتم را دقیقتر بررسی کنیم.
+
+کد زیر پیادهسازی الگوریتم برنامهنویسی پویا برای مسئله TSP است:
+
+.. code-block:: python
+
+    def tsp_dp(graph):
+        n = len(graph)
+        # To generate all possible subsets that include node 0
+        all_sets = [[]] * (2 ** n)
+        all_sets[0] = [0]
+        
+        # Initialize memoization table
+        memo = {}
+        for i in range(1, n):
+            memo[(frozenset([0, i]), i)] = graph[0][i]
+        
+        # Fill memo table using DP
+        for size in range(2, n):
+            for subset in combinations(range(1, n), size):
+                subset = frozenset(subset | {0})
+                for j in subset:
+                    if j == 0:
+                        continue
+                    # Find minimum path through all nodes in subset ending at j
+                    memo[(subset, j)] = min(
+                        memo[(subset - {j}, k)] + graph[k][j]
+                        for k in subset if k != j
+                    )
+        
+        # Return minimum Hamiltonian cycle
+        return min(
+            memo[(frozenset(range(n)), j)] + graph[j][0]
+            for j in range(1, n)
+        )
+
+.. figure:: images/tsp.png
+    :align: center
+    :width: 60%
+    
+    نمایش گرافی از مسئله TSP با ۴ شهر
+
+**تحلیل پیچیدگی:**  
+تعداد زیرمجموعههای ممکن :math:`2^{n-1}` است و برای هر زیرمجموعه حداکثر n گره مقصد داریم. بنابراین پیچیدگی زمانی کل الگوریتم :math:`O(n^2 * 2^n)` خواهد بود. با بهینهسازیهای انجامشده (مانند استفاده از بیتماسکها و حافظه پویا) در عمل به :math:`O(2^n * n)` میرسیم.
+
+**نکته مهم:**  
+این الگوریتم برای n ≤ 20 عملی است، اما برای اندازههای بزرگتر نیاز به روشهای تقریبی یا مکاشفهای داریم.
+
+.. note::  
+    در پیادهسازی فوق از ترکیب مجموعههای یخزده (frozenset) و دیکشنری برای ذخیرهسازی حالتها استفاده شده است. این تکنیک امکان استفاده از ساختارهای غیرقابل تغییر را بهعنوان کلید در جدول ممویزاسیون فراهم میکند.
+
+Therefore, we arrived at an algorithm with a time complexity of :math:`O(2^n * n)`.
+

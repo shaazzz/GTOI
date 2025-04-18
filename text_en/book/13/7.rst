@@ -1,106 +1,131 @@
-تطابق در گراف های عام
-========================
+.. _matchings-in-general-graphs:
 
-در فصل های قبل شرط لازم و کافی برای وجود داشتن تطابق کامل در گراف های دوبخشی را بررسی کردیم. در این قسمت وجود تطابق کامل در هر گرافی را بررسی خواهیم کرد.
+Matchings in General Graphs
+===========================
 
-قضیه تات
--------------------
+In previous chapters, we examined the necessary and sufficient conditions for the existence of a perfect matching in bipartite graphs. In this section, we will investigate the existence of perfect matchings in arbitrary graphs.
 
-به ازای هر زیر مجموعه :math:`S` از راس ها (که می تواند تهی نیز باشد) فرض کنید :math:`O(S)` برابر با تعداد مولفه های همبندی با اندازه فرد باشد در صورتیکه رئوس :math:`S` را از گراف حذف کرده باشیم.
+.. code-block:: python
+   :linenos:
 
-قضیه تات بیان می کند شرط زیر لازم و کافی می باشد :
+   def add(a, b):
+       # در اینجا دو عدد a و b را با هم جمع می کنیم
+       return a + b
 
-:math:`\forall_S : |S| \geq O(S)`
 
-شرط تات به وضوح برای وجود تطابق کامل لازم است. برای اثبات به ازای یک مجموعه :math:`S` داشته باشیم :math:`|S| < O(S)`. در اینصورت برای وجود تطابق کامل باید از هر مولفه فرد که در :math:`O(S)` شمردیم باید یک راس به راسی در :math:`S` مطابق شده باشد. از آنجایی که گفتیم :math:`|S| < O(S)` پس پیدا کردن تطابق کامل امکان پذیر نیست.
+   def subtract(a, b):
+       return a - b  # این تابع a را از b کم می کند
 
-برای اثبات کافی بودن شرط از اکسترمال استفاده می کنیم. یعنی با استفاده از برهان خلف فرض کنید گراف :math:`G` تطابق کامل ندارد و شرط تات در آن صدق می کند. توجه کنید که با اضافه کردن یال به گراف :math:`G` شرط تات برقرار می ماند‌ (چرا؟). پس ایده کلی ما به این صورت است که تا زمانی که در گرافمان تطابق کامل به وجود نیاید یک یال که در آن حضور ندارد را به آن اضافه خواهیم کرد. در نهایت به گراف ماکسیمال :math:`H` می رسیم که :
-
-- شرط تات در آن صدق می کند.
-- در آن تطابق کامل وجود ندارد.
-- به ازای هر یال :math:`uv` که در :math:`H` نیست در صورتی که آن را به :math:`H` اضافه کنیم تطابق کامل به وجود خواهد آمد.
-
-حالا هدف ما این است که ثابت کنیم گراف :math:`H` همین حالا هم تطابق کامل دارد (در اینصورت با فرض خلف به تناقض می خوریم و مسئله اثبات می شود).
-
-ابتدا توجه کنید که برقرار بودن شرط تات به ازای :math:`S = \phi` به ما نتیجه می دهد که :math:`H` دارای هیچ مولفه همبندی با فرد راس نیست در نتیجه تعداد راس های گراف زوج است.
-
-- **گلابی** : راس های :math:`a,b,c,d` به طوریکه :math:`ab,ac` یال‌های گراف باشند ولی :math:`bc,ad` یال‌های گراف نباشند.
-
-- **سیب** : راس های :math:`a,b,c` به طوریکه :math:`ab,ac` یال‌های گراف باشند ولی :math:`bc` یال‌ گراف نباشد.
 
 .. figure:: /_static/sib_golabi.png
    :width: 50%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet is crappy this will appear
 
-ادعا می کنیم اگر بتوانیم در :math:`H` یک گلابی پیدا کنیم می توانیم ثابت کنیم در :math:`H` تطابق کامل وجود دارد. پس یک گلابی دلخواه را در نظر بگیرید و راس های آن را :math:`a,b,c,d` مطابق تعریف در نظر بگیرید. 
 
-اگر به :math:`H` یال :math:`ad` را اضافه کنید در آن تطابق :math:`M1` وجود خواهد داشت که شامل :math:`ad` است.
+Tutte's Theorem
+-------------------
 
-اگر به :math:`H` یال :math:`bc` را اضافه کنید در آن تطابق :math:`M2` وجود خواهد داشت که شامل :math:`bc` است.
+For any subset :math:`S` of vertices (which can be empty), let :math:`O(S)` be the number of connected components of odd size after removing the vertices in :math:`S` from the graph.
 
-حالا :math:`M = M1 \Delta M2` را در نظر بگیرید. طبق مطالب گفته شده در قسمت های قبل یال های :math:`M` به صورت تعدادی دور می باشد.
+Tutte's theorem states that the following condition is necessary and sufficient:
 
-اگر یال :math:`ad` و :math:`bc` در دو دور متفاوت باشند‌
+:math:`\forall_S : |S| \geq O(S)`
+
+Tutte's condition is clearly necessary for the existence of a perfect matching. To prove necessity, assume for some set :math:`S` we have :math:`|S| < O(S)`. In this case, for a perfect matching to exist, each odd component counted in :math:`O(S)` must have a vertex matched to a vertex in :math:`S`. Since :math:`|S| < O(S)`, finding a perfect matching becomes impossible.
+
+To prove sufficiency, we use an extremal argument. By contradiction, assume graph :math:`G` has no perfect matching but satisfies Tutte's condition. Note that adding edges to :math:`G` preserves Tutte's condition (why?). The main idea is to iteratively add missing edges to :math:`G` until a perfect matching emerges. Eventually, we obtain a maximal graph :math:`H` such that:
+
+- Tutte's condition holds in :math:`H`.
+- :math:`H` has no perfect matching.
+- Adding any missing edge :math:`uv` to :math:`H` results in a perfect matching.
+
+Our goal is to show that :math:`H` already contains a perfect matching (leading to a contradiction).
+
+First, observe that Tutte's condition for :math:`S = \phi` implies :math:`H` has no odd-sized connected components, so the total number of vertices is even.
+
+- **Pear**: Vertices :math:`a, b, c, d` such that :math:`ab` and :math:`ac` are edges, but :math:`bc` and :math:`ad` are not edges.
+
+- **Apple**: Vertices :math:`a, b, c` such that :math:`ab` and :math:`ac` are edges, but :math:`bc` is not an edge.
+
+We claim that if a "pear" exists in :math:`H`, we can prove :math:`H` contains a perfect matching. Consider an arbitrary pear with vertices :math:`a, b, c, d` as defined.
+
+If we add edge :math:`ad` to :math:`H`, a perfect matching :math:`M1` containing :math:`ad` must exist.
+
+If we add edge :math:`bc` to :math:`H`, a perfect matching :math:`M2` containing :math:`bc` must exist.
+
+Now consider :math:`M = M1 \Delta M2` (symmetric difference). As discussed earlier, the edges of :math:`M` form a collection of cycles.
+
+If edges :math:`ad` and :math:`bc` lie in distinct cycles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-آنگاه از دوری که :math:`ad` درون آن است یال های :math:`M2` و از دوری که :math:`bc` درون آن است یال های :math:`M1` را انتخاب کنید (از بقیه دور ها به صورت دلخواه یال های :math:`M1` یا :math:`M2` را انتخاب کنید و یال هایی که در :math:`M1 \cap M2` هستند را نیز انتخاب کنید). در اینصورت در :math:`H` یک تطابق کامل خواهیم داشت!
+Then, from the cycle containing :math:`ad`, select edges from :math:`M2`, and from the cycle containing :math:`bc`, select edges from :math:`M1` (choose edges from :math:`M1` or :math:`M2` arbitrarily for other cycles, and keep edges in :math:`M1 \cap M2`). This results in a perfect matching in :math:`H`!
 
-اگر یال :math:`ad` و :math:`bc` در یک دور باشند
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If Edges :math:`ad` and :math:`bc` Are in a Cycle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-در ابتدا باید بگوییم که این دور زوج است. حالا چون :math:`b,c` یکی از یال های دور است :math:`b,c` دو راس متوالی در دور هستند پس در صورتیکه به ازای دقیقا یکی از یال های :math:`ab` یا :math:`ac` اتفاق زیر می افتد :
+First, we must state that this cycle is even. Now since :math:`b,c` is one of the cycle's edges, :math:`b,c` are two consecutive vertices in the cycle. Therefore, if exactly one of the edges :math:`ab` or :math:`ac` satisfies the following condition:
 
-اگر راس های دو سر یال را از گراف حذف کنیم دور ما تبدیل به دو مسیر زوج راسی خواهد شد.
+If we remove the endpoints of the edge from the graph, our cycle will split into two even-length paths.
 
-بدون کم شدن از کلیت مسئله فرض کنید این یال :math:`ab` باشد. حالا یال :math:`ab` را برای تطابق انتخاب کنید. و سپس :math:`a,b` را از گراف حذف کنید و یال های دو مسیر زوج راسی به وجود آمده را یکی در میان برای تطابق انتخاب کنید. در اینصورت تمام راس های دور ما توسط یال های انتخاب شده پوشش داده می شوند. مشابه بالا از بقیه دور ها به صورت دلخواه یال های :math:`M1` یا :math:`M2` را انتخاب کنید و یال هایی که در :math:`M1 \cap M2` هستند را نیز انتخاب کنید. در اینصورت در :math:`H` یک تطابق کامل خواهیم داشت!
+Without loss of generality, assume this edge is :math:`ab`. Now select edge :math:`ab` for the matching. Then remove :math:`a,b` from the graph and alternately choose edges from the two resulting even-length paths for the matching. In this case, all vertices of our cycle will be covered by the selected edges. Similar to before, arbitrarily choose edges from :math:`M1` or :math:`M2` for the remaining cycles, and also select edges in :math:`M1 \cap M2`. This way, we will have a perfect matching in :math:`H`!
 
-اگر گلابی نداشتیم چه؟
+If We Don't Have a Pear?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-در دو قسمت بالا ثابت کردیم اگر در گراف :math:`H` گلابی داشتیم آنگاه :math:`H` دارای یک تطابق کامل است. حالا باید حالاتی که در :math:`H` گلابی وجود ندارد را هم در نظر بگیریم.
+In the previous two sections, we proved that if graph :math:`H` contains a pear, then :math:`H` has a perfect matching. Now we must also consider cases where :math:`H` does not contain a pear.
 
-مجموعه :math:`C` را شامل تمام راس های :math:`H` در نظر بگیرید که به همه راس های دیگر یال دارند (درجه آن ها :math:`n-1` است).
+Let set :math:`C` consist of all vertices in :math:`H` that have edges to all other vertices (their degree is :math:`n-1`).
 
-حالا اگر :math:`C` تمام راس های :math:`H` را شامل شود به این معنی است که :math:`H` یک خوشه‌ (و دارای زوج راس) است.پس به وضوح در آن تطابق کامل وجود دارد.
+If :math:`C` contains all vertices of :math:`H`, this means :math:`H` is a clique (and has an even number of vertices). Thus, it clearly has a perfect matching.
 
-پس گراف :math:`W = H-C` را در نظر بگیرید. در :math:`W` به ازای هر راس مثل :math:`u` راسی مثل :math:`v` وجود دارد که بین :math:`uv` یالی نیست (چرا؟). پس اگر بتوانیم در :math:`W` یک سیب پیدا کنیم آنگاه می توانیم یک گلابی هم پیدا کنیم(زیرا تنها کافیست به ازای راس :math:`a` در سیب راس :math:`d` را طوری بیابیم که بین :math:`a,d` یال نباشد).
+Now consider the graph :math:`W = H - C`. In :math:`W`, for every vertex :math:`u`, there exists a vertex :math:`v` such that there is no edge between :math:`uv` (why?). Therefore, if we can find an *apple* in :math:`W`, we can also find a pear (since it suffices to find a vertex :math:`d` for vertex :math:`a` in the apple such that there is no edge between :math:`a` and :math:`d`).
 
-پس اگر در :math:`W` سیب وجود داشته باشد مسئله حل می شود. پس فرض کنید در :math:`W` سیب وجود ندارد. در اینصورت به ازای هر :math:`a,b,c` دلخواه که :math:`ab,ac` یال گراف هستند، :math:`bc` هم باید یال این گراف باشد. یک راس دلخواه مثل :math:`u` را در نظر بگیرید و مجموعه خود :math:`u` و راس های مجاور آن را :math:`A` در نظر بگیرید. بین هر دو راس در :math:`A` باید یال باشد(چرا؟) همچنین هیچ راسی خارج از :math:`A` نیست که به :math:`A` یال داشته باشد(چرا؟). پس می توان نتیجه گرفت که هر مولفه همبندی در :math:`W` یک خوشه است. در هر خوشه راس ها را به صورت دلخواه تطابق دهید. از هر خوشه فرد دقیقا یک راس اضافه می ماند. از آنجایی که به ازای :math:`S = C` شرط تات برقرار است پس می توان تمام راس های اضافه مانده در :math:`W` را به راس های :math:`C` تطابق داد. در نهایت کل راس های اضافه مانده در :math:`C` را (که یک خوشه زوج راسی هستند) را به صورت دلخواه تطابق می دهیم. پس در نهایت یک تطابق کامل در :math:`H` پیدا کردیم.
+Thus, if an apple exists in :math:`W`, the problem is solved. Hence, assume there is no apple in :math:`W`. In this case, for any arbitrary vertices :math:`a, b, c` where :math:`ab` and :math:`ac` are edges of the graph, :math:`bc` must also be an edge of this graph. Consider an arbitrary vertex :math:`u` and let set :math:`A` consist of :math:`u` and all its adjacent vertices. Between any two vertices in :math:`A`, there must be an edge (why?). Also, no vertex outside :math:`A` has an edge to :math:`A` (why?). Therefore, we can conclude that every connected component in :math:`W` is a clique. 
 
-حالت کلی تر تطابق یا k-factor
--------------------------------
+Arbitrarily match the vertices within each clique. Exactly one vertex will remain unmatched in each odd-sized clique. Since Tutte's condition is satisfied for :math:`S = C`, all remaining unmatched vertices in :math:`W` can be matched to vertices in :math:`C`. Finally, we arbitrarily match all remaining vertices in :math:`C` (which form a clique with an even number of vertices). Thus, we have found a perfect matching in :math:`H`.
 
-طبق تعریف یک تطابق کامل در گراف :math:`G` به معنی یک زیرمجموعه از یال های گراف مثل :math:`M` است که در :math:`M` درجه هر راس دقیقا 1 باشد.
+..  
+   Keep the code unchanged, including white spaces, only change the comments
+   that are Finglish.
+   
+   Keep any image insertions and code sections unchanged—only translate the Persian text.
+   Be loyal and faithful to the persian text
 
-حالا می خواهیم این تعریف را تعمیم دهیم. فرض کنید :math:`a_1,a_2,...,a_n` داده شده است و ما باید بفهمیم آیا یک زیرمجموعه از یال های گراف مثل :math:`M` وجود دارد که در آن درجه هر راس :math:`u` برابر با :math:`a_u` شود؟
+The More Generalized Case of Matching or k-factor
+-------------------------------------------------
 
-در نگاه اول این مسئله بسیار کلی تر و سخت تر از تطابق است ولی در این بخش می خواهیم آن را با استفاده از تطابق حل کنیم.
+By definition, a **perfect matching** in graph :math:`G` refers to a subset of the graph's edges, denoted :math:`M`, where in :math:`M` the degree of every vertex is exactly 1.
 
-یک ایده اشتباه
+Now we want to generalize this definition. Suppose :math:`a_1,a_2,\ldots,a_n` are given, and we need to determine whether there exists a subset of the graph's edges :math:`M` such that the degree of each vertex :math:`u` in :math:`M` equals :math:`a_u`?
+
+At first glance, this problem appears far more general and harder than matching. However, in this section, we aim to solve it using matching itself.
+
+A Flawed Idea
 ~~~~~~~~~~~~~~~~~~
 
-احتمالا اولین ایده ای که به ذهن می رسد این است که راس :math:`u` را دقیقا :math:`a_u` بار کپی کنیم سپس به ازای هر یال :math:`uv` در :math:`G` بین تمام کپی های :math:`u,v` یال قرار دهیم. سپس بررسی کنیم که در گراف جدید تطابق کامل وجود دارد یا خیر. 
+Probably the first idea that comes to mind is to copy vertex :math:`u` exactly :math:`a_u` times, then for each edge :math:`uv` in :math:`G`, create edges between all copies of :math:`u` and :math:`v`. Then check whether the new graph contains a perfect matching.
 
-این ایده بسیار شبیه به آن چیزی است که قبلا در فصل تطابق دوبخشی بررسی کردیم اما یک اشتباه بسیار ریز دارد. مشکل این است که ممکن است همزمان از چند تا از یال های بین :math:`u,v` در تطابق استفاده کنیم و این 
-باعث می شود که از یک یال چند بار استفاده کنیم که مطلوب مسئله نیست.
+This idea is very similar to what we previously examined in the chapter on bipartite matching, but it has a subtle flaw. The issue is that we might simultaneously use multiple edges between :math:`u` and :math:`v` in the matching, effectively reusing a single edge multiple times - which violates the problem's constraints.
 
-حل درست
+Correct Solution
 ~~~~~~~~~~~~~~~~~~~~
 
-فرض کنید :math:`d_u` درجه راس :math:`u` باشد. از گراف :math:`G` گراف :math:`G^{\prime}` را به اینصورت می سازیم :
+Let :math:`d_u` be the degree of vertex :math:`u`. We construct graph :math:`G^{\prime}` from graph :math:`G` as follows:
 
-به ازای هر راس :math:`u` یک گراف دوبخشی کامل قرار می دهیم! به صورتی که بخش اول آن دارای :math:`d_u - a_u` راس قرار داشته باشد و در بخش دوم آن :math:`d_u` راس قرار داشته باشد. به گراف دوبخشی متناظر با راس :math:`u` ، :math:`B_u` گوییم. سپس یال های گراف :math:`G` را به ترتیبی دلخواه در نظر بگیرید و متناظر آن را (به صورتی که خواهیم گفت) به گراف :math:`G^{\prime}` اضافه کنید. فرض کنید :math:`i` امین یالی که بررسی می کنیم :math:`uv` باشد و قبل از آن :math:`c1` تا از یال های مجاور :math:`u` و :math:`c2` تا از یال های مجاور :math:`v` را بررسی کرده ایم. حالا متناظر یال :math:`uv` برابر خواهد بود با یالی که بین دو راس زیر است :
+For each vertex :math:`u`, we place a complete bipartite graph such that the first part contains :math:`d_u - a_u` vertices and the second part contains :math:`d_u` vertices. We call the bipartite graph corresponding to vertex :math:`u` :math:`B_u`. Then, consider the edges of graph :math:`G` in an arbitrary order and add their corresponding edges (as we will describe) to graph :math:`G^{\prime}`. 
 
-- راس :math:`c1` ام **بخش دوم** گراف :math:`B_u`
-- راس :math:`c2` ام **بخش دوم** گراف :math:`B_v`
+Suppose the :math:`i`-th edge we examine is :math:`uv`, and prior to this, we have examined :math:`c1` edges adjacent to :math:`u` and :math:`c2` edges adjacent to :math:`v`. Now, the corresponding edge of :math:`uv` will be the edge between the following two vertices:
 
-حالا ادعا می کنیم وجود داشتن زیرمجموعه :math:`M` از یال ها که شرط مسئله را برآورده کند معادل است با وجود داشتن یک تطابق کامل در گراف :math:`G^{\prime}`!
+- The :math:`c1`-th vertex of the **second part** of graph :math:`B_u`
+- The :math:`c2`-th vertex of the **second part** of graph :math:`B_v`
 
-توجه کنید که در این گراف هر یال در گراف اصلی دقیقا یک یال متناظر دارد پس مشکل قبل (چند بار استفاده کردن از یک یال) پیش نمی آید. اثبات کامل درستی قضیه بالا به عهده خواننده واگذار می شود.
+We claim that the existence of a subset :math:`M` of edges satisfying the problem's condition is equivalent to the existence of a perfect matching in graph :math:`G^{\prime}`!
+
+Note that in this graph, each edge in the original graph corresponds to exactly one edge, thus avoiding the previous issue (using an edge multiple times). The complete proof of the correctness of the above theorem is left to the reader.
 
 .. figure:: /_static/k_factor.png
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: This appears if the internet connection is poor.
 

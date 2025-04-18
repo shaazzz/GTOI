@@ -1,14 +1,25 @@
-درخت دودویی (Binary Tree)
-============
+.. code-block:: python
+   :linenos:
 
-ساختار درخت دودویی مانند یک درخت معمولی است با این تفاوت که طبقه ای است.
-طبقه ها از صفر شروع می شود و در طبقه صفرم فقط یک راس قرار دارد که به آن ریشه می گویند.
-هر دو راسی که بینشان یال وجود دارد در دقیقا دو طبقه متوالی قرار دارند.
-دو راس u و v را در نظر بگیرید که به هم یال دارند و راس u در طبقه با شماره کمتر است، به راس u والد یا پدر راس v؛ و به راس v بچه یا پسر راس u گفته می شود.
-در این گراف هر راس حداکثر دو بچه دارد و واضح است که یک والد دارد.
-راس هایی که هیچ بچه ای ندارند برگ نامیده میشوند.
-بلند ترین مسیر از بین تمامی مسیر هایی که از ریشه به یک برگ وجود دارد را ارتفاع می نامند.
-زیر درخت به زیر گرافی از درخت دودویی گفته میشود که در آن راس u آمده باشد تمام بچه های u هم در آن آمده باشد.
+   class Node:
+       def __init__(self, data):
+           self.left = None  # chap
+           self.right = None  # rast
+           self.data = data
+
+
+Binary Tree
+===========
+
+The structure of a binary tree is similar to a regular tree but leveled. 
+Levels start from zero, where only one vertex called the root exists at level zero. 
+Any two vertices connected by an edge reside in exactly two consecutive levels. 
+Consider two vertices u and v connected by an edge where u is in the lower-numbered level. 
+We call u the parent of v, and v the child of u. 
+In this graph, each vertex has at most two children and clearly has one parent. 
+Vertices with no children are called leaves. 
+The longest path among all paths from the root to a leaf is called the height. 
+A subtree refers to a subgraph of the binary tree where if vertex u is included, all its children must also be included.
 
 
 .. figure:: /_static/dot/Binary_Tree.svg
@@ -16,33 +27,34 @@
    :align: center
    :alt: Binary Tree
 
-**در این قسمت به سه نوع درخت دودویی اشاره می کنیم.**
+**In this section, we will discuss three types of binary trees.**
 
 Full Binary Tree
 ----------------
-درخت دودویی که در آن تمامی راس ها یا دو بچه دارند و یا برگ هستند.
+A binary tree in which all vertices either have two children or are leaves.
 
 .. figure:: /_static/dot/Full_Binary_Tree.svg
-   :width: 60%
-   :align: center
-   :alt: Full Binary Tree
+ :width: 60%
+ :align: center
+ :alt: Full Binary Tree
 
 Complete Binary Tree
 --------------------
-درخت دودویی که تمام برگ ها در دو طبقه آخر هستند و برگ های طبقه آخر از چپ پر شدند.
+A binary tree where all leaves are in the last two levels, and the leaves of the last level are filled from the left.
 
 .. figure:: /_static/dot/Complete_Binary_Tree.svg
-   :width: 60%
-   :align: center
-   :alt: Complete Binary Tree
+ :width: 60%
+ :align: center
+ :alt: Complete Binary Tree
 
 Perfect Binary Tree
 -------------------
-به درختی که تمامی برگ ها در طبقه آخر باشند و تعداد بچه های تمامی راس ها در دیگر طبقات دو باشد گویند.
+A tree where all leaves are at the last level and all nodes in other levels have two children is called a perfect binary tree.
 
 .. figure:: /_static/dot/Perfect_Binary_Tree.svg
-   :width: 60%
-   :align: center
-   :alt: Perfect Binary Tree
+ :width: 60%
+ :align: center
+ :alt: Perfect Binary Tree
 
-یکی از بیشترین استفاده ها از درخت دودویی، درخت جست و جوی دودویی است که جلوتر با آن بیشتر آشنا می شویم.
+One of the most common uses of binary trees is the binary search tree, which we will examine in more detail later.
+

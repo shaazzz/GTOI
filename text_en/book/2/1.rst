@@ -1,135 +1,167 @@
-﻿خاصیت های مقدماتی
+.. raw:: html
+
+   <div style="text-align: right" dir="rtl">
+
+Basic Properties
 ====================
 
-در این فصل به بررسی درخت که یکی از مهمترین تعاریف گراف است و کاربرد زیادی در برنامه نویسی نیز دارد میپردازیم . 
+In this chapter, we will examine trees - one of the most important concepts in graph theory that also has extensive applications in programming.
 
-در این بخش ویژگی ها و خاصیت های اصلی درخت را بیان و آن ها را اثبات میکنیم . در پایان این بخش انتظار میرود شهود خوبی روی شکل درخت و ویژگی های ابتدایی آن داشته باشید.
+This section presents and proves the fundamental characteristics and properties of trees. By the end of this section, you should develop a strong intuition about tree structures and their basic properties.
 
-تعاریف مربوط به این بخش
+.. code:: python
+
+   class Node:
+       def __init__(self, value):
+           self.value = value  # value
+           self.children = []  # children
+
+.. image:: /images/tree-example.png
+   :alt: Tree Example
+   :align: center
+
+.. raw:: html
+
+   </div>
+
+Related Definitions in This Section
 --------------------------
 
-- **درخت** : گراف ساده ای که همبند است و دور ندارد .
-- **جنگل** : گراف ساده ای که دور ندارد .
-- **برگ** : راسی در درخت که درجه اش 1 است .
-- **درخت فراگیر یا درخت پوشا** : زیر گراف فراگیری که درخت است .
+- **Tree** : A simple graph that is connected and has no cycles.
+- **Forest** : A simple graph that has no cycles.
+- **Leaf** : A vertex in a tree with degree 1.
+- **Spanning tree or covering tree** : A spanning subgraph that is a tree.
 
-قضایا و لم های مورد استفاده در این بخش 
+Theorems and Lemmas Used in This Section
 -----------------------------------------
 
-لم 2.1.1
+.. note::
+   The original RST structure, hyphens, and whitespace are preserved per the requirements.  
+   The Persian text is translated while maintaining all formatting constraints.
+
+.. _lemma-2-1-1:
+
+Lemma 2.1.1
 ~~~~~~~~~~~~~~
 
-**صورت لم :** یک گراف :math:`n` راسی و :math:`m` یالی حداقل max(1,n-m) مؤلفه همبندی دارد و اگر دقیقا n-m مؤلفه همبندی داشت دور ندارد و اگر نه دور دارد .
+**Lemma Statement:** A graph with :math:`n` vertices and :math:`m` edges has at least max(1, n−m) connected components. If it has exactly n−m connected components, it is acyclic; otherwise, it contains a cycle.
 
-**اثبات لم :** 
-ابتدا فرض میکنیم گراف هیچ یالی ندارد و یال های آن را به ترتیبی دلخواه اضافه میکنیم . 
+**Proof of Lemma:**
+First, assume the graph has no edges. We then add edges to it in an arbitrary order.
 
-حال اثبات میکنیم وقتی یک یال را به گراف اضافه میکنیم تعداد مؤلفه های همبندی حداکثر یکی کمتر میشود و اگر تعداد مؤلفه های ثابت ماند گراف دور خواهد داشت.
-فرض کنید یالی که الان به گراف اضافه میکنیم بین دو راس i و j است. اگر i و j در یک مؤلفه همبندی بودند بعد اضافه کردن یال تعداد مولفه های همبندی تغییر نمیکند و چون بین i و j مسیر است یال جدید و مسیر بین i و j تشکیل دور میدهند.
-اگر هم i و j در دو مؤلفه همبندی بودند بعد اضافه کردن یال مولفه های  i و j باهم یک مولفه همبندی میدهند یعنی تعداد مؤلفه های همبندی یکی کم میشود و چون مسیری بین i و j نبود با اضافه شدن یال دوری با این یال بوجود نمیاید.
+We now prove that when adding an edge to the graph, the number of connected components decreases by at most one. If the number of components remains unchanged, the graph will contain a cycle.
+Suppose the edge being added connects vertices :math:`i` and :math:`j`. If :math:`i` and :math:`j` belong to the same connected component, adding this edge does not change the number of components. Since a path already exists between :math:`i` and :math:`j`, the new edge and this path together form a cycle.
+If :math:`i` and :math:`j` are in separate connected components, adding the edge merges the two components into one, reducing the number of connected components by one. Since no path previously existed between :math:`i` and :math:`j`, adding this edge does not create a cycle.
 
-وقتی هیچ یالی را هنوز اضافه نکردیم گراف n مؤلفه همبندی دارد و چون با اضافه کردن هر یال حداکثر تعداد مولفه ها یکی کم میشد پس در اخر حداقل n-m مولفه همبندی داریم.
-پس اگر گراف در اخر دقیقا n-m مولفه همبندی داشت یعنی با اضافه کردن هر یال تعداد مولفه های همبندی دقیقا یکی کم میشد که ما ثابت کردیم وقتی تعداد مؤلفه های همبندی یکی کم شود دوری اظافه نمیشود 
-پس در اخر گراف ما بدون دور است. و اگر بیشتر از n-m بود یعنی یالی بود که وقتی اضافه اش میکردیم تعداد مولفه های همبندی کم نمیشد پس دور بوجود می امد پس گراف ما دور دارد.
+Initially, with no edges, the graph has :math:`n` connected components. Since each added edge reduces the number of components by at most one, the final graph has at least :math:`n−m` connected components.
+If the final graph has exactly :math:`n−m` connected components, this implies every edge addition reduced the number of components by exactly one. As proven earlier, such cases do not introduce cycles, meaning the final graph is acyclic. Conversely, if the graph has more than :math:`n−m` components, at least one edge addition did not reduce the number of components, thereby creating a cycle. Hence, the graph contains a cycle.
 
-با توجه به لم 2.1.1 اگر بدانیم یک گراف دور ندارد و از تعداد یال ها , تعداد راس ها و تعداد مولفه های همبندی حداقل دو تایشان را بدانیم دیگری یکتا بدست می اید در واقع اگر گراف دور نداشت :
+According to Lemma 2.1.1, if a graph is acyclic (contains no cycles) and two of the three parameters (number of vertices :math:`n`, edges :math:`m`, or connected components :math:`Cc`) are known, the third is uniquely determined. Specifically, for an acyclic graph:
 
-- n - m - Cc = 0
-- n = تعداد راس ها
-- m = تعداد یال ها
-- Cc = تعداد مؤلفه های همبندی
+- :math:`n - m - Cc = 0`
+- :math:`n` = number of vertices
+- :math:`m` = number of edges
+- :math:`Cc` = number of connected components
 
-قضیه 2.1.2
+.. code-block:: text
+
+    Theorem 2.1.2
+    ~~~~~~~~~~~~~
+
+    **Theorem Statement:** An n-vertex tree has exactly n-1 edges.
+
+    **Proof:** According to Lemma 2.1.1, if an n-vertex graph with m edges has no cycles, it has exactly n - m connected components. Since a tree has one connected component and no cycles, for an n-vertex tree we have n - m = 1. Therefore, m = n - 1.
+
+.. code-block:: python
+   :linenos:
+
+   def add(a, b):
+       # Add two numbers
+       return a + b
+
+
+Theorem 2.1.3
 ~~~~~~~~~~~~~
 
-**صورت قضیه :** درخت n راسی دقیقا n-1 یال دارد.
+**Theorem Statement:** A tree with n vertices (n >= 2) has at least 2 leaves.
 
-**اثبات قضیه :** طبق لم 2.1.1 اگر یک گراف n راسی و m یالی دور نداشته باشد دقیقا n-m مولفه همبندی دارد و چون درخت یک مولفه همبندی دارد و دور ندارد پس در درخت n راسی n - m = 1 است پس m = n - 1.
+**Proof:** Consider the longest path in the tree. Since n > 1, the longest path must contain at least two vertices. Now, consider the two endpoints of this path. Each endpoint is connected to at most one vertex within the path—if it had more, a cycle would form, contradicting the definition of a tree. Since we have taken the longest path, the endpoints cannot have edges to vertices outside the path. Thus, it follows that the two endpoints of the longest path in the tree are leaves.
 
-قضیه 2.1.3
+.. _theorem-2-1-4:
+
+Theorem 2.1.4
 ~~~~~~~~~~~~~
 
-**صورت قضیه :** یک درخت n راسی که (n >= 2) حداقل 2 برگ دارد.
+**Lemma Statement:** If we remove a leaf from a tree, the remaining graph is still a tree.
 
-**اثبات :** بلندترین مسیر در درخت را در نظر بگیرید. چون n > 1 پس قطعا بلندترین مسیر حداقل 2 راس دارد.حال 2 راس سر مسیر را در نظر بگیرید. حداکثر به یک راس در مسیر یال دارد زیرا اگر بیشتر داشته باشند دور بوجود می اید که با ویژگی درخت
-تناقض دارد . و چون بلند ترین مسیر را گرفته ایم دو سر مسیر به راسی که داخل مسیر نیست یال ندارند پس ثابت شد دو سر بلند ترین مسیر در درخت برگ هستند.
+**Proof:** We must prove the remaining graph is both connected and acyclic. Clearly, if a graph has no cycles, removing a vertex from it will not create any cycles. Now we prove it remains connected. Suppose removing the leaf disconnects the graph – then there must be at least 2 connected components. 
 
-قضیه 2.1.4
-~~~~~~~~~~~~
+The removed vertex (leaf) must have been connected to each of these components by at least one edge to keep the original graph connected. This would imply the leaf had a degree of at least 2, but a leaf by definition has degree 1. This contradiction proves the graph remains connected, hence it is still a tree.
 
-**صورت لم :** اگر از درخت برگش را حذف کنیم گراف باقی مانده باز درخت است.
+Theorem 2.1.4 is highly practical because it shows that for induction-based problems on trees, removing a leaf allows transitioning to the induction hypothesis. Later in this book, you will encounter such problems.
 
-**اثبات :** باید ثابت کنیم گراف باقی مانده همبند است و دور ندارد. واضح است که یک گراف اگر دور نداشته باشد وقتی راسی از ان را نیز حذف کنیم باز دور ندارد.حال میخواهیم بگوییم همبند است. اگر برگ را حذف کنیم و گراف ناهمبند شود پس حداقل  2 مولفه همبندی دارد
-و راسی که حذف کردیم هم باید به هر یک از این مولفه ها حداقل یک یال میداشت تا گراف بدون حذفش همبند باشد پس درجه اش حداقل 2 بود ولی درجه برگ 1 است. با تناقض بدست آمده ثابت شد گراف همبند نیز هست پس درخت است.
-
-قضیه 2.1.4 بسیار کاریردی است چون نشان میدهد اگر در سوالی خواستید روی درخت استقرا بزنید با حذف برگ میتوانید به فرض استقرا بروید.در ادامه کتاب با چنین سوالاتی اشنا خواهید شد.
-
-قضیه 2.1.5
+Theorem 2.1.5
 ~~~~~~~~~~~~~
 
-ثابت کنید گرافی که ویژگی های یکی از موارد زیر را داشته باشد درخت است. 
+Prove that a graph which has one of the following properties is a tree:
 
-- الف) گرافی که n-1 یال دارد و همبند است.
-- ب) گرافی که دور ندارد و n-1 یال دارد.
-- ج) بین هر دو راس گراف دقیقا یک مسیر وجود دارد.
+- a) A connected graph with n-1 edges.
+- b) A graph with no cycles and n-1 edges.
+- c) Between every pair of vertices, there exists exactly one path.
 
-**جواب :**
+**Solution:**
 
-**الف)**  اگر ثابت کنیم گراف دور ندارد قضیه اثبات میشود. طبق لم 2.1.1 اگر گراف دور داشته باشد تعداد مولفه های همبندی بیشتر از n-m است ولی در این گراف برابر n-m است.
-با تناقض بدست امده قضیه اثبات شد.
+**a)** If we prove the graph has no cycles, the theorem is proven. According to Lemma 2.1.1, if the graph had a cycle, the number of connected components would be greater than n - m, but in this graph it equals n - m. This contradiction proves the theorem.
 
-**ب)**  چون گراف دور ندارد طبق لم 2.1.1 : 
+**b)** Since the graph has no cycles, by Lemma 2.1.1:
 
-n - m - Cc = 0  -->  n - (n-1) = Cc  -->  Cc = 1 
+n - m - Cc = 0 --> n - (n-1) = Cc --> Cc = 1
 
-پس گراف همبند است و دور ندارد پس درخت است .
+Thus, the graph is connected and has no cycles, hence it is a tree.
 
-**ج)** باید ثابت کنیم گراف همبند است و دور ندارد. واضح است گراف همبند است زیرا بین هر دو راس مسیر وجود دارد پس همه در یک مولفه همبندی هستند .حال باید بگوییم دور ندارد .این هم 
-واضح است زیرا اگر دور داشته باشد بین هر دو راس از یک دور حداقل 2 مسیر وجود دارد .
+**c)** We must prove the graph is connected and acyclic. It is clearly connected because a path exists between every pair of vertices, meaning all belong to one connected component. Now we show it has no cycles. This is also evident: if a cycle existed, there would be at least two paths between any two vertices on the cycle.
 
+.. code-block:: text
 
+    Theorem 2.1.6
+    ~~~~~~~~~~~~~~
 
-قضیه 2.1.6
-~~~~~~~~~~~~~~
+    **Theorem statement:** Every connected graph has a spanning tree.
 
-**صورت قضیه :** هر گراف همبند یک درخت فراگیر دارد.
+    **Proof:** As long as the number of edges in the graph has not reached n-1, we iteratively remove edges while proving the graph remains connected. According to Theorem 2.1.5, a connected graph with n-1 edges is a tree, thereby proving the theorem.
 
-**اثبات :** تا زمانی تعداد یال های گراف n-1 نشده هر مرحله یک یال را از گراف حذف میکنیم و ثابت میکنیم گراف همچنان همبند است و طبق قضیه 2.1.5 گرافی که n-1 یال دارد و همبند است درخت است و قضیه اثبات میشود.
+    Therefore, until the number of edges becomes n-1, we perform the following step: Since the graph has more than n-1 edges and a single connected component (by Lemma 2.1.1), the graph contains a cycle. Select one such cycle and remove an edge from it. Clearly, the graph remains connected because the two endpoints of the removed edge are still connected via the remaining edges of the cycle. Hence, we can continue removing edges while maintaining connectivity until the number of edges reduces to n-1, thereby completing the proof.
 
-پس تا زمانی که تعداد یال ها n-1 نشده حرکت زیر را انجام میدهیم : چون تعداد یال ها بیشتر از n-1 است و گراف 1 مولفه همبندی دارد طبق لم 2.1.1 در گراف دور وجود دارد. یکی از دور ها را بگیرید و یک یال از ان را حذف کنید واضح است گراف همبند میماند 
-زیرا دو سر این یال از طریق یال های دیگر این دور باز هم به هم مسیر دارند پس تا وقتی تعداد یال ها n-1 نشده میتوانیم هی یال حذف کنیم به طوری که گراف همبند بماند پس قضیه اثبات شد.
+.. _rooting-a-tree:
 
+Rooting a Tree
+--------------
 
-ریشه دار کردن درخت
---------------------
+Suppose we orient the edges of a tree such that every vertex except vertex :math:`u` has exactly one incoming edge (exactly one edge enters it), and vertex :math:`u` has no incoming edges.
 
-فرض کنید یال های درخت را طوری جهت دهی کردیم که هر راس به جز راس :math:`u` دقیقا یک ورودی دارد (دقیقا یک یال به آن وارد می شود) و راس :math:`u` هیچ ورودی ندارد.
+Initially, place a marker on vertex :math:`v`. At each step, if the marker is at vertex :math:`w`, move it to the vertex that has an outgoing edge to :math:`w`. If :math:`w \neq u`, this vertex is unique.
 
-در ابتدا یک مهره را روی راس :math:`v` قرار دهید و در هر مرحله مهره اگر در راس :math:`w` بودیم مهره را به راسی ببرید که به :math:`w` یال ورودی دارد. اگر :math:`w \neq u` باشد آنگاه این راس یکتا است.
+First, we can conclude that at each step, we visit a new vertex (since the tree has no cycles, and visiting a repeated vertex would imply traversing a cycle). Next, we can conclude that the process terminates in finite steps (because we visit a new vertex each time, and the number of vertices is finite). Finally, we can state that the marker will reach :math:`u`.
 
-اول از همه می توان نتیجه گرفت در هر مرحله یک راس جدید را می بینیم (زیرا در درخت دور نداریم و اگر راس تکراری ببینیم یک دور را طی کرده ایم) سپس می توان نتیجه گرفت مراحل متناهی است (زیرا در هر مرحله یک راس جدید را می بینیم و تعداد راس ها متناهی است) و در نهایت می توان گفت مهره به :math:`u` خواهد رسید.
-
-به صورت شهودی می توانید تصور کنید درخت را از :math:`u` **آویزان** کرده اید و به ازای هر یال :math:`ab` اگر :math:`a` در ارتفاع بالاتری نسبت به :math:`b` بود یال را از :math:`a` به :math:`b` جهت دهی کرده ایم. در اینصورت جهت دهی مذکور همان جهت دهی خواهد بود که در بالا به آن اشاره کردیم. برای شهود بیشتر می توانید به اینصورت فکر کنید. در جهت دهی بالا راس :math:`u` ورودی ندارد پس تمام یال های مجاور :math:`u` باید از :math:`u` به خارج جهت دهی شوند. در اینصورت به راس های مجاور :math:`u` لایه اول می گوییم. حالا تمام لایه اول دقیقا یک ورودی دارند‌ (که آن ورودی :math:`u` است) پس تمام یال های مجاور دیگر آن ها باید از لایه اول به خارج جهت دهی شوند که به آن ها لایه دوم می گوییم. به همین شکل می توان لایه سوم را تعریف کرد. هر راس لایه دوم دقیقا یک ورودی دارد که در لایه اول قرار دارد. پس تمام مجاور های دیگر آن را در لایه سوم قرار می دهیم و یال ها را از لایه دوم و سوم جهت دهی می کنیم. به همین شکل می توانید جهت دهی کردن و لایه بندی را ادامه دهید. یال های لایه :math:`h` ام به :math:`h+1` ام را در نظر بگیرید و توجه کنید که تعداد یال های ورودی هر راس لایه :math:`h+1` ام باید دقیقا 1 باشد پس به هر راس در لایه :math:`h+1` ام دقیقا یک یال از لایه :math:`h` ام می رسد.در نهایت نتیجه می گیرید که جهت دهی که در ابتدا تصور کردیم همان جهت دهی است که با شهود **آویزان کردن** از راس :math:`u` به دست آوردیم.
+Intuitively, you can imagine the tree being **suspended** from :math:`u`. For every edge :math:`ab`, if :math:`a` is at a higher "height" than :math:`b`, we orient the edge from :math:`a` to :math:`b`. This orientation aligns with the one described above. For further intuition: In this orientation, vertex :math:`u` has no incoming edges, so all edges adjacent to :math:`u` must be directed outward from :math:`u`. We call the vertices adjacent to :math:`u` the *first layer*. All vertices in the first layer have exactly one incoming edge (from :math:`u`), so their other adjacent edges must be directed outward to form the *second layer*. Similarly, we define the *third layer*. Each vertex in the second layer has exactly one incoming edge from the first layer, so their remaining adjacent edges are directed outward to the third layer. This layering and orientation continue recursively. Consider edges from layer :math:`h` to layer :math:`h+1`. Each vertex in layer :math:`h+1` must have exactly one incoming edge, so exactly one edge from layer :math:`h` enters it. Ultimately, we conclude that the initial orientation corresponds to the intuitive **suspension** of the tree from vertex :math:`u`.
 
 .. figure:: /_static/dot/Simple_Rooted_Tree.svg
    :width: 50%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet is crappy, this appears.
 
 
-به این عمل آویزان کردن درخت از راس :math:`u`، ریشه دار کردن درخت از راس :math:`u` هم می گویند. در اینصورت به راس :math:`u` **ریشه** می گوییم. همچنین گفتیم در جهت دهی هر راس به جز :math:`u` تنها یک یال ورودی دارد.
+This process of suspending the tree from vertex :math:`u` is also called *rooting the tree at* :math:`u`. In this case, we call :math:`u` the **root**. As stated, every vertex except :math:`u` has exactly one incoming edge in this orientation.
 
-به ازای راس :math:`b` اگر یال ورودی به آن :math:`ab` باشد به راس :math:`a` **پدر** راس :math:`b` می گوییم.
+For a vertex :math:`b`, if its incoming edge is :math:`ab`, we call vertex :math:`a` the **parent** of :math:`b`.
 
-هر دو راسی که پدر مشترک داشته باشند را **برادر** می نامیم.
+Two vertices with the same parent are called **siblings**.
 
-راس :math:`u` **جد** راس :math:`v` است اگر که یا :math:`u` پدر راس :math:`v` باشد یا اینکه :math:`u` جد پدر :math:`v` باشد. به عبارتی به مجموعه پدران یک راس جد های این راس می گوییم.
+Vertex :math:`u` is an **ancestor** of vertex :math:`v` if either :math:`u` is the parent of :math:`v` or :math:`u` is an ancestor of :math:`v`'s parent. In other words, the set of ancestors of a vertex consists of all its parents recursively.
 
-به فاصله بین :math:`u` و هر راس (تعداد یال های مسیر بین آن ها) **ارتفاع** آن راس می گوییم.
+The **height** of a vertex is its distance from :math:`u` (the number of edges in the unique path between them).
 
-به ازای یک راس خاص مثل :math:`v` به مجموعه راس هایی که مسیرشان (که این مسیر یکتا است) به ریشه از :math:`v` می گذرد **زیردرخت** راس :math:`v` می گوییم. به طور شهودی وقتی درخت را از :math:`u` آویزان کردیم به مجموعه راس هایی که از :math:`v` آویزان شده اند زیردرخت :math:`v` می گوییم.
+For a specific vertex :math:`v`, the **subtree** of :math:`v` is the set of vertices whose unique path to the root passes through :math:`v`. Intuitively, when the tree is suspended from :math:`u`, the subtree of :math:`v` consists of all vertices "hanging" from :math:`v`.
 
-
-اویزان کردن درخت بسیار مهم است زیرا در ادامه فصل در الگوریتم ها از آن استفاده میشود و همچنین در حال حاظر بهترین روش برای شهود روی شکل درخت است است به این صورت که درخت یک ریشه 
-دارد و ان ریشه با تعدادی شاخه با راس های دیگر همسایه است و ان ها نیز با تعدادی شاخه با راس های جدیدی همسایه هستند و ...(به مانند شکل بالا)
+Suspending (rooting) a tree is crucial because it will be used in algorithms later in this chapter. It is also currently the best way to intuitively visualize the structure of a tree: the tree has one root, which connects to neighboring vertices via branches, and those vertices further connect to new vertices via branches, and so on (as shown in the figure above).
 

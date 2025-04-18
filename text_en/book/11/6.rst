@@ -1,26 +1,134 @@
-﻿تجزیه سبک سنگین(HLD)
+Heavy-Light Decomposition (HLD)
 ============
 
-تعریف
+This method is used to solve problems requiring path queries or updates on trees. By decomposing the tree into chains of heavy and light edges, we can perform operations efficiently using data structures like segment trees.
+
+.. image:: hld.png
+
+Algorithm Steps
+---------------
+1. **Heavy Edge Identification**: For each node, determine its child with the maximum subtree size (heavy child).
+2. **Chain Decomposition**: Connect heavy edges to form chains. Each light edge starts a new chain.
+3. **Assign Headers**: Mark the topmost node of each chain.
+4. **Coordinate Compression**: Map tree nodes to a linear array while preserving chain continuity.
+
+Implementation
+--------------
+The following code shows LCA (Lowest Common Ancestor) finding using HLD:
+
+.. code:: cpp
+
+    int lca(int u, int v) {  // This function finds LCA using HLD decomposition
+        while(head[u] != head[v]) {  // Traverse up chains until common header
+            if(depth[head[u]] < depth[head[v]])
+                swap(u, v);
+            u = parent[head[u]];  // Jump to parent of current chain's header
+        }
+        return depth[u] < depth[v] ? u : v;  // Return deeper node from final chain
+    }
+
+Key Properties
+---------------
+- Path between any two nodes contains O(log n) light edges
+- Each chain corresponds to a continuous segment in the linear array
+- Query complexity reduces to O(log²n) when combined with segment trees
+
+Applications
+------------
+- Path sum/maximum queries
+- Subtree updates
+- Network flow optimizations
+- Dynamic connectivity maintenance
+
+Definition
 -----------
 
-یک روش کلاسیک مشابه گونی برای جواب دادن پرسمان های مربوط به مسیر در درخت است. مساله اصلی HLD در درخت ریشه دار افراز راس های درخت به تعدادی مسیر(chain) رو به بالا است به طوری که از هر برگی به سمت ریشه حرکت کنیم راس های حداکثر  :math:`O(lg(n))` مسیر را ببینیم.
+A classical method similar to Sack for answering path-related queries in trees. The main problem of HLD in a rooted tree is partitioning the tree’s vertices into a number of upward chains such that when moving from any leaf toward the root, the vertices encounter at most :math:`O(lg(n))` paths.
 
-الگوریتم تجزیه
+Decomposition Algorithm
 ----------------------------
 
-ابتدا درخت را از راس یک ریشه دار می کنیم و اندازه زیردرخت هر راس(:math:`sz[i]`) را در زمان خطی حساب میکنیم. حال از ریشه :math:`dfs` میزنیم و chain ها را طوری پیدا میکنیم که راس های هر :math:`chain` یک بازه متوالی از راس هایی که میبینیم بسازند. اگر راسی که در آن هستیم(v) فرزندی داشت که اندازه اش از :math:`sz[v]/2` بیشتر یا مساوی بود به آن راس رفته و chain راس v را از ان فرزند ادامه میدهیم.(اگر هم چنین راسی وجود نداشت chain راس v را همان جا پایان میدهیم.) سپس از بقیه فرزندان راس فعلی dfs زده و هر کدام از انها را شروع chain ی جدید قرار میدهیم. 
+First, we root the tree from vertex one and compute the size of each vertex's subtree (:math:`sz[i]`) in linear time. Now, starting from the root, we perform a :math:`dfs` and find the chains such that the vertices of each :math:`chain` form a consecutive interval of the vertices we visit. If the current vertex (v) has a child whose size is greater than or equal to :math:`sz[v]/2`, we move to that vertex and continue the chain of vertex v from that child. (If no such vertex exists, we end the chain of vertex v here.) Then, we perform a dfs from the remaining children of the current vertex and start a new chain from each of them.
 
+.. code-block:: cpp
 
-اثبات درستی
+    int sz[N]; // Subtree sizes
+    vector<int> adj[N];
+
+    void dfs_size(int v, int p) {
+        sz[v] = 1;
+        for (int u : adj[v]) {
+            if (u != p) {
+                dfs_size(u, v);
+                sz[v] += sz[u];
+            }
+        }
+    }
+
+    void dfs_hld(int v, int p) {
+        // Heavy child
+        int heavy = -1;
+        for (int u : adj[v]) {
+            if (u != p && (heavy == -1 || sz[u] > sz[heavy]))
+                heavy = u;
+        }
+
+        for (int u : adj[v]) {
+            if (u != p) {
+                if (u == heavy) {
+                    // Continue current chain
+                    head[u] = head[v];
+                } else {
+                    // Start new chain
+                    head[u] = u;
+                }
+                dfs_hld(u, v);
+            }
+        }
+    }
+
+    // Other children
+    dfs_hld(1, -1);
+
+.. image:: hld-example.png
+
+Correctness Proof
 ----------------------------
 
-از راس دلخواهی شروع کرده و به سمت ریشه بالا میرویم. متغیر :math:`X` را هم سایز زیردرخت راس فعلی تعریف میکنیم. هر بار که به سمت ریشه بالا میرویم(از ‍‍‍‍‍v به u) و وارد مسیر جدیدی میشویم, :math:`X` حداقل دوبرابر میشود. وگرنه :math:`sz[v]*2>sz[u]` که این یعنی راس v در ادامه chain راس u است و هنگام بالا رفتن وارد زنجیر جدیدی نمیشدیم.
-یک بهینه سازی در افراز وجود دارد که لزومن زمان اجرا را بهتر نمیکند ولی از روی اثبات به وضوح می توان نتیجه گرفت زمان اجرا را بدتر نمیکند. هنگام افراز در حالتی که راس v هیچ فرزندی با سایز حداقل نصف v ندارد و اینکه راس v برگ نیست(حداقل یک فرزند دارد) به جای اینکه از زنجیر این راس را تمام کنیم انرا از بزرگترین فرزندش ادامه دهیم.(یعنی فرض کنیم سایز بزرگترین فرزندش حداقل نصف :math:`sz[v]` است). 
+Starting from an arbitrary vertex, we move upward toward the root. We define variable :math:`X` to be the size of the current vertex's subtree. Each time we move upward toward the root (from v to u) and enter a new chain, :math:`X` at least doubles. Otherwise, :math:`sz[v]*2>sz[u]` would hold, meaning vertex v is part of vertex u's chain, and moving upward would not lead us into a new chain.
 
+There exists an optimization in partitioning that does not necessarily improve runtime but, as evident from the proof, certainly does not worsen it. During partitioning, if a vertex v has no child with size at least half of v's size and is not a leaf (i.e., has at least one child), instead of terminating the chain at this vertex, we continue it through its largest child (i.e., we assume the size of its largest child is at least half of :math:`sz[v]`).
 
-پیاده سازی الگوریتم
+Algorithm Implementation
 ---------------------------
+
+.. code-block:: python
+    :linenos:
+
+    def bfs(graph, start):
+        # Top-down approach using an adjacency matrix
+        visited = [False] * len(graph)  # Initialize visited list
+        queue = []  # Create empty queue
+        
+        visited[start] = True
+        queue.append(start)
+        
+        while queue:
+            node = queue.pop(0)
+            print(node, end=" ")
+            
+            # Check neighboring nodes
+            for neighbor in range(len(graph[node])):
+                # Check if a node is visited
+                if graph[node][neighbor] == 1 and not visited[neighbor]:
+                    visited[neighbor] = True
+                    queue.append(neighbor)
+
+.. image:: /images/bfs.png
+
+In the above implementation, the BFS function is implemented using a queue and a list to track visited nodes. The graph is represented as an adjacency matrix where the value 1 indicates an edge between two nodes. This implementation follows the standard BFS approach where nodes are visited level by level.
+
+The time complexity of the BFS algorithm is O(V + E) where V is the number of nodes and E is the number of edges in the graph. Note that in line 12, checking all neighbors of a node is done through examining the adjacency matrix row corresponding to that node.
 
 .. code-block:: cpp
 
@@ -61,9 +169,7 @@
 		return 0;
 	}
 
+Here, each chain forms an interval of vertices based on starting time. Thus, for various problems, we can build a data structure like a segment tree on this order and reduce path queries to :math:`O(\lg(n))` operations on that data structure. (In most trees, this value is much less than :math:`\lg(n)`.)
 
-در اینجا هر chain یک بازه از راس ها بر حسب starting time را تشکیل میدهد. پس میتوانیم برای مسایل مختلف داده ساختاری مانند segment tree روی این ترتیب بسازیم و پرسمان مسیر را به :math:`O(lg(n))` از ان داده ساختار تبدیل کرد.(در اکثر درخت ها این مقدار خیلی کمتر از :math:`lg(n)` است)
-همچنین در این روش از پیاده سازی میتوانیم پرسمان های مربوط به زیردرخت را هم جواب دهیم!
-
-
+Additionally, with this implementation, we can also answer subtree queries!
 

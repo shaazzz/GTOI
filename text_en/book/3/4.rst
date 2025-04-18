@@ -1,352 +1,414 @@
-مولفه‌های قویا همبند
+Strongly Connected Components
 ===================================================================================
 
-مفاهیم اولیه
+In graph theory, a **strongly connected component** (SCC) of a directed graph is a maximal subset of vertices where each vertex is reachable from every other vertex in the subset. Kosaraju's algorithm is one of the most efficient methods for finding SCCs. Below is its implementation:
+
+.. code-block:: cpp
+   :linenos:
+
+   // Find strongly connected components using Kosaraju's algorithm
+   vector<int> order;
+   void dfs1(int u) {
+       vis[u] = true;
+       for (int v : adj[u])
+           if (!vis[v])
+               dfs1(v);
+       order.push_back(u);
+   }
+
+   vector<vector<int>> components;
+   void dfs2(int u, vector<int>& component) {
+       vis[u] = true;
+       component.push_back(u);
+       for (int v : adjT[u])  // Transpose graph
+           if (!vis[v])
+               dfs2(v, component);
+   }
+
+   void kosaraju() {
+       order.clear();
+       components.clear();
+       
+       fill(vis.begin(), vis.end(), false);
+       for (int u = 0; u < n; u++)
+           if (!vis[u])
+               dfs1(u);
+               
+       fill(vis.begin(), vis.end(), false);
+       reverse(order.begin(), order.end());
+       
+       for (int u : order)
+           if (!vis[u]) {
+               vector<int> component;
+               dfs2(u, component);
+               components.push_back(component);
+           }
+   }
+
+.. image:: /images/fig-scc.png
+
+Steps of Kosaraju's algorithm:
+
+1. **First DFS pass**: Perform a depth-first search (DFS) on the original graph and record vertices in the order of their completion times (post-order traversal). Store them in a stack.
+
+2. **Graph transpose**: Create the transpose (reversed) graph by reversing all edge directions.
+
+3. **Second DFS pass**: Process vertices in decreasing order of finishing times from the first pass. For each unvisited vertex, perform DFS on the transposed graph to find its strongly connected component.
+
+Important notes:
+
+- Time complexity is *O(n + m)*, where *n* is the number of vertices and *m* the number of edges.
+- The algorithm relies on the property that the SCC structure of a graph and its transpose are identical.
+- The order of vertices in the first DFS determines the discovery order of components in the second pass.
+
+Basic Concepts
 -------------------------------------------------------------
-**تعریف 3.4.1 (جفت راس قویا همبند)**
+
+.. code-block:: python
+   :linenos:
+
+   class Graph:
+       def __init__(self):
+           self.vertices = []  # لیست رأسها
+           self.edges = []     # لیست یالها
+
+**Definition 3.4.1 (Strongly Connected Vertex Pair)**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-در گراف جهت‌­دار به جفت راس 
+In a directed graph, we say the vertex pair 
 :math:`(v, u)`
-قویا همبند گوییم اگر و تنها اگر مسیری از 
+is strongly connected if and only if there exists a path from 
 :math:`v`
-به 
+to 
 :math:`u`
-و مسیری از 
+and a path from 
 :math:`u`
-به 
+to 
 :math:`v`
-وجود داشته باشد.
+.
 
-به عنوان مثال در شکل 1، راس­‌های 2 و 4 یک جفت راس قویا همبند هستند.
+For example, in Figure 1, vertices 2 and 4 form a strongly connected vertex pair.
 
-**تعریف 3.4.2 (گراف قویا همبند)**
+**Definition 3.4.2 (Strongly Connected Graph)**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-گراف قویا همبند، گراف جهت­‌داری است که هر جفت راس آن قویا همبند باشند (شکل 1).
+A strongly connected graph is a directed graph where every pair of vertices is strongly connected (Figure 1).
 
 .. figure:: /_static/scc_1.png
-   :width: 50%
-   :align: left
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: left
+ :alt: If internet connection is poor, this appears
 
-**تعریف 3.4.3 (مولفه قویا همبند (strongly connected component یا به اختصار scc))**
+**Definition 3.4.3 (Strongly Connected Component (SCC))**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-یک مولفه قویا همبند در گراف جهت­‌دار 
+A strongly connected component in a directed graph 
 :math:`G`
-، زیرمجموعه­‌ای از رئوس 
+is a subset of vertices of 
 :math:`G`
-می­‌باشند که در زیرگراف القایی آن­‌ها تشکیل یک گراف قویا همبند را دهد و همچنین ماکسیمال باشد، یعنی نتوان راس دیگری به آن اضافه کرد.
+whose induced subgraph forms a strongly connected graph, and is maximal—meaning no additional vertex can be included in it.
 
-**لم 3.4.4**
+.. _lemma-3-4-4:
+
+**Lemma 3.4.4**  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+**Lemma Statement:** Every vertex  
+:math:`v`  
+in a directed graph  
+:math:`G`  
+belongs to exactly one unique strongly connected component.  
+
+**Proof:** We use proof by contradiction. Suppose  
+:math:`v`  
+is in two strongly connected components  
+:math:`H`  
+and  
+:math:`L`,  
+and let  
+:math:`u`  
+be a vertex in  
+:math:`L`  
+that is not in  
+:math:`H`.  
+Since  
+:math:`u`  
+and  
+:math:`v`  
+are in the same strongly connected component, every vertex in  
+:math:`H`  
+can reach  
+:math:`v`  
+via a path, and from  
+:math:`v`,  
+there exists a path to  
+:math:`u`.  
+Similarly, there is a path from  
+:math:`u`  
+to  
+:math:`v`,  
+and from  
+:math:`v`  
+to any arbitrary vertex in  
+:math:`H`.  
+Hence, vertex  
+:math:`u`  
+could be added to component  
+:math:`H`,  
+contradicting the maximality of  
+:math:`H`.  
+This contradiction proves the validity of the lemma.
+
+**Result 3.4.5**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**صورت لم:** هر راس 
-:math:`v`
-در گراف جهت­‌دار 
+Any directed graph 
 :math:`G`
-، تنها در یک مولفه قویا همبند یکتا قرار دارد.
-
-**اثبات:** از برهان خلف استفاده می­‌کنیم. فرض کنید که 
-:math:`v`
-در دو مولفه قویا همبند 
-:math:`H`
-و 
-:math:`L`
-قرار دارد و 
-:math:`u`
-راسی در 
-:math:`L`
-باشد که در 
-:math:`H`
-قرار ندارد. چون 
-:math:`u`
-و 
-:math:`v`
-در یک مولفه قویا همبند قرار دارند، در نتیجه از هر راسی در 
-:math:`H`
-می­‌توان با مسیری به 
-:math:`v`
-آمد و سپس با مسیری به 
-:math:`u`
-رفت و همچنین با مسیری از 
-:math:`u`
-به 
-:math:`v`
-آمد و با مسیری به هر راس دلخواه در 
-:math:`H`
-رفت. پس درنتیجه می­‌توان راس 
-:math:`u`
-را به مولفه 
-:math:`H`
-اضافه کرد که این با ماکسیمال بودن 
-:math:`H`
-در تناقض است. از تناقض حاصل درستی حکم نتیجه می‌­شود.
-
-
-**نتیجه 3.4.5**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-می­‌توان هر گراف جهت‌­دار 
-:math:`G`
-را به مولفه‌­های قویا همبند افراز کرد. شکل 2 گراف جهت­‌داری را نمایش می­‌دهد که مولفه‌­های قویا همبند آن مشخص شده­‌اند.
+can be partitioned into its strongly connected components. Figure 2 shows a directed graph where its strongly connected components are specified.
 
 .. figure:: /_static/scc_2.png
-   :width: 50%
-   :align: left
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: left
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
-**تعریف 3.4.6 (گراف معکوس)**
+**Definition 3.4.6 (Inverse Graph)**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-گراف معکوس 
-:math:`G`
-، گرافی است که از معکوس کردن جهت یال‌های گراف 
-:math:`G`
-بدست می‌آید. توجه کنید یک گراف قویا همبند است اگر و تنها اگر معکوس آن نیز قویا همبند باشد.
+The inverse graph of 
+:math:`G` 
+is the graph obtained by reversing the direction of all edges in graph 
+:math:`G`. 
+Note that a graph is strongly connected if and only if its inverse is also strongly connected.
 
-بدون دور بودن مولفه‌­های قویا همبند
+.. Without cycles in strongly connected components
 --------------------------------------------------------------------------
 
-**تعریف 3.4.7 (گراف فشرده شده مولفه­های قویا همبند)**
+**Definition 3.4.7 (Condensed Graph of Strongly Connected Components)**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-فرض کنید 
+Let 
 :math:`G`
-، یک گراف جهت­‌دار دلخواه باشد و گراف جهت­‌دار 
+be an arbitrary directed graph, and let 
 :math:`H`
-گرافی باشد که هر راس آن متناظر با یک مولفه قویا همبند در 
+be a directed graph where each vertex corresponds to a strongly connected component in 
 :math:`G`
-است و هر مولفه قویا همبند در 
+, and each strongly connected component in 
 :math:`G`
-به دقیقا یک راس در 
-:math:`H`
-متناظر شود. اگر 
+maps to exactly one vertex in 
+:math:`H`.
+If 
 :math:`v`
-راسی در 
-:math:`H`
-باشد، مولفه قویا همبند متناظر با راس 
+is a vertex in 
+:math:`H`,
+we denote the strongly connected component corresponding to 
 :math:`v`
-در 
+in 
 :math:`G`
-را با 
-:math:`F(v)`	
-نمایش می‌­دهیم. اگر 
+by 
+:math:`F(v)`. 
+For any two vertices 
 :math:`v`
-و 
+and 
 :math:`u`
-دو راس از 
-:math:`H`
-باشند، به ازای هر یال جهت‌­دار از رئوس 
+in 
+:math:`H`,
+there exists a directed edge from 
+:math:`v`
+to 
+:math:`u`
+for every directed edge from vertices in 
 :math:`F(v)`
-به رئوس 
+to vertices in 
 :math:`F(u)`
-، یالی جهت­‌دار از 
+in 
+:math:`G`.
+Similarly, every edge from 
 :math:`v`
-به 
+to 
 :math:`u`
-قرار دارد و همچنین هر یالی که از 
-:math:`v`
-به 
-:math:`u`
-است، متناظر با یالی از رئوس 
-:math:`F(v)`
-به رئوس 
-:math:`F(u)`
-می­‌باشد. در این صورت به 
+in 
 :math:`H`
-، یک گراف فشرده شده مولفه‌­های قویا همبند 
-:math:`G`
-می‌­گوییم.
+corresponds to an edge from vertices in 
+:math:`F(v)`
+to vertices in 
+:math:`F(u)`
+in 
+:math:`G`.
+In this case, 
+:math:`H`
+is called a **condensed graph of strongly connected components** of 
+:math:`G`.
 
-**قضیه 3.4.8**
+.. _theorem-3-4-8:
+
+**Theorem 3.4.8**  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+**Theorem Statement:** The condensed graph of strongly connected components has no cycles.  
+
+**Proof:** Let  
+:math:`G`  
+be an arbitrary directed graph and  
+:math:`H`  
+be the condensed graph of the strongly connected components of  
+:math:`G`.  
+We use proof by contradiction. Suppose  
+:math:`H`  
+has a cycle, and let two vertices  
+:math:`v`  
+and  
+:math:`u`  
+in  
+:math:`H`  
+lie on this cycle. Since in a strongly connected component, there exists a directed path from every vertex to every other vertex in the same component, it follows that there must be a directed path from every vertex in  
+:math:`F(v)`  
+to every vertex in  
+:math:`F(u)`  
+and vice versa (why?). This implies that the vertices of  
+:math:`F(v)`  
+and  
+:math:`F(u)`  
+must belong to the same strongly connected component, contradicting the maximality assumption of the strongly connected components. Hence,  
+:math:`H`  
+cannot have a cycle, and the theorem is proved.
+
+**Result 3.4.9**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**صورت قضیه:** هر گراف فشرده شده مولفه­‌های قویا همبند، دور ندارد.
-
-**اثبات:** فرض کنید 
-:math:`G`
-یک گراف جهت‌­دار دلخواه است و 
-:math:`H`
-، گراف فشرده شده مولفه­‌های قویا همبند 
-:math:`G`
-باشد.از برهان خلف استفاده می‌­کنیم. فرض کنید 
-:math:`H`
-دور داشته باشد و دو راس مانند 
-:math:`v`
-و 
-:math:`u`
-از 
-:math:`H`
-در یک دور قرار داشته باشند. چون از هر راس در یک مولفه قویا همبند به هر راس آن مولفه مسیر هست، پس در نتیجه می‌­توان از هر راس در 
-:math:`F(v)`
-به هر راس در 
-:math:`F(u)`
-رفت و همچنین از هر راس در 
-:math:`F(u)`
-به هر راس در 
-:math:`F(v)`
-مسیری جهت­‌دار وجود دارد (چرا؟) که یعنی رئوس 
-:math:`F(v)`
-و 
-:math:`F(u)`
-باید در یک مولفه قویا همبند قرار بگیرند که این با فرض ماکسیمال بودن مولفه‌­های قویا همبند در تناقض است. پس در نتیجه 
-:math:`H`
-دور ندارد و حکم اثبات می‌­شود.
-
-**نتیجه 3.4.9**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-طبق قضیه 3.3.2، می­‌توان رئوس هر گراف فشرده شده مولفه­‌های قویا همبند را توپولوژیک سورت کرد. پس در نتیجه می‌­توان مولفه­‌های قویا همبند هر گراف جهت‌داری را به صورت توپولوژیک سورت کنار هم قرار دهیم، یعنی به این صورت که جهت همه یال­‌هایی که بین دو مولفه متفاوت باشند، به یک سمت باشند (شکل 3).
+According to Theorem 3.3.2, the vertices of the condensed graph of strongly connected components can be topologically sorted. Therefore, the strongly connected components of any directed graph can be arranged in topological order such that all edges between two distinct components point in the same direction (Figure 3).
 
 .. figure:: /_static/scc_3.png
-   :width: 50%
-   :align: left
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: left
+ :alt: If the internet connection is bad, this image appears
 
-پیدا کردن مولفه­‌های قویا همبند
+Finding Strongly Connected Components
 ------------------------------------------------------------------------------
 
-حال قصد داریم الگوریتمی با پیچیدگی زمانی مناسب برای پیدا کردن مولفه­‌های قویا همبند یک گراف ارائه دهیم.
+Now we aim to present an algorithm with appropriate time complexity for finding the strongly connected components of a graph.
 
-**الگوریتم کساراجو**
+.. _kosaraju-algorithm:
+
+Kosaraju's Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**شرح:** ابتدا روی کل گراف 
-:math:`DFS`
-می­‌زنیم و هربار هنگام خروج از هر راس آن را در یک پشته می‌­اندازیم (توجه کنید هر چه از راسی دیرتر خارج شویم، در پشته بالاتر قرار می‌گیرد). حال گراف معکوس را درنظر می­‌گیریم و در هر مرحله از بین تمام راس‌های دیده نشده، راسی که در پشته بالاتر از بقیه قرار دارد (مانند 
-:math:`v`
-) را برداشته و از آن در گراف معکوس، 
-:math:`DFS`
-می‌­زنیم و 
-:math:`v`
-و تمام راس­‌هایی که دیده می‌­شوند (از طریق 
-:math:`DFS`
-زدن از راس 
-:math:`v`
-) را در یک مولفه جدید قرار می‌­دهیم و این کار را تا پیدا شدن تمام مولفه­‌های قویا همبند ادامه می‌­دهیم. توجه کنید که هنگام 
-:math:`DFS`
-زدن بر روی گراف معکوس، زمانی که راسی دیده می‌­شود، آن را به عنوان دیده شده علامت زده و در سری‌­های بعد از آن 
-:math:`DFS`
-نمی­‌زنیم و یا به آن وارد نمی‌­شویم.
 
-**اثبات درستی:** برای اثبات این الگوریتم, ابتدا به لم زیر که مشابه آن را در بخش قبل داشتیم توجه کنید.
+**Description:** First, we perform a 
+:math:`DFS` 
+on the entire graph. Each time we exit a vertex, we push it onto a stack (note that the later we exit a vertex, the higher it is placed in the stack). Now, we consider the reversed graph. In each step, among all unseen vertices, we take the vertex at the top of the stack (e.g., 
+:math:`v`), perform a 
+:math:`DFS` 
+starting from it in the reversed graph, and assign 
+:math:`v` 
+and all vertices visited during this 
+:math:`DFS` 
+to a new component. We repeat this process until all strongly connected components (SCCs) are found. Note that during the 
+:math:`DFS` 
+on the reversed graph, once a vertex is visited, it is marked as seen and will not be revisited in subsequent traversals.
 
-تعریف می‌کنیم
-:math:`f(v)`
-به معنای زمان تمام شدن پیمایش برای راس 
-:math:`v`
-. به عبارتی داریم موقعیت یک راس را در پشته مشخص می‌کنیم(هر چه
-:math:`f(v)`
-بیشتر باشد, راس در پشته در جایگاه پایین‌تری قرار می‌گیرد).
+**Correctness Proof:** To prove the correctness of this algorithm, we first consider the following lemma, similar to one discussed in the previous section.
 
-**لم ۱:** اگر
-:math:`f(u) > f(v)`
-و به عبارتی راس
-:math:`u`
-در پشته, بالا تر از راس
-:math:`v`
-باشد, و همچنین مسیری از 
-:math:`v`
-به
-:math:`u`
-باشد, آنگاه مسیری از 
-:math:`u`
-به 
-:math:`v`
-نیز وجود دارد.
+We define 
+:math:`f(v)` 
+as the finishing time of the traversal for vertex 
+:math:`v`. In other words, it determines the position of the vertex in the stack (the larger 
+:math:`f(v)` 
+is, the lower the vertex is placed in the stack).
 
-**برهان لم۱:** از برهان خلف استفاده می‌کنیم. فرض کنید مسیری از
-:math:`v`
-به 
-:math:`u`
-است و  هیچ مسیری از 
-:math:`u`
-به
-:math:`v`
-نباشد.
+**Lemma 1:** If 
+:math:`f(u) > f(v)` 
+(i.e., vertex 
+:math:`u` 
+is higher than vertex 
+:math:`v` 
+in the stack) and there is a path from 
+:math:`v` 
+to 
+:math:`u`, then there must also be a path from 
+:math:`u` 
+to 
+:math:`v`.
 
-آنگاه چون ما در ابتدا راس 
-:math:`u`
-را در پیمایش دیده‌ایم(چرا؟) و مسیری از 
-:math:`u`
-به
-:math:`v`
-نیست, پس هیچگاه راس 
-:math:`v`
-را پیمایش نمیکنیم, مگر اینکه پیمایش راس 
-:math:`u`
-تمام شود. از طرفی اگر پیمایش راس
-:math:`u`
-تمام شود و هنوز راس 
-:math:`v`
-را ندیده باشیم, نتیجه می‌شود که اول 
-:math:`u`
-به پشته اضافه می‌شود و بعد
-:math:`v`
-به عبارتی
-:math:`f(u) < f(v)`
-که این خلاف فرض است. پس لم ثابت شد!
+**Proof of Lemma 1:** We use proof by contradiction. Assume there is a path from 
+:math:`v` 
+to 
+:math:`u` 
+but no path from 
+:math:`u` 
+to 
+:math:`v`.
 
-حال توجه داشته باشید در هنگام پیمایش گراف معکوس, روی معکوس یال‌ها حرکت می‌کنیم. یعنی عضو بالای پشته که راس 
-:math:`v`
-باشد را برمی‌داریم و روی همه راس‌هایی مثل
-:math:`x`
-که از 
-:math:`x`
-به
-:math:`v`
-مسیر هست پیمایش می‌کنیم. در این‌صورت طبق لم۱، راس 
-:math:`v`
-هم به راس
-:math:`x`
-مسیر دارد!
+Since we have already visited vertex 
+:math:`u` 
+during the initial traversal (why?), and there is no path from 
+:math:`u` 
+to 
+:math:`v`, we would not traverse 
+:math:`v` 
+until the traversal of 
+:math:`u` 
+is completed. However, if the traversal of 
+:math:`u` 
+finishes and 
+:math:`v` 
+remains unseen, 
+:math:`u` 
+would be added to the stack before 
+:math:`v`, implying 
+:math:`f(u) < f(v)`. This contradicts our assumption. Thus, the lemma is proven.
 
-پس 
-:math:`v`
-و همه رئوسی که در پیمایش گراف معکوس از 
-:math:`v`
-دیده شدند در یک مولفه قرار می‌گیرند!
+Now, note that during the traversal of the reversed graph, we move along reversed edges. We take the vertex 
+:math:`v` 
+at the top of the stack and traverse all vertices 
+:math:`x` 
+for which there is a path from 
+:math:`x` 
+to 
+:math:`v` 
+in the reversed graph. According to Lemma 1, vertex 
+:math:`v` 
+also has a path to 
+:math:`x` 
+in the original graph. Therefore, 
+:math:`v` 
+and all vertices visited during the 
+:math:`DFS` 
+from 
+:math:`v` 
+in the reversed graph belong to the same SCC.
 
-از طرفی هیچ راس دیگری در این مولفه نیست. زیرا در غیر این صورت اگر راس دیگری در این مولفه قرار می‌گرفت، باید حداقل یک مسیر به 
-:math:`v`
-می‌داشت و جزو ر‌ئوس دیده‌شده از 
-:math:`v`
-شمرده می‌شد.
+Furthermore, no other vertices can belong to this SCC. If another vertex were part of this component, it would have a path to 
+:math:`v` 
+and thus would have been visited during the 
+:math:`DFS` 
+from 
+:math:`v`.
 
-**پیچیدگی الگوریتم**
+**Algorithm Complexity**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-در الگوریتم بالا صرفا ۲ بار از 
-:math:`DFS`
-استفاده کردیم, در نتیجه پیچیدگی الگوریتم برابر با
-:math:`O(n + m)`
-است که
-:math:`m, n`
-به ترتیب تعداد راس‌ها و یال‌ها می‌باشند.
+In the above algorithm, we used :math:`DFS` only twice. Therefore, the algorithm's complexity is :math:`O(n + m)`, where :math:`m` and :math:`n` represent the number of vertices and edges, respectively.
 
-**لم 3.4.10**
+**Lemma 3.4.10**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**صورت لم:** الگوریتم کساراجو، مولفه‌های قویا همبند را به ترتیب توپولوژیک سورت آن‌ها آن‌ها پیدا می‌کند.
+**Lemma Statement:** Kosaraju's algorithm finds strongly connected components in the topological order of their sorted sequence.
 
-**اثبات:** به استقرا بر روی تعداد مولفه‌های قویا همبند حکم را ثابت می‌کنیم. به ازای یک مولفه که درستی حکم بدیهی است. حال اگر فرض بر درستی حکم به ازای 
+**Proof:** We prove the claim by induction on the number of strongly connected components. The base case with one component is trivial. Assuming the claim holds for 
 :math:`n-1`
-مولفه باشد، حکم را به ازای 
+components, we prove it for 
 :math:`n`
-مولفه ثابت می‌کنیم. اگر به مولفه اولی که در الگوریتم پیدا می‌کنیم (مانند 
+components. Suppose the first component found by the algorithm (e.g., 
 :math:`H`
-) از مولفه دیگری مانند 
+) has an incoming edge from another component 
 :math:`L`
-یالی وارد شود، در این صورت در گراف معکوس، از 
+. In the reversed graph, this implies an edge exists from 
 :math:`H`
-به 
+to 
 :math:`L`
-یال هست و چون در الگوریتم، 
+. However, since 
 :math:`L`
-بعد از 
+is discovered after 
 :math:`H`
-پیدا می‌شود، پس در هنگام پیمایش 
+in the algorithm, during the traversal of 
 :math:`H`
-در گراف معکوس، باید تعدادی از راس‌های 
+in the reversed graph, some vertices of 
 :math:`L`
-دیده شوند و در 
+would be visited and mistakenly included in 
 :math:`H`
-قرار گیرند در صورتی که مولفه‌ها نمی‌توانند اشتراک داشته باشند. پس در نتیجه مولفه اولی که پیدا می‌کنیم یالی از سمت مولفه‌های دیگر به آن وارد نمی‌شود و اولین مولفه در توپولوژیک سورت می‌باشد. حال طبق فرض استقرا باقی مولفه‌ها نیز به ترتیب توپولوژیک سورت پیدا می‌شوند (چرا؟) و حکم اثبات می‌شود.
+—a contradiction, as components cannot overlap. Thus, the first component discovered has no incoming edges from other components and must be the first in the topological order. By the induction hypothesis, the remaining components are also discovered in topological order (why?). This completes the proof.
 
-
-**پیاده‌سازی الگوریتم**
+**Algorithm Implementation**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-توجه کنید انتها کد، مولفه ها را به ترتیب توپولوژیک سورت آن‌ها خروجی می‌دهیم.
+Note that at the end of the code, we output the components sorted in their topological order.
 
 .. code-block:: cpp
 
@@ -402,3 +464,4 @@
 	    }
 	    return 0;
 	}
+

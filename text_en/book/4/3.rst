@@ -1,41 +1,34 @@
-گراف و جادو
+.. _graphs_and_magic:
+
+Graphs and Magic
 =======================
 
-بعضی از اوقات مسائل ترکیبیاتی با ایده های بسیار جذاب به گراف مدل سازی می شوند. در فضای گراف ها با ابزار های قدرتمندی که داریم (قضیه ها و شهود خوب روی گراف) می توان مسائل را به راحتی حل کرد.
+Sometimes combinatorial problems with very interesting ideas are modeled as graphs. In the realm of graphs, using the powerful tools at our disposal (theorems and good intuition about graphs), we can easily solve problems.
 
-در این بخش قصد داریم شما را با چند مثال با جادوی مدل سازی با گراف آشنا کنیم!
+In this section, we aim to familiarize you with the magic of graph modeling through a few examples!
 
-درخت؟
+Tree?
 ------------
 
-مجموعه :math:`S` را مجموعه اعداد 1 تا :math:`n` تعریف می کنیم و :math:`n` زیرمجموعه :math:`A_1,A_2,...,A_n` را از مجموعه :math:`S` در نظر می گیریم که همه متمایزند. ثابت کنید عددی مثل :math:`x` وجود دارد که اگر :math:`x` را از :math:`A_i` ها حذف کنیم همچنان :math:`A_i` ها با هم متمایز باشند.
+Let set :math:`S` be defined as the numbers 1 to :math:`n`, and consider :math:`n` distinct subsets :math:`A_1, A_2, \ldots, A_n` of :math:`S`. Prove that there exists a number :math:`x` such that if :math:`x` is removed from all :math:`A_i` subsets, the subsets remain pairwise distinct.
 
-جواب
+Answer
 ~~~~~~~~~~
 
-چه زمان حذف کردن عددی مثل :math:`x` از مجموعه ها موجب ایجاد دو مجموعه مساوی می شود؟ تنها زمانی که دو مجموعه مثل :math:`A_i, A_j` وجود داشته باشند که تنها تفاوت آن ها در :math:`x` باشند. یعنی همه اعداد به جز :math:`x` یا در هر دو آمده باشند یا در هیچکدام نیامده باشند. 
+When does removing an element like :math:`x` from sets result in two equal sets? Only when there exist two sets like :math:`A_i, A_j` that differ solely in :math:`x`. That is, all elements except :math:`x` must either be present in both sets or absent from both.
 
-حالا مسئله را به اینصورت به گراف مدل سازی می کنیم که :math:`n` راس در نظر می گیریم که هر کدام نماینده :math:`A_i` ها هستند. بین دو راس :math:`u,v` یالی با وزن :math:`w` بکشید اگر تنها تفاوت :math:`A_u, A_v` در عضو :math:`w` باشد. حالا مسئله معادل این است که ثابت کنیم وزنی وجود دارد که بین یال ها نیامده است!
+Now, let's model this problem as a graph. Consider :math:`n` vertices, each representing a set :math:`A_i`. Draw an edge between two vertices :math:`u, v` with weight :math:`w` if the only difference between :math:`A_u` and :math:`A_v` is the element :math:`w`. The problem now reduces to proving there exists a weight not present among the edges!
 
-طبق مدل سازی گرافمان هر بار که یالی با وزن :math:`w` را طی کنیم عضو :math:`w` از مجموعه فعلی مان حذف یا به آن اضافه می شود. پس در هر گذر بسته باید از هر وزن زوج تا داشته باشیم (زیرا وضعیت بودن یا نبودن هر عضو باید زوج بار تغییر کند تا بعد از طی کردن گذر به همان مجموعه اولیه برسیم).
+According to our graph model, traversing an edge with weight :math:`w` toggles the membership of element :math:`w` in our current set. Therefore, in any closed walk, we must have an even number of each weight (since the presence/absence status of each element must toggle an even number of times to return to the original set).
 
-حالا برهان خلف بزنید که از هر وزن حداقل یک یال با این وزن داشته باشیم. پس از هر وزن یک یال دلخواه با این وزن را انتخاب کنید و گراف :math:`n` یالی :math:`G` را تشکیل دهید.
+Assume for contradiction that every weight appears in at least one edge. Select one arbitrary edge for each weight to form a graph :math:`G` with :math:`n` edges.
 
-ابتدا واضح است که گراف :math:`G` دور ندارد. زیرا در صورت وجود دور باید از هر وزن زوج تا داشته باشیم که چون از هر وزن دقیقا یکی داریم ممکن نیست. پس :math:`G` باید جنگل باشد. از طرفی گفتیم :math:`G` دقیقا :math:`n` یال دارد و می دانیم این ممکن نیست (زیرا بیشینه یال در جنگل مربوط به درخت است که :math:`n-1` یال دارد).
+First, observe that :math:`G` cannot contain cycles. If a cycle existed, it would require an even number of each weight, which is impossible since we have exactly one edge per weight. Thus, :math:`G` must be a forest. However, :math:`G` has exactly :math:`n` edges, which is impossible (as a forest's maximum edge count corresponds to a tree with :math:`n-1` edges).
 
-پس می توانیم از تناقض حاصل نتیجه بگیریم وزنی هست که در بین یال ها ظاهر نشده است که حکم مسئله مان را ثابت می کند.
+From this contradiction, we conclude there must exist a weight not present among the edges, proving our claim.
 
-
-
-مثلث ها؟
+Triangles?
 --------------
 
-فرض کنید :math:`S` مجموعه ای :math:`2^n+1` عضوی باشد و :math:`f({x,y})` تابعی باشد که ورودی آن یک زیرمجموعه دو عضوی از :math:`S` است و خروجی آن یک عدد بین 0 تا :math:`2^{n-1}-1` می باشد. همچنین می دانیم به ازای هر :math:`x,y,z` که سه عضو متفاوت :math:`S` هستند از بین :math:`f({x,y}), f({x,z}), f({y,z})` یکی از آنها برابر جمع دو تای دیگر است. شما باید ثابت کنید :math:`x,y,z` وجود دارند که :math:`f({x,y}), f({x,z}), f({y, z})` هر سه برابر با 0 هستند.
-
-
-
-
-
-
-
+Assume that :math:`S` is a set with :math:`2^n+1` elements, and :math:`f(\{x,y\})` is a function that takes a two-element subset of :math:`S` as input and returns a number between 0 and :math:`2^{n-1}-1`. Furthermore, we know that for any three distinct elements :math:`x, y, z` in :math:`S`, one of :math:`f(\{x,y\})`, :math:`f(\{x,z\})`, or :math:`f(\{y,z\})` equals the sum of the other two. You must prove that there exist :math:`x, y, z` such that :math:`f(\{x,y\})`, :math:`f(\{x,z\})`, and :math:`f(\{y,z\})` are all equal to 0.
 

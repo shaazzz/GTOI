@@ -1,60 +1,116 @@
-اعداد رمزی
-============
+Ramsey Numbers
+=============
 
-آشنایی
+In graph theory, the Ramsey number R(m, n) represents the smallest number such that any graph with this many vertices contains either a complete subgraph with m vertices or an independent subgraph with n vertices.
+
+Example: R(3, 3) = 6. This means that in any graph with 6 vertices, there must be either a triangle (complete 3-vertex subgraph) or an independent set of 3 vertices.
+
+Note: Calculating Ramsey numbers is extremely challenging, and only a few exact values have been determined to date.
+
+Sample code for visualizing a graph with 5 vertices::
+
+    # Importing the NetworkX graph library
+    import networkx as nx
+    import matplotlib.pyplot as plt
+
+    # Creating a graph with 5 vertices
+    G = nx.Graph()
+    
+    # اضافه کردن یالها
+    G.add_edges_from([(1,2), (1,3), (2,3), (2,4), (3,5), (4,5)])
+    
+    # نمايش گراف
+    nx.draw(G, with_labels=True, node_color='lightblue')
+    plt.show()
+
+.. image:: images/ramsey.png
+
+Note: This is a simplified example of modeling a Ramsey problem in Python. In practice, investigating higher Ramsey numbers requires more sophisticated algorithms and intensive computations.
+
+.. _trees:
+
+Introduction  
 ------------
 
-اولین مسئله
+A **tree** is a connected acyclic graph. Below is an example of tree representation in code:
+
+.. code-block:: python
+
+    class TreeNode:
+        def __init__(self, data):
+            self.data = data
+            self.children = []
+    
+    def print_tree(root):  # Prints the tree
+        if not root:
+            return
+        print(root.data)
+        for child in root.children:
+            print_tree(child)
+
+.. image:: /images/tree-example.png
+
+Trees have wide applications in data structures and algorithms. A tree with ``n`` nodes has exactly ``n-1`` edges. For example, the tree in the image above has 5 nodes and 4 edges. Key properties include:
+
+- There is exactly one unique path between any two nodes  
+- Adding any edge creates a cycle  
+- Removing any edge disconnects the graph
+
+.. rst-class:: arabic-direction
+
+First Problem
 ~~~~~~~~~~~~~
 
-جمعی 6 نفره داریم که هر دو یا با هم دوست هستند یا با هم دشمن هستند. ثابت کنید 3 نفر وجود دارند که یا همه با هم دشمن باشند یا همه با هم دوست باشند.
+We have a group of 6 people where every two are either friends or enemies. Prove that there exist three people who are either all mutual friends or all mutual enemies.
 
-تعریف
+Definition
 ~~~~~~~~~~
 
-تابع :math:`R(a,b)` برابر است با کمترین :math:`n` به طوریکه هر طور یال های یک :math:`K_n` را با دو رنگ آبی و قرمز رنگ آمیزی کنیم یا یک :math:`K_a` آبی داشته باشد یا یک :math:`K_b` قرمز.
+The function :math:`R(a,b)` is equal to the smallest :math:`n` such that no matter how we color the edges of a :math:`K_n` with two colors, blue and red, there will either be a blue :math:`K_a` or a red :math:`K_b`.
 
-می توانید به راحتی ثابت کنید که مسئله بالا معادل است با اثبات حکم :math:`R(3,3) \leq 6`.
+You can easily prove that the above problem is equivalent to demonstrating the statement :math:`R(3,3) \leq 6`.
 
-
-کران ها
+Bounds
 ---------------
 
-به دست آوردن مقدار دقیق :math:`R(a,b)` ممکن نیست اما می توان کران هایی برای آن ارائه داد.
+Obtaining the exact value of :math:`R(a,b)` is not possible, but we can provide bounds for it.
 
-در وهله اول باید ثابت کنیم :math:`R(a, b)` وجود دارد.(ممکن است به ازای هیچ :math:`n` ای ویژگی مطلوب برای :math:`K_n` برقرار نباشد)
+First, we must prove that :math:`R(a, b)` exists. (It might be that for no :math:`n`, the desired property holds for :math:`K_n`)
 
-ایده حل این است که یک راس پیدا کنیم که به اندازه کافی مجاور آبی یا قرمز داشته باشد و سپس تنها مجاور های آن راس را در نظر بگیریم و در آنجا یک خوشه آبی یا قرمز با اندازه کوچکتر پیدا کنیم.
+The solution idea is to find a vertex with sufficiently many blue or red adjacents, then consider only its neighbors and find a smaller blue or red clique there.
 
-به صورت دقیق فرض کنید راسی مثل :math:`u` وجود داشته باشد که حداقل :math:`R(a-1,b)` مجاور آبی داشته باشد در اینصورت اگر مجاور های این راس را در نظر بگیرید دو حالت زیر پیش می آید‌ :
+More precisely, suppose there exists a vertex :math:`u` with at least :math:`R(a-1,b)` blue neighbors. In this case, considering its neighbors leads to two scenarios:
 
-- در آن یک :math:`K_{a-1}` آبی وجود دارد که در اینصورت می توانیم با اضافه کردن راس :math:`u` به آن یک :math:`K_a` آبی به دست بیاوریم.
-- در آن یک :math:`K_b` قرمز وجود دارد.
+- There exists a blue :math:`K_{a-1}` among them, in which case adding vertex :math:`u` creates a blue :math:`K_a`.
+- There exists a red :math:`K_b` among them.
 
-پس اگر راسی باشد که حداقل :math:`R(a-1,b)` مجاور آبی وجود داشته باشد مسئله حل می شود. مشابها اگر راسی باشد که حداقل :math:`R(a, b-1)` مجاور قرمز داشته باشد هم مسئله حل می شود.
+Therefore, if there exists a vertex with at least :math:`R(a-1,b)` blue neighbors, the problem is solved. Similarly, if there exists a vertex with at least :math:`R(a, b-1)` red neighbors, the problem is also solved.
 
-پس نتیجه می گیریم که :math:`R(a,b) \leq R(a-1,b) + R(a,b-1)` زیرا اگر گراف ما حداقل :math:`R(a-1,b) + R(a,b-1)` راس داشته باشد هر راس دلخواهی را که در نظر بگیرید یا به اندازه کافی مجاور آبی خواهد داشت یا به اندازه کافی مجاور قرمز خواهد داشت.
+Thus, we conclude that :math:`R(a,b) \leq R(a-1,b) + R(a,b-1)`. Because if our graph has at least :math:`R(a-1,b) + R(a,b-1)` vertices, any arbitrary vertex will either have sufficiently many blue neighbors or sufficiently many red neighbors.
 
-نامساوی بالا ما را به یاد اتحاد پاسکال می اندازد. ( :math:`\binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}` )
+This inequality reminds us of Pascal's identity ( :math:`\binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}` ).
 
-همچنین می توان با استقرا ثابت کرد که :math:`R(a, b) \leq \binom{a+b}{a}` 
+Furthermore, we can prove by induction that :math:`R(a, b) \leq \binom{a+b}{a}`.
 
-تعمیم به k بعد
-------------------
+.. code-block:: rst
 
-تصور کنید که مجموعه ای :math:`n` عضوی داریم و هر زیرمجموعه :math:`k` تایی آن را با یکی از رنگ های آبی یا قرمز رنگ کرده ایم. حالا به یک زیرمجموعه مثل :math:`A` خوشه :math:`k` بعدی می گوییم اگر تمام زیر مجموعه های :math:`k` تایی :math:`A` همرنگ باشند. (اگر این رنگ آبی باشد خوشه آبی می گوییم و اگر این رنگ قرمز باشد خوشه قرمز می گوییم).
+   Generalization to k Dimensions
+   ------------------------------
 
-حالا :math:`R_k(a,b)` را تعریف می کنیم مینیمم :math:`n` که هر طور زیرمجموعه های :math:`k` تایی آن را با آبی و قرمز رنگ کنیم یا یک خوشه آبی :math:`a` تایی داشته باشیم یا یک خوشه قرمز :math:`b` تایی.
+   Suppose we have an n-element set, and we have colored each of its k-element subsets with either blue or red. We call a subset :math:`A` a **k-dimensional cluster** if all k-element subsets of :math:`A` have the same color (if blue, we call it a blue cluster; if red, a red cluster).
 
-ایده اثبات مشابه بالا است. فرض کنید :math:`n = R_k(a,b)` یک عضو خاص مثل :math:`u` از مجموعه :math:`n` تایی :math:`A` را در نظر بگیرید. فرض کنید :math:`B = A - \{u\}`. هر زیر مجموعه :math:`k-1` تایی از :math:`B` مثل :math:`S` را به رنگی در می آوریم که زیرمجموعه :math:`k` تایی :math:`S \cup \{u\}` دارد. اگر تعداد اعضای :math:`B` حداقل :math:`R_{k-1}( R_k(a-1,b), R_k(a,b-1) )` باشد در اینصورت یکی از دو اتفاق زیر می افتد :
+   We define :math:`R_k(a,b)` as the minimum :math:`n` such that no matter how we color the k-element subsets of an n-element set with blue and red, there will either be a blue cluster of size :math:`a` or a red cluster of size :math:`b`.
 
-- در :math:`B` یک خوشه :math:`k-1` بعدی آبی مثل :math:`S` به اندازه حداقل :math:`R_k(a-1,b)` دارد. در اینصورت یا :math:`S` یک خوشه :math:`k` بعدی قرمز به اندازه :math:`b` دارد (که مسئله حل است). یا :math:`S` یک خوشه :math:`k` بعدی آبی به اندازه :math:`a-1` دارد. در اینصورت می توانیم :math:`u` را به این مجموعه اضافه کنیم و یک خوشه :math:`k` بعدی به اندازه :math:`a` داریم.
+   **Proof idea**: Similar to the previous approach. Assume :math:`n = R_k(a,b)`. Consider a specific element :math:`u` from the n-element set :math:`A`. Let :math:`B = A - \{u\}`. Color each :math:`(k-1)`-element subset :math:`S` of :math:`B` with the color of the k-element subset :math:`S \cup \{u\}`. If the size of :math:`B` is at least :math:`R_{k-1}( R_k(a-1,b), R_k(a,b-1) )`, then one of the following must occur:
 
-- در :math:`B` یک خوشه :math:`k-1` بعدی قرمز مثل :math:`S` به اندازه حداقل :math:`R_k(a,b-1)` دارد. در اینصورت یا :math:`S` یک خوشه :math:`k` بعدی آبی به اندازه :math:`a` دارد (که مسئله حل است). یا :math:`S` یک خوشه :math:`k` بعدی قرمز به اندازه :math:`b-1` دارد. در اینصورت می توانیم :math:`u` را به این مجموعه اضافه کنیم و یک خوشه :math:`k` بعدی قرمز به اندازه :math:`b` داریم.
+   - :math:`B` contains a :math:`(k-1)`-dimensional blue cluster :math:`S` of size at least :math:`R_k(a-1,b)`. In this case, either :math:`S` contains a :math:`k`-dimensional red cluster of size :math:`b` (solving the problem), or :math:`S` contains a :math:`k`-dimensional blue cluster of size :math:`a-1`. We can then add :math:`u` to this cluster to form a :math:`k`-dimensional blue cluster of size :math:`a`.
 
-طبق مطالب گفته شده می توان ثابت کرد که :math:`R_k(a,b) \leq R_{k-1}(R_k(a-1,b),R_k(a,b-1))`
+   - :math:`B` contains a :math:`(k-1)`-dimensional red cluster :math:`S` of size at least :math:`R_k(a,b-1)`. In this case, either :math:`S` contains a :math:`k`-dimensional blue cluster of size :math:`a` (solving the problem), or :math:`S` contains a :math:`k`-dimensional red cluster of size :math:`b-1`. We can then add :math:`u` to this cluster to form a :math:`k`-dimensional red cluster of size :math:`b`.
 
-تعمیم به k بعد و c رنگ
--------------------------------
+   Based on this reasoning, we can prove that :math:`R_k(a,b) \leq R_{k-1}(R_k(a-1,b),R_k(a,b-1))`.
 
-به صورت مشابه می توانیم برای بیش از دو رنگ نیز مسئله را بیان و اثبات کنیم. پیدا کردن کران روی :math:`R_k(a_1,a_2,...,a_c)` را به خواننده واگذار می کنیم.
+Generalization to k Dimensions and c Colors
+--------------------------------------------
+
+Similarly, we can formulate and prove the problem for more than two colors. We leave finding bounds on :math:`R_k(a_1,a_2,...,a_c)` to the reader.
+

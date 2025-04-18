@@ -1,16 +1,18 @@
-تطابق در گراف دوبخشی
+.. _bipartite-matchings:
+
+Matchings in Bipartite Graphs
 ===============================
 
-در بخش قبل گفتیم که شرط لازم و کافی برای داشتن یک تطابق ماکسیمم این است که مسیر افزوده وجود نداشته باشد. این شرط در گراف دوبخشی به راحتی قابل بررسی است (چرا؟).
+In the previous section, we stated that the necessary and sufficient condition for having a maximum matching is the absence of an augmenting path. This condition can be easily checked in bipartite graphs (why?).
 
-در نتیجه بررسی کردن تطابق در گراف های دوبخشی (به عنوان حالت خاصی از گراف) به علت کاربرد زیادشان سودمند است.
+As a result, studying matchings in bipartite graphs (as a special case of graphs) is particularly useful due to their numerous applications.
 
-الگوریتم
+Algorithm
 ----------
 
-در این الگوریتم از تطابق خالی شروع می‌کنیم و تا زمانی که مسیری افزایشی در گراف وجود داشت تطابق را بزرگ‌تر می‌کنیم. به راحتی قابل مشاهده است که در این صورت ماکسیمم بودن تطابق نهایی ما بدیهی است. برای پیدا کردن مسیر افزایشیبه این صورت عمل میکنیم:
+In this algorithm, we start with an empty matching and keep enlarging it as long as there exists an augmenting path in the graph. It can be easily observed that the maximality of the final matching becomes evident in this case. To find an augmenting path, we proceed as follows:
 
-فرض کنید گراف ما شامل دو بخش :math:`n_1` راسی و :math:`n_2` راسی باشد. به ازای :math:`v = 1 ... n_1` در گراف حال حاضرمان به دنبال مسیر افزایشی می‌گردیم. در مرحله :math:`i` ام می‌توان ادعا کرد تطابقی که بین :math:`i` راس بخش اول و بقیه رئوس بخش دوم است ماکسیمم است، در نتیجه در آخر نیز تطابق ما ماکسیمم خواهد بود. پیاده‌سازی آن به شکل زیر است:
+Suppose our graph consists of two parts with :math:`n_1` vertices and :math:`n_2` vertices. For each :math:`v = 1 ... n_1` in the current graph, we search for an augmenting path. In the :math:`i`-th phase, it can be claimed that the matching between the first :math:`i` vertices of the first partition and the remaining vertices of the second partition is maximal. Consequently, the final matching will also be maximal. The implementation is as follows:
 
 .. code-block:: cpp
 
@@ -60,7 +62,7 @@
       return 0;
   }
 
-در الگوریتم ذکر شده به ازای هر راس از بخش بالا، :math:`O(m)` گام انجام می‌شود، پس پیچیدگی زمانی آن برابر :math:`O(nm)` است. البته یک نوع پیاده‌سازی دیگر همین الگوریتم نیز وجود دارد که سرعت آن حداقل دوبرابر سریع‌تر از الگوریتم بالا است (چرا؟):
+In the mentioned algorithm, for each vertex in the upper section, :math:`O(m)` steps are executed, thus its time complexity is :math:`O(nm)`. However, there is another implementation of this same algorithm whose speed is at least twice as fast as the aforementioned algorithm (Why?):
 
 .. code-block:: cpp
 
@@ -115,45 +117,51 @@
       return 0;
   }
 
-قضیه هال
--------------
+.. _hall-theorem:
 
-این قضیه شرط لازم و کافی دیگری برای ماکسیمم بودن یک تطابق در یک گراف دوبخشی را بیان می‌کند که اولین بار توسط فیلیپ هال مطرح شد و به قضیه ازدواج معروف است. این قضیه به شرح زیر است:
+Hall's Theorem
+--------------
 
-فرض کنید :math:`X` مجموعه‌ای از رئوس بخش اول یک گراف دوبخشی باشد. مجموعه :math:`X` در گراف تطابق کامل دارد، اگر و تنها اگر به ازای هر زیرمجموعه از آن مثل :math:`S` و مجموعه همسایه‌های خارج :math:`X` آن‌ها در گراف به نام :math:`T`، داشته باشیم :math:`|S| \leq |T|`.
+This theorem states another necessary and sufficient condition for a matching to be maximum in a bipartite graph. It was first proposed by Philip Hall and is known as the Marriage Theorem. The theorem is as follows:
 
-لازم بودن شرط بالا بدیهی است (در غیر این صورت تعداد رئوس مجاور یک مجموعه برای تطابق دادنشان کافی نخواهد بود). برای اثبات کافی بودن نیز از برهان خلف استفاده می‌کنیم و فرض می‌کنیم گرافی با چنین خاصیتی باشد که تطابق کامل نداشته باشد؛
+Let :math:`X` be a set of vertices in the first partition of a bipartite graph. The set :math:`X` has a perfect matching in the graph **if and only if** for every subset of :math:`X`, say :math:`S`, and the set of their neighbors outside :math:`X` in the graph, denoted :math:`T`, we have :math:`|S| \leq |T|`.
+
+The necessity of this condition is obvious (otherwise, the number of adjacent vertices would be insufficient for matching). To prove sufficiency, we use contradiction: assume there exists a graph with this property that lacks a perfect matching.
 
 .. figure:: /_static/marriage_theorem.jpeg
    :width: 50%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet is terrible, this appears
 
-یک تطابق ماکسیمم را درنظر می‌گیریم و راس دلخواهی مثل :math:`u` که غیراشباع است را درنظر می‌گیریم (حتماً وجود دارد!). از آنجا که این راس با کسی منطبق نشده، راس منطبق یک راس دلخواه مجاور آن را درنظر میگیریم. این دو راس طبق فرض مسئله یک راس مجاور دیگر دارند که یا منطبق نشده (که در این صورت مسیر افزایشی داریم) و یا منطبق شده که راس منطبق آن را نیز به این دو راس اضافه می‌کنیم. این کار را تا جای ممکن ادامه می‌دهیم و از آنجا که تعداد رئوس مجاور :math:`X` حداقل اندازه خودشان است، در آخر به مرحله‌ای میرسیم که مجموعه حال حاضرمان یک راس مجاور دارند که اشباع نشده که در این صورت مسیر افزایشی داریم که این با ماکسیمم بودن تطابقمان در تناقض است.
+Consider a maximum matching and an arbitrary unsaturated vertex :math:`u` (which must exist!). Since this vertex is unmatched, we take an arbitrary adjacent matched vertex. By the problem's assumption, these two vertices have another adjacent vertex that is either unmatched (yielding an augmenting path) or matched, whose matched vertex we add to the set. Repeating this process, and since the number of adjacent vertices to :math:`X` is at least their own size, we eventually reach a stage where the current set has an adjacent unsaturated vertex. This creates an augmenting path, contradicting the maximality of our matching.
 
-تطابق در گراف دوبخشی k منتظم
------------------------------
+Matching in k-Regular Bipartite Graphs
+--------------------------------------
 
-طبق قضیه هال می‌توان اثبات کرد که گراف دوبخشی k منتظم تطابق کامل دارد. برای اثبات این موضوع نیز کافیست اثبات کنیم که شرط هال برای آن برقرار است؛
+According to Hall's theorem, it can be proven that a k-regular bipartite graph has a perfect matching. To prove this, it suffices to show that Hall's condition holds for it.
 
-مجموعه‌ای از رئوس بخش اول گراف مثل :math:`S` را درنظر بگیرید و همسایه‌های آن‌ها در بخش دوم را :math:`T` بنامید. اثبات می‌کنیم :math:`|S| \leq |T|`. می‌دانیم مجموع یال‌های بین دو بخش برابر :math:`x = |S| \times k` است. از این رابطه می‌توان نتیجه گرفت :math:`|T| \geq (x \div k) = |S|`.
+Consider a set of vertices :math:`S` from the first partition of the graph and let :math:`T` be their neighbors in the second partition. We prove that :math:`|S| \leq |T|`. We know the total number of edges between the two partitions is :math:`x = |S| \times k`. From this relation, we can conclude :math:`|T| \geq (x \div k) = |S|`.
 
 .. figure:: /_static/dot/K_R_Bipartite_Subgraph.svg
-   :width: 30%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 30%
+ :align: center
+ :alt: Displayed when the internet connection is poor
 
-پس حکم حال در گراف ما برقرار است و قطعاً در گراف ما تطابقی کامل یافت می‌شود.
+Thus, Hall's condition is satisfied in our graph, and a perfect matching certainly exists in the graph.
 
-تعمیم قضیه هال
---------------
+Generalization of Hall's Theorem
+-------------------------------
 
-یک گراف دوبخشی به نام :math:`G` داریم و می‌خواهیم تعدادی از یال‌های آن را برداریم، طوری که درجه هر راس بخش اول مثل :math:`u` برابر :math:`a_u` و درجه هر راس بخش دوم حداکثر یک شود. برای حل این مسئله گراف :math:`G'` را به گونه‌ای میسازیم که در آن تطابق کامل از بخش اول به دوم وجود دارد، اگر و تنها اگر در گراف :math:`G` چنین مجموعه یال‌هایی وجود داشته باشد؛
+We have a bipartite graph called :math:`G` and want to remove some of its edges such that the degree of each vertex in the first partition like :math:`u` becomes :math:`a_u`, and the degree of each vertex in the second partition becomes at most one. To solve this problem, we construct a graph :math:`G'` such that it contains a perfect matching from the first partition to the second if and only if such an edge set exists in graph :math:`G`;
 
-گراف :math:`G'` را بدین گونه می‌سازیم که به جای هر راس :math:`u` در گراف از بخش اول، یک مجموعه :math:`a_u` تایی از رئوس می‌سازیم (که کپی هایی از راس :math:`u` هستند) و به ازای هر یال گراف مثل :math:`(u, v)`، تمام مجموعه راس :math:`u` را به راس  :math:`v` متصل می‌کنیم. گراف حاصل دوبخشی است (چرا؟) اگر شرط هال در آن برقرار باشد یعنی تطابق کامل دارد که در این صورت به ازای هر یال بین مجموعه رئوس راس :math:`u` و راس :math:`v` در گراف، یال :math:`(u, v)` را در گراف :math:`G` برمی‌داریم که بدیهی است که در این صورت به مجموعه یال‌های دلخواهمان می‌رسیم. در صورتی هم که گراف :math:`G'` تطابقی کامل نداشته باشد به همین شکل می‌توان نتیجه گرفت که در گراف :math:`G` نیز چنین مجموعه‌ای وجود ندارد (به صورت برعکس عمل میکنیم).
+We construct graph :math:`G'` by replacing each vertex :math:`u` in the first partition with a set of :math:`a_u` vertices (which are copies of vertex :math:`u`). For each edge like :math:`(u, v)` in the original graph, we connect all vertices in the copy set of :math:`u` to vertex :math:`v`. The resulting graph is bipartite (Why?). If Hall's condition holds (i.e., it has a perfect matching), then for each edge between the copy set of vertex :math:`u` and vertex :math:`v` in :math:`G'`, we keep the edge :math:`(u, v)` in :math:`G`, which clearly gives us the desired edge set. If :math:`G'` has no perfect matching, we can similarly conclude that no such edge set exists in :math:`G` (by reversing the argument).
 
-فرایند چک کردن شرط هال در گراف :math:`G^{\prime}` را در نظر بگیرید.به ازای هر زیرمجموعه :math:`S` که از بخش اول گراف :math:`G ^ {\prime}` و مجموعه همسایه های آن :math:`T` است، چک می کنیم که :math:`|S| \leq |T|` برقرار باشد. حالا می توان توجه کرد که به ازای هر راس :math:`u` اگر تعدادی از کپی های :math:`u` در :math:`S` آمده باشد ولی همه آن ها نیامده باشند می توان همه را به مجموعه :math:`S` اضافه کرد در اینصورت :math:`T` تغییری نخواهد کرد و تنها :math:`S` زیاد می شود. پس می توان فقط :math:`S` هایی را چک کرد که به ازای هر :math:`u` یا تمام کپی های :math:`u` آمده اند یا هیچکدام نیامده اند.
+Consider the process of checking Hall's condition in graph :math:`G^{\prime}`. For every subset :math:`S` from the first partition of :math:`G^{\prime}` and its neighbor set :math:`T`, we verify that :math:`|S| \leq |T|`. Note that if some copies of :math:`u` are included in :math:`S` but not all, we can add all copies to :math:`S` without changing :math:`T` - this only increases :math:`S`. Therefore, we only need to check subsets :math:`S` where either all copies of each :math:`u` are included or none are.
 
-با کمی تفکر نتیجه می گیریم که طبق حرف های بالا می توان روی گراف :math:`G` این شرط لازم و کافی را پیدا کرد : :math:`\forall_{S} \sum\limits_{i \in S} a_i \leq |T|`
+After careful consideration, we conclude that the above reasoning leads to the following necessary and sufficient condition for graph :math:`G`:
 
-که :math:`S` هر زیرمجموعه ای از راس های بخش اول گراف است و  :math:`T` اجتماع همسایه های :math:`S` است.   
+.. math::
+   \forall_{S} \sum\limits_{i \in S} a_i \leq |T|
+
+Where :math:`S` is any subset of vertices in the first partition of the graph, and :math:`T` is the union of neighbors of :math:`S`.
+

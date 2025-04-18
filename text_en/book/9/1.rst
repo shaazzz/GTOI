@@ -1,184 +1,105 @@
-تعریف np و np کامل
-=====================
+.. _np-definition:
 
-ممکن است شنیده باشید که فلان مساله
-np
-است و نمی توان آن را حل کرد. اما واقعا یعنی چه؟ و چرا نمی توان آن را حل
-کرد؟ در این فصل به بررسی این مسائل می پردازیم.
+Definition of NP and NP-Completeness
+====================================
 
-هدف از این فصل، تعیین تکلیف مسائلی از گراف است که به ارائه الگوریتمی برای آن ها
-نپرداختیم. این فصل، عدم موفقیت ما برای ارائه الگوریتم پرکتیکال برای این مسائل
-را توجیه می کند.
+You may have heard that a certain problem is in **NP** and cannot be solved. But what does this really mean? And why can't it be solved? In this chapter, we will explore these questions.
 
-این مبحث، یکی از مباحث علوم نظری کامپیوتر است. اگر چه خواندن این فصل به طور مستقیم
-کمکی به موفقیت شما در آزمون های المپیاد کامپیوتر نخواهد کرد، اما خواندن آن به
-دلایل زیر توصیه می شود:
+The goal of this chapter is to address graph problems for which we did not provide algorithmic solutions. It justifies our failure to present a practical algorithm for these problems.
 
-- این مبحث یکی از جالب ترین مباحث علوم نظری کامپیوتر است و شما که علاقه مند به
-  المپیاد کامپیوتر هستید قطعا از آن لذت خواهید برد.
-- خواندن این مبحث به شما کمک می کند تا از باور های غلط رایج در میان دانش آموزان
-  درباره مسائل np دور بمانید.
-- خواندن این مبحث به شما کمک می کند که راحت تر مسائل
-  np
-  را تشخیص دهید و در آزمون به حل آن ها نپردازید.
+This topic belongs to theoretical computer science. Although studying this chapter will not directly contribute to your success in computer olympiad exams, it is recommended for the following reasons:
 
-مسائل تصمیم
---------------
-مسائل تصمیم، مسائلی هستند که پاسخ آن ها تنها یک بیت است. یعنی پاسخ آن ها بله
-یا خیر است. مثلا مساله یک عدد را تجزیه کنید یک مساله تصمیم نیست اما یک عدد اول
-است یا خیر یک مساله تصمیم است.
+- This is one of the most fascinating topics in theoretical computer science, and as someone interested in computer olympiads, you will undoubtedly enjoy it.
+- Studying this topic will help you avoid common misconceptions about NP problems among students.
+- Studying this topic will help you more easily recognize NP problems and refrain from attempting to solve them in exams.
 
-عموما برای مسائل، یک مساله تصمیم وجود دارد که می توان با آن، مساله اصلی را حل کرد. مثلا
-مساله کوچک ترین عامل اول این عدد، بزرگ تر از
-k
-است یا خیر می تواند به کمک یک جستجوی دو دویی مساله تجزیه را حل کند. در حالت کلی، مساله
-تصمیم آیا بیت کا ام خروجی ۱ است، می تواند مساله اصلی را حل کند.
+Decision Problems
+-----------------
+Decision problems are those where the answer is a single bit. That is, their answer is yes
+or no. For example, the problem of factoring a number is not a decision problem, but determining
+whether a number is prime is a decision problem.
 
-در این بخش ما با مسائل تصمیم سر و کار داریم، اما از نتیجه می توان به طور گسترده
-در مسائل دیگر نیز استفاده کرد.
+Generally, for many problems, there exists a decision problem that can solve the main problem.
+For example, the decision problem "Is the smallest prime factor of this number greater than k?"
+can solve the factorization problem using binary search. In general, the decision problem
+"Is the k-th bit of the output 1?" can solve the main problem.
 
-کلاس P
+In this section, we primarily deal with decision problems, but the results can be widely applied
+to other types of problems as well.
+
+.. raw:: latex
+
+    \begin{class}P}\end{class}
+
+Class P
 ---------
-مسائل کلاس
-P
-دسته ای از مسائل تصمیم هستند که الگوریتمی وجود دارد که می تواند در
-:math:`O(|s|^k)`
-نتیجه را معین کند. در این جا
-:math:`s`
-رشته ورودی،
-:math:`|s|`
-طول رشته ورودی و
-:math:`k`
-یک عدد ثابت مستقل از ورودی است. به عبارت دیگر، مسائلی که در زمان چند جمله ای بر حسب
-طول ورودی حل می شوند، در این کلاس هستند. توجه کنید که طول ورودی همیشه پارامتری نیست
-که ما برحسب آن پیچیدگی الگوریتم را تحلیل می کنیم، مثلا مساله تصمیم تجزیه یک عدد، یعنی
-آیا عدد
-:math:`n`
-عامل اولی کوچک تر از
-:math:`k`
-دارد یا خیر، الگوریتمی با پیچیدگی زمانی
-:math:`O(\sqrt{n})`
-یا همان
-:math:`n^{\frac{1}{2}}`
-دارد اما این مساله در کلاس
-P
-قرار ندارد. زیرا طول ورودی از
-:math:`O(lg(n))`
-بوده است و یعنی الگوریتم ما بر حسب طول ورودی، چند جمله ای نبوده است.
+Problems in class P are a set of decision problems for which there exists an algorithm that can determine the result in :math:`O(|s|^k)` time. Here, :math:`s` is the input string, :math:`|s|` is the length of the input string, and :math:`k` is a constant independent of the input. In other words, this class includes problems solvable in polynomial time relative to the input length. Note that the input length is not always the parameter used to analyze an algorithm's complexity. For example, consider the decision problem of integer factorization: determining whether a number :math:`n` has a prime factor smaller than :math:`k`. This problem has an algorithm with time complexity :math:`O(\sqrt{n})` (or equivalently :math:`n^{\frac{1}{2}}`), but it does not belong to class P. This is because the input length is :math:`O(\lg(n))`, meaning the algorithm's runtime is not polynomial with respect to the input length.
 
+.. code-block:: text
 
-کلاس NP
----------
-این مسائل، دسته ای از مسائل هستند که لزوما یک راه حل چند جمله ای ندارند، اما
-یک تایید کننده چند جمله ای دارند.
+    NP Class
+    ---------
+    These problems are a category of problems that do not necessarily have a polynomial-time solution, but have a polynomial-time verifier.
 
-تایید کننده
+Verifier
 ~~~~~~~~~~~~~
-تایید کننده یک مساله، خود یک مساله تصمیم است که ورودی مساله اصلی را به همراه یک
-رشته کمکی (که یک جواب یا اثبات خوانده می شود) می گیرد و تعیین می کند که آیا این
-جواب درستی برای مساله است یا نه. اگر یک رشته کمکی وجود داشته باشد که تایید کننده آن را
-تایید کند، یعنی جواب مساله اصلی مثبت بوده است و اگر جواب مساله اصلی منفی باشد، هیچ
-رشته ای وجود ندارد که تایید کننده آن را تایید کند.
+A verifier for a problem is itself a decision problem that takes the input of the original problem along with an auxiliary string (called an answer or proof) and determines whether this answer is correct for the problem or not. If there exists an auxiliary string that the verifier accepts, it means the original problem's answer is positive. If the original problem's answer is negative, no string exists that the verifier would accept.
 
-به عبارت دقیق تر، اگر مساله اصلی را با
-:math:`X`
-نشان دهیم که
-:math:`X(s)`
-یا تایید و یا رد است، به یک مساله مانند
-:math:`C(s,t)`
-یک تایید کننده برای مساله ایکس می گوییم اگر و تنها اگر دو شرط زیر برقرار باشد:
+More precisely, if we denote the original problem by :math:`X`, where :math:`X(s)` is either accepted or rejected, we call a problem :math:`C(s,t)` a verifier for problem X if and only if the following two conditions hold:
 
-- اگر
-  :math:`X(s) = 0`
-  باشد آن گاه به ازای هر رشته ممکن t
-  :math:`C(s,t) = 0`
-  است.
-- اگر
-  :math:`X(s) = 1`
-  باشد آن گاه حداقل یک رشته وجود دارد که
-  :math:`C(s,t) = 1`
-  باشد.
+- If :math:`X(s) = 0`, then for every possible string t, :math:`C(s,t) = 0`.
+- If :math:`X(s) = 1`, then there exists at least one string t for which :math:`C(s,t) = 1`.
 
-تعریف
+.. _definition:
+
+Definition
+~~~~~~~~~~
+
+Now we return to the definition of the NP class. A problem belongs to this class if and only if it has a verifier that terminates in polynomial time, and furthermore, if the answer to the original problem is affirmative, there exists an auxiliary string with polynomial length relative to the input that the verifier will accept.
+
+Example
 ~~~~~~~
-حال به تعریف کلاس
-NP
-باز می گردیم. یک مساله عضو این کلاس است، اگر و تنها اگر یک تایید کننده داشته باشد
-که در زمان چند جمله ای به نتیجه برسد و هم چنین اگر جواب مساله اصلی مثبت است، یک رشته
-کمکی با طول چند جمله ای نسبت به ورودی وجود داشته باشد که تایید کننده آن را تایید کند.
+A wide range of problems fall into this class. For example, consider the problem of whether a graph contains a Hamiltonian cycle. A verifier can take a permutation of vertices as input and check whether each member of this permutation is connected by an edge to the next member. If the answer to the main problem is negative, no permutation exists; if positive, there exists a permutation whose length is shorter than the original graph, and the verifier can perform this check in linear time. Thus, the Hamiltonian cycle problem belongs to the class ``NP``.
 
-مثال
-~~~~~~~
-طیف گسترده ای از مسائل در این کلاس قرار دارد. مثلا مساله این که آیا گراف دور همیلتونی
-دارد یا خیر را در نظر بگیرید. یک تایید کننده، می تواند جایگشتی از رئوس را در ورودی
-بگیرد و بررسی کند که آیا هر عضو این جایگشت به عضو بعدی اش یال دارد یا خیر. اگر
-جواب مساله اصلی منفی باشد هیچ جایگشتی وجود ندارد و اگر مثبت باشد جایگشتی وجود دارد که
-طول آن از گراف اصلی کمتر است و تایید کننده می تواند در زمان خطی، این بررسی را انجام
-دهد. پس مساله دور همیلتونی یک مساله در کلاس
-NP
-است.
+The corresponding decision problem of number factorization is also an ``NP`` problem. A verifier can take a number smaller than *k* as input and determine whether the input is divisible by this number. This check can be performed in polynomial time via division (using the algorithm we learned in elementary school), and the proof length (the number smaller than *k*) is shorter than the input length. Therefore, this problem also lies in the class ``NP``.
 
-مساله تصمیم متناظر تجزیه اعداد نیز یک مساله
-NP
-است. یک تایید کننده می تواند یک عدد کوچکتر از
-k
-را ورودی بگیرد و تشخیص دهد که آیا ورودی به این عدد بخش پذیر است یا نه. این تشخیص
-می تواند در زمان چند جمله ای تقسیم را انجام دهد (با کمک الگوریتمی که در دبستان
-خواندیم) و طول اثبات (همان عدد کوچکتر از
-k)
-از طول ورودی کمتر است بنابراین این
-مساله نیز در کلاس
-NP
-قرار دارد.
+.. _polynomial-reduction:
 
-کاهیدن چند جمله ای
----------------------
-تعریف می کنیم مساله
-A
-به مساله
-B
-در زمان چند جمله ای کاهیده می شود، اگر
-و تنها اگر بتوان به کمک یک الگوریتم 
-و یک ماشین پیشگوی مساله
-B
-مساله
-A
-را در زمان چند جمله ای حل کرد. کاهیدن از این جهت مورد توجه است که
-اگر A به B کاهیده شود و B
-در زمان چند جمله ای حل شود،
-A نیز در زمان چند جمله ای حل می شود.
+Polynomial Reduction
+--------------------
+We define that problem **A** is polynomial-time reducible to problem **B** if and only if, using an algorithm and an oracle machine for problem **B**, problem **A** can be solved in polynomial time. Reduction is important because if **A** reduces to **B** and **B** is solvable in polynomial time, then **A** is also solvable in polynomial time.
 
-مسائل NP سخت و NP کامل
+.. _np-hard-vs-np-complete:
+
+NP-Hard and NP-Complete Problems
 -------------------------
-به یک مساله
-NP سخت
-می گوییم اگر و تنها اگر هر مساله در کلاس
-NP
-را بتوان در زمان چند جمله ای به این مساله کاهید. اگر یک مساله
-NP سخت
-خود در کلاس
-NP
-باشد، به آن
-NP کامل
-گفته می شود.
-شاید عجیب به نظر برسد که همه مسائل که گستره و تنوع عظیمی دارند را به یک مساله
-کاهید، اما در ادامه این فصل با مسائل
-NP سخت و NP کامل
-زیادی آشنا می شوید.
+
+A problem is called **NP-hard** if and only if every problem in the NP class can be reduced to it in polynomial time. If an NP-hard problem itself belongs to the NP class, it is called **NP-complete**.
+
+It may seem surprising that all problems with their vast diversity can be reduced to a single problem. However, throughout this chapter, you will become familiar with numerous NP-hard and NP-complete problems.
+
+.. code-block:: python
+   :linenos:
+   
+   # in tabe yek tike az yek graph ra mishkanad
+   def graph_cut(graph):
+       # cut logic
+       return cut_graph
 
 P=NP
 --------
-این مساله بزرگترین مساله باز در کل علوم کامپیوتر است. این مساله بیان می کند که آیا
-همه مسائل کلاس
-NP
-در زمان چند جمله ای حل می شوند یا خیر؟ این مساله معادل این است که یکی از مسائل
-NP
-سخت را بتوان در زمان چند جمله ای حل کرد.
+This problem is the biggest open question in all of computer science. It asks whether
+all problems in the NP class
+can be solved in polynomial time. This problem is equivalent to determining whether
+any NP-hard problem can be solved in polynomial time.
 
-جواب مثبت به این مساله، تمام الگوریتم های رمز نگاری را می شکند و پتانسیل فروپاشی
-اقتصاد را دارد. از طرفی دیگر، مسائل محاسباتی که اکنون میلیارد ها سال طول می کشند را
-در زمان کوتاهی محاسبه می کند. می تواند کلید حل سرطان را ها پیدا کند و ...
+A positive answer to this problem would break all encryption algorithms and has
+the potential to collapse global economies. On the other hand, computational problems
+that currently require billions of years to solve could be computed in short time spans.
+It could unlock solutions to curing cancer, and...
 
-جواب منفی به این مساله اگرچه کاربرد عملی ندارد
-و باور عمومی این است که جواب منفی است، ولی یک پیشرفت شگرف در علوم نظری
-کامپیوتر است. برای اثبات این مساله، یک میلیون دلار جایزه در نظر گرفته شده است.
+A negative answer to this problem, while lacking practical applications
+(and despite the general consensus leaning toward a negative answer),
+would represent a monumental breakthrough in theoretical computer science.
+A one-million-dollar prize has been offered for resolving this problem.
+

@@ -1,165 +1,175 @@
-بازی‌ها و گراف جهت‌دار
-=======================
+Games and Directed Graphs
+=========================
 
-مقدمه
+In many strategic and board games, the sequence of moves and possible choices of each player can be modeled using **directed graphs**. In these graphs, each node represents a game state, and edges show valid transitions between states based on game rules.
+
+.. code-block:: python
+   :linenos:
+
+   # Function to check connectivity in directed graph
+   def check_connectivity(graph):
+       visited = set()
+       # Depth-First Search (DFS) implementation
+       def dfs(node):
+           if node not in visited:
+               visited.add(node)
+               for neighbor in graph.get(node, []):
+                   dfs(neighbor)
+       # Start DFS from the first node
+       dfs(list(graph.keys())[0])
+       return len(visited) == len(graph)
+
+.. image:: /images/directed-graph.png
+
+In the example above:
+
+1. The Python code checks strong connectivity in a directed graph using DFS
+2. The image shows a directed graph where node relationships represent game moves
+3. Edge directions determine valid transitions between game states
+
+**Important note:** In such models, cycles in the graph indicate the possibility of infinite loops in the game, requiring special handling in game design.
+
+.. raw:: latex
+
+    \chapter*{Introduction}
+    \addcontentsline{toc}{chapter}{Introduction}
+
+Introduction
 ---------------------------
-در این قسمت، به بررسی ارتباط بازی ها و گراف های جهت دار می‌پردازیم.
 
-کار را با یک مثال ساده شروع می‌کنیم:
+In this section, we examine the connection between games and directed graphs.  
 
-علی و متین مشغول بازی هستند. یک کیسه سنگریزه شامل 10 سنگریزه جلوی آن‌ها قرار دارد. در هر مرحله، کسی که نوبش است، 1 یا 2 سنگریزه از کیسه بر می‌دارد. بازنده بازی کسی است که با کیسه خالی مواجه شود و نتواند سنگریزه بردارد.
+We begin with a simple example:  
 
-فرض کنید متین بازی را شروع می‌کند. اگر هر دو نفر به بهترین نحو بازی کنند، برنده بازی چه کسی خواهد بود؟
+Ali and Matin are playing a game. A bag containing 10 pebbles lies before them. On each turn, the player whose turn it is takes 1 or 2 pebbles from the bag. The loser is the one who faces an empty bag and cannot take any pebbles.  
 
-بررسی یک مثال
+Suppose Matin starts the game. If both players play optimally, who will win the game?
+
+Examining an Example
 ---------------------------
-در این بخش، مثالی که در بخش مقدمه مطرح کردیم را توضیح می‌دهیم.
- 
-یک گراف 11 راسی می‌سازیم که شماره راس های آن، از 0 تا 10 هستند. از راس
-:math:`i`
-به راس
-:math:`j`
-یک یال جهت‌دار رسم می‌کنیم، اگر بتوان با برداشتن 1 یا 2 سنگریزه از
-:math:`i`
-به
-:math:`j`
-رسید.
+In this section, we explain the example introduced in the introductory section.
 
-کنار هر راس یک حرف
-:math:`L(Lose)`
-یا 
-:math:`W(Win)`
-می‌نویسیم(یا اینکه هیچی نمی‌نویسیم،‌ که یعنی وضعیت این راس، هنوز مشخص نشده).
+We create an 11-vertex graph where the vertices are numbered from 0 to 10. We draw a directed edge from vertex :math:`i` to vertex :math:`j` if we can reach :math:`j` by removing 1 or 2 pebbles from :math:`i`.
 
-فرض کنید کنار راس با شماره 
-:math:`i`
-حرف
-:math:`L`
-را نوشته‌ایم. معنای آن این است که اگر کیسه اولیه که دو نفر روی آن بازی می‌کنند،
-:math:`i`
-سنگریزه داشته باشد،‌ اگر هر دو نفر به بهترین شکل بازی کنند،‌ نفر اول بازنده آن بازی است.
+Next to each vertex, we write the letter :math:`L` (Lose) or :math:`W` (Win) (or leave it blank, meaning the status of this vertex hasn't been determined yet).
 
-و برعکس،‌ فرض کنید کنار راس با شماره 
-:math:`i`
-حرف
-:math:`W`
-را نوشته‌ایم. معنای آن این است که اگر کیسه اولیه که دو نفر روی آن بازی می‌کنند،
-:math:`i`
-سنگریزه داشته باشد،‌ اگر هر دو نفر به بهترین شکل بازی کنند،‌ نفر اول برنده آن بازی است.
+Suppose we write the letter :math:`L` next to vertex :math:`i`. This means if the initial bag played by two players contains :math:`i` pebbles, and both play optimally, the first player will lose the game.
 
-حال در ابتدای بازی، به کدام راس می‌توان
-:math:`L`
-یا 
-:math:`W`
-را نسبت داد؟!
+Conversely, suppose we write the letter :math:`W` next to vertex :math:`i`. This means if the initial bag contains :math:`i` pebbles, and both play optimally, the first player will win the game.
 
-با کمی فکر، متوجه می‌شیم راس با شماره 0. به این معنا که اگر کیسه اولیه، شامل 0 سنگریزه باشد، طبق قوانین بازی، نفر اول، بازنده است. چون نمی‌تواند سنگریزه ای بردارد.
+Now, at the start of the game, which vertices can we label as :math:`L` or :math:`W`?!
 
-پس به راس 0،
-:math:`L`
-را نسبت می‌دهیم.
+With some thought, we realize vertex 0. This means if the initial bag contains 0 pebbles, according to the game rules, the first player loses because they cannot remove any pebbles.
 
-حال راس بعدی  که تکلیف آن مشخص می‌شود کدام است؟
+Thus, we assign :math:`L` to vertex 0.
 
-راس 1 را در نظر بگیرید. اگر کیسه فقط 1 سنگریزه داشته باشد، نفر اول می‌تواند فقط یک سنگریزه بردارد. حال اگر دقت کنیم، میبینیم کیسه ای که بعد از حرکت نفر اول مانده است، شامل 0 سنگریزه است که قبلا تکلیف آن را مشخص کردیم.
+Now, which vertex should be determined next?
 
-قبلا گفتیم که وضعیت راس 0، 
-:math:`L`
-می‌باشد. پس وضعیت راس 1، برابر با
-:math:`W`
-می‌شود. چون اگر دقت کرده باشید، وقتی نفر اول، یک سنگریزه برداشت،‌ جای نفر اول و دوم بازی عوض شده(چون نوبت عوض شد). بنابراین راس 0، نشان دهنده باخت نفر دوم بازی(علی) است.
+Consider vertex 1. If the bag has only 1 pebble, the first player can only remove 1 pebble. Observe that the remaining bag after this move contains 0 pebbles, whose status we already determined.
 
+We previously stated that vertex 0 has status :math:`L`. Therefore, vertex 1's status becomes :math:`W`. Notice that when the first player removes 1 pebble, the roles of the first and second players switch (since the turn changes). Thus, vertex 0 represents the loss of the second player (Ali) in the game.
 
+**Result**  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+The status of the vertices, which are  
+:math:`L`  
+or  
+:math:`W`,  
+is determined in the order of the vertices' indices.  
 
-**نتیجه**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-وضعیت راس ها، یعنی همان
-:math:`L`
-یا 
-:math:`W`
-را، به ترتیب شماره راس ها مشخص می‌کنیم.
+To do this: If vertex  
+:math:`u`  
+(among the vertices to which  
+:math:`v`  
+has a directed edge) exists such that its status is  
+:math:`L`,  
+then the status of vertex  
+:math:`v`  
+becomes  
+:math:`W`.  
+If all vertices to which  
+:math:`v`  
+has edges have status  
+:math:`W`,  
+then the status of vertex  
+:math:`v`  
+becomes  
+:math:`L`.  
 
-برای این کار، اگر راس
-:math:`u`
-بین راس هایی که
-:math:`v`
-به آن یال جهت دار دارد وجود داشت که وضعیتش برابر با 
-:math:`L`
-بود، آنگاه وضعیت راس 
-:math:`v`
-برابر با
-:math:`W`
-می شود. و اگر همه راس هایی که
-:math:`v`
-به آنها یال داشت، وضعیت شان
-:math:`W`
-بود، آنگاه وضعیت راس
-:math:`v`
-برابر با
-:math:`L`
-می شود.
+Using this method, we can determine the status of all vertices. Now, it suffices to check the initial state of the game and see whether it is  
+:math:`L`  
+or  
+:math:`W`.  
+If it is  
+:math:`L`,  
+it means the first player loses the game. If the status is  
+:math:`W`,  
+it means the first player wins. With this approach, we can determine whether Ali or Matin wins the game we described earlier!
 
-با این روش، می‌توان وضعیت همه راس ها را مشخص کرد. حال کافی است به حالت اولیه بازی نگاه کنیم و ببینیم
-:math:`L`
-است یا
-:math:`W`.
-اگر
-:math:`L`
-بود، یعنی نفر اول بازنده بازی است. و اگر وضعیت
-:math:`W`
-بود، یعنی نفر اول برنده است. با این کار، می‌توان فهمید در بازی‌ای که بالا تر مشخص کردیم، علی برنده بازی است یا متین!
+Token Movement Game on a Graph
+------------------------------
+Our game is as follows: we have a graph with a token initially placed on the starting vertex. Players take turns moving, and each player moves the token to an adjacent vertex on their turn. The player who cannot make a move loses the game.
 
-بازی حرکت مهره روی گراف 
----------------------------
-بازی ما به این صورت است که یک گراف داریم و در ابتدا یک مهره روی راس شروع است. بازیکنان به نوبت حرکت می کنند و هر بازیکن در نوبتش مهره را روی یک راس مجاور می برد. کسی که نتواند حرکتی کند بازنده بازی است.
-
-تعمیم
+Generalization
 ~~~~~~~~~~~~~~~~
 
-اگر به ماهیت اکثر بازی ها توجه کنید درون آن ها چنین گرافی خواهید دید! در واقع ذات بازی های ترکیبیاتی به این صورت است که دو نفر یا بیشتر روی منابعی مشترک تغییراتی اعمال می کنند (منابع مشترک می تواند صفحه شطرنج باشد که مهره ها را روی آن حرکت می دهیم یا می تواند یک کیسه باشد که از آن سنگ بر می داریم).
+If you pay attention to the nature of most games, you'll find such a graph within them! In fact, the essence of combinatorial games is that two or more players make changes to shared resources (shared resources could be a chessboard where we move pieces, or a bag from which we take stones).
 
-حالا فرض کنید به ازای هر وضعیت از منابع مشترک و اینکه نوبت چه کسی است یک راس بسازیم و راس :math:`A` را به :math:`B` یال جهت دار بزنیم اگر و تنها اگر فردی که در وضعیت :math:`A` نوبتش است بتواند در نوبتش به :math:`B` برود. حالا یک گراف داریم! ما توانستیم بازی خود را روی یک گراف تعریف کنیم. 
+Now suppose we create a vertex for each state of the shared resources and whose turn it is, and draw a directed edge from vertex :math:`A` to :math:`B` if and only if the player whose turn it is in state :math:`A` can move to :math:`B` during their turn. Now we have a graph! We've managed to define our game on a graph.
 
-پس به صورت شهودی قبول می کنیم که اکثر بازی ها می توانند به بازی حرکت مهره روی گراف (که در بالا گفتیم) تبدیل شود. برای مثال، بازی شطرنج را در نظر بگیرید. هر وضعیت از این بازی، یک صفحه شطرنج با چینش مختلف مهره‌ها است.
+Thus we intuitively accept that most games can be converted into moving pieces on a graph (as we described above). For example, consider the game of chess. Each state of this game is a chessboard with different arrangements of pieces.
 
-حل بازی روی گراف
-~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: python
 
-اگر بتوانیم بازی حرکت مهره روی گراف را حل کنیم گام بزرگی در فهم روش حل اکثر بازی ها برداشته ایم. برای حل این بازی به این صورت عمل می کنیم. به هر راس یک برچسب برد (W)، باخت(L) یا تساوی(D) نسبت می دهیم. به سه نکته زیر توجه کنید.
+    # Create graph structure
+    graph = Graph()
+    graph.add_node(0)  # Node for initial state
+    graph.add_node(1)  # Node for secondary state
+    graph.add_edge(0, 1)  # here the edge is adjacent
 
-- راسی که یال خروجی نداشته باشد حتما L است.
-- راسی که مجاور L داشته باشد حتما W است.
-- اگر بازیکنی استراتژی نباختن داشته باشد امکان ندارد که مهره را به یک راس با برچسب W ببرد (زیرا در اینصورت حریفش می تواند ببرد).
+.. image:: images/game_graph.png
+    :align: center
 
-پس این الگوریتم را روی گرافمان پیاده می کنیم. تا زمانی که راسی مثل :math:`u` بود که یال خروجی نداشت روی آن برچسب :math:`L` می زنیم سپس روی تمام راس هایی مثل :math:`v` که :math:`v` به :math:`u` یال دارد برچسب W می زنیم.
-سپس تمام راس هایی که روی آنها برچسب زدیم را از گراف حذف می کنیم. چرا؟ چون مطمئنیم که اگر بازیکن بخواهد مهره را به :math:`v` برساند باید قبل از آن به راسی که روی آن W نوشته شده برسد و هیچکدام از بازیکنان دوست ندارند که مهره را روی راس های W ببرند. 
+Solving the Game on a Graph
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-در نهایت زمانی می رسد که هر راس از گراف باقی مانده حداقل یک خروجی دارد. از هر کدام از راس های گراف که شروع کنیم بازی هیچگاه تمام نخواهد شد و هر دو بازیکن می توانند بازی را تا ابد ادامه دهند! پس توانستیم راس ها را به سه دسته افراز کنیم و به ازای هر دسته می دانیم که اگر از راسی روی آنها شروع کنیم نتیجه بازی چه خواهد بود (برد، باخت یا تساوی). پس ما بازی حرکت مهره روی گراف را به صورت الگوریتمی حل کردیم.
+If we can solve the game of moving a token on a graph, we will have taken a major step in understanding the solution methods for most games. To solve this game, we proceed as follows: We assign each vertex a label of **Win (W)**, **Loss (L)**, or **Draw (D)**. Pay attention to the following three points:
 
+- A vertex with no outgoing edges is definitely labeled **L**.
+- A vertex adjacent to an **L** is definitely labeled **W**.
+- If a player has a non-losing strategy, they cannot move the token to a vertex labeled **W** (because then their opponent could win).
 
-چند نتیجه گیری سودمند
+Thus, we implement this algorithm on our graph. As long as there exists a vertex :math:`u` with no outgoing edges, we label it :math:`L`. Then we label all vertices :math:`v` that have an edge to :math:`u` as **W**. Next, we remove all labeled vertices from the graph. Why? Because we are certain that if a player wants to move the token to :math:`v`, they must first reach a vertex labeled **W**, and neither player wants to move the token to **W**-labeled vertices.
+
+Eventually, we reach a stage where every remaining vertex in the graph has at least one outgoing edge. Starting from any of these remaining vertices, the game will never end, and both players can continue playing indefinitely! Thus, we have partitioned the vertices into three categories, and for each category, we know the game's outcome (win, loss, or draw) if started from a vertex in that category. Therefore, we have algorithmically solved the game of moving a token on a graph.
+
+Some Useful Conclusions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-اگر راسی به خودش یال داشته باشد آنگاه قطعا این راس
-L
-نخواهد بود. زیرا طبق الگوریتم تنها زمانی به یک راس برچسب
-L
-می زنیم که یال خروجی نداشته باشد. به صورت دقیق تر کسی که در حال حاضر
-مهره اش روی این راس است می تواند به راحتی استراتژی نفر مقابل را
-بدزدد. یعنی اگر تشخیص دهد نفر دیگر می تواند ببرد به راحتی از یال
-طوقه استفاده می کند و این حرکت مثل این است که نوبت خودش و نفر بعد
-را عوض کرده است، بعد از این می تواند از استراتژی نفر دیگر استفاده
-کند. در مسائل این بخش مثال هایی از دزدیدن استراتژی آورده شده است.
+If a vertex has a loop edge (an edge pointing to itself), then it certainly cannot be an
+**L** vertex. According to the algorithm, we only label a vertex as **L** 
+when it has no outgoing edges. More precisely, the player whose piece is currently 
+on this vertex can easily "steal" the opponent's strategy. That is, if they realize 
+the other player can win, they can simply use the loop edge to swap turns with the opponent, 
+effectively switching their own turn with the next player's. After this move, 
+they can adopt the opponent's strategy. Examples of strategy stealing are provided 
+in the problems of this section.
 
-الگوریتمی که مطرح کردیم به شیوه دیگری برای گراف های بدون دور قابل بررسی است. این موضوع به خاطر ویژگی DAG ها یعنی داشتن ترتیب توپولوژیکی است. راس های گراف را به ترتیب توپولوژیکی می چینیم. حالا از آخر شروع می کنیم و یکی یکی راس ها را حذف می کنیم. اگر راسی که حذف می کنیم به یک L که جلو تر است یال داشته باشد روی آن W می نویسیم در غیر اینصورت L می نویسیم و در نهایت به تمام راس ها برد یا باخت نسبت داده می شود زیرا چنین بازی هایی همیشه پایان پذیر هستند.
+The algorithm we described can be analyzed differently for directed acyclic graphs (DAGs) 
+due to their topological ordering property. We arrange the vertices of the graph 
+in topological order. Starting from the end, we remove vertices one by one. 
+If the vertex being removed has an edge to a previously labeled **L** vertex, 
+we mark it as **W**. Otherwise, we mark it as **L**. Eventually, all vertices 
+are assigned a win (**W**) or loss (**L**) status, as such games always terminate.
 
+.. _final-note:
 
-
-حرف آخر
+Final Note
 ------------
 
-به نظر می آید تبدیل کردن بازی ها به گراف راه موثری برای حل کردن آن ها می باشد اما در حقیقت اینطور نیست. 
+At first glance, converting games into graphs seems like an effective method for solving them, but in reality, this is not the case.  
 
-زیرا که در عمل خیلی از بازی ها بعد از تبدیل شدن به گراف تعداد راس های بسیار زیادی (یا حتی نامتناهی) خواهند داشت و از آنجایی که ما برای حل کردن بازی ها به اندازه تعداد راس ها و یال ها حافظه و زمان اجرا نیاز خواهیم داشت، حل کردن بسیاری از بازی ها به این شیوه امکان پذیر نیست.‌ (می توانید تخمین بزنید که بازی شطرنج بعد از تبدیل به گراف چند راس متفاوت خواهد داشت؟!).
+This is because, in practice, many games will have an extremely large (or even infinite) number of vertices when converted into graphs. Since solving games requires memory and runtime proportional to the number of vertices and edges, solving many games in this manner becomes impractical. (Can you estimate how many distinct vertices a chess game would have after being converted into a graph?!).  
 
-از طرف دیگر در خیلی از بازی ها تبدیل کردن به گراف می تواند شهود بهتری برای حل مسئله به ما بدهد و یا اینکه گراف ما بسیار خاص خواهد شد. پس نتیجه گیری این است که تبدیل کردن به گراف ابزار نسبتا قدرتمندی در حل و شهود پیدا کردن روی بازی ها می باشد اما همیشه پاسخگوی نیاز ما نخواهد بود.
+On the other hand, for many games, converting them into graphs can provide better intuition for solving the problem, or the resulting graph may become highly specialized. Thus, the conclusion is that converting to graphs is a relatively powerful tool for solving and gaining intuition about games, but it will not always meet our needs.
+

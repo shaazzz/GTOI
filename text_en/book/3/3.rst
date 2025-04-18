@@ -1,150 +1,290 @@
-گراف جهت‌دار بدون دور
+.. _directed-acyclic-graph:
+
+Directed Acyclic Graph (DAG)
 ===========================================================
-تعریف 3.3.1 (DAG)
+
+A directed graph that contains no cycles is called a **Directed Acyclic Graph (DAG)**. These graphs are widely used in applications such as task scheduling, dependency resolution, and data processing pipelines. Since no cycles exist, we can topologically sort the graph's nodes.
+
+.. code-block:: python
+
+    def has_cycle(graph):
+        # Function to check for cycles
+        visited = set()
+        recursion_stack = set()
+
+        def dfs(node):
+            if node not in visited:
+                visited.add(node)
+                recursion_stack.add(node)
+                for neighbor in graph.get(node, []):
+                    if neighbor not in visited and dfs(neighbor):
+                        return True
+                    elif neighbor in recursion_stack:
+                        return True
+                recursion_stack.remove(node)
+            return False
+
+        for node in graph:
+            if dfs(node):
+                return True
+        return False
+
+.. figure:: /images/dag.png
+    :align: center
+    :width: 60%
+    :alt: An example of a Directed Acyclic Graph (DAG)
+
+.. Definition 3.3.1 (DAG)
+.. --------------------------------------------
+.. فرض کنید یک بازی تفنگی داریم. سازنده بازی قرار است برای هر دست از بازی, تاریخچه آن دست از بازی را ذخیره کند. به عبارتی اگر نفر 
+.. :math:`A`
+.. نفر 
+.. :math:`B`
+.. را کشت, یک یال جهت دار از 
+.. :math:`A`
+.. به
+.. :math:`B`
+.. رسم می‌کنیم.
+
+.. با فرض اینکه دو نفر نمی‌توانند همزمان همدیگر را بکشند, گرافی که این کاربر ها با یکدیگر تشکیل می‌دهند یک گراف جهت دار بدون دور است(چرا؟).
+
+
+.. همانطور که از اسم بخش مشخص است, به گراف جهت داری که دور نداشته باشد یک گراف جهت دار بدون دور یا به اصطلاح
+.. :math:`DAG`
+.. (directed acyclic graph)	
+.. گوییم.
+
+Definition 3.3.1 (DAG)
 --------------------------------------------
-فرض کنید یک بازی تفنگی داریم. سازنده بازی قرار است برای هر دست از بازی, تاریخچه آن دست از بازی را ذخیره کند. به عبارتی اگر نفر 
-:math:`A`
-نفر  
-:math:`B`
-را کشت, یک یال جهت دار از 
-:math:`A`
-به
-:math:`B`
-رسم می‌کنیم.
+Suppose we have a shooter game. The game developer must save the history of each game round. Specifically, if player :math:`A` kills player :math:`B`, we draw a directed edge from :math:`A` to :math:`B`.
 
-با فرض اینکه دو نفر نمی‌توانند همزمان همدیگر را بکشند, گرافی که این کاربر ها با یکدیگر تشکیل می‌دهند یک گراف جهت دار بدون دور است(چرا؟).
+Assuming two players cannot kill each other simultaneously, the graph formed by these players will be a directed acyclic graph (why?).
 
+As implied by the section title, a directed graph without cycles is called a *directed acyclic graph* or, using its common acronym, :math:`DAG` (directed acyclic graph).
 
-همانطور که از اسم بخش مشخص است, به گراف جهت داری که دور نداشته باشد یک گراف جهت دار بدون دور یا به اصطلاح
-:math:`DAG`
-(directed acyclic graph)	
-گوییم.
+.. An Important Property
+   -----------------------------------------
 
-یک خاصیت مهم
------------------------------------------
-**قضیه 3.3.2** 
+**Theorem:** In every tree, the number of vertices of degree one is at least two.
+
+**Proof:** We use induction on the number of vertices (n). 
+
+- For *n = 1*: The single vertex has degree zero, which is a contradiction since the theorem states at least two vertices of degree one. Hence, this case is trivial. 
+- For *n = 2*: Both vertices have degree one, satisfying the theorem. 
+
+Assume the theorem holds for all trees with *k* vertices. Consider a tree *T* with *k + 1* vertices. Remove a leaf vertex *v* (degree one) and its incident edge. The remaining graph *T - v* is a tree with *k* vertices. By the induction hypothesis, *T - v* has at least two vertices of degree one. 
+
+Now, reattach *v* to its parent *u* in *T*. Two cases arise:
+
+1. If *u* had degree one in *T - v*, its degree becomes two in *T*. Thus, the number of leaves decreases by at most one (since *v* is added as a new leaf). 
+2. If *u* had degree ≥ 2 in *T - v*, attaching *v* increases its degree but does not reduce the number of leaves. 
+
+In both cases, *T* retains at least two leaves. Hence, the theorem holds by induction.
+
+**Example:** In the following code, we count leaves in a tree:
+
+.. code-block:: python
+
+    def count_leaves(tree):
+        # Create a tree with n vertices
+        leaves = 0
+        for vertex in tree.vertices:
+            # The cost of organizing the ceremony
+            if vertex.degree == 1:
+                leaves += 1
+        return leaves
+
+    # Currently in the queue
+    queue = initialize_queue(root)
+
+.. figure:: images/tree_deg.png
+    :align: center
+
+**Note:** The above figure illustrates a tree with three leaves (vertices 1, 2, and 4).
+
+.. raw:: html
+
+  <style>
+  .highlight .err { border: none !important; }
+  </style>
+
+**Theorem 3.3.2** 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**صورت قضیه :** اگر 
+**Statement:** If 
 :math:`G`
-یک گراف جهت دار بدون دور باشد, آنگاه میتوان راس های 
+is a directed acyclic graph (DAG), then the vertices of 
 :math:`G`
-را طوری به ترتیب 
+can be ordered as 
 :math:`v_{1}, v_{2}, ..., v_{n}`
-نوشت به طوری که اگر یال 
+such that if the edge 
 :math:`(v_{i}, v_{j})`
-در گراف باشد, انگار
-:math:`i < j` 
-باشد. (شکل۱ و شکل۲ را ببینید. شکل۲ یک ترتیب مرتب کردن راس ها برای گراف شکل۱ می‌باشد.)
+exists in the graph, then 
+:math:`i < j`. 
+(See Figure 1 and Figure 2. Figure 2 shows a vertex ordering for the graph in Figure 1.)
 
 .. figure:: /_static/dot/DAG_Random.svg
-   :width: 25%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 25%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
 .. figure:: /_static/dot/DAG_Sorted.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
-**اثبات قضیه :** برای اثبات این قضیه از استقرا کمک می‌گیریم. پایه استقرا 
-:math:`n = 1`
-می‌باشد. که گرافی یک راسی می‌باشد. که حکم برای این گراف واضح است.
+**Proof:** We prove this theorem using induction. The base case is 
+:math:`n = 1`,
+where the graph has a single vertex. The statement trivially holds here.
 
-طبق قضیه
-:math:`3.1.2`
-که در تعاریف گراف ثابت کردیم, در 
+By Theorem 3.1.2
+(proven in our earlier definitions of graphs),
 :math:`G`
-یک راس وجود دارد که درجه ورودی آن  
+contains a vertex with in-degree 
 :math:`0`
-می‌باشد(زیرا اگر درجه ورودی همه راس ها حداقل یک باشد, آنگاه این گراف دور دارد که با فرض سوال در تناقض است).
+(since if all vertices had an in-degree of at least 1, the graph would contain a cycle, contradicting the assumption).
 
-حال  فرض کنید 
-:math:`d^{-}(x) = 0`
-. راس 
-:math:`x` 
-را در جایگاه 
-:math:`v_{1}`
-قرار میدهیم و از گراف حذف میکنیم(به همراه تمام یال های متصل به آن).
-
-چون گراف اولیه دور نداشت, با حذف راس 
+Let 
+:math:`d^{-}(x) = 0`.
+Place vertex 
 :math:`x`
-دوری ایجاد نمی‌شود و شرایط استقرا برقرار است. پس طبق استقرا گراف باقی‌مانده را می‌توان طوری در یک ردیف چید که شرط سوال برقرار باشد. این ترتیب چیدن راس ها را به ترتیب در 
-:math:`v_{2}, v_{3}, ..., v_{n}`
-قرار می‌دهیم. از طرفی 
-:math:`v_{1} = x`
-است.
-
-اکنون کافی است ثابت کنیم این ترتیب راس ها, از شرط سوال پیروی می‌کند.
-راس های 
-:math:`v_{2}, v_{3}, ..., v_{n}`
-که تکلیفشان مشخص است چون طبق استقرا چیده شده اند. حال کافی است راس 
+at position 
 :math:`v_{1}`
-شرط را رعایت کند. که این هم واضح است. چون این راس یال ورودی ندارد. پس حکم ثابت شد!
+and remove it from the graph (along with all its connected edges).
 
-**پی نوشت :** صورت شهودی تر این قضیه به این‌صورت است که می‌توان راس های گراف بدون دور را در یک ردیف چید به طوری که همه یال ها از چپ به راست(یا از راست به چپ) باشند! هم‌چنین به این ترتیب از راس ها یک 
-topological sort 
-یا ترتیب توپولوژیک
-گوییم!
+Since the original graph had no cycles, removing 
+:math:`x`
+will not create any cycles, preserving the induction hypothesis. By induction, the remaining graph can be ordered as 
+:math:`v_{2}, v_{3}, ..., v_{n}`
+to satisfy the condition. We append this ordering after 
+:math:`v_{1} = x`.
 
+We now verify that this ordering satisfies the theorem’s condition. For vertices 
+:math:`v_{2}, v_{3}, ..., v_{n}`,
+the condition holds by the induction hypothesis. For 
+:math:`v_{1}`,
+the condition is also satisfied because 
+:math:`v_{1}`
+has no incoming edges. Thus, the theorem is proven.
 
-مرتب سازی توپولوژیک
+**Note:** An intuitive interpretation of this theorem is that the vertices of a DAG can be arranged in a linear order such that all edges point in the same direction (e.g., left to right or right to left). This ordering is called a **topological sort** or **topological order**!
+
+.. _topological_sort:
+
+Topological Sorting
 -----------------------------------------
 
-الگوریتم مرتب سازی توپولوژیک
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-این الگوریتم همان الگوریتم 
+Topological sorting is an ordering of the vertices of a directed acyclic graph (DAG)
+such that for every directed edge uv from vertex u to vertex v, u comes before v
+in the ordering. This ordering is not necessarily unique.
+
+Applications of topological sorting include task scheduling, course prerequisites,
+and dependency resolution in build systems.
+
+Algorithm
+~~~~~~~~~~
+A common algorithm for topological sorting is based on depth-first search (DFS).
+The steps are as follows:
+
+1. Perform DFS traversal of the graph
+2. After visiting all neighbors of a vertex, add it to a stack
+3. The final topological order is the reverse of the stack
+
+Example implementation in Python:
+
+.. code-block:: python
+
+    def topological_sort(graph):
+        # Function for topological sort using DFS
+        visited = set()
+        stack = []
+        
+        def dfs(node):
+            if node in visited:
+                return
+            visited.add(node)
+            for neighbor in graph[node]:  # barresi hame hamsayaha
+                dfs(neighbor)
+            stack.append(node)  # ezafe kardan be stack bad az bazgasht
+            
+        for node in graph:
+            dfs(node)
+            
+        return stack[::-1]  # baraks kardane stack baraye daryafte tartib
+
+.. note::
+    The graph must be a DAG for topological sorting to be possible. If the graph
+    contains cycles, no valid topological order exists.
+
+.. image:: images/topological_sort_example.png
+    :alt: Example of topological sorting
+    :align: center
+
+.. _topological_sorting_algorithm:
+
+Topological Sorting Algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This algorithm is the same as the 
 :math:`DFS`
-است. صرفا هنگام تمام شدن پیمایش از یک راس, آن را در یک پشته(در اینجا برای افزایش سرعت برنامه از پشته استفاده نکردیم. توصیه می‌شود استفاده از پشته به حداقل برسد), می‌اندازیم.
+algorithm. Simply, when finishing the traversal of a vertex, we push it onto a stack (here, to improve the program's speed, we did not use a stack. It is recommended to minimize stack usage).
 
-اثبات درستی الگوریتم
+.. Proof of Algorithm Correctness
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-فرض کنید ترتیبی که الگوریتم به ما می‌دهد اینگونه باشد :math:`v_{1}, v_{2}, ..., v_{n}`
-به لم زیر توجه کنید :
 
-**لم ۱ :** وقتی راسی مانند
-:math:`x`
-را در آرایه می‌اندازیم که همه راس هایی که از x می‌توان به آنها رسید(یعنی همه راس هایی مثل
-:math:`v`
-که از 
-:math:`x`
-به
-:math:`v`
-مسیر هست) , پیمایش آنها تمام شده باشد و در آرایه انداخته شده باشند!(چرا؟)
+Suppose the order provided by the algorithm is as follows: :math:`v_{1}, v_{2}, ..., v_{n}`.  
+Consider the following lemma:
+
+**Lemma 1:** When we place a vertex :math:`x` in the array, all vertices reachable from :math:`x`  
+(i.e., all vertices :math:`v` such that there is a path from :math:`x` to :math:`v`) must have already been  
+traversed and placed in the array! (Why?)
 
 
+To prove the above algorithm, we use proof by contradiction and **Lemma 1**. Assume the order  
+we obtained is not valid. That is, there exist :math:`i < j` such that the edge :math:`(v_{i}, v_{j})`  
+belongs to the graph (i.e., an edge from left to right).
 
-برای اثبات الگوریتم بالا از برهان خلف و **لم ۱** استفاده می‌کنیم. فرض کنید ترتیبی که به دست آوردیم مطلوب نباشد. یعنی وجود دارند 
-:math:`i < j`
-به طوری که یال 
-:math:`(v_{i}, v_{j})`
-متعلق به گراف باشد(یعنی یک یال از چپ به راست).
+But this is impossible! Because when :math:`v_{i}` is placed in the array, according to **Lemma 1**,  
+all vertices reachable from :math:`v_{i}` must have already been placed in the array. However,  
+there is an edge (and trivially a path) from :math:`v_{i}` to :math:`v_{j}`, yet :math:`v_{j}` has not been  
+placed in the array! This contradicts **Lemma 1**. Therefore, the assumption is false, and  
+such :math:`i, j` cannot exist!
 
-اما این ممکن نیست! زیرا وقتی 
-:math:`v_{i}`
-در آرایه انداخته شده, طبق **لم ۱**, تمام راس هایی که از 
-:math:`v_{i}`
-به آنها مسیر هست, باید در آرایه انداخته شده باشند. اما از 
-:math:`v_{i}`
-به
-:math:`v_{j}`
-یک یال است(و بدیهتا مسیر هم هست), و 
-:math:`v_{j}`
-هنوز در آرایه انداخته نشده! که این خلاف **لم ۱** می‌باشد. پس حکم باطل است و چنین
-:math:`i, j`
-وجود ندارند!
-
-پیچیدگی الگوریتم
+Algorithm Complexity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-پیچیدگی الگوریتم بالا, همان پیچیدگی الگوریتم 
-:math:`DFS`
-است یعنی
-:math:`O(n + m)`
-که 
-:math:`m, n`
-به ترتیب تعداد راس ها و یال ها می‌باشند.
+The complexity of the above algorithm is the same as the complexity of the 
+:math:`DFS` 
+algorithm, i.e., 
+:math:`O(n + m)`, 
+where 
+:math:`m, n` 
+are the number of vertices and edges, respectively.
 
-پیاده‌سازی الگوریتم
+.. Algorithm Implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following code reads a graph as input and stores it using an adjacency matrix:
+
+.. code-block:: python
+   :linenos:
+
+   n = int(input())  # Get number of vertices
+   m = int(input())  # Get number of edges
+
+   # Create (n+1)*(n+1) adjacency matrix initialized with 0
+   adjacency_matrix = [[0]*(n+1) for _ in range(n+1)]
+
+   for _ in range(m):
+       u = int(input())  # Enter edge from vertex
+       v = int(input())  # Enter edge to vertex
+       adjacency_matrix[u][v] = 1
+       adjacency_matrix[v][u] = 1  # Undirected graph
+
+.. note::
+   In this implementation, we used ``n+1`` instead of ``n`` for matrix dimensions to align vertex numbers with their indices (assuming vertices are numbered from 1 to n). Using standard input (``input()``) for large graphs may be inefficient. In competitive programming, it's better to use ``sys.stdin`` for faster input.
+
+The adjacency matrix representation is visualized below:
+
+.. figure:: images/adjacency_matrix.png
+
 .. code-block:: cpp
 
 	#include<bits/stdc++.h>
@@ -185,6 +325,7 @@ topological sort
 	    return 0;
 	}
 
-**پی نوشت۱ :** دقت کنید که الگوریتم بالا در صورتی جواب درست را می‌دهد که گرافی بدون دور به عنوان ورودی بگیرد. بعد‌ها الگوریتم پیدا کردن دور در گراف جهت دار را شرح خواهیم داد.
+.. Note 1: Note that the above algorithm produces the correct result only when the input is an acyclic graph. Later, we will describe the algorithm for detecting cycles in directed graphs.
 
-**پی نوشت۲ :** در آخر ترتیب توپولوژیکی که به دست می‌اوریم, یال ها از راست به چپ هستند(به عبارتی یال ها از ایندکس بزرگ تر به ایندکس کوچک تر هستند. برعکس ترتیبی که در **قضیه 3.3.2** آوردیم).
+.. Note 2: The topological order obtained here has edges pointing from right to left (i.e., edges go from larger indices to smaller indices, opposite to the order stated in **Theorem 3.3.2**).
+

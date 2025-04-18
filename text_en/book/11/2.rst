@@ -1,79 +1,102 @@
-گونی
+Guni
 ============
-گونی یکی از الگوریتم های زیبا و کاربردی در درخت است که طیف وسیعی از مسائل را
-حل می کند. در این مساله، ما یک گونی (یک داده ساختار دلخواه) داریم که در یک
-عملیات می توان یکی از
-رئوس درخت را از آن حذف کرد یا یکی از رئوس را به آن اضافه کرد. درخت ما
-ریشه دار است و هدف این است که هر کدام از
-:math:`n`
-زیر درخت از درخت، هر کدام حداقل یک بار در گونی به تنهایی قرار گرفته باشند و
-مجموع تعداد عملیات ها از
-:math:`O(nlg(n))`
-باشد.
+Guni is one of the beautiful and practical algorithms in trees that solves a wide range of problems. In this problem, we have a Guni (an arbitrary data structure) where in each operation we can either remove a vertex of the tree from it or add a vertex to it. Our tree is rooted, and the goal is for each of the :math:`n` subtrees of the tree to have been placed alone in the Guni at least once, while keeping the total number of operations bounded by :math:`O(n \lg(n))`.
 
-کاربرد
+Application
 ---------
-در مسائل زیادی می توان از گونی استفاده کرد که تعدادی در تمرین های این فصل آمده
-اند. اما برای این که بیشتر این مساله و اهمیت آن برای شما روشن شود، یک مثال با هم
-حل خواهیم کرد. در این مساله یک درخت ریشه دار داریم که هر راس آن یک رنگی دارد. به
-ازای هر زیر درخت می خواهیم تعداد رنگ های متفاوت آن را به دست بیاوریم و خروجی دهیم. فرض
-کنید که راه حل مساله گونی را بلدید و به کمک آن سعی کنید که مساله را حل کنید.
+In many problems, a "guni" can be used (several examples are given in this chapter's exercises). But to better clarify this concept and its importance, we'll solve an example together. In this problem, we have a rooted tree where each vertex has a color. For every subtree, we want to calculate and output the number of distinct colors. Assume you know the guni problem's solution and try to solve this problem using it.
 
-برای حل این مساله، از یک داده ساختار استفاده می کنیم که بتوان به آن یک راس اضافه کرد
-یا یک راس حذف کرد و یا تعداد رنگ های متمایز آن را دریافت کرد. این داده ساختار می تواند
-یک آرایه ساده باشد که هنگام اضافه کردن خانه مربوط به آن رنگ را یک واحد زیاد می کنیم
-و هنگام حذف کردن خانه را یک واحد کم می کنیم و همزمان تعداد رنگ های متفاوت را نگه می داریم
-یعنی اگر یک رنگ قبل از اضافه کردن صفر بود و الآن یک می شد آن متغیر را یک واحد زیاد
-و هنگام حذف نیز اگر آن رنگ صفر می شد متغیر را یک واحد کم می کنیم. هر سه عملیات در
-این داده ساختار در زمان
-:math:`O(1)`
-انجام می شود.
+To solve this problem, we use a data structure that can:
+1. Add a vertex
+2. Remove a vertex
+3. Return the count of distinct colors
 
-حال از الگوریتم گونی (که هم اکنون جزییات پیاده سازی آن را نمی دانیم) استفاده می کنیم. همه
-زیر درخت ها را یک بار در این داده ساختار می آوریم و پاسخشان را یادداشت می کنیم. سپس
-جواب ها را چاپ می کنیم.
+This data structure can be a simple array where:
+- When adding a vertex, we increment the corresponding color's cell by 1
+- When removing a vertex, we decrement the corresponding color's cell by 1
+- We simultaneously maintain a distinct color counter (i.e., if a color's count changes from 0 to 1 when added, we increment the counter; if it changes to 0 when removed, we decrement the counter)
 
-الگوریتم
+All three operations in this data structure run in :math:`O(1)` time.
+
+Now we use the guni algorithm (whose implementation details we currently don't know). We process all subtrees once in this data structure, record their answers, then print the results.
+
+Algorithm
 ----------
-ایده گونی مشابه ایده جدا سازی سبک سنگین است که در فصل پایین ترین جد مشترک با آن
-آشنا شدیم. (برای یادآوری، می توانید به بخش 10.2 نگاهی بیاندازید) هدف
-ما این است که روی هر راس، به اندازه ضریبی از تعداد یال های سبکش در مسیر به ریشه عملیات
-انجام دهیم. یعنی تعداد حذف کردن و اضافه کردن های راس
-:math:`v`
-به گونی در کل عملیات، از
-:math:`O(light_v)`
-باشد. و از قسمت 10.2 به خاطر می آوریم که
-:math:`light_v \le lg(n)`
-و بنابراین اگر موفق به این کار شویم، جمع عملیات ها روی تمام رئوس از
-:math:`O(nlg(n))`
-خواهد بود.
+The idea of the sack is similar to the heavy-light separation idea introduced in the chapter on Lowest Common Ancestor (LCA). (For a reminder, you can refer to Section 10.2). Our goal is to perform operations on each vertex proportional to the number of its light edges in the path to the root. That is, the total number of deletions and additions of vertex 
+:math:`v` 
+to the sack during all operations should be 
+:math:`O(light_v)`. 
+From Section 10.2, we recall that 
+:math:`light_v \le \lg(n)`, 
+so if we succeed in this, the total operations across all vertices will be 
+:math:`O(n \lg(n))`.
 
-الگوریتم را به صورت یک تابع بازگشتی پیاده سازی می کنیم. این تابع
-یک راس ورودی می گیرد، با گونی خالی شروع می کند، تمام
-زیردرخت هایی که ریشه شان در زیردرخت این راس
-است را در گونی یک بار قرار می دهد، سپس گونی را به طوری که تمام رئوس زیردرختش
-درون آن باشند تحویل می دهد. پیاده سازی این تابع، برای یک برگ بدیهی است و
-در زمان ثابت اجرا می شود. برای رئوس غیر برگ، آن را به طور بازگشتی پیاده می کنیم. ابتدا
-روی همه یال های سبک فرزند این تابع را اجرا می کنیم و بعد از اجرا، گونی را خالی
-می کنیم. سپس روی فرزند این راس که یال سنگین دارد، این تابع را اجرا می کنیم
-اما **دیگر گونی را خالی نمی کنیم** و بعد بچه های با یال سبک را مجددا به گونی
-اضافه می کنیم. حال کل زیردرخت درون گونی آمده است. پاسخ راس ورودی تابع را از
-داده ساختار دریافت می کنیم و سپس به اجرای تابع خاتمه می دهیم.
+We implement the algorithm as a recursive function. This function takes an input vertex, starts with an empty sack, places all subtrees rooted under this vertex into the sack once, then returns the sack containing all vertices of its subtree. Implementing this function is trivial for a leaf node and runs in constant time. For non-leaf vertices, we proceed recursively. First, we execute the function on all light-edge children and empty the sack after each execution. Next, we execute the function on the heavy-edge child of this vertex **without emptying the sack**, then re-add the light-edge children to the sack. Now the entire subtree is in the sack. We retrieve the answer for the input vertex from the data structure and terminate the function.
 
-در هنگام اجرای این تابع، همه فرزندان راس سنگین تنها به اندازه ای که تابع بازگشتی
-نیاز داشت از گونی اضافه و حذف شده اند و فرزندان راس های سبک، به جز آن، یک بار توسط
-تابع اصلی حذف و یک بار نیز اضافه شده اند. خود راس ورودی نیز در آخر یک بار اضافه
-شد. می توان دید که تعداد اضافه شدن و حذف شدن های هر راس مثل
-:math:`v`
-دقیقا برابر
-:math:`2light_v+1`
-خواهد شد. هم چنین می توان دریافت که زمان اجرای برنامه، ضریبی از تعداد عملیات های
-روی گونی است و هر دو طبق چیزی که در بالا مطرح شد از
-:math:`O(nlg(n))`
-می باشند.
+During execution, all children of the heavy-edge vertex are only added to or removed from the sack as required by the recursive function, while light-edge children are removed once and re-added once by the main function. The input vertex itself is also added once at the end. It can be observed that the total number of additions and removals for any vertex 
+:math:`v` 
+is exactly 
+:math:`2 light_v + 1`. 
+Additionally, the runtime of the algorithm is proportional to the number of sack operations, and both—as explained above—are 
+:math:`O(n \lg(n))`.
 
-پیاده سازی
-------------
+Implementation
+---------------
+
+This section discusses the implementation of graph algorithms. Below is an example code block for checking bipartiteness:
+
+.. code-block:: python
+   :linenos:
+
+   def is_bipartite(g):
+       # In this problem, we assume the graph is undirected
+       color = {}
+       for node in g.nodes():
+           if node not in color:
+               queue = [node]
+               color[node] = 0
+               while queue:
+                   v = queue.pop(0)
+                   for neighbor in g.neighbors(v):
+                       if neighbor in color:
+                           if color[neighbor] == color[v]:
+                               return False
+                       else:
+                           color[neighbor] = 1 - color[v]
+                           queue.append(neighbor)
+       return True
+
+.. figure:: images/bipartite_graph.png
+   :align: center
+   :width: 60%
+
+Another example with adjacency matrix representation:
+
+.. code-block:: python
+   :linenos:
+
+   def has_cycle(matrix):
+       # Detects cycles in undirected graphs using DFS
+       visited = [False] * len(matrix)
+       for i in range(len(matrix)):
+           if not visited[i]:
+               stack = [(i, -1)]
+               while stack:
+                   node, parent = stack.pop()
+                   visited[node] = True
+                   for j in range(len(matrix[node])):
+                       if matrix[node][j]:
+                           if not visited[j]:
+                               stack.append((j, node))
+                           elif j != parent:
+                               return True
+       return False
+
+Key points to remember:
+
+1. Always handle disconnected graphs
+2. Choose appropriate data structures based on graph density
+3. Consider edge cases like empty graphs and single-node graphs
 
 .. code-block:: cpp
 
@@ -127,7 +150,30 @@
         compute_answer(); // hame zirderakht v dar gooni ast, javabash ra hesab mikonim
     }
 
-توجه کنید که در این پیاده سازی، باید گراف را ورودی بگیرید و مقادیر آرایه
-sz
-را با یک دی اف اس دیگر پر کنید که در این جا به آن اشاره نکردیم.
+.. note::  
+   توجه کنید که در این پیاده‌سازی، باید گراف را ورودی بگیرید و مقادیر آرایه  
+   ``sz``  
+   را با یک **DFS** دیگر پر کنید که در این‌جا به آن اشاره نکردیم.  
+
+.. code-block:: python  
+   :linenos:  
+   
+   # درخت DFS ریشه‌دار بسازید  
+   def dfs(u, parent):  
+       sz[u] = 1  # اندازه زیردرخت اولیه  
+       for v in graph[u]:  
+           if v != parent:  
+               dfs(v, u)  
+               sz[u] += sz[v]  # افزودن اندازه زیردرخت فرزند  
+
+.. image:: images/dfs_tree.png  
+   :align: center  
+
+**توضیحات:**  
+- در خط ۴، حلقه روی همسایه‌های رأس ``u`` اجرا می‌شود.  
+- شرط ``v != parent`` از بازگشت به والد جلوگیری می‌کند.  
+- در خط ۶، اندازه زیردرخت فرزند به والد اضافه می‌شود.  
+
+**نکته:**  
+الگوریتم فوق اندازه زیردرخت هر رأس را در آرایه ``sz`` ذخیره می‌کند. برای پر کردن این آرایه با روش‌های دیگر (مثلاً BFS)، نیاز به تغییر الگوریتم دارید.
 

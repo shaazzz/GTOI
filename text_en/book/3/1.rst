@@ -1,46 +1,72 @@
-تعاریف
+Definitions
 =============
 
-تعریف 3.1.1 (گراف جهت دار)
----------------------------
-فرض کنید تعدادی شهر داریم که توسط جاده هایی به هم متصل هستند و شما در شهر D هستید و می‌خواهید به شهر A بروید(شکل ۱).
-برای رسیدن به شهر A باید از تعدادی جاده عبور کنیم ولی از آنجا که جاده‌ها می‌توانند یک‌طرفه باشند، به گرافی نیاز داریم که جهت هر جاده را به ما نشان دهد که به آن گراف جهت دار گوییم(شکل ۲).
+.. image:: images/graph_example.png
+   :align: center
+
+A graph is a structure amounting to a set of vertices connected by edges. Formally:
+
+.. code-block:: python
+
+   class Graph:
+       def __init__(self):
+           self.vertices = {}  # Finglish comment (no change)
+           self.edges = []     # لیست یالها (Persian comment - translate)
+           
+       def add_edge(self, u, v):
+           # در صورت وجود رأس، یال اضافه کن (Persian comment - translate)
+           if u in self.vertices and v in self.vertices:
+               self.edges.append((u, v))
+
+A **simple graph** prohibits loops and multiple edges between vertices. In contrast, a **multigraph** allows them.
+
+.. raw:: html
+
+    <div style="direction: ltr; text-align: left">
+
+Definition 3.1.1 (Directed Graph)
+----------------------------------
+Suppose we have several cities connected by roads, and you are in city D and want to go to city A (Figure 1). To reach city A, we must traverse several roads, but since the roads can be one-way, we need a graph that shows the direction of each road, which we call a **directed graph** (Figure 2).
 
 .. figure:: /_static/dot/Simple_Graph.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
 .. figure:: /_static/dot/Simple_Directed_Graph.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: اگه اینترنت یارو آشغال باشه این میاد
 
-به بیان دقیق تر، گراف جهت دار 
-:math:`G`
-یک زوج مرتب
-:math:`(V, E)`
-است که :math:`V` مجموعه راس های گراف است. همچنین :math:`E` یک مجموعه شامل زوج مرتب هایی به فرم
-:math:`(u, v)`
-است به این معنا که یک یال جهت دار از 
-:math:`u`
-به 
-:math:`v`
-در گراف وجود دارد.
+More precisely, a directed graph 
+:math:`G` 
+is an ordered pair 
+:math:`(V, E)` 
+where :math:`V` is the set of vertices. The set :math:`E` contains ordered pairs of the form 
+:math:`(u, v)`, 
+indicating a directed edge from 
+:math:`u` 
+to 
+:math:`v` 
+in the graph.
 
-به گراف جهت دار 
-:math:`G`
-ساده می‌گوییم اگر شامل یال های جهت دار چند گانه و طوقه نباشد. البته توجه داشته باشید که ممکن است 
-:math:`G`
-ساده باشد و :math:`E` شامل 
-:math:`(u, v)`
-و
-:math:`(v, u)`
-باشد، ولی نمی‌تواند ۲ تا از زوج مرتب 
-:math:`(u, v)`	
-را داشته باشد.
+We call a directed graph 
+:math:`G` 
+**simple** if it contains no multiple directed edges or loops. Note that :math:`G` can be simple while :math:`E` contains both 
+:math:`(u, v)` 
+and 
+:math:`(v, u)`, 
+but it cannot have duplicate ordered pairs 
+:math:`(u, v)`.
 
-توجه داشته باشید که از این به بعد ما با گراف های جهت دار ساده کار خواهیم داشت و منظور ما از گراف جهت دار گراف جهت دار ساده خواهد بود، مگر اینکه در صورت سوال ذکر شود.
+Note: From this point forward, we will work with simple directed graphs. Unless explicitly stated otherwise, the term "directed graph" will refer to a simple directed graph.
+
+.. raw:: html
+
+    </div>
+
+.. Degree in Directed Graphs
+.. ------------------------------------------------
 
 درجه در گراف جهت دار
 --------------------------------
@@ -64,134 +90,148 @@
 :math:`\Delta^{+}, \Delta^{-}`
 به ترتیب ماکسیمم درجه ورودی و ماکسیمم درجه خروجی است.
 
-
-دور و مسیر در گراف جهت دار 
+Degree in Directed Graphs
 --------------------------------
-مشابه گراف های ساده، در گراف های جهت دار هم تعاریفی مانند گشت، گشت بسته، گذر، دور و مسیر داریم. 
-برای مثال در شکل۲، یک مسیر جهت دار می‌تواند مسیری به شکل (D -> C -> B -> A)
-باشد که راس شروع همان مبدا سفر(D) و راس پایان همان مقصد سفر(A) می‌باشد. دقت کنید در طی کردن یال ها، باید جهت یال رعایت شود. برای مثال هنگامی که در راس D هستیم، نمی‌توانیم به راس A به صورت مستقیم برویم!
+In a directed graph, each vertex has an in-degree and an out-degree. For example, in Figure 2, the in-degree of vertex D is 3 and its out-degree is 1!
+
+The in-degree of vertex :math:`v` is denoted by the symbol 
+:math:`d^{−}(v)` 
+or 
+:math:`deg^{−}(v)`, 
+and the out-degree is denoted by 
+:math:`d^{+}(v)` 
+or 
+:math:`deg^{+}(v)`.
+
+The notation 
+:math:`\delta^{+}, \delta^{-}` 
+refers to the *minimum in-degree* and *minimum out-degree*, respectively.
+
+Similarly, the notation 
+:math:`\Delta^{+}, \Delta^{-}` 
+refers to the *maximum in-degree* and *maximum out-degree*, respectively.
+
+.. _directed-cycles-paths:
+
+Cycles and Paths in Directed Graphs
+-----------------------------------
+Similar to simple graphs, in directed graphs, we have definitions such as walk, closed walk, trail, cycle, and path.
+For example, in Figure 2, a directed path could be a path like (D -> C -> B -> A)
+where the starting vertex is the origin (D) and the ending vertex is the destination (A). Note that when traversing edges, their direction must be respected. For example, when at vertex D, we cannot go directly to vertex A!
 
 
-همچنین یک دور در شکل۲ می‌تواند به صورت (D -> C -> B -> D) باشد. بدیهتا در هنگام طی کردن دور، باید جهت یال ها رعایت شود.
+Additionally, a cycle in Figure 2 could be (D -> C -> B -> D). Obviously, when traversing a cycle, edge directions must be respected.
 
-به طور مشابه، طول هر کدام از تعاریف بالا، برابر با تعداد یال های آن است.
+Similarly, the length of each of the above definitions equals the number of its edges.
 
 
-به بیان دقیق تر : 
+More precisely:
 
-**گشت :**
-دنباله
+**Walk:**
+A sequence
 :math:`v_{1}, v_{2}, ..., v_{l}`
-یک گشت در گراف جهت دار 
+is a walk in the directed graph
 :math:`G`
-است، اگر به ازای هر 
-:math:`1 \leq i < l`
-یال
+if for every
+:math:`1 \leq i < l`,
+the edge
 :math:`(v_{i}, v_{i+1})`
-در :math:`G` باشد(به عبارتی یال فوق متعلق به مجموعه :math:`E` باشد) .
+exists in :math:`G` (i.e., the edge belongs to the set :math:`E`).
 
-**گشت بسته :**
-اگر در دنباله ای که تعریف کردیم،
-:math:`v_{1} = v_{l}` 
-باشد، به این گشت یک گشت بسته گوییم.
+**Closed Walk:**
+If in the sequence we defined,
+:math:`v_{1} = v_{l}`,
+we call this walk a closed walk.
 
-**گذر :** اگر در دنباله ای که تعریف کردیم، هیچ یال تکراری نباشد، به این گشت یک گذر گوییم.
+**Trail:** If in the sequence we defined, there are no repeated edges, we call this walk a trail.
 
-**مسیر :** اگر در دنباله ای که تعریف کردیم، هیچ راس تکراری نباشد(و در نتیجه یال تکراری هم نباشد)، گشت حاصل یک مسیر است.
+**Path:** If in the sequence we defined, there are no repeated vertices (and consequently no repeated edges), the resulting walk is a path.
 
-
-**دور :** در آخر اگر در یک مسیر، راس شروع و پایان یکسان باشند(
+**Cycle:** Finally, if in a path, the starting and ending vertices are the same (
 :math:`v_{1} = v_{l}`
-)
-به گشت حاصل یه دور گوییم.
+),
+we call the resulting walk a cycle.
 
-دقت کنید که تعاریف بالا دقیقا مانند تعاریف در گراف ساده هستند با این تفاوت که در گراف جهت دار باید جهت یال ها درست طی شوند!
+Note that these definitions are exactly like those in simple graphs, with the difference that in directed graphs, edge directions must be correctly followed!
 
-قضایا و لم های مورد استفاده در این بخش 
---------------------------------------
+Theorems and Lemmas Used in This Section
+----------------------------------------
 
+.. _theorem-3-1-2:
 
-**قضیه 3.1.2**
+**Theorem 3.1.2**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**صورت قضیه :** در گراف جهت دار :math:`G`، داریم 
-:math:`\sum d^{-}(v) = \sum d^{+}(v)`
+**Theorem Statement:** In a directed graph :math:`G`, we have  
+:math:`\sum d^{-}(v) = \sum d^{+}(v)`  
 
+**Proof:** The proof of this theorem is simple (this theorem is similar to the evenness of the sum of degrees in a simple graph). Consider any edge in this graph: it adds one outgoing degree to the starting vertex and one incoming degree to the ending vertex. Consequently, one unit is added to the right side of the equality and one unit to the left side of the equality!
 
-**اثبات قضیه :** برهان این قضیه ساده است(این قضیه مشابه با زوج بودن مجموع درجات در گراف ساده است). هر یال از این گراف را که در نظر بگیرید، به راس شروع یک درجه خروجی اضافه می‌کند و به راس پایان یک درجه ورودی اضافه میکند. در نتیجه یک واحد به طرف راست تساوی و یک واحد به طرف چپ تساوی اضافه می‌شود!
+.. raw:: latex
 
+    \setcounter{chapter}{3}
+    \setcounter{section}{1}
+    \setcounter{subsection}{2}
 
-**قضیه 3.1.3**
+**Theorem 3.1.3**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**صورت قضیه :** اگر در گراف جهت دار :math:`G`، درجه خروجی(یا درجه ورودی) هر راس حداقل ۱ باشد، آنگاه این گراف حداقل یک دور جهت‌دار دارد.
+**Statement of the Theorem:** In a directed graph :math:`G`, if every vertex has an out-degree (or in-degree) of at least 1, then the graph contains at least one directed cycle.
 
+**Proof of the Theorem:** This theorem is analogous to the case of simple graphs where every vertex has a degree of at least 2. Consider the longest path in the graph.
 
-**اثبات قضیه :** این قضیه مشابه با دور داشتن گراف ساده‌ای است که درجه هر راس آن حداقل ۲ است. بلند ترین مسیر گراف را در نظر بگیرید.
+Suppose this longest path is 
+:math:`v_1, v_2, ..., v_l`.
+By definition, the length of this path is 
+:math:`l-1`.
 
-فرض کنید این بلند ترین مسیر به صورت 
-:math:`v_1, v_2, ..., v_l`
-باشد. طول این مسیر طبق تعاریف بالا برابر با‌ 
-:math:`l-1`
-است.
-
-حال راس
+Now consider vertex 
+:math:`v_l`.
+Since this vertex has an out-degree of at least 1, there exists a vertex 
+:math:`x`
+such that there is a directed edge from 
 :math:`v_l`
-را در نظر بگیرید. از آنجا که این راس حداقل یک درجه خروجی دارد، پس راسی مانند 
+to 
+:math:`x`.
+Moreover, vertex 
 :math:`x`
-وجود دارد به طوری که از
-:math:`v_l`
-به 
-:math:`x`
-یک یال جهت دار است. از طرفی راس
-:math:`x`
-نمی‌تواند خارج از مسیر بالا باشد(چرا؟).
+cannot lie outside this path (Why?).
 
-پس راس
+Therefore, vertex 
 :math:`x`
-یکی از راس های مسیر است. برای مثال فرض کنید  
+must be one of the vertices in the path. Let 
 :math:`x = v_j`
+for some :math:`j`.
 
-در نتیجه دنباله
+Consequently, the sequence 
 :math:`v_{j}, v_{j+1}, ..., v_{l}, v_{j}`
-تشکیل یک دور می‌دهد!
+forms a directed cycle!
 
+.. _theorem-3-1-4:
 
-**قضیه 3.1.4**
+**Theorem 3.1.4**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**صورت قضیه :** اگر در گراف جهت دار :math:`G`، درجه خروجی(یا درجه ورودی) هر راس حداقل :math:`k` باشد، آنگاه این گراف یک دور به طول حداقل :math:`k+1` دارد.
+**Theorem Statement:** In a directed graph :math:`G`, if every vertex has an out-degree (or in-degree) of at least :math:`k`, then the graph contains a cycle of length at least :math:`k+1`.
 
+**Proof:** This theorem generalizes Theorem 3.1.2. Its proof follows a similar approach to Theorem 3.1.2.
 
-**اثبات قضیه :** این قضیه تعمیم قضیه 3.1.2 می‌باشد. اثبات این قضیه هم مشابه با قضیه 3.1.2 می‌باشد.
+Consider the longest path in :math:`G`. Suppose the sequence of vertices is 
+:math:`v_1, v_2, \ldots, v_l`.
 
-به طور مشابه بلند ترین مسیر در :math:`G` را در نظر بگیرید. فرض کنید دنباله ای به صورت 
-:math:`v_1, v_2, ..., v_l`
-باشد.
+We claim that :math:`l > k` (i.e., the length of the longest path is at least :math:`k`).
 
-حال ادعا میکنیم 
-:math:`l > k`
-(به عبارتی می‌گوییم طول بلند ترین مسیر حداقل برابر با :math:`k` است).
+The proof of this claim is straightforward. Observe that vertex :math:`v_l` has at least :math:`k` outgoing edges. All vertices adjacent to :math:`v_l` (those receiving an edge from :math:`v_l`) must lie within this longest path (Why?). Thus, the longest path contains at least :math:`k+1` vertices (including :math:`v_l` and its :math:`k` neighbors).
 
-برهان ادعا واضح است، زیرا اگر راس :math:`v_l` را در نظر بگیریم، حداقل  :math:`k` یال از :math:`v_l` خارج می‌شود. که همه این راس ها(راس هایی که یال ورودی از :math:`v_l` دارند) داخل بلندترین مسیر هستند(چرا؟). پس این بلند ترین مسیر حداقل :math:`k+1` راس دارد(k تا از همسایه های :math:`v_l` و خود :math:`v_l`).
+Now, consider the smallest index :math:`j` such that there is an edge from :math:`v_l` to :math:`v_j` (i.e., we select the leftmost vertex in the path to maximize the cycle length). The cycle formed is 
+:math:`v_j, v_{j+1}, \ldots, v_l, v_j`.
+We assert that the length of this cycle is at least :math:`k+1` (Why?).
 
+.. |شکل۱| image:: images/figure1.png
+.. |شکل۲| image:: images/figure2.png
 
-حال کم‌ترین
-:math:`j`
-را در نظر بگیرید به طوری از 
-:math:`v_l`
-به
-:math:`v_j`
-یال باشد(به عبارتی سمت چپ ترین راس از مسیر را در نظر می‌گیریم تا در حد امکان طول دور را افزایش دهیم).
-حال دور رو به رو را در نظر بگیرید 
-:math:`v_{j}, v_{j + 1}, ..., v_{l}, v_{j}`
-ادعا می‌کنیم طول این دور حداقل برابر با :math:`k+1` است(چرا؟).
-
-
-چند تعریف دیگر
+A Few More Definitions
 --------------------------------------
-**گراف زمینه  :**
-اگر یال های یک گراف جهت دار را بی جهت کنیم، آنگاه به گراف به دست آمده گراف زمینه گوییم. برای مثال شکل۱ یک گراف زمینه برای شکل۲ است.
-
-
+**Underlying Graph:**
+If we remove the directions from the edges of a directed graph, the resulting graph is called the underlying graph. For example, |شکل۱| is the underlying graph for |شکل۲|.
 

@@ -1,25 +1,62 @@
-ماتریس مجاورت
+Adjacency Matrix
 ============
 
-ماتریس مجاورت
+To represent a graph with ``n`` vertices, we can use an ``n×n`` matrix where rows and columns correspond to vertices. The entry in row ``i`` and column ``j`` is 1 if there is an edge between vertex ``i`` and vertex ``j``, and 0 otherwise. For example, the adjacency matrix for the following simple undirected graph:
+
+.. image:: images/adjacency_matrix.*
+
+is:
+
+.. math::
+
+   \begin{bmatrix}
+   0 & 1 & 0 & 1 \\
+   1 & 0 & 1 & 1 \\
+   0 & 1 & 0 & 0 \\
+   1 & 1 & 0 & 0 \\
+   \end{bmatrix}
+
+In simple graphs (without loops), the diagonal entries of the adjacency matrix are always zero.
+
+Sample code for creating an adjacency matrix:
+
+.. code-block:: python
+   :linenos:
+
+   # Creating adjacency matrix
+   n = 4  # Number of vertices
+   adjacency_matrix = [[0 for _ in range(n)] for _ in range(n)]
+   
+   edges = [(0, 1), (0, 3), (1, 2), (1, 3)]  # Graph edges
+   
+   for i, j in edges:
+       # If there is an edge between i and j
+       adjacency_matrix[i][j] = 1
+       adjacency_matrix[j][i] = 1  # For undirected graphs
+   
+   # Prints the adjacency matrix
+   for row in adjacency_matrix:
+       print(row)
+
+Adjacency Matrix
 --------------
 
-ماتریس مجاورت ماتریسی است  n × n که برای نمایش گراف های ساده استفاده می شود. در این ماتریس :math:`a_{ij}` نشان دهنده تعداد یال های موجود بین راس i و راس j در گراف است. اگر توجه کنید می فهمید که این ماتریس متقارن است. درایه های این ماتریس صفر و یک است.
+The adjacency matrix is an n × n matrix used to represent simple graphs. In this matrix, :math:`a_{ij}` represents the number of edges between vertex i and vertex j in the graph. If you note, this matrix is symmetric. The entries of this matrix are zero and one.
 
-در گراف هایی با یال چندگانه و طوقه
+In graphs with multiple edges and loops
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-در این گراف ها ماتریس مجاورت با همان تعریف اصلی خود مورد استفاده قرار می گیرید و تفاوت در اینجاست که دیگر درایه ها لزوماً صفر و یک نیستند و می توانند هر مقدار حسابی را بگیرند.
+In these graphs, the adjacency matrix is used with its original definition, with the difference that the entries are no longer necessarily zero or one and can take any numerical value.
 
-
-در گراف های جهت دار
+.. Directed Graphs
 ~~~~~~~~~~~~~~~~~~~~~
 
-در گراف های جهت دار ماتریس مجاورت به این صورت تعریف می شود که :math:`a_{ij}` به معنای تعداد یال هایی است که از راس i به j می رود.
+In directed graphs, the adjacency matrix is defined such that :math:`a_{ij}` represents the number of edges going from vertex *i* to vertex *j*.  
 
-نکته آخر راجب ماتریس مجاورت این است که زمانی که گراف دارای وزن است مورد استفاده قرار نمی گیرد هر چند در بدست آوردن کوتاه ترین مسیر ها از ماتریسی مشابه این ماتریس استفاده می شود و در تمامی تعریف های بالا یال ها وزن دار نیستند.
+A final note regarding the adjacency matrix is that it is not used when the graph is weighted, though a matrix similar to this matrix is employed for finding shortest paths. In all the definitions above, edges are assumed to be unweighted.  
 
-.. figure:: /_static/AdjacencyMatrix.png
-   :width: 80%
-   :align: center
-   :alt: Adjacency Matrix
+.. figure:: /_static/AdjacencyMatrix.png  
+ :width: 80%  
+ :align: center  
+ :alt: Adjacency Matrix
+

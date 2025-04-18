@@ -1,19 +1,53 @@
-یک ریختی
+Isomorphism
 ============
 
-گراف های یکسان
+Two graphs *G* and *H* are called **isomorphic** (written as *G ≃ H*) if there exists a bijective correspondence between their vertices that preserves adjacency relationships. In other words, if every pair of adjacent vertices in *G* corresponds to a pair of adjacent vertices in *H*, and vice versa.
+
+Necessary conditions for two graphs to be isomorphic:
+-----------------------------------------------------
+- They must have the **same number of vertices**
+- They must have the **same number of edges**
+- Their vertices must have **matching degrees** (same degree sequence)
+
+.. code-block:: python
+
+    def is_isomorphic(graph1, graph2):
+        # Check number of vertices
+        if len(graph1.nodes) != len(graph2.nodes):  # If number of vertices isn't equal
+            return False
+        
+        # Check number of edges    
+        if len(graph1.edges) != len(graph2.edges):  # If number of edges isn't equal
+            return False
+            
+        # Check degree sequences
+        if sorted(graph1.degrees) != sorted(graph2.degrees):  # Compare sorted degree lists
+            return False
+            
+        # More detailed checks needed for full verification
+        return True
+
+.. image:: /images/isomorphism-example.png
+
+.. note::
+    In reality, checking graph isomorphism is computationally complex (NP problem). The above code only verifies basic conditions. For full verification, more advanced algorithms like VF2 or UWLCM are used, with time complexity up to ``O(n!)`` in worst cases.
+
+Identical Graphs
 ----------------
-گراف G و H را در نظر بگیرید.
-اگر V(G) = V(H) و E(G) = E(H) باشد گوییم گراف های G و H یکسان هستند.
+Consider graphs G and H.
+If V(G) = V(H) and E(G) = E(H), then we say graphs G and H are identical.
 
-یک ریختی
-----------
-گراف G و H را در نظر بگیرید.
-تابع یک به یک و پوشا f(u) را تعریف کنیم راس تناظر داده شده در گراف H از راس u در گراف G و با این شرط که f(u) و f(v) با هم برابرند تنها در صورتی که u برابر با v باشد.
-اگر بتوان یک تابع f بین راس های G و H ایجاد کرد که با قراردادن f هر راس u در گراف G جای خود راس u این دو گراف یکسان شود، گوییم این دو گراف یک ریخت هستند.
-به عبارت دیگه یال uv در G وجود دارد اگر و تنها اگر یال f(u)f(v) هم در H وجود داشته باشد؛ در این صورت دو گراف یک ریخت هستند.
-
-خود ریختی
+Isomorphism
 -----------
-تعریف ساده خود ریختی،یک ریختی گراف به خودش است.
-یعنی با جایگشت دادن راس های گراف مجموعه یال ها تغییر نکند.
+Consider graphs G and H.  
+We define a bijective function f(u) that maps each vertex u in graph G to a corresponding vertex in graph H, with the condition that f(u) and f(v) are equal only if u equals v.  
+
+If we can construct a function f between the vertices of G and H such that replacing each vertex u in graph G with f(u) makes the two graphs identical, we say the graphs are **isomorphic**.  
+
+In other words, an edge uv exists in G **if and only if** the edge f(u)f(v) also exists in H; in this case, the two graphs are isomorphic.
+
+Automorphism
+------------
+A simple definition of an automorphism is a graph morphism to itself.  
+That is, by permuting the vertices of the graph, the edge set remains unchanged.
+

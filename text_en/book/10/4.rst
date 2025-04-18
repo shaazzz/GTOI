@@ -1,118 +1,60 @@
-ارتباط LCA و RMQ
-==================
+The Relationship Between LCA and RMQ
+===================================
 
-در ادامه به بررسی یک مساله دیگر می‌پردازیم که در ظاهر به موضوع بحث نامربوط است اما
-ارتباط نزدیکی به مساله
-‌LCA
-دارد. سپس به کمک حل این مساله یک راه حل از اردر
-:math:`O(n*lg(n)+q)`
-ارائه می‌کنیم که در صورت زیاد بودن تعداد پرسش ها نسبت به رئوس درخت، از
-راه قبل بهتر عمل می‌کند.
+In the following section, we examine another problem that appears unrelated at first glance but has a close connection to the LCA problem. We then present a solution with time complexity :math:`O(n \lg n + q)` using this problem, which performs better than previous methods when the number of queries is large relative to the number of tree vertices.
 
-در این مساله ابتدا یک آرایه
-n
-راسی به شما داده می‌شود و سپس از شما
-q
-پرسش انجام می‌شود که در هر پرسش، دو سر یک بازه به شما داده می‌شود و از شما کمینه
-اعضای این بازه خواسته می‌شود. شما به کمک درخت بازه‌ای که در قبل خواندید می‌توانید
-این مساله را از
-:math:`O(n+q*lg(n))`
-حل کنید. اگر به جای کمینه اعضا، جمع اعضا خواسته می‌شد نیز می‌توانستید به راحتی و از
-:math:`O(n+q)`
-مساله را حل کنید. به این مساله
-RMQ
-می‌گویند که مخفف پرسش کمینه در بازه است.
+In this problem, you are first given an array of size *n*, followed by *q* queries. In each query, you are given the two endpoints of a range and asked to find the **minimum element** within this range. Using the **segment tree** discussed earlier, you can solve this problem in :math:`O(n + q \lg n)`. If the problem instead required the **sum of elements** in the range, it could easily be solved in :math:`O(n + q)`. This problem is called **RMQ** (Range Minimum Query).
 
-تبدیل RMQ به LCA
+Converting RMQ to LCA
 ---------------------
-در این جا از روی آرایه ورودی، یک درخت دکارتی می‌سازیم. درخت دکارتی یک درخت دودویی است
-که هر عضو آرایه متناظر با یک راس از درخت است. راس متناظر با عضو کمینه آرایه در ریشه
-قرار دارد، زیردرخت فرزند چپ معادل درخت دکارتی بازه ابتدا تا عضو کمینه و زیردرخت
-فرزند راست معادل درخت دکارتی بازه عضو کمینه تا انتها است. در شکل زیر
-یک درخت دکارتی را می‌بینید.
+Here, we build a Cartesian tree from the input array. A Cartesian tree is a binary tree 
+where each element of the array corresponds to a node in the tree. The node corresponding 
+to the minimum element of the array is placed at the root. The left subtree is equivalent 
+to the Cartesian tree of the subarray from the beginning to the minimum element, and the 
+right subtree is equivalent to the Cartesian tree of the subarray from the minimum element 
+to the end. In the figure below, you can see a Cartesian tree.
 
 .. figure:: /_static/dot/Cartesian_Tree.svg
-   :width: 40%
-   :align: center
-   :alt: عکس یک مثال از درخت دکارتی
+ :width: 40%
+ :align: center
+ :alt: An example image of a Cartesian tree
 
-به کمک این مطلب که کوچکترین جد مشترک درون بازه بین این دو راس قرار دارد، ثابت کنید که
-برای پیدا کردن مینیمم در بازه، می توان پایین ترین جد مشترک در درخت دکارتی را پیدا کرد.
-در ادامه با ارائه یک راه از
-:math:`O(n)`
-برای ساخت درخت دکارتی نشان می دهیم که اگر راهی برای
-RMQ
-وجود داشته باشد، راهی با همان پیچیدگی برای
-LCA
-وجود خواهد داشت.
+Using the fact that the lowest common ancestor lies within the interval between these two nodes, 
+prove that to find the minimum in the interval, one can find the LCA in the Cartesian tree. 
+Subsequently, by presenting an :math:`O(n)` method for constructing the Cartesian tree, 
+we demonstrate that if there exists a solution for RMQ, there will also exist a solution 
+with the same complexity for LCA.
 
-ساخت درخت دکارتی در زمان خطی
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-درخت دکارتی را می‌توان به کمک یک استک ساخت. درون استک رئوسی که از پدرشان مطمئن نیستیم
-را به صورت مرتب
-(هم از لحاظ مقدار و هم از لحاظ مکان)
-نگه می‌داریم. ابتدا با استک خالی شروع کرده و شروع به پیمایش آرایه می کنیم. هر
-عضوی که می‌بینیم، تا جایی که از سر استک کوچک تر باشد را از استک حذف می کنیم. پدر همه
-آنها معلوم است. زیرا دیگر ممکن نیست کسی از جلوی آرایه پدر این رئوس باشد. پدر هر کدام
-راس قبلی در استک و پدر آخرین راس حذف شده همین راسی است که ورودی گرفته ایم. سپس این راس
-را درون استک اضافه می‌کنیم و به راس بعدی می‌رویم. در انتها یک جنگل به دست می آید که
-ریشه های آن درون استک است. این رئوس نیز به ترتیب هر کدام پدر راس قبلی است
-(چون دیگر راس جدیدی در کار نیست)
-و ریشه درخت نیز آخرین عضو استک است که کمینه آرایه نیز هست.
+Building a Cartesian Tree in Linear Time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Cartesian tree can be constructed using a stack. The stack maintains vertices whose parent is not yet determined, ordered both by value and position. Starting with an empty stack, we traverse the array. For each element, we pop elements from the stack as long as they are larger than the current element. The parent of all popped vertices is now determined, as no preceding element in the array can be their parent. The parent of each popped vertex is the previous vertex in the stack, and the parent of the last popped vertex is the current element. We then push the current element into the stack and proceed. In the end, we obtain a forest whose roots remain in the stack. These roots are sequentially linked as parent-child pairs (since no new elements remain), with the last element in the stack becoming the tree's root (which is also the array's minimum element).
 
-تبدیل LCA به RMQ
+.. _converting-lca-to-rmq:
+
+Converting LCA to RMQ
 ---------------------
-روی درخت
+We perform a 
 DFS
-می‌زنیم. موقع ورود به هر راس، آن را در آرایه اضافه می کنیم و مقدار
-آن را برابر ارتفاع آن قرار می‌دهیم. موقع خروج از هر راس نیز پدر آن را
-به همین ترتیب به آرایه اضافه می‌کنیم. هر راس به تعداد فرزندانش به علاوه یک عضو
-متناظر در آرایه دارد. برای پیدا کردن پایین ترین جد مشترک، تنها کافیست که عضو کمینه
-بین اعضای متناظر دو راسی که می خواهیم
-LCA
-آن را به دست آوریم را محاسبه کرده و ببینیم که متناظر با چه راسی است. اثبات این
-مطلب به خواننده واگذار می‌شود. بنابراین اگر راهی برای یکی از مسائل
-LCA یا RMQ
-وجود داشته باشد برای دیگری نیز راهی با همان پیچیدگی وجود دارد.
+traversal on the tree. Upon entering each vertex, we add it to the array and 
+set its value equal to its height. When exiting each vertex, we also add its parent 
+to the array in the same way. Each vertex has a corresponding number of entries in 
+the array equal to its number of children plus one. To find the lowest common ancestor, 
+we simply need to compute the minimum element between the corresponding entries 
+of the two target vertices in the array and determine which vertex it corresponds to. 
+The proof of this is left to the reader. Therefore, if a solution exists for either 
+the LCA or RMQ problem, a solution with the same complexity exists for the other.
 
-حل مساله RMQ با جدول پراکنده
+Solving RMQ with Sparse Table
 --------------------------------
-جدول پراکنده نوع خاصی از برنامه نویسی پویا است که در آن بعد دوم نسبت به بعد
-اول سایز لگاریتمی دارد. این جدول در مسائل مختلفی به کار می‌رود و در این جا به کمک
-آن این مساله را حل می‌کنیم.
-:math:`dp_{i,j}`
-را برابر عضو کمینه در بازه
-:math:`[i,i+2^j)`
-باشد. اگر این dp را داشته باشیم به کمک آن می توان پرسش ها را در
-:math:`O(1)`
-پاسخ داد. به این صورت که
-j
-را پیدا می کنیم که طول بازه مورد نظر بین
-:math:`2^j`
-و
-:math:`2^{j+1}`
-باشد. سپس جواب مساله برابر است با
+The sparse table is a special type of dynamic programming where the second dimension has a logarithmic size relative to the first. This table is used in various problems, and here we use it to solve this problem.
+
+Let :math:`dp_{i,j}` be the minimum element in the interval :math:`[i,i+2^j)`. If we have this dp, we can answer queries in :math:`O(1)`. Specifically, we find a **j** such that the length of the target interval lies between :math:`2^j` and :math:`2^{j+1}`. The answer to the query will then be:
 
 .. math:: min(dp_{l,j},dp_{r-2^j,j})
 
-محاسبه این جدول نیز از
-:math:`O(n*lg(n))`
-امکان پذیر است. کافیست از
-j=۰
-شروع کرده و تا لگاریتم طول آرایه جلو برویم. هر
-j
-به این صورت از
-j
-قبلی به دست می آید
+Computing this table is also feasible in :math:`O(n \lg n)`. Starting from **j=0**, we proceed up to the logarithm of the array's length. Each **j** is derived from the previous **j** using:
 
 .. math:: dp_{i,j}=min(dp_{i,j-1},dp_{i+2^{j-1},j-1})
 
-به این ترتیب برای
-RMQ و LCA
-الگوریتمی از پیچیدگی زمانی
-:math:`O(n*lg(n)+q)`
-داریم که در شرایطی که
-n از q
-کمتر باشد از الگوریتم قبلی
-:math:`O(n+q*lg(n))`
-بهتر عمل می‌کند.
+Thus, for **RMQ** and **LCA**, we obtain an algorithm with time complexity :math:`O(n \lg n + q)`. When **n** is smaller than **q**, this performs better than the previous :math:`O(n + q \lg n)` algorithm.
+

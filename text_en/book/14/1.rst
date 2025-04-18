@@ -1,98 +1,81 @@
-گراف مسطح
-============
+.. Planar Graph
+.. ============
 
-گراف مسطح گرافی است که می توان آن را روی صفحه رسم کرد بدون آن که یال هایش از روی هم دیگر
-بگذرند. گراف های زیر مسطح هستند:
-
+A planar graph is a graph that can be drawn on a plane without its edges crossing. The following graphs are planar:
 
 .. figure:: /_static/mosatah.png
    :width: 50%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet is bad, this shows up
 
-گرافی که نتوان روی صفحه به این صورت رسم کرد، گراف غیر مسطح است. برای مثال گراف کامل
-پنج راسی غیر مسطح است. ( امتحان کنید :) )
+A graph that cannot be drawn on a plane in this way is non-planar. For example, the complete five-vertex graph is non-planar. (Try it :) )
 
-رسم گراف مسطح روی کره
------------------------
-یک گراف را می توان روی کره رسم کرد به صورتی
-که یال های آن یکدیگر را قطع نکنند اگر و تنها اگر مسطح باشد. برای اثبات از تبدیل زیر
-استفاده می کنیم.
+.. Drawing a Planar Graph on a Sphere
+.. ---------------------------------
+
+Drawing a Planar Graph on a Sphere
+----------------------------------
+A graph can be drawn on a sphere such that its edges do not cross each other **if and only if** it is planar. To prove this, we use the following transformation:
 
 .. figure:: /_static/mosatah_kore.jpg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+  :width: 50%
+  :align: center
+  :alt: If the internet sucks, this shows up
 
-یک کره را روی صفحه قرار دهید و قطب مخالف نقطه مماس به صفحه را در نظر بگیرید.
-(نقطه N)
-هر خطی که شامل این نقطه باشد دقیقا یک نقطه از صفحه و یک نقطه از کره را می پوشاند. حال
-برای اثبات قضیه یک گراف مسطح را روی صفحه در نظر بگیرید و آن را روی کره رسم کنید. به
-این صورت که به ازای هر نقطه از صفحه خط
-از N به آن را رسم کنید و نقطه معادل
-آن در کره را به دست آورید. حال اگر آن نقطه از صفحه یک راس بود، روی کره راس، اگر یال بود
-نقطه ای از یال و اگر ناحیه بود نقطه ای از ناحیه روی آن بگذارید. به این صورت یک رسم از
-گراف روی کره به دست می آید. می توان دید که یال ها بیوستگی خود را از دست نمی دهند و بدیهیست
-که یکدیگر را قطع نمی کنند.
+Place a sphere on a plane and consider the antipodal point to the tangent point on the plane (point **N**). Any line passing through this point will cover exactly one point on the plane and one point on the sphere. To prove the theorem, consider a planar graph drawn on the plane and project it onto the sphere. For each point on the plane, draw a line from **N** to that point and find its corresponding point on the sphere. If the point on the plane is a vertex, mark it as a vertex on the sphere; if it lies on an edge, mark it as a point on the edge; and if it belongs to a region, mark it as a point in that region on the sphere. This constructs a drawing of the graph on the sphere. Observe that the edges retain their continuity and clearly do not cross each other.
 
-برای سمت دیگر قضیه نیز به طور مشابه عمل می کنیم. اما دقت می کنیم که نقطه
-N
-روی راس یا یال نباشد. ناحیه ای که آن نقطه روی آن است تبدیل به ناحیه نامتناهی که
-گراف را احاطه کرده می شود.
+For the converse, we proceed similarly but ensure that point **N** does not lie on a vertex or edge. The region containing **N** becomes the infinite region surrounding the graph.
 
-
-قضیه اویلر
+Euler's Theorem
 -------------
-قضیه اویلر رابطه ای برای به دست آوردن تعداد ناحیه های تشکیل شده در یک گراف مسطح است. این
-قضیه بیان می کند که: 
+Euler's theorem provides a relation for determining the number of regions formed in a planar graph. This theorem states that:
 
 .. math:: f = e + t + 1 - n
 
-که در آن f تعداد ناحیه ها، e تعداد یال ها، t تعداد مولفه ها و n تعداد رئوس است.
-به طور خاص در گراف همبند، داریم:
+where \( f \) is the number of regions, \( e \) the number of edges, \( t \) the number of components, and \( n \) the number of vertices.  
+In particular, for a connected graph, we have:
 
 .. math:: f = e + 2 - n
 
-اثبات
+Proof
 ~~~~~~~
-اثبات این قضیه اصلا پیچیده نیست، بنابراین خوب است که ابتدا خودتان به آن فکر کنید.
-اگر گراف یک جنگل باشد، حکم برقرار است چون یک ناحیه وجود دارد و داریم
+The proof of this theorem is not complicated at all, so it's good to first think about it yourself. 
+If the graph is a forest, the statement holds because there is one region and we have:
 :math:`e = n - t`
-اما اگر جنگل نباشد، یکی از یال هایی که درون دور آمده و غیر برشی است را از گراف حذف
-می کنیم. تعداد رئوس و مولفه ها ثابت می ماند اما تعداد نواحی و تعداد یال ها دقیقا یک
-واحد کم می شود. پس اگر حکم در گراف جدید درست باشد، در گراف قبلی نیز درست بوده است. آن
-قدر این کار را ادامه می دهیم تا به یک جنگل برسیم. چون در جنگل حکم برقرار است، در تمام
-گراف های این بین از جمله گراف ابتدایی نیز برقرار بوده است.
+But if it's not a forest, we remove one of the non-bridge edges that lies inside a cycle from the graph. 
+The number of vertices and components remains unchanged, but the number of regions and edges decreases by exactly one. 
+Therefore, if the statement holds for the new graph, it must have also held for the previous graph. 
+We continue this process until we obtain a forest. 
+Since the statement holds for forests, it must have held for all intermediate graphs including the original graph.
 
-گراف دوگان
+Dual Graph
 -------------
-گراف دوگان یک گراف مسطح، گرافی است که به این صورت به دست می آید: در هر ناحیه یک راس قرار
-دهید، سپس بین راس های متناظر با ناحیه های مجاور یال قرار دهید. مانند شکل زیر:
+A dual graph of a planar graph is constructed as follows: place a vertex in each region, then connect edges between the vertices corresponding to adjacent regions, as illustrated in the figure below:
 
 .. figure:: /_static/mosatah_dogan.svg
-   :width: 50%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 50%
+ :align: center
+ :alt: This appears if the internet connection is poor
 
-توجه کنید که گراف دوگان نیز مسطح است. گراف دوگان
-در حل مسائل مربوط به گراف مسطح می تواند مفید باشد.
+Note that the dual graph is also planar. Dual graphs can be useful in solving problems related to planar graphs.
 
-گراف اشباع
---------------
-گراف اشباع یک گراف مسطح ساده است که نمی توان به آن یال اضافه کرد و باز هم مسطح ساده
-بماند. یک گراف که بیش از دو راس دارد
-اشباع است اگر و تنها اگر هر ناحیه سه ضلع داشته باشد یا به عبارت دیگر
-گراف دوگان آن سه منتظم باشد. در یک گراف اشباع داریم:
+.. code-block:: rst
 
-.. math:: 3f = 2e
+    Maximal Planar Graph
+    --------------
+    A maximal planar graph is a simple planar graph to which no more edges can be added while remaining simple and planar. A graph with more than two vertices 
+    is maximal if and only if every face is bounded by three edges (i.e., its dual graph is 3-regular). In a maximal planar graph, we have:
 
-که اگر آن را درون رابطه اویلر قرار دهیم ( گراف اشباع به وضوح همبند است ) به دست می آید:
+    .. math:: 3f = 2e
 
-.. math:: \frac{2e}{3} = e - n + 2
-.. math:: \frac{e}{3} = n - 2
-.. math:: e = 3n - 6
+    Substituting this into Euler's formula (the graph is clearly connected) yields:
 
-که ثابت می کند که در هر گراف ساده مسطح
+    .. math:: \frac{2e}{3} = e - n + 2
+    .. math:: \frac{e}{3} = n - 2
+    .. math:: e = 3n - 6
 
-.. math:: e \le 3n - 6
-.. math:: e = O(n)
+    This proves that for any simple planar graph:
+
+    .. math:: e \le 3n - 6
+    .. math:: e = O(n)
+

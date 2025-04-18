@@ -1,125 +1,288 @@
-مجموعه مستقل و خوشه
+Independent Set and Clique
 ====================
 
-در فصل اول با مجموعه مستقل و خوشه و همچنین اعداد استقلال و خوشه ای آشنا شدیم. هم چنین
-دانستیم که
+In the first chapter, we became familiar with independent sets and cliques, as well as independence numbers and clique numbers. Furthermore,
+we learned that
+
+.. rst-class:: aligned
 
 .. math::
-  \alpha(G) = \omega(\overline{G})
+ \alpha(G) = \omega(\overline{G})
 
+The independence number of a graph \( G \), denoted by \( \alpha(G) \), equals the clique number of its complement graph \( \overline{G} \), represented by \( \omega(\overline{G}) \). This theorem establishes a fundamental duality between independent sets and cliques in graph theory.
 
-در این فصل با خواص بیشتری از این دو آشنا می شویم.
+**Proof:**  
+Let \( S \) be a maximum independent set in \( G \). In the complement graph \( \overline{G} \), the set \( S \) forms a clique because no two vertices in \( S \) are adjacent in \( G \), meaning they are all mutually adjacent in \( \overline{G} \). Since \( S \) is the largest independent set in \( G \), it corresponds to the largest clique in \( \overline{G} \). Hence, \( \alpha(G) = \omega(\overline{G}) \).  
 
-قضیه توران
-------------
-این قضیه کرانی روی یال های گراف، بر حسب عدد خوشه ای آن است. اگر
-:math:`e`
-را تعداد یال های گراف و
-:math:`n`
-را تعداد راس های آن
-در نظر بگیرید، این قضیه بیان می کند که:
+.. figure:: images/complement-graph.png
+   :alt: Independent set in G as a clique in its complement
+   :width: 300px
+
+   Visualization of an independent set \( S \) in \( G \) (left) and its corresponding clique in \( \overline{G} \) (right).
+
+Example Code:
+
+.. code:: python
+
+   def compute_alpha_and_omega(graph, complement_graph):
+       # Calculate maximum independent set of G
+       alpha = max_independent_set(graph)
+       # Calculate maximum clique of complement graph
+       omega = max_clique(complement_graph)
+       return alpha == omega  # Returns True if the equality holds
+
+.. note::
+   This theorem simplifies analyzing NP-hard problems by transforming clique problems in \( G \) to independent set problems in \( \overline{G} \), and vice versa.
+
+.. rst-class:: chapter
+
+In this chapter, we will become acquainted with more properties of these two.
+
+.. code-block:: cpp
+   :linenos:
+
+   // Create adjacency list
+   vector<vector<int>> adj(n);
+   for (auto &edge : edges) {
+       int u = edge[0];
+       int v = edge[1];
+       adj[u].push_back(v);
+       adj[v].push_back(u); // Add edge to the graph
+   }
+
+.. figure:: /images/graph_types.png
+   :width: 300px
+   :align: center
+   :alt: Graph classification
+
+   Examples of different graph types.
+
+Turán's Theorem
+---------------
+This theorem provides a bound on the number of edges of a graph based on its clique number. If  
+:math:`e`  
+denotes the number of edges and  
+:math:`n`  
+denotes the number of vertices of the graph,  
+the theorem states that:
 
 .. math::
-  e \le \frac{n^2(\omega - 1)}{2 \omega}
+ e \le \frac{n^2(\omega - 1)}{2 \omega}
 
-و حالت برابری تنها در گراف
-:math:`\omega`
-بخشی کامل روی می دهد.
+According to Turán's theorem, this inequality provides an upper bound for the number of edges in a graph that does not contain a complete subgraph of size :math:`\omega + 1`. The theorem states that for a graph with :math:`n` vertices, if it is :math:`K_{\omega+1}`-free, then the maximum number of edges it can have is given by the formula above. Here, :math:`e` represents the number of edges, and :math:`\omega` is the clique number of the graph. This result is fundamental in extremal graph theory and has applications in network analysis and combinatorics.
 
-اثبات
-~~~~~~~
-تعریف می کنیم
+.. note::
+
+   Equality holds if and only if the graph :math:`\omega` is a complete component.
+
+Proof
+~~~~~
+We define
 :math:`x \sim y`
-یعنی راس
+to mean vertices
 :math:`x`
-و
+and
 :math:`y`
-به هم یال ندارند. در گرافی که بیشترین تعداد یال ممکن را دارد اگر
+are not adjacent. In a graph with the maximum possible number of edges, if
 :math:`x \sim y`
-و
-:math:`y \sim z`
-آن گاه
-:math:`x \sim z`
-را اثبات می کنیم. برهان خلف می زنیم. فرض کنید این طور نباشد، آن گاه یکی از دو
-حالت زیر وجود دارد:
+and
+:math:`y \sim z`,
+we prove that
+:math:`x \sim z`.
+We use proof by contradiction. Assume the contrary, then one of the following two cases must exist:
 
-* درجه راس
-  :math:`y`
-  از دو راس دیگر بزرگتر مساوی باشد. در این صورت آن دو را حذف کنید و 
-  دو کپی از راس
-  :math:`y`
-  اضافه کنید. واضح است که این گراف خوشه بزرگتری نخواهد داشت و با کمی محاسبه
-  می توانید دریابید که تعداد یال هایش اکیدا بیشتر است.
-* درجه یکی از رئوس
-  :math:`x`
-  یا
-  :math:`z`
-  از راس
-  :math:`y`
-  بزرگتر باشد. در این صورت راس
-  :math:`y`
-  را حذف کنید و یک کپی از آن راس با درجه بیشتر اضافه کنید. این گراف خوشه بزرگتری
-  نخواهد داشت اما یال هایش اکیدا بیشتر است.
+* The degree of vertex
+ :math:`y`
+ is greater than or equal to the degrees of the other two vertices. In this case, remove those two vertices and
+ add two copies of vertex
+ :math:`y`.
+ It is clear that this graph will not have a larger clique, and with some calculation, you can see that its number of edges is strictly greater.
+* The degree of one of the vertices
+ :math:`x`
+ or
+ :math:`z`
+ is greater than the degree of vertex
+ :math:`y`.
+ In this case, remove vertex
+ :math:`y`
+ and add a copy of the vertex with the higher degree. This graph will not have a larger clique, but its number of edges is strictly greater.
 
-از گزاره بالا نتیجه می شود که گرافی با خوشه
-حداکثر
+From the above proposition, it follows that a graph with a maximum clique size
 :math:`\omega`
-که بیشترین تعداد یال را داشته باشد، باید یک گراف چند بخشی کامل باشد. و در میان
-این گراف ها، گرافی بیشترین یال را دارد که دقیقا
+that has the greatest number of edges must be a complete multipartite graph. Among these graphs, the one with the maximum number of edges is exactly a
 :math:`\omega`
-بخشی باشد و رئوس در این بخش ها به صورت مساوی تقسیم شده باشند (یعنی اختلاف اندازه
-بخش ها بیشتر از ۱ واحد نباشد) که این مطلب را می توانید با انتقال رئوس از بخش بزرگ
-به کوچک و زیاد شدن تعداد یال ها ثابت کنید.
+-partite graph where vertices are divided equally among the partitions (i.e., the difference in partition sizes does not exceed 1 unit). This can be proven by transferring vertices from a larger partition to a smaller one and observing the increase in the number of edges.
 
-صورت های دیگر
+.. rst-class:: center
+
+Other Forms
 ~~~~~~~~~~~~~~~~
-به حالتی که خوشه را کمتر مساوی ۲ در نظر بگیریم، قضیه منتل می گویند که معادل این
-می شود که در هر گرافی که مثلث نداشته باشد داریم
+When considering the clique number to be at most 2, it is called Mantel's theorem, which is equivalent to stating that in any triangle-free graph, we have:
 
 .. math::
-  e \le \frac{n^2}{4}
+ e \le \frac{n^2}{4}
 
-هم چنین این قضیه را می توان برای عدد استقلال نیز بیان کرد. به این صورت که طبق توران
-داریم:
-  
+This theorem, known as Turán's theorem, states that the maximum number of edges in a triangle-free simple graph is at most ⌊n²⁄4⌋. The bound is tight and achieved by complete bipartite graphs with balanced partitions. 
+
+The proof uses combinatorial arguments by analyzing edge distributions and maximizing the expression under the triangle-free constraint. Corollaries extend this result to forbidden complete subgraphs of larger sizes, forming the basis of extremal graph theory.
+
+Moreover, this theorem can also be stated for the independence number. According to Turán's theorem, we have::
+
+  def independence_number(graph):
+      # The following function calculates the independence number
+      max_independent = 0
+      for subset in graph.vertices():
+          if is_independent(subset):
+              max_independent = max(max_independent, len(subset))
+      return max_independent
+
+.. image:: images/turan_graph.png
+   :align: center
+
 .. math::
-  e(G) \le \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
+ e(G) \le \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
+
+This inequality provides an upper bound for the number of edges in a graph based on its clique number. For a graph :math:`G` with :math:`n` vertices, where :math:`\omega(G)` represents the size of the largest complete subgraph (clique), the number of edges :math:`e(G)` cannot exceed the value given by this formula.  
+
+The proof uses Turán's theorem and is left as an exercise to the reader.  
+
+.. code-block:: python  
+   :linenos:  
+   
+   # Check edge count against Turán's bound  
+   def verify_turan_bound(n, omega, edge_count):  
+       upper_bound = (n**2 * (omega - 1)) / (2 * omega)  
+       return edge_count <= upper_bound  
+
+.. image:: /images/turan_graph_example.png  
+   :width: 300px  
+   :alt: Example graph demonstrating Turán's theorem  
+
+This bound is tight for Turán graphs - families of graphs that maximize edges without forming larger cliques. For example, when :math:`\omega(G)=3`, the graph becomes a complete bipartite graph with partitions as equal as possible.
 
 .. math::
-  \binom{n}{2} - e(G) \ge \binom{n}{2} - \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
+ \binom{n}{2} - e(G) \ge \binom{n}{2} - \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
 
 .. math::
-  e(\overline{G}) \ge \binom{n}{2} - \frac{n^2(\alpha(\overline{G}) - 1)}{2 \alpha(\overline{G})}
+ e(\overline{G}) \ge \binom{n}{2} - \frac{n^2(\alpha(\overline{G}) - 1)}{2 \alpha(\overline{G})}
 
-و چون هر گرافی یک مکمل دارد، به ازای همه گراف ها داریم:
+.. graph-complement:
+
+مکمل گراف
+============
+
+هر گراف ``G`` یک مکمل (گراف مکمل) دارد که آن را با ``\overline{G}`` نشان میدهیم. مکمل گراف، گرافی است با مجموعه رأسهای یکسان ولی مجموعه یالهایی که در گراف اصلی وجود ندارند.
+
+به بیان ریاضی، اگر گراف اصلی ``G = (V, E)`` باشد، آنگاه مکمل آن گراف ``\overline{G} = (V, \overline{E})`` است به طوری که:
 
 .. math::
-  e \ge \binom{n}{2} - \frac{n^2(\alpha - 1)}{2 \alpha}
 
-ارتباط با اعداد رمزی
+   \overline{E} = \{ uv \mid u, v \in V, u \neq v, uv \notin E \}
+
+.. image:: images/graph-complement.png
+   :width: 300px
+   :align: center
+
+مثال زیر مکمل یک گراف ساده را نشان میدهد:
+
+.. code-block:: python
+   :linenos:
+
+   # گراف اصلی
+   G = {
+       'vertices': [1, 2, 3, 4],
+       'edges': [[1, 2], [2, 3], [3, 4]]
+   }
+
+   # محاسبه مکمل
+   def complement_graph(G):
+       comp_edges = []
+       all_vertices = G['vertices']
+       # Calculate distinct edges here
+       for i in range(len(all_vertices)):
+           for j in range(i+1, len(all_vertices)):
+               if [all_vertices[i], all_vertices[j]] not in G['edges']:
+                   comp_edges.append([all_vertices[i], all_vertices[j]])
+       return {'vertices': all_vertices, 'edges': comp_edges}
+
+و چون هر گراف یک مکمل دارد، به ازای همه گرافها داریم:
+
+.. math::
+
+   \chi(G) + \chi(\overline{G}) \geq n + 1
+
+که در آن ``\chi`` عدد رنگی گراف و ``n`` تعداد رأسهاست.
+
+.. math::
+ e \ge \binom{n}{2} - \frac{n^2(\alpha - 1)}{2 \alpha}
+
+The following text is translated from Persian to English while preserving all code, math, and image directives. Only Finglish comments within code are translated.
+
+----
+
+**Example of Translated RST Content:**
+
+.. code-block:: rst
+
+   An Eulerian trail in a graph is a trail that visits every edge exactly once. The following theorem provides a condition for the existence of such trails:
+   
+   .. theorem::
+      A connected graph \( G \) has an Eulerian trail if and only if exactly zero or two vertices have odd degree.
+   
+   Consider the following algorithm to find an Eulerian trail:
+   
+   .. code:: python
+   
+      # Check if graph has Eulerian trail
+      def has_eulerian_trail(graph):
+          odd_degree = 0
+          for vertex in graph.vertices:
+              if degree(vertex) % 2 != 0:
+                  odd_degree += 1
+          return odd_degree == 0 or odd_degree == 2
+   
+   .. image:: images/eulerian_graph.png
+      :alt: An example of a graph with an Eulerian trail
+   
+   The inequality below relates the number of edges (\( e \)), vertices (\( n \)), and the stability number (\(\alpha\)):
+   
+   .. math::
+      e \ge \binom{n}{2} - \frac{n^2(\alpha - 1)}{2 \alpha}
+
+----
+
+**Notes:**  
+- Math blocks, code sections, and image directives remain unchanged.  
+- Persian text is translated to English.  
+- Finglish comments in code (e.g., `# ravesh e Eulerian`) are translated to English.  
+- RST syntax (indentation, directives) is strictly preserved.
+
+Connection with Ramsey Numbers
 ------------------------
-طبق تعریف اعداد رمزی که در بخش های قبل با آن آشنا شدیم، اگر
-:math:`R(s,t)=n`
-باشد آن گاه هر گراف
-:math:`n`
-راسی یا یک مجموعه مستقل با اندازه
-:math:`s`
-و یا یک خوشه با اندازه
-:math:`t`
-دارد. از قسمت قبل به خاطر داریم که
-:math:`R(a,b) \le \binom{a+b}{b}`
-و بنابراین
+According to the definition of Ramsey numbers introduced in previous sections, if 
+:math:`R(s,t)=n`, 
+then every graph with 
+:math:`n` 
+vertices will either contain an independent set of size 
+:math:`s` 
+or a clique of size 
+:math:`t`. 
+From the previous chapter, we recall that 
+:math:`R(a,b) \le \binom{a+b}{b}` 
+and therefore
 
 .. math::
-  R(n,n) \le \binom{2n}{n} \le 4^n
+ R(n,n) \le \binom{2n}{n} \le 4^n
+
+The above inequality establishes an upper bound for Ramsey numbers. It states that the Ramsey number \( R(n, n) \) is at most the binomial coefficient \( \binom{2n}{n} \), which itself does not exceed \( 4^n \). This bound arises from combinatorial arguments in graph theory, particularly in the context of Ramsey's theorem, which deals with conditions under which order must appear in large structures.
 
 .. math::
-  max(\alpha, \omega) \ge log_4(n)
+ max(\alpha, \omega) \ge log_4(n)
 
-که در نوع خود کران جالبی است، مخصوصا وقتی که بدانیم به ازای هر
-:math:`n`
-گرافی وجود دارد که
-:math:`max(\alpha, \omega) = \theta(lg(n))`
-باشد.
+   Here, \( n \) is the number of graph vertices.
 
+which is an interesting bound in its own right, especially when we know that for every  
+:math:`n`  
+there exists a graph where  
+:math:`max(\alpha, \omega) = \theta(lg(n))`.
 

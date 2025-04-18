@@ -1,74 +1,100 @@
-برش کمینه و جریان بیشینه
-==========================
+.. Minimal Cut and Maximum Flow
+.. ============================
 
-در این بخش به بررسی مساله مهمی در حوزه الگوریتم ها می پردازیم که بسیاری از مسائل
-را ( از جمله مساله تطابق ) می توان به کمک آن حل کرد.
+Minimum Cut and Maximum Flow
+============================
 
-در این مساله ما یک شبکه آب داریم که چند نقطه دارد که به وسیله لوله ( یال ) های جهتدار
-به هم متصل شده اند. هر لوله یک ظرفیتی دارد که به این معنی است که حداکثر جریان آبی
-که می تواند از این لوله رد شود، چقدر است. دو نقطه خاص از این شبکه برای ما مهم هستند.
-نقطه مبدا و مقصد، و هدف اندازه گیری بیشترین مقدار جریان آبی است که می توان از نقطه
-مبدا به مقصد انتقال داد.
+In this section, we examine a crucial problem in the domain of algorithms, through which many problems (including the matching problem) can be solved.
 
-برابری با برش کمینه
----------------------
-همان گراف مساله بالا را در نظر بگیرید. می‌خواهیم مجموعه ای از یال ها را حذف کنیم
-که راس مبدا به مقصد مسیر جهتدار نداشته باشد. هدف این است که جمع ظرفیت یال های حذف
-شده کمینه شود. به این مساله، مساله برش کمینه می‌گویند. در ادامه ثابت می‌کنیم که
-در هر گراف جریان بیشینه با برش کمینه برابر است.
+In this problem, we have a water network with several nodes connected by directed pipes (edges). Each pipe has a capacity, meaning the maximum water flow that can pass through it. Two specific nodes in this network are particularly important: the source and the sink. The goal is to determine the maximum amount of water flow that can be transferred from the source to the sink.
 
-اثبات
+.. Equality with the Minimum Cut
+   -----------------------------
+
+Consider the same graph from the previous problem. We want to remove a set of edges 
+such that there is no directed path from the source vertex to the target vertex. 
+The objective is to minimize the total capacity of the removed edges. 
+This problem is called the **minimum cut problem**. 
+In what follows, we will prove that in any graph, 
+the **maximum flow** is equal to the **minimum cut**.
+
+.. code-block:: python
+   :linenos:
+   
+   class Graph:
+       def __init__(self, graph):
+           self.graph = graph  # گراف رو ba adjacency list migirim
+           self. ROW = len(graph)
+   
+   # اگر اینترنت یارو آشغال باشه این میاد -> If the internet sucks, this appears
+   
+   
+Proof
 ~~~~~~~
-ابتدا واضح است که اندازه هر برشی از اندازه هر جریانی بیشتر است. زیرا حذف هر یال حداکثر
-به اندازه ظرفیتش از میزان جریان کم می کند و تا زمانی که جریان وجود داشته باشد
-ما به یک برش نرسیده ایم. برای اثبات اینکه جریان بیشینه با برش کمینه برابر است
-یک جریان بیشینه را در نظر می گیریم و یک برش به اندازه آن به دست می آوریم.
+First, it is clear that the size of any cut is larger than the size of any flow. This is because removing any edge reduces the flow by at most its capacity, and as long as a flow exists, we have not yet encountered a cut. To prove that the **maximum flow** equals the **minimum cut**, we consider a maximum flow and derive a cut of the same size.
 
-جریان بیشینه را در نظر بگیرید. یک مسیر افزایش دهنده مسیری است با این شرط که اگر
-از یک یال در جهت خودش در مسیر استفاده کرده ایم، نباید از تمام ظرفیتش استفاده شده باشد
-و اگر در جهت برعکس از آن استفاده می کنیم، باید حتما جریانی از آن رد شده باشد، برای
-مثال مسیر زیر یک مسیر افزایش دهنده است:
+Consider a maximum flow. An *augmenting path* is defined as a path where:  
+- If we traverse an edge in its original direction along the path, the edge must not be fully saturated.  
+- If we traverse an edge in the reverse direction, there must be non-zero flow on that edge.  
+For example, the following path is an augmenting path:
 
 .. figure:: /_static/flow_path.png
    :width: 50%
    :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+   :alt: If the internet is bad, this appears  
 
-در یک جریان بیشینه، مسیر افزایش دهنده از مبدا به مقصد وجود ندارد. زیرا اگر وجود داشته
-باشد می توان جریان گذرنده را بیشتر کرد، کافیست که جریان یال هایی که در جهت مسیر هستند
-(یال های آبی)
-را یک واحد زیاد و جریان بقیه یال ها را یک واحد کم کنیم. با این کار جریان یک واحد بیشتر
-می شود.
+In a maximum flow, no augmenting path exists from the source to the sink. If such a path existed, we could increase the flow: simply increase the flow on forward edges (blue edges) by one unit and decrease the flow on reverse edges by one unit. This would result in a net flow increase of one unit.
 
-حال برای پیدا کردن یک برش به اندازه جریان بیشینه = f، می توانید رئوسی را در نظر بگیرید که
-از راس مبدا به آن مسیر افزایش دهنده وجود دارد. طبق مطلب بالا راس مقصد در این مجموعه
-نیست. جریان ورودی این مجموعه ۰ است زیرا اگر یالی از خارج این مجموعه وجود داشته باشد
-که از آن جریان گذشته باشد و به داخل این مجموعه باشد، آنگاه راس خارج مجموعه این یال نیز
-باید داخل این مجموعه باشد چون مسیر افزایش دهنده به آن وجود دارد. جمع جریان ورودی و خروجی
-هر مجموعه برابر جمع جریان ورودی و خروجی هر راس در آن مجموعه است. و جمع جریان ورودی و خروجی
-هر راس دقیقا ۰ است به جز راس ورودی و خروجی. راس ورودی
-f
-واحد جریان خروجی دارد پس جمع جریان ورودی و خروجی مجموعه ای که ما در نظر گرفتیم دقیقا
-f
-است و چون جریان ورودی این مجموعه ۰ است، در نتیجه جریان خروجی این مجموعه f
-است. یال های خروجی این مجموعه را در نظر بگیرید، همه ظرفیتشان تماما تکمیل است
-(وگرنه مسیر افزایش دهنده به رئوس خروجی این یال ها وجود داشت)
-و جمع ظرفیت هایشان دقیقا f است. این یال ها را قطع کنید، دیگر مسیری از مبدا به بیرون این مجموعه
-و در نتیجه به مقصد وجود ندارد. پس ما برشی به اندازه f یعنی اندازه بزرگترین جریان بیشینه
-پیدا کردیم. پس جریان بیشینه برابر برش کمینه است.
+To find a cut with size equal to the maximum flow *f*, consider the set of vertices reachable from the source via augmenting paths. By the above argument, the sink vertex is *not* in this set. The **inflow** to this set is zero because if there were an edge from outside the set carrying flow into the set, the starting vertex of that edge would also belong to the set (as an augmenting path to it exists).  
 
-الگوریتم فورد فلکرسون برای جریان بیشینه
-----------------------------------------
-سعی می کنیم که یک مسیر افزایش دهنده از مبدا به مقصد پیدا کنیم و به کمک آن
-یک واحد به جریان اضافه کنیم. آن قدر این کار را ادامه می دهیم تا دیگر مسیر افزایش دهنده
-وجود ندارد. یک جریان به دست می آید که برشی به اندازه آن وجود دارد. و چون می دانیم
-که همه برش ها بزرگتر مساوی همه جریان ها هستند، جریانی که پیدا کرده ایم قطعا جریان
-بیشینه است.
+The total inflow and outflow of any vertex (except the source and sink) must balance to zero. For the source vertex, the net outflow is *f*. Thus, the total outflow from our defined set is exactly *f*, and since the inflow is zero, the outflow equals *f*.  
 
-قطعه کد زیر پیاده سازی این الگوریتم است. برای سادگی کار، به جای این که برای پیدا کردن
-مسیر حالت های در جهت و در خلاف جهت را جداگانه بررسی کنیم، به ازای هر یال یک یال در خلاف
-جهت آن و با وزن ۰ قرار می دهیم. هر گاه که از یک یال جریانی گذراندیم، ظرفیت خودش را کم
-می کنیم و به ظرفیت یال دوگان آن یال اضافه می کنیم. 
+All edges leaving this set must be fully saturated (otherwise, augmenting paths to vertices beyond these edges would exist). The total capacity of these edges is precisely *f*. Cutting these edges disconnects the source from the sink. Hence, we have found a cut of size *f*—the value of the maximum flow. This proves that the **maximum flow equals the minimum cut**.
+
+.. _ford_fulkerson_algorithm:
+
+Ford-Fulkerson Algorithm for Maximum Flow
+-----------------------------------------
+We attempt to find an augmenting path from the source to the sink and use it 
+to add one unit to the flow. We repeat this process until no augmenting path 
+remains. The resulting flow will have a corresponding cut with equal capacity. 
+Since we know all cuts are greater than or equal to all flows, the flow we have 
+found is guaranteed to be the maximum flow.
+
+The following code snippet implements this algorithm. To simplify the process, 
+instead of separately checking forward and backward edges when finding paths, 
+we create a reverse edge with capacity 0 for every original edge. Whenever 
+flow is sent through an edge, we reduce its capacity and increase the capacity 
+of its corresponding reverse edge. 
+
+.. code-block:: python
+   :linenos:
+
+   def ford_fulkerson(graph, source, sink):
+       # Create reversed edges with 0 capacity
+       for u in graph:
+           for v, capacity in graph[u].items():
+               if v not in graph:
+                   graph[v] = {}
+               graph[v][u] = 0
+       
+       max_flow = 0
+       path = bfs(graph, source, sink)
+       
+       while path:
+           # Find minimum residual capacity in the path
+           flow = min(graph[u][v] for u, v in path)
+           for u, v in path:
+               graph[u][v] -= flow
+               graph[v][u] += flow
+           max_flow += flow
+           path = bfs(graph, source, sink)
+       return max_flow
+
+.. note::
+   The BFS function for finding augmenting paths is not shown here. In practice, 
+   this implementation can be optimized using more efficient algorithms like 
+   Edmonds-Karp (BFS-based Ford-Fulkerson).
 
 .. code-block:: cpp
 
@@ -129,37 +155,15 @@ f
       }
   }
 
-در این الگوریتم برای پیدا کردن مسیر افزایش دهنده از الگوریتم DFS استفاده کرده ایم. این
-الگوریتم در هر مرحله حداقل یک واحد به جریان موجود اضافه می کند و چون زمان
-DFS خطی است این الگوریتم پیچیدگی زمانی
-:math:`O(ef)`
-دارد که e تعداد یال ها و f مقدار بیشینه جریان است.
-اگر به جای الگوریتم 
-DFS از الگوریتم BFS
-استفاده می کردیم کران
-:math:`O(ve^2)`
-نیز ثابت شده بود که به اثبات آن نمی پردازیم.
+In this algorithm, we use the DFS algorithm to find an augmenting path. This algorithm adds at least one unit to the existing flow in each step, and since the time complexity of DFS is linear, the algorithm has a time complexity of :math:`O(ef)`, where *e* is the number of edges and *f* is the maximum flow value.
 
-پیدا کردن عدد همبندی راسی و یالی
-------------------------------------
-به کمک الگوریتم جریان بیشینه می توان عدد همبندی راسی و یالی را در زمان چند جمله ای
-به دست آورد.
+If we had used the BFS algorithm instead of DFS, the bound :math:`O(ve^2)` would also hold, though we omit its proof here.
 
-برای به دست آوردن عدد همبندی یالی، به ازای هر یال دو یال جهت دار با وزن ۱ در خلاف جهت
-هم بین این دو راس اضافه می کنیم. سپس بین هر دو راس جریان بیشینه را پیدا می کنیم که برابر
-برش کمینه نیز هست. با توجه به این که برش کمینه هر دو جهت یال را قطع نمی کند، برش
-کمینه این گراف با گراف بی جهت برابر است. و هر برش دو راس را ناهمبند می کند پس از عدد همبندی
-یالی گراف بیشتر است و چون کمینه یال های لازم برای ناهمبند کردن یک گراف دو راس را از
-هم جدا می کند کمینه این برش ها همان عدد همبندی یالی گراف است. پیچیدگی زمانی این الگوریتم
-:math:`O(v^3e)`
-است زیرا جواب از تعداد راس ها کمتر است.
+Finding Vertex and Edge Connectivity Numbers
+--------------------------------------------
+Using the maximum flow algorithm, we can obtain vertex and edge connectivity numbers in polynomial time.
 
-برای به دست آوردن عدد همبندی راسی گراف، یک گراف جدید می سازیم که به ازای هر راس دو راس
-دارد. یک راس ورودی و یک راس خروجی. به ازای هر یال نیز دو یال اضافه می کنیم. از راس های
-ورودی متناظر به راس های خروجی متناظر. برای هر راس نیز از ورودی به خروجی یال می کشیم.
-یال های متناظر با یال ها ظرفیت بینهایت و یال های درون هر راس ظرفیت ۱ دارد. برای این که
-به دست بیاوریم که چه میزان راس مورد نیاز است حذف شود تا دو راس مورد نظر ناهمبند شوند،
-می توان برش کمینه بین این دو راس را در گراف به دست آورد. برای هر دو راس این مقدار را
-محاسبه می کنیم و عدد همبندی راسی به دست می آید. پیچیدگی زمانی این الگوریتم
-:math:`O(v^3e)`
-است زیرا جواب از تعداد راس ها کمتر است.
+To find the edge connectivity number, for each edge we add two directed edges with weight 1 in opposite directions between the two vertices. Then we find the maximum flow between every pair of vertices, which equals the minimum cut. Since the minimum cut doesn't cut both directions of an edge, the minimum cut of this directed graph is equivalent to the undirected graph's. As every cut disconnects two vertices, this value is greater than the graph's edge connectivity number. However, since the minimum number of edges required to disconnect any two vertices corresponds to the minimum of these cuts, this minimum cut value equals the graph's edge connectivity number. The time complexity of this algorithm is :math:`O(v^3e)` because the solution is smaller than the number of vertices.
+
+To find the vertex connectivity number, we construct a new graph where each vertex is split into two nodes: an input node and an output node. For each original edge, we add two directed edges: from the input node of one vertex to the output node of the other, and vice versa. For each vertex, we connect its input node to its output node. Edges corresponding to original edges have infinite capacity, while intra-vertex edges have capacity 1. To determine how many vertices need to be removed to disconnect two target vertices, we find the minimum cut between those two vertices in this transformed graph. By calculating this value for all vertex pairs, we obtain the vertex connectivity number. The time complexity of this algorithm is :math:`O(v^3e)` because the solution is smaller than the number of vertices.
+

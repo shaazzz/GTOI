@@ -1,45 +1,38 @@
-الگوریتم برون‌خط تارجان
-========================
+Tarjan's Offline Algorithm
+==========================
 
-مسائلی که در آن ها تعدادی پرسش مطرح می شوند دو نوع راه حل دارند. راه برخط
-(online)
-و راه برون‌خط
-(offline).
-در راه برخط شما مجبورید هر سوال را در لحظه پاسخ دهید و تا به پرسش فعلی پاسخ
-ندهید نمی‌توانید پرسش بعدی را دریافت کنید. اما در راه برون خط می توانید همه پرسش ها
-را دریافت کرده و سپس شروع به پاسخ دادن کنید.
+Problems involving multiple queries have two types of solutions: online (online) and offline (offline). In the online approach, you must answer each query immediately, and until you respond to the current query, you cannot receive the next one. However, in the offline approach, you can receive all queries first and then start answering them.
 
-در این بخش با یک راه برون خط برای مسائلی که مطرح شد ارائه می‌کنیم. چون برخط بودن یک
-محدودیت است، راه های برون خط پیچیدگی کمتری دارند.
+In this section, we present an offline solution for the aforementioned problems. Since being online imposes a constraint, offline approaches have lower complexity.
 
-راه مساله پدر در ارتفاع خاص
------------------------------
-این مساله ساده است. کافیست همه پرسش ها را دریافت کرده و سپس از ریشه درخت
-DFS
-بزنیم. هنگامی که وارد یک راس شدیم، آن را در یک وکتور پوش می‌کنیم و هنگام خارج
-شدن آن را پاپ می‌کنیم. به این ترتیب هنگامی که در یک راس هستیم، خودش و تمام
-اجدادش درون وکتور هستند و به ترتیب ارتفاع چیده شده‌اند. پس هنگامی که به یک
-راس رسیدیم می‌توانیم تمامی پرسش های مربوط به آن را از
-:math:`O(1)`
-پاسخ دهیم. به این ترتیب راهی خطی در اختیار داریم.
+.. The solution to the parent problem at a specific height
+.. ------------------------------------------------------
 
-راه مساله LCA
+This problem is straightforward. It suffices to collect all queries and then perform a DFS traversal 
+from the root of the tree. When entering a vertex, we push it into a vector, and when exiting, 
+we pop it. This way, while processing a vertex, the vertex itself and all its ancestors 
+will be present in the vector, ordered by their height. Thus, when reaching a vertex, 
+we can answer all its associated queries in :math:`O(1)` time. This provides us with a linear approach.
+
+The Solution to the LCA Problem
 -------------------------------
-ابتدا تمام پرسش ها را دریافت می کنیم و برای هر راس، لیستی از پرسش های
-مربوط به آن را تهیه می کنیم. این کار در زمان خطی نسبت به ورودی قابل انجام است.
+First, we receive all queries and create a list of related queries for each vertex. 
+This can be done in linear time relative to the input size.
 
-سپس روی درخت
+Then, we perform a 
 DFS
-می‌زنیم. هنگامی که به یک راس می رسیم، یک دسته ایجاد می کنیم و این راس را
-درون آن می‌گذاریم. و هنگامی که از این راس خارج می شویم، دسته ای که این راس
-درون آن است را با دسته پدر این راس ترکیب می‌کنیم. به این ترتیب اگر روی یک راس مانند
+on the tree. When we enter a vertex, we create a set and place this vertex 
+inside it. When we exit the vertex, we merge the set containing this vertex with 
+its parent's set. With this approach, if we are on a vertex like 
 u
-باشیم، هر راس دیگر مانند
+, any other vertex like 
 v
-در دسته‌ای قرار دارد که سر دسته آن، جد مشترک بین آن دو است. عملیات های ترکیب را می‌توان با
+will reside in a set whose head is the lowest common ancestor of the two. 
+The merge operations can be implemented using 
 DSU
-انجام داد و بنابراین پیچیدگی این الگوریتم برابر است با:
+, making the algorithm's complexity:
 :math:`O((n+q)*a(n))`
-که در آن
+where 
 :math:`a(n)`
-همان تابع معکوس آکرمان است.
+is the inverse Ackermann function.
+

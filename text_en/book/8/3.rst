@@ -1,18 +1,18 @@
 Heap
 ============
-Heap یا پشته به دو دسته min heap و max heap تقسیم می شود.
-در min heap یا پشته کمترین مقدار هر راس از بچه هاش کوچک تر است و در max heap یا پشته بیشترین هر راس از بچه هاش بزرگتر است.
-در heap برگ ها یا در دو طبقه آخر قرار دارند.
+A heap (پشته) is divided into two categories: min heap and max heap. In a min heap (پشته), the value of each node is smaller than its children, and in a max heap (پشته), the value of each node is larger than its children. In a heap, the leaves are located in the last two levels.
 
-(Insertion) اضافه کردن
-----------------------
-مراحل اضافه کردن x در min heap به شکل زیر است( در max heap مراحل مشابه است)  :
+(Insertion) Insertion
+---------------------
+The steps for adding x to a min heap are as follows (the steps are similar for a max heap):
 
-- x را در آخرین طبقه به یکی از راس های طبقه یکی مانده به آخر که هنوز دو بچه ندارد وصل میکنیم و اگر چنین راسی وجود نداشت یک طبقه جدید اضافه می کنیم و x را به یکی از راس های طبقه بالایش وصل می کنیم.
-- حال x را با پدرش مقایسه می کنیم و اگر مقدارش از پدرش کمتر بود جاشون رو عوض میکنم. این مرحله را تا جایی ادامه می دهیم تا یا x ریشه شود یا از مقدار پدرش بزرگ تر باشد.
+- Place x in the last level by connecting it to a node in the second-to-last level that does not yet have two children. If such a node does not exist, add a new level and connect x to a node in the level above.
 
-(Deletion) حذف کردن
--------------------
-مراحل حذف کردن در min heap به شکل زیر است( در max heap مراحل مشابه است) :
+- Now, compare x with its parent. If x's value is less than its parent's, swap their positions. Continue this step until x becomes the root or its value is greater than its parent's.
 
-- مقدار ریشه را با مقدار یکی از برگ های طبقه آخر عوض می کنیم و آن برگ را حذف می کنیم. در این مرحله مقدار ریشه عوض شده است بنابراین باید چک کنیم که شرایط min heap را داشته باشد،فرض کنید y مقدار کمتر بین بچه های ریشه باشد، اگر ریشه از y بزرگ تر بود جای y و ریشه را عوض میکنیم و حال این مرحله را برای زیر درختی که ریشه در آن قرار دارد انجام می دهیم.
+.. (Deletion) Deletion
+--------------------
+The steps for deletion in a min heap are as follows (the steps are similar for a max heap):
+
+- Swap the value of the root with the value of one of the leaves in the last level, then remove that leaf. At this stage, the root's value has changed, so we must check if it satisfies the min heap condition. Let y be the smaller value between the root's children. If the root is greater than y, we swap the root and y, and then repeat this step for the subtree where the root is now located.
+

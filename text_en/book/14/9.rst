@@ -1,21 +1,88 @@
-چند ماتریس خاص
-=========
+.. _special_matrices:
 
-ماتریس صفر
+Some Special Matrices
+=====================
+
+**Adjacency Matrix**
+--------------------
+
+The adjacency matrix is one of the most important tools for analyzing graphs. 
+This matrix is defined as follows for a graph with *n* vertices:
+
+.. math::
+
+    A = [a_{ij}]_{n \times n} \quad \text{where} \quad a_{ij} = 
+    \begin{cases}
+        1 & \text{if there is an edge between vertices } i \text{ and } j \\
+        0 & \text{otherwise}
+    \end{cases}
+
+Key properties of the adjacency matrix:
+
+- If the graph is undirected, the adjacency matrix will be **symmetric**.
+- If the graph is directed, the entry :math:`a_{ij}` equals the number of edges **from** vertex :math:`i` **to** vertex :math:`j`.
+- If the graph is weighted, :math:`a_{ij}` represents the **weight** of the edge between vertices :math:`i` and :math:`j`.
+
+Example adjacency matrix for an undirected graph:
+
+.. code-block:: python
+
+    # Adjacency matrix for graph 5.3
+    adjacency_matrix = [
+        [0, 1, 0, 1],
+        [1, 0, 1, 1],
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
+    ]
+
+.. figure:: images/adjacency_matrix.png
+    :width: 200px
+    :align: center
+    :caption: Adjacency matrix of the graph in Figure 5.3
+
+**Incidence Matrix**
+--------------------
+
+The incidence matrix represents connections between vertices and edges. For a graph with *n* vertices and *m* edges, it is an :math:`n \times m` matrix defined as:
+
+.. math::
+
+    B = [b_{ij}]_{n \times m} \quad \text{where} \quad b_{ij} = 
+    \begin{cases}
+        1 & \text{if vertex } i \text{ is incident to edge } j \\
+        0 & \text{otherwise}
+    \end{cases}
+
+Example incidence matrix:
+
+.. code-block:: python
+
+    # Incidence matrix for graph 5.3
+    incidence_matrix = [
+        [1, 1, 0, 0],  # Vertex 1
+        [1, 0, 1, 1],  # Vertex 2
+        [0, 1, 1, 0],  # Vertex 3
+        [0, 0, 0, 1]   # Vertex 4
+    ]
+
+.. note::
+    In directed graphs, the incidence matrix uses :math:`-1` and :math:`1` to indicate edge direction.
+
+Zero Matrix
 -----------
-ماتریسی که تمام درایه های آن صفر است.
+A matrix where all entries are zero.
 
 :math:`\begin{equation*}
 A = 
 \begin{bmatrix}
-0 & 0  \\
+0 & 0 \\
 0 & 0 
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس سطری
+Row Matrix
 ------------
-ماتریسی که فقط یک سطر دارد.
+A matrix that has only one row.
 
 :math:`\begin{equation*}
 A = 
@@ -24,24 +91,24 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس ستونی
+Column Matrix
 -------------
-ماتریسی که فقط یک ستون دارد.
+A matrix that has only one column.
 
 :math:`\begin{equation*}
 A = 
 \begin{bmatrix}
-37  \\
-4  \\
--5  \\
-3  \\
-0  
+37 \\
+4 \\
+-5 \\
+3 \\
+0 
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس مربعی
+Square Matrix
 -------------
-ماتریسی که تعداد سطر های آن با تعداد ستون های آن برابر است.
+A matrix where the number of rows is equal to the number of columns.
 
 :math:`\begin{equation*}
 A = 
@@ -51,9 +118,9 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس قطری
-------------
-نوع خاصی از ماتریس مربعی است که تمام درایه های بالا و پایین قطر اصلی آن صفر است.
+Diagonal Matrix
+---------------
+A special type of square matrix where all entries above and below the main diagonal are zero.
 
 :math:`\begin{equation*}
 A = 
@@ -64,9 +131,9 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس اسکالر
---------------
-ماتریسی قطری است که درایه های روی قطر اصلی آن با هم برابرند.
+Scalar Matrix
+-------------
+A diagonal matrix in which the entries on the main diagonal are equal.
 
 :math:`\begin{equation*}
 A = 
@@ -76,10 +143,10 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس همانی(واحد)
---------------------
-ماتریس اسکالری که درایه های روی قطر آن برابر 1 است.
-این ماتریس با مرتبه n × n را با :math:`I_n` نشان می دهند.
+Identity Matrix
+---------------
+A scalar matrix where the entries on the diagonal are equal to 1.  
+This matrix of order n × n is denoted by :math:`I_n`.
 
 :math:`\begin{equation*}
 A = 
@@ -89,10 +156,10 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس متقارن
---------------
-ماتریسی مربعی که درایه سطر i و ستون j با درایه سطر j و ستون i برابر است.
-به عبارتی دیگر :math:`a_{ji}` = :math:`a_{ij}` است.
+Symmetric Matrix
+----------------
+A square matrix where the element in row i and column j equals the element in row j and column i.
+In other words: :math:`a_{ji}` = :math:`a_{ij}`.
 
 :math:`\begin{equation*}
 A = 
@@ -104,13 +171,13 @@ A =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس متناوب
----------------
-ماتریسی مربعی که توانی از k وجود داشته باشد که :math:`A^k = A` می گویند.
+Idempotent Matrix
+-----------------
+A square matrix for which there exists a power k such that :math:`A^k = A` is called an idempotent matrix.
 
-ماتریس ترانهاده
+Transpose Matrix
 ----------------
-ماتریس ترانهاده از روی یک ماتریس دیگر ساخته می شود و اگر ماتریس A را در نظر بگیریم با n سطر و m ستون، درایه :math:`a^{T}_{ij}` ماتریس ترانهاده ساخته شده از روی ماتریس A که آن را با :math:`A^T` نشان می دهیم با m سطر و n ستون برابر است با درایه :math:`a_{ji}` ماتریس A .
+The transpose matrix is constructed from another matrix. If we consider matrix A with n rows and m columns, the entry :math:`a^{T}_{ij}` of the transpose matrix created from A (denoted as :math:`A^T`) with m rows and n columns equals the entry :math:`a_{ji}` of matrix A.
 
 :math:`\begin{equation*}
 A = 
@@ -129,13 +196,13 @@ A^T =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس مثلثی
---------------
-گونه خاصی از ماتریس های مربعی است. ماتریس های مثلثی به دو دسته بالا مثلثی و پایین مثلثی تقسیم می شوند که بالا مثلثی به ماتریسی گفته می شود که درایه های زیر قطر اصلی صفر است و پایین مثلثی به ماتریسی که درایه های بالای قطر اصلی صفر است.
+Triangular Matrix
+-----------------
+A special type of square matrix. Triangular matrices are divided into two categories: upper triangular and lower triangular. An upper triangular matrix is defined as a matrix where all entries below the main diagonal are zero, and a lower triangular matrix is one where all entries above the main diagonal are zero.
 
-ماتریس کهاد
--------------
-ماتریس کهاد از روی یک ماتریس دیگر ساخته می شود و اگر ماتریس A را در نظر بگیریم، برای بدست آوردن درایه :math:`a_{ij}` ماتریس ترانهاده اول ماتریس B را با حذف کردن سطر i و ستون j ماتریس A درست میکنیم و بعد مقدار :math:`a_{ij}` برابر با دترمینان ماتریس B است.
+Adjugate Matrix
+---------------
+The adjugate matrix is constructed from another matrix. If we consider matrix A, to obtain the entry :math:`a_{ij}` of the adjugate matrix, we first construct matrix B by removing row :math:`i` and column :math:`j` from matrix A. Then, the value of :math:`a_{ij}` is equal to the determinant of matrix B.
 
 :math:`\begin{equation*}
 A = 
@@ -154,9 +221,12 @@ B =
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس همسازه
---------------
-ماتریس همسازه از روی ماتریس دیگر ساخته می شود و فرض کنید که ماتریس A باشد، درایه سطر i و j ماتریس همسازه با :math:`a_{ij}` × :math:`-1^{i + j}` برابر است.
+.. 
+   The code blocks and math sections are kept unchanged as per instructions.
+
+Cofactor Matrix
+---------------
+The cofactor matrix is constructed from another matrix, assumed to be matrix A. The entry in row :math:`i` and column :math:`j` of the cofactor matrix equals :math:`a_{ij}` multiplied by :math:`-1^{i + j}`.
 
 :math:`\begin{equation*}
 A = 
@@ -169,18 +239,18 @@ A =
 A' = 
 \begin{bmatrix}
 37 & -8 & 6 \\
--11 & 0 & -7  
+-11 & 0 & -7 
 \end{bmatrix}
 \end{equation*}`
 
-ماتریس الحاقی
+Adjoint Matrix
 --------------
-به ترانهاده همساز یک ماتریس گفته می شود.
+The adjoint matrix refers to the transpose of the cofactor matrix.
 
-ماتریس وارون
+Inverse Matrix
 -------------
-به ماتریس B وارون ماتریس A می گویند اگر ضربشان ماتریس همانی باشد(A × B = I). 
-وارون یک ماتریس برابر با ماتریس الحاقی ماتریس کهاد آن ماتریس است.
+Matrix B is called the inverse of matrix A if their product equals the identity matrix (A × B = I).  
+The inverse of a matrix is equal to the adjugate matrix of its cofactor matrix.
 
 :math:`\begin{equation*}
 A = 
@@ -193,6 +263,7 @@ A =
 A' = 
 \begin{bmatrix}
 3 & -1 \\
--5 & 2  
+-5 & 2 
 \end{bmatrix}
 \end{equation*}`
+

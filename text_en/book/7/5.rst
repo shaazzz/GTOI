@@ -1,106 +1,95 @@
-تعداد گشت ها به طول n
-========================
+Number of Walks of Length n
+===========================
 
-به کمک ماتریس مجاورت گراف و عملیات هایی که روی ماتریس ها تعریف می شود می توان
-الگوریتمی برای به دست آوردن تعداد گشت ها به طول
+Using the adjacency matrix of a graph and defined matrix operations, we can provide an algorithm to determine the number of walks of length *n*. To understand this section, it is necessary to be familiar with the operation of matrix multiplication (a well-known operation) and have good intuition about it. You can search for matrix multiplication on the internet to familiarize yourself with it.
+
+.. The Meaning of Matrix Multiplication in Graphs
+------------------------------------------------
+
+Consider two graphs with
 n
-ارائه داد. برای درک این قسمت، لازم است با عملیات ضرب ماتریسی که یک عملیات معروف است
-آشنا باشید و شهود خوبی روی آن داشته باشید. می توانید ضرب ماتریس را درون اینترنت
-جستجو کرده تا با آن آشنا شوید.
-
-معنی ضرب ماتریس در گراف ها
------------------------------
-
-دو گراف
-n
-راسی را در نظر بگیرید. برای مثال این دو گراف را گراف آبی با ماتریس مجاورت
+vertices. For example, let's call the blue graph with adjacency matrix
 A
-و قرمز با ماتریس مجاورت B
-می نامیم. می خواهیم تعداد گشت های بین دو راس
-i و j
-را به دست بیاوریم. به طوری که دو یال داشته باشند و یال اول آن ها آبی و یال دوم آن ها قرمز
-باشد. این تعداد را
-:math:`C_{i,j}`
-می نامیم. واضح است که برای محاسبه این مقدار می توان روی راس میانی این گشت حالت بندی کرد
-(راسی مانند k)
-و سپس یال های آبی از i به k را در یال های قرمز از k به j ضرب کرد و مقادیر به دست آمده را
-به ازای تمام k های ممکن جمع زد. به زبان ریاضی:
+and the red graph with adjacency matrix B.
+We want to find the number of walks between two vertices
+i and j
+that have two edges, where the first edge is blue and the second edge is red.
+We denote this number by
+:math:`C_{i,j}`.
+Clearly, to calculate this value we can consider all possible intermediate vertices
+(a vertex like k)
+then multiply the blue edges from i to k by the red edges from k to j,
+and sum the results over all possible k. Mathematically:
 
 .. math:: C_{i,j} = \sum\limits_{k=1}^{n} A_{i,k}B_{k,j}
 
-که با کمی دقت می توان دریافت که ماتریس
+With careful attention, we can see that matrix
 C
-برابر ضرب ماتریس A در B است.
+is equal to the matrix product of A and B.
 
-توان ماتریس
---------------
-توان ماتریس را مانند توان اعداد، به این صورت تعریف می کنیم که
-:math:`A^n`
-یعنی n بار ضرب A در خودش.
-طبق قضیه ای که در بالا نشان دادیم می توان دریافت که تعداد گشت های به طول
-n از i به j
-برابر درایه (i,j) در
-:math:`A^n`
-است. برای اثبات به ازای هر گشت به طول
-n-1
-یک یال قرمز بگذارید و به ازای هر یال گراف یک یال آبی. به وضوح هر گشت به طول
-n
-معادل یک گشت با یک یال قرمز و یک یال آبی است. و چون
-:math:`A^n = A^{n-1}A`
-حکم را با استقرا می توان ثابت کرد.
+.. Matrix Power
+   -------------
 
-الگوریتم و پیچیدگی
---------------------
-پس برای حل مساله کافیست تا بتوانیم توان ماتریس را در زمان خوبی محاسبه کنیم.
-چون ضرب ماتریس ها خاصیت شرکت پذیری دارد ( یعنی
-:math:`(AB)C = A(BC)` )
-پس مهم نیست که به چه ترتیبی توان را حساب می کنیم. اگر توان زوج باشد داریم:
+The power of a matrix is defined similarly to the power of numbers, such that 
+:math:`A^n` 
+means multiplying A by itself n times. 
+
+According to the theorem we demonstrated above, it can be concluded that **the number of walks of length n from i to j** 
+is equal to the (i,j) entry in 
+:math:`A^n`. 
+
+To prove this: For each walk of length n-1, place a red edge, and for each edge of the graph, place a blue edge. 
+Clearly, every walk of length n corresponds to a walk with one red edge and one blue edge. 
+Since 
+:math:`A^n = A^{n-1}A`, 
+the statement can be proven by induction.
+
+Algorithm and Complexity
+------------------------
+Therefore, to solve the problem, it is sufficient to compute matrix powers in reasonable time.
+Since matrix multiplication is associative (i.e., 
+:math:`(AB)C = A(BC)`),
+the order of exponentiation does not matter. For even exponents:
 
 .. math:: A^{2k} = (A^k)^2
 
-و اگر فرد باشد، داریم:
+And for odd exponents:
 
 .. math:: A^{2k+1} = A(A^k)(A^k)
 
-اگر ضرب ماتریس را با الگوریتم بدیهی اش، یعنی
-:math:`O(n^3)`
-محاسبه کنیم، می توان به صورت بازگشتی برای محاسبه
+If we compute matrix multiplication using the naive algorithm with 
+:math:`O(n^3)` 
+complexity, we can recursively compute 
 :math:`A^k`
-ابتدا توان
+by first calculating 
 :math:`A^{\lfloor\frac{k}{2}\rfloor}`
-را محاسبه کنیم و سپس به وسیله روابط بالا جواب مساله را حساب کنیم. زمان اجرای
-این الگوریتم بازگشتی برابر است با:
+and then using the above relations. The time complexity of this recursive algorithm is:
 
 .. math:: T(k) = T(\frac{k}{2}) + O(n^3) = O(n^3lg(k))
 
-نام این الگوریتم الگوریتم توان رسانی سریع است که در جایی که می خواهیم یک عملیات شرکت پذیر
-را روی یک عضو چندین بار تکرار کنیم می توانیم از آن استفاده کنیم.
-مثلا برای توان اعداد نیز می توانید از همین الگوریتم استفاده کنید.
+This algorithm is called the **fast exponentiation algorithm**, which can be used whenever we need to repeatedly apply an associative operation to an element. 
+For example, the same algorithm can be used for number exponentiation.
 
-تعمیم
--------
-الگوریتمی که در این جا بررسی کردیم تنها برای محاسبه تعداد گشت های به طول ثابت کاربرد
-ندارد، بلکه می توان با آن خواص دیگری از گشت های به طول ثابت را نیز
-(مانند بزرگ ترین گشت یا گشت با کم وزن ترین یال)
-به دست آورد. برای مثال می خواهیم بین دو راس گشتی به طول
-k
-پیدا کنیم که جمع وزن یال های آن بیشینه باشد.
-اگر بخواهیم این مساله را برای گرافی حل کنیم که یال های آن قرمز و آبی باشد و گشت های با
-یک یال قرمز و یک یال آبی مد نظر مان باشد پاسخ به این صورت به دست می آید:
+Generalization
+--------------
+The algorithm we examined here is not only used for computing the number of walks of fixed length,
+but can also be used to derive other properties of fixed-length walks 
+(such as the largest walk or the walk with the minimum edge weight).
+For example, suppose we want to find a walk of length k between two vertices 
+where the sum of edge weights is maximized.
+If we want to solve this problem for a graph with red and blue edges, considering walks that alternate
+between one red edge and one blue edge, the solution can be obtained as follows:
 
 .. math:: C_{i,j} = \max\limits_{k=1}^{n} A_{i,k} + B_{k,j}
 
-می توانیم ماتریس
-C
-را به عنوان ترکیب ماتریس
-A و B
-تعریف کنیم. با کمی دقت می توان دریافت که عمل ترکیب مانند عمل ضرب ماتریس شرکت پذیر است.
-برای اثبات می توانید یک گراف با یال های قرمز و آبی و سبز در نظر بگیرید و گشتی که
-قرمز - آبی - سبز باشد و جمع وزن یال هایش بیشینه باشد را از دو روش به دست آورید.
-پس می توان مشابه قبل توان ماتریس را تعریف کرد و با استقرا ثابت کرد که
-:math:`A^k_{i,j}`
-برابر بزرگترین گشت به طول 
-k بین دو راس i و j
-است و الگوریتم
-:math:`O(n^3lg(k))`
-برای محاسبه این ماتریس وجود دارد.
+We can define matrix C as the combination of matrices A and B.
+Upon closer inspection, we can see that the combination operation is associative, similar to matrix multiplication.
+To prove this, consider a graph with red, blue, and green edges, and derive the maximum-weight 
+red-blue-green walk using two different approaches. 
+Thus, similar to before, we can define matrix powers and use induction to prove that 
+:math:`A^k_{i,j}` 
+represents the maximum-weight walk of length k between vertices i and j,
+and that there exists an 
+:math:`O(n^3lg(k))` 
+algorithm to compute this matrix.
+

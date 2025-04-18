@@ -1,338 +1,202 @@
-درخت مجازی
+Virtual Tree
 ===============
 
-یک درخت مثل :math:`T`‍
-را در نظر بگیرید. یک زیر مجموعه دلخواه از راس های 
-:math:`T`
-مثل
-:math:`A`
-نسبت را درخت مجازی گوییم اگر نسبت به 
-:math:`lca`
-بسته باشد. یعنی
-:math:`lca`
-هر دو راس دلخواه از
-:math:`A`
-درون خود
-:math:`A`
-باشد.
+Consider a tree :math:`T`. An arbitrary subset of vertices in :math:`T`, denoted as :math:`A`, is called a **virtual tree** if it is closed under the **lowest common ancestor (LCA)**. That is, the LCA of any two vertices in :math:`A` must also belong to :math:`A`.
 
 
 .. figure:: /_static/virt_tree_intro.png
-   :width: 80%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 80%
+ :align: center
+ :alt: If the internet connection is poor, this image appears
 
+Why is a Virtual Tree Important for Us?
+---------------------------------------
 
-چرا درخت مجازی برای ما مهم است؟
----------------------------------
+Suppose we have a large graph where performing a BFS/DFS traversal takes *O(n)* time. If we need to perform this traversal multiple times for different subsets of nodes, the time complexity becomes problematic.
 
-اولین مسئله
-~~~~~~~~~~~~~~
+For example, consider this code snippet:
 
-فرض کنید زیرمجموعه ای از راس های درخت مثل
-:math:`B`
-را سیاه کرده ایم. حالا می خواهیم تعدادی از راس هایی که سیاه نیستند را نیز سیاه کنیم به طوریکه کل راس های سیاه همبند باشند. 
-همچنین می خواهیم تعداد راس های سیاه در نهایت کمینه شوند. این کمینه تعداد را بیابید.
+.. code-block:: c++
 
-واضح است که برای حل این سوال باید تمام راس هایی که بر روی مسیر حداقل دو راس سیاه هستند را سیاه کنیم. اما سوال مهم این است که چطور تعداد این راس ها را بیابیم
-به طوریکه پیچیدگی زمانی ما به
-:math:`|B|`
-مربوط باشد و کاملا مستقل از
-:math:`n`
-باشد. (یعنی اگر مجموعه‌ای که به ما دادند کوچک بود ما هم سریع جواب بدهیم و برعکس)
+    void dfs(int v) {
+        visited[v] = true;  // This can be done via DFS or BFS
+        for (int u : adj[v]) {
+            if (!visited[u]) {
+                parent[u] = v;
+                dfs(u);
+            }
+        }
+    }
 
-فرض کنید عدد جواب
-:math:`ans`
-باشد. توجه کنید که خود 
-:math:`ans`
-ممکن است خیلی زیاد باشد و از مرتبه
-:math:`|B|`
-نباشد. مثلا اگر درخت ما یک مسیر باشد و
-:math:`B`
-مجموعه دو راس ابتدا و انتهای این مسیر باشد
-:math:`ans=n`
-می شود. پس نمی توانیم از مرتبه زمانی
-:math:`ans` 
-هم کار کنیم.
+Now suppose we have several queries where each query gives a subset *S* of nodes, and we need to work with the subgraph induced by these nodes. A virtual tree helps us reduce the problem size from *O(n)* to *O(k)* where *k = |S|*.
 
-حالا به این نکته جالب توجه کنید. حالت نهایی درخت را (که در آن راس های سیاه همبند هستند) را در نظر بگیرید و فرض کنید
-درجه سیاهی هر راس مثل
-:math:`u`
-را تعداد راس های سیاه مجاور راس سیاه
-:math:`u`
-تعریف می کنیم. همانطور که احتمالا از مثالی که برای مسیر زدیم متوجه شدید، ممکن است تعداد زیادی از راس هایی که مجبور به سیاه کردنشان هستیم درجه سیاهی ۲
-داشته باشند!
+.. figure:: images/virtual-tree-example.png
+    :align: center
+    
+    Example of a virtual tree.
 
-یک معادل سازی روی مسئله انجام می دهیم تا کارمان راحت تر شود. درخت را از یکی از راس های
-:math:`B`
-آویزان کنید. حالا به ازای هر راس
-:math:`u`
-درون
-:math:`B`
-تمام راس های از
-:math:`u`
-تا ریشه باید سیاه شوند و همچنین این سیاه بودن کافی نیز هست (یعنی ساختار به دست آمده شرط همبند بودن را دارد).
+**Note:** A virtual tree preserves the connectivity relationships between key nodes while eliminating irrelevant nodes. This structure is particularly useful in problems involving dynamic programming on trees and path queries.
 
-در اینجا هست که مسئله ما کمی شبیه مسئله درخت مجازی می شود.فرض کنید آنقدر به مجموعه 
-:math:`B`
-راس اضافه کردیم که نسبت به
-:math:`lca`
-بسته شد. یعنی تا زمانی که دو راس 
-:math:`u, v`
-درون 
-:math:`B`
-بودند که
-:math:`lca(u, v)`
-درون
-:math:`B`
-نبود ما باید 
-:math:`lca(u, v)`
-را سیاه کنیم و به
-:math:`B`
-اضافه کنیم.
-
-حالا به ازای هر راس غیر از ریشه مثل 
-:math:`u`
-پایین ترین جد سیاهش را پدر مجازی این راس بنامید که آن را با
-:math:`p_u`
-نشان می دهیم. توجه کنید که حالا راس های بین
-:math:`u, p_u`
-همان راس هایی بودند که گفتیم درجه سیاهی آنها ۲ می شود و ممکن است تعداد آنها زیاد باشد. حالا اگر به ازای تمام
-:math:`u, p_u`
-هااین راس ها را بشماریم (که تعداد آن ها 
-:math:`h_u - h_{p_u} - 1` 
-است) و این مقدار را با تعداد راس های سیاه فعلی جمع کنیم جواب مسئله به دست خواهد آمد.
-
-در این قسمت به چند نکته کلیدی اشاره نکردیم. از جمله اینکه:
-
-- چطور می توانیم راس هایی را پیدا کنیم که اگر به مجموعه :math:`B` اضافه شوند درخت مجازی می سازند؟
-
-- چرا تعداد حداکثر تعداد راس های درخت مجازی تنها به :math:`B` مربوط است و ربطی به :math:`n` ندارد؟
-
-در ادامه به این سوال ها جواب می دهیم. همچنین لازم به ذکر است که سوالی که در این قسمت مطرح کردیم بدون عوض کردن ریشه هم به همان راحتی قایل حل است.
-عوض کردن ریشه ای که انجام دادیم صرفا به دلیل راحت تر کردن توضیحات بود!
-
-قطر یک زیرمجموعه
+.. rst::
+The First Problem
 ~~~~~~~~~~~~~~~~~~~~
 
-فرض کنید یک درخت 
-:math:`T`
-و یک مجموعه 
-:math:`B`
-به شما داده اند. حالا شما باید دو تا از راس های درون 
-:math:`B`
-را نام ببرید که فاصله آن دو از یکدیگر بیشینه است.
+Suppose we have a subset of vertices of a tree, denoted as :math:`B`, colored black. Now we want to color some additional non-black vertices such that all black vertices become connected. We also want to minimize the total number of black vertices. Find this minimum number.
 
-الگوریتم پیدا کردن قطر درخت با 
-dfs 
-را در فصل ۲ بررسی کردیم. در اینجا هم اگر راس های 
-:math:`B`
-همبند باشند می توانیم از همان الگوریتم 
-dfs 
-استفاده کنیم.
-اگر همبند نبود چطور؟ دغدغه فعلی ما مشابه مسئله قبلی است. یعنی می خواهیم به ازای هر دو راس 
-:math:`u,v` 
-از 
-:math:`B`
-تمام راس های حاظر در مسیر
-:math:`uv`
-را به 
-:math:`B`
-اضافه کنیم و سپس روی گراف حاصل الگوریتم 
-dfs 
-را اجرا کنیم.
+Clearly, to solve this problem, we must color all vertices that lie on the path between at least two black vertices. However, the key question is how to count these vertices in a way that the time complexity depends solely on :math:`|B|` and remains completely independent of :math:`n`. (Meaning if the given set is small, our solution should be fast, and vice versa.)
 
-اما در حقیقت این کار روش خوبی نیست چون همانطور که در مسئله قبل بیان کردیم ممکن است تعداد راس هایی که نیاز داریم به 
-:math:`B`
-خیلی زیاد باشد.
+Let the answer be :math:`ans`. Note that :math:`ans` itself might be very large and not of the order :math:`|B|`. For example, if the tree is a path and :math:`B` consists of the two endpoints, then :math:`ans = n`. Thus, we cannot work with a time complexity of order :math:`ans`.
 
-در اینجا هم مثل مسئله قبل از درخت مجازی استفاده می کنیم. یعنی مجموعه 
-:math:`B`
-را آنقدر بسط می دهیم تا به یک درخت مجازی برسیم.
-حالا بین در یک گراف جدید بین هر راس و پدر مجازی خودش یالی با وزن  
-:math:`h_u - h_{p_u}` 
-می کشیم.
-حالا درخت جدیدی که داریم همان درخت مجازی ما
-است! با پیدا کردن قطر در این درخت، بیشینه فاصله بین راس های
-:math:`B`
-اولیه را پیدا می کنیم.
+Now consider this interesting observation. In the final state of the tree (where black vertices are connected), define the *black degree* of a black vertex :math:`u` as the number of black vertices adjacent to :math:`u`. As you might have noticed from the path example, many vertices we are forced to color black may have a black degree of 2!
 
+To simplify the problem, we perform an equivalent transformation. Root the tree at one of the vertices in :math:`B`. For every vertex :math:`u` in :math:`B`, all vertices on the path from :math:`u` to the root must be colored black, and this suffices to satisfy the connectivity condition.
 
-الگوریتم
+Here, the problem starts to resemble the *virtual tree* problem. Assume we keep adding vertices to :math:`B` until it becomes closed under the *lowest common ancestor (LCA)*. That is, as long as there exist two vertices :math:`u, v` in :math:`B` whose LCA is not in :math:`B`, we must color their LCA and add it to :math:`B`.
+
+For every non-root vertex :math:`u`, define its *virtual parent* :math:`p_u` as the lowest black ancestor of :math:`u`. Note that the vertices between :math:`u` and :math:`p_u` are precisely those we mentioned earlier that end up with a black degree of 2, and their count can be large. If we count these vertices for all :math:`u, p_u` pairs (their number is :math:`h_u - h_{p_u} - 1`) and add this to the current number of black vertices, we obtain the answer.
+
+We have omitted several key points here, such as:
+
+- How do we efficiently find the vertices to add to :math:`B` to construct the virtual tree?  
+- Why does the maximum size of the virtual tree depend only on :math:`B` and not :math:`n`?
+
+We will address these questions later. It is also worth noting that the problem can be solved just as easily without rerooting the tree. The rerooting was merely a didactic choice to simplify the explanation!
+
+.. The diameter of a subset
+.. ~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you are given a tree :math:`T` and a set :math:`B`. Now, you need to name two vertices in :math:`B` such that the distance between them is maximized.
+
+We discussed the algorithm for finding the diameter of a tree using **dfs** in Chapter 2. Here, if the vertices in :math:`B` are connected, we can use the same **dfs** algorithm.  
+What if they are not connected? Our current challenge is similar to the previous problem. That is, for every pair of vertices :math:`u,v` in :math:`B`, we want to add all vertices along the :math:`uv`-path to :math:`B` and then apply the **dfs** algorithm on the resulting graph.
+
+However, this approach is not ideal in practice because, as mentioned in the previous problem, the number of vertices we need to add to :math:`B` could become very large.
+
+Here, similar to the previous problem, we use a **virtual tree**. We expand the set :math:`B` until it forms a virtual tree.  
+In this new graph, we draw an edge between each vertex and its virtual parent with a weight of :math:`h_u - h_{p_u}`.  
+The resulting new tree is our virtual tree! By finding the diameter of this tree, we determine the maximum distance between the original vertices in :math:`B`.
+
+Algorithm
 ---------------
 
-مقدمه
+In this section, we will examine classical algorithms in graph theory and their implementations. Graphs as mathematical structures have various algorithms for traversal, pathfinding, and optimization.
+
+The following code shows a simple example of graph representation using adjacency list:
+
+.. code-block:: python
+
+    # Drawing the nodes
+    nodes = ['A', 'B', 'C', 'D']
+    adjacency_list = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D'],
+        'C': ['A'],
+        'D': ['B']
+    }
+    
+    print('Hello, Graphs!')  # Output message
+
+.. image:: /images/dfs.png
+
+One fundamental algorithm is graph traversal. Depth-First Search (DFS) and Breadth-First Search (BFS) are two common approaches. In DFS, we explore as far as possible along each branch before backtracking, while BFS explores all neighbors at the current depth level before moving deeper.
+
+Introduction
 ~~~~~~~~~~~
 
-همانطور که احتمالا از مسائل قبلی شهود
-گرفتید، درخت مجازی می تواند نماینده یک زیردرخت کوچک از درخت ما باشد.
-نکته جالب توجه این است که این زیردرخت لزوما همبند نیست اما اگر درخت جدیدی بسازیم که
-در آن هر کس به پدر مجازی اش وصل شده باشد درخت جدیدی به دست می آوریم.
-سپس می توانیم از این به
-بعد تنها درخت جدید را در نظر بگیریم و محاسبات خود را روی آن انجام دهیم.
+As you have likely intuited from previous problems, a virtual tree can represent a small subtree of our tree. An interesting point is that this subtree is not necessarily connected; however, if we construct a new tree where each node is connected to its virtual parent, we obtain a new tree. From this point onward, we can consider only the new tree and perform our computations on it.
 
 
 .. figure:: /_static/transform_to_virt_tree.png
-   :width: 80%
-   :align: center
-   :alt: اگه اینترنت یارو آشغال باشه این میاد
+ :width: 80%
+ :align: center
+ :alt: If the internet is crappy, this comes up
 
 
-در این قسمت فرض می کنیم که مجموعه راس های
-:math:`B`
-به ما داده شده است و ما می خواهیم تعدادی راس به آن اضافه کنیم تا
-:math:`B`
-یک درخت مجازی شود. در اینجا این کار را بسط دادن می نامیم.
+In this section, we assume the set of vertices :math:`B` is given, and we want to add some vertices to it so that :math:`B` becomes a virtual tree. We refer to this process as expansion.
 
-اولین تلاش
-~~~~~~~~~~~~
+.. rst:
+First Attempt
+~~~~~~~~~~~~~
 
-در گام اول می توانیم به ازای هر دو راس درون مجموعه 
-:math:`B`
-مثل
-:math:`a, b`
-،
-:math:`lca(a, b)`
-را محاسبه کرده و آن را مجموعه 
-:math:`C`
-بنامیم.
+In the first step, for every two vertices in the set :math:`B` such as :math:`a, b`, we can compute :math:`lca(a, b)` and call this set :math:`C`.
 
-حالا ادعا می کنیم  
-:math:`D = B \cup C`
-یک درخت مجازی است. برای اثبات توجه کنید که هر راس عضو 
-:math:`D`
-درون زیردرختش یک عضو از 
-:math:`B`
-موجود است. (چرا؟) حالا فرض کنید که دو راس 
-:math:`a, b \in D` 
-باشند که 
-:math:`lca`
-آن دو درون 
-:math:`D` 
-نباشد.
-راس های عضو 
-:math:`B`
-که درون زیردرخت
-:math:`a, b`
-بودند را به ترتیب 
-:math:`a\prime, a\prime`
-بنامید. 
-اگر
-:math:`lca(a, b)`
-در
-:math:`D`
-نیامده باشد آنگاه 
-:math:`lca(a\prime, b\prime)`
-همان 
-:math:`lca(a, b)`
-خواهد بود که در 
-:math:`C`
-است که با حرف اولیه ما تناقض دارد.
+Now, we claim that :math:`D = B \cup C` is a virtual tree. To prove this, note that every vertex in :math:`D` has a member of :math:`B` within its subtree. (Why?) Now, suppose there are two vertices :math:`a, b \in D` whose :math:`lca` is not in :math:`D`. Name the vertices in :math:`B` that were in the subtrees of :math:`a, b` as :math:`a\prime, a\prime` respectively. If :math:`lca(a, b)` is not in :math:`D`, then :math:`lca(a\prime, b\prime)` would be the same as :math:`lca(a, b)`, which is in :math:`C`, contradicting our initial assumption.
 
-پس تنها کافیست به ازای هر دو راس درون 
-:math:`B`
-این محاسبات را انجام دهیم (و نیازی نیست که
-:math:`lca`
-راس هایی که جدید اضافه می شوند را با بقیه بررسی کنیم)
+Therefore, it suffices to perform these computations for every two vertices in :math:`B` (and there is no need to check the :math:`lca` of newly added vertices with others).
 
-یک الگوریتم بهتر
+A Better Algorithm
 ~~~~~~~~~~~~~~~~~~
 
-روشی که قبل از این گفتیم پیچیدگی زمانی بالایی داشت. اگر محسبات مربوط به
-:math:`lca`
-را
-:math:`O(lg(n))`
-در نظر بگیریم آنگاه روش بالا از 
-:math:`O(|B|^2)`
-خواهد بود.
+The method we discussed earlier had high time complexity. If we consider the computations for :math:`lca` as :math:`O(\lg(n))`, then the previous method would be :math:`O(|B|^2)`.
 
-حالا تلاش می کنیم که یک روش بهتر پیدا کنیم. یک راس به نام 
-:math:`u`
-را در نظر بگیرید که در 
-:math:`B` 
-نیست اما باید در درخت مجازی باشد. یعنی دو راس 
-:math:`u`
-دو بچه 
-:math:`a, b`
-دارد که درون زبردرخت هر یک از 
-:math:`a, b`
-یک یا چند راس از 
-:math:`B`
-وجود دارد (که
-:math:`lca`
-آن ها 
-:math:`u`
-خواهد شد)
+Now we try to find a better approach. Consider a vertex called :math:`u` that is not in :math:`B` but must be in the virtual tree. That is, the vertex :math:`u` has two children :math:`a, b` where in the subtree of each :math:`a` and :math:`b`, there exists one or more vertices from :math:`B` (whose :math:`lca` would be :math:`u`).
 
-حالا توجه کنید که از 
-:math:`lca`
-گرفتن هر کدام از راس های درون زیردرخت
-:math:`a`
-با هر کدام از راس های درون زیردرخت
-:math:`b`
-راس 
-:math:`u`
-به دست خواهد آمد. مشکل الگوریتم قبلی این بود که در این شرایط 
-:math:`u`
-را تعداد زیادی بار حساب می کرد که به این نیازی نداشتیم. یعنی به ازای هر زوج مرتب از راس های زیردرخت 
-:math:`a, b`
-یک بار راس 
-:math:`u`
-را حساب می کرد که دقیقا همین موضوع پیچیدگی زمانی راه قبل را زیاد می کرد.
+Note that taking the :math:`lca` of any vertex in the subtree of :math:`a` with any vertex in the subtree of :math:`b` will result in vertex :math:`u`. The problem with the previous algorithm was that in this scenario, it would compute :math:`u` many times unnecessarily. Specifically, for every ordered pair of vertices from subtrees :math:`a` and :math:`b`, it would compute vertex :math:`u` once, which is exactly what caused the high time complexity in the previous method.
 
-نکته جالب این است که اگر بتوانیم برای راس های درخت 
-:math:`T`
-ترتیب اولیه ای قائل شویم که در این ترتیب **زیردرخت هر راس به یک بازه تبدیل شود** آنگاه می توانیم از روش زیراستفاده کنیم و ادعا کنیم به درستی عمل می کند.
+The key insight is that if we can establish an **initial ordering** for the vertices of tree :math:`T` such that in this ordering, **the subtree of each vertex corresponds to an interval**, then we can use the following method and claim it works correctly:
 
-- راس های :math:`B` را بر حسب این ترتیب گفته شده مرتب کنید.
-- حالا به ازای هر دو راس متوالی در لیست مرتب شده ای که به دست آوردیم :math:`lca` این دو راس را به مجموعه :math:`C` اضافه کنید.
-- اجتماع دو مجموعه 
-  :math:`B, C`
-  درخت مجازی ما را تشکیل می دهند.
+- Sort the vertices in :math:`B` according to this specified ordering.
+- For every two consecutive vertices in the sorted list, add their :math:`lca` to set :math:`C`.
+- The union of the two sets :math:`B` and :math:`C` forms our virtual tree.
 
+Why does this algorithm work correctly? We stated that vertex :math:`u` has two children where each child's subtree contains at least one vertex from :math:`B`. In the sorted list generated by the algorithm, there exists **an interval** corresponding to the subtree of :math:`u`. Within the vertices of this interval, there must be two vertices belonging to subtrees of different children of :math:`u` (Why?). Therefore, when computing their :math:`lca`, vertex :math:`u` will be added to set :math:`C`—exactly as we desired!
 
-چرا این الگوریتم درست کار می کند؟ گفتیم راس 
-:math:`u`
-دو بچه دارد که در زیردرخت هر کدام راسی از 
-:math:`B`
-وجود دارد. در لیستی مرتب شده ای که الگوریتم را روی آن انجام دادیم **یک بازه** مربوط به زیر درخت 
-:math:`u` 
-وجود دارد. در راس های مربوط به این بازه قطعا دو راس وجود داند که مربوط به زیردرخت بچه های متفاوتی از
-:math:`u`
-هستند (چرا؟) بنابراین هنگامی که 
-:math:`lca`
-حساب می کنیم راس
-:math:`u`
-به مجموعه 
-:math:`C`
-اضافه می شود! همانطور که می خواستیم.
-
-ترتیب بهینه؟
+.. Optimal Order?
 ~~~~~~~~~~~~~~~~~
 
-در الگوریتم بالا به طور جادویی از یک ترتیب استفاده کردیم که ویژگی جالبی داشت. اما چنین ترتیبی ارائه ندادیم.
+In the above algorithm, we magically used an order that had an interesting property. However, we did not provide such an order.
 
-می توانید خودتان چنین ترتیبی بسازید. تمام روش های ساختن چنین ترتیبی ریشه در الگوریتم 
+Can you create such an order yourself? All methods for constructing such an order are rooted in the 
 dfs 
-دارند. چرا؟ چون هنگامی که می خواهیم این ترتیب را برای زیردرخت راسی مثل 
-:math:`u`
-محاسبه کنیم باید ابتدا به صورت بازگشتی چنین ترتیبی برای زیردرخت تمام بچه های 
-:math:`u`
-پیدا کنیم و راس
+algorithm. Why? Because when we want to compute this order for the subtree of a vertex like 
+:math:`u`, 
+we must first recursively find such an order for the subtrees of all children of 
+:math:`u`, 
+then add the vertex 
 :math:`u` 
-را هم جایی بین فاصله بازه های دو تا از بچه ها (یا قبل و بعد از همه) اضافه کنیم.
+somewhere between the intervals of two children (or before/after all of them).
 
-این دقیقا کاری است که 
-در 
-dfs
-آن را
-starting-time
-یا 
-finishing-time
-می نامیم و آن را در فصل ۲ بررسی کردیم.
+This is exactly what 
+dfs 
+calls 
+starting-time 
+or 
+finishing-time, 
+which we examined in Chapter 2.
 
-پیاده سازی
+Implementation
 ~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    class Graph:
+        def __init__(self):
+            self.adj_list = {}  # Read graph from file
+        
+        def add_vertex(self, v):  # Create graph members
+            if v not in self.adj_list:
+                self.adj_list[v] = []
+        
+        def add_edge(self, u, v):  # Get the number of vertices from file
+            self.adj_list[u].append(v)  # Create vertices
+            self.adj_list[v].append(u)  # Get the number of edges from file
+    
+    # Create edges
+    graph = Graph()
+    
+    with open("graph.txt") as f:  # Get edge from file
+        n = int(f.readline())  # Add edge to graph
+        for _ in range(n):
+            graph.add_vertex(int(f.readline()))
+        
+        m = int(f.readline())
+        for _ in range(m):
+            u, v = map(int, f.readline().split())
+            graph.add_edge(u, v)
+
+.. image:: images/graph.png
+
+In this example, the graph is read from a file and stored using an adjacency list. Each line in the file represents an edge between two vertices.
 
 .. code-block:: cpp
   
@@ -383,26 +247,7 @@ finishing-time
     return vec;
   }
 
+.. Also note that if vertex :math:`u` is inside the virtual tree and the vertex before it in the starting-time order is vertex :math:`v`, then the virtual parent of vertex :math:`u` is equal to :math:`lca(u, v)`. (Why?)
 
+In the above code, the LCA is computed using a method with time complexity :math:`O(\lg(n))`, and ultimately, finding the expansion of the virtual tree for set :math:`B` is performed in :math:`O(|B| \times \lg(n))` time.
 
-همچنین توجه کنید که اگر راس 
-:math:`u`
-درون درخت مجازی باشد و راس قبل از آن در ترتیب
-starting-time
-راس 
-:math:`v`
-باشد در اینصورت پدر مجازی راس 
-:math:`u`
-برابر با
-:math:`lca(u, v)`
-می باشد. (چرا؟)
-
-برای محاسبه 
-:math:`lca`
-در کد بالا از روشی با پیچیدگی زمانی
-:math:`O(lg(n))`
-استفاده شد و در نهایت پیدا کردن بسط درخت مجازی مجموعه
-:math:`B`
-با زمان 
-:math:`O(|B| \times lg(n))`
-انجام شد.

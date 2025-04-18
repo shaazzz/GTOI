@@ -1,38 +1,43 @@
-Trie
-============
-ترای یک درخت ریشه دار است که برای نگه داشتن چند کلمه استفاده می شود.
-هر کلمه به صورت زنجیره ای از حروف است که از ریشه شروع می شود.
-اگر دو کلمه پیشوند یکسانی داشته باشند، یک زنجیر یکسان هم در درخت دارند.
-فرض کنید تعداد حروف مورد استفاده در کلمات X باشد.
-در این صورت هر راس حداکثر X بچه دارد.
-دقت کنید که در راس ها حروف وجود ندارند بلکه یال بین هر دو راس دارای حرف است برای فهم بهتر به شکل زیر نگاه کنید.
+.. code-block:: text
 
-.. figure:: /_static/dot/Trie.svg
-   :width: 50%
-   :align: center
-   :alt: Trie example
+    Trie
+    ============
+    A trie is a rooted tree used to store multiple words. 
+    Each word is represented as a chain of letters starting from the root. 
+    If two words share a common prefix, they will have the same chain in the tree. 
+    Suppose the number of distinct letters used in the words is \(X\). 
+    In this case, each node has at most \(X\) children. 
+    Note that the nodes themselves do not contain letters; instead, the edge between each pair of nodes is labeled with a letter. For better understanding, refer to the figure below.
 
-هر راس می تواند یک علامت هم داشته باشد و اگر راسی علامت داشته باشد به این معنی است که در این راس کلمه ای به پایان رسیده است و مسیر ریشه تا این راس آن کلمه است.
-اگر ممکن بود چند کلمه یکسان بین کلمات وجود داشته باشد می توان بجای علامت از عدد استفاده کرد و تعداد کلمات پایان یافته در هر راس را نگه داشت.
+    .. figure:: /_static/dot/Trie.svg
+      :width: 50%
+      :align: center
+      :alt: Trie example
 
-جست و جو (Search)
+    Each node can also have a marker. If a node is marked, it signifies that a word ends at that node, and the path from the root to this node represents that word. 
+    If duplicate words might exist in the collection, instead of a marker, a number can be used to keep track of the count of words ending at each node.
+
+Search (Search)
 ------------------
-شما می توانید در :math:`O(n)` چک کنید که یک کلمه به طول n در درخت ترای وجود دارد یا نه.
+You can check in :math:`O(n)` whether a word of length n exists in the trie. 
 
-به این صورت که از ریشه شروع می کنید و حرف به حرف جلو می رید و اگر در راسی مانند u هستید و حرف بعدی در کلمه X است اگر راس u با یال X به بچه v می رفت به راس v و حرف بعدی در کلمه می رویم، اگر راس u یال X نداشت به این معناست که کلمه در درخت وجود ندارد.
-این عملکرد را تا جایی ادامه می دهیم تا کلمه تمام شود(حرف بعدی وجود نداشته باشد). فرض کنید کلمه روی راس w تموم شده است، اگر راس w علامت داشت (و یا مقدار عددی آن طبیعی بود) به این معناست که کلمه وجود دارد و در غیر این صورت کلمه وجود ندارد.
+Starting from the root, you move letter by letter through the word. If you are at a node u and the next letter in the word is X, check if node u has an edge labeled X leading to a child v. If such an edge exists, move to node v and proceed to the next letter. If node u has no edge labeled X, the word does not exist in the trie. Continue this process until the word ends (no more letters remain). Suppose the word ends at node w. If node w is marked (or has a natural number value), the word exists; otherwise, it does not.
 
-اضافه کردن (Insertion)
+Insertion (Insertion)
 -----------------
-شما می توانید در :math:`O(n)` یک کلمه به طول n را در درخت ترای اضافه کنید.
+You can insert a word of length n into the trie in :math:`O(n)` time.
 
-به این صورت که از ریشه شروع می کنید و حرف به حرف جلو می رید و اگر در راسی مانند u هستید و حرف بعدی در کلمه X است اگر راس u با یال X به بچه v می رفت به راس v و حرف بعدی در کلمه می رویم،
-اگر کلمه تمام شده راسی که روی آن هستیم را علامت می زنیم(یا به عدد آن یک واحد اضافه می کنیم) و اگر یال X وجود ندارد راس جدیدی می سازیم و راس فعلی را با یال X به آن وصل می کنیم و به حرف بعدی و راس بعدی(راس تازه ساخته شده) می رویم.
-این روند را ادامه می دهیم تا جایی که یا کلمه تموم شود.
+Starting from the root, traverse letter by letter. If you are at node u and the next letter is X: 
+- If node u has an edge labeled X to a child v, move to v and proceed to the next letter.
+- If the word ends at the current node, mark it (or increment its numerical value by 1). 
+- If no edge labeled X exists, create a new node, connect node u to this new node with an edge labeled X, move to the new node, and proceed to the next letter. 
 
-کاربردها
----------
-برای برخی سیستم‌ های تکمیل خودکار رشته (autocomplete) استفاده می‌ شود.
-برای ذخیره ‌سازی و دسترسی سریع به رشته های یک لغت‌نامه کاربرد فراوانی دارد.
-می‌تواند در بعضی شرایط به عنوان جایگزینی برای جدول ‌های درهم ‌سازی استفاده بشود.
-از ترای برای مرتب‌ سازی داده ‌ها در زمان خطی استفاده می‌ شود. مثلاً اگر مجموعه‌ ای از رشته ‌ها را در ترای درج کنیم و نمایش پیش‌ ترتیب آن را چاپ کنیم، رشته‌ها به ترتیب لغتنامه‌ ای مرتب می‌شوند. همچنین اگر ترای را با مجموعه‌ ای از اعداد بسازیم، جستجوی سطح اول اعداد را به ترتیب می‌ پیماید.
+Repeat this process until the word is fully processed.
+
+Applications
+------------
+- Used in some autocomplete systems.
+- Widely used for storage and fast access to dictionary strings.
+- Can be used as a replacement for hash tables in certain scenarios.
+- Tries enable linear-time data sorting. For example, inserting a set of strings into a trie and printing its pre-order traversal will output the strings in lexicographical order. Similarly, when building a trie with numbers, the first-level search traverses the numbers in sorted order.
+

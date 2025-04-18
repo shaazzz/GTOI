@@ -1,30 +1,46 @@
 2-SAT
 ============
 
-2-SAT که مخفف 2-Satisfiability است یک مسئله منطقیست.
+2-SAT, which stands for 2-Satisfiability, is a logical problem.
 
-نکته ای که وجود دارد این است که به شما یک عبارت با متغیر های منطقی داده شده و شما باید جوری متغیر ها را صفر و یک دهید که شرط برقرار شه و یا بگویید که نمی توان شراطی را برقرار کرد. این عبارت چیزی شبیه به :math:`({a_1} ∨ {b_1}) ∧ ({a_2} ∨ {b_2}) ∧ ··· ∧ ({a_m} ∨ {b_m})` است که در آن :math:`a_i` و :math:`b_i` یکی از متغیر های :math:`({x_1}, {x_2},..., {x_n})` و یا نقیض آن ها یعنی :math:`({¬x_1}, {¬x_2},..., {¬x_n})` است.
+The key point is that you are given a logical expression with variables, and you must assign 0s and 1s to the variables such that all conditions are satisfied, or declare that it's impossible. This expression resembles something like :math:`({a_1} ∨ {b_1}) ∧ ({a_2} ∨ {b_2}) ∧ ··· ∧ ({a_m} ∨ {b_m})`, where :math:`a_i` and :math:`b_i` are either variables from :math:`({x_1}, {x_2},..., {x_n})` or their negations, i.e., :math:`({¬x_1}, {¬x_2},..., {¬x_n})`.
 
-الگوریتم
+.. code-block:: cpp
+   :linenos:
+
+   int n;
+   cin >> n;
+   // here we check a
+   if (a) {
+       // if it was valid
+       cout << "YES" << endl;
+   }
+
+.. image:: /2SAT.png
+   :alt: 2SAT
+
+Algorithm
 ---------
-در ابتدا به ازای هر متغیر و نقیض آن یک راس در گراف می گذاریم (در مجموع 2n راس) و به ازای هر عبارت :math:`u ∨ w` یک یال جهت دار از نقیض u به w و یک یال جهت دار از نقیض w به u می گذاریم.
+Initially, for each variable and its negation, we create a vertex in the graph (totaling 2n vertices). For each clause :math:`u ∨ w`, we add a directed edge from the negation of u to w, and a directed edge from the negation of w to u.
 
-اگر دو راس u و نقیض u در یک مولفه قویاً همبندی باشند به این معنی است که نمی توان شرایط این عبارت را برقرار کرد چرا که اگر u یک باشد آنگاه نقیض آن هم یک است و اگر u صفر باشد نقیض آن هم صفر است.
+If two vertices u and its negation are in the same strongly connected component (SCC), it means the clause cannot be satisfied. This is because if u is assigned 1, its negation must also be 1, and if u is 0, its negation must also be 0—leading to a contradiction.
 
-با توجه به این مفهوم می توانیم با الگوریتم `کوسارا جو <https://gtoi.shaazzz.ir/book/3/4.html#id13>`_ بفهمیم که آیا در یک مولفه قویاً همبندی یک راس با نقیضش آمده یا نه.
+Using `Kosaraju's algorithm <https://gtoi.shaazzz.ir/book/3/4.html#id13>`_, we can determine whether any vertex and its negation reside in the same SCC.
 
-اگر نکته بالا برقرار بود یعنی می توانیم جوری متغیر ها را یک و صفر دهیم که شرایط عبارت سوال برقرار شود بنابراین در گام بعدی می خواهیم متغیر ها را یک و صفر دهیم.
+If the above condition is not met (i.e., no variable shares an SCC with its negation), the formula can be satisfied. We then proceed to assign values to the variables.
 
-راس های گراف را `مرتب سازی توپولوژیک <https://gtoi.shaazzz.ir/book/3/3.html#id4>`_ می کنیم. اگر u بعد از نقیضش بیاد مقدارش رو یک و اگر u قبل از نقیضش بیاد به آن صفر می دهیم.
+We perform a `topological sort <https://gtoi.shaazzz.ir/book/3/3.html#id4>`_ on the vertices of the graph. If a vertex u appears after its negation in the topological order, we assign it 1; if it appears before its negation, we assign it 0.
 
-این الگوریتم دارای اردر :math:`O(n + m)` است.
+This algorithm has a time complexity of :math:`O(n + m)`.
 
-کاربرد ها
------------
-از کاربرد های 2-SAT می توان به تشخیص دو بخش بودن گراف کرد. به این نحو که به ازای هر راس یک متغیر در نظر می گیریم. و اگر دو راس مانند u و v به هم یال داشتند دو شرط :math:`(a_v ∨ ¬a_u) ∧ (¬a_v ∨ a_u)` را به عبارت 2-SAT اضافه می کنیم.
-واضح است که می توانیم با این شرط ها گراف های دو بخشی را تشخیص دهیم. به این صورت که یک بخش گراف را صفر و بخش دیگر را یک در نظر بگیریم شرط 2-SAT برقرار است بنابراین اگر به جواب برسیم یعنی گراف دو بخشی است.
+Applications
+------------
+One of the applications of 2-SAT is detecting bipartiteness of graphs. For each vertex, we consider a variable. If two vertices u and v are connected by an edge, we add two conditions :math:`(a_v ∨ ¬a_u) ∧ (¬a_v ∨ a_u)` to the 2-SAT formula.
+
+Clearly, this approach allows us to detect bipartite graphs. By assigning one partition as 0 and the other as 1, the 2-SAT conditions are satisfied. Therefore, if a solution exists, it means the graph is bipartite.
 
 3-SAT
 -------
-مسئله سخت تری نسبت به 2-SAT، که بجای دو متغیر در هر پرانتز سه متغیر وجود دارد. این مسئله NP است و بنابراین الگوریتم مناسبی برای آن موجود نیست.
-گفتی است که می توان تمام K-SAT ها را به 3-SAT تبدیل کرد که در آن k از سه بزرگ تر است.
+A more difficult problem than 2-SAT, where each clause contains three variables instead of two. This problem is NP-complete and therefore has no efficient known algorithm.  
+It is stated that all K-SAT problems (where k > 3) can be converted to 3-SAT.
+

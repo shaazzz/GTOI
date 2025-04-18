@@ -1,67 +1,159 @@
-دکسترا
+.. _dijkstra:
+
+Dijkstra
 ============
-صورت مسئله
-------------
 
-یک گراف جهت دار وزن دار 
+Dijkstra's Algorithm
+--------------------
+
+Dijkstra's algorithm finds the shortest paths from a source node to all other nodes in a weighted graph with non-negative edge weights. This algorithm uses a priority queue to always select the node with the minimum tentative distance.
+
+**Input**: A weighted graph with non-negative weights, and a source node `s`  
+**Output**: Shortest distances from `s` to all other nodes
+
+Pseudocode
+~~~~~~~~~~
+
+.. code:: c++
+
+    // Initialize distances
+    vector<float> dist(n, INF);
+    dist[s] = 0;
+
+    priority_queue<pair<float, int>> pq;
+    pq.push({0, s});
+
+    while (!pq.empty()) {
+        // Select node with minimum distance
+        int u = pq.top().second; 
+        float d = -pq.top().first;
+        pq.pop();
+        
+        if (d > dist[u]) continue;
+        
+        // Update distances to neighbors
+        for (auto &[v, w] : adj[u]) {
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                pq.push({-dist[v], v});
+            }
+        }
+    }
+
+.. image:: /images/dijkstra.png
+
+Working Example
+~~~~~~~~~~~~~~~
+
+Consider node `A` as the source. The algorithm proceeds as follows:
+
+1. Initial distance: `A=0`, others=∞  
+2. Process `A`, update neighbors `B=3`, `C=1`  
+3. Select `C` (smallest distance), update neighbor `D=4`  
+4. Select `B`, update neighbor `D=3`  
+5. Select `D`, no updates remain  
+
+Final distances: `A=0`, `B=3`, `C=1`, `D=3`
+
+Proof of Correctness
+~~~~~~~~~~~~~~~~~~~~
+
+Using mathematical induction:  
+
+- **Base case**: Distance to source is correctly 0  
+- **Inductive step**: If all previous min selections were correct, then relaxing edges from the current node will yield correct distances  
+
+At each step, the algorithm selects the node `u` with minimum confirmed distance and :math:`d_u + w(u, v)` updates the tentative distance for neighbor `v`.
+
+Implementation Notes
+~~~~~~~~~~~~~~~~~~~~
+
+.. code:: c++
+
+    struct Edge {
+        int to;
+        float weight;
+    };
+
+    vector<float> dijkstra(const vector<vector<Edge>> &adj, int s) {
+        int n = adj.size();
+        vector<float> dist(n, INF);
+        dist[s] = 0;
+        
+        // Use min-heap (priority_queue as max-heap with negative weights)
+        priority_queue<pair<float, int>> pq;
+        pq.push({0, s});
+        
+        while (!pq.empty()) {
+            auto [d, u] = pq.top();
+            pq.pop();
+            d = -d;
+            
+            // Skip processed nodes
+            if (d > dist[u]) continue;  
+            
+            for (auto &[v, w] : adj[u]) {
+                // Check if new path is better
+                if (dist[v] > dist[u] + w) {  
+                    dist[v] = dist[u] + w;
+                    pq.push({-dist[v], v}); 
+                }
+            }
+        }
+        return dist;
+    }
+
+- **Time complexity**: O((V+E) log V) using priority queue  
+- **Space complexity**: O(V + E)
+
+.. Problem Statement
+   ------------
+
+We have a directed weighted graph 
 :math:`G`
-داریم. وزن تمامی یال های :math:`G` نامنفی می باشند.
+. The weights of all edges of :math:`G` are non-negative.
 
-حال میخواهیم به ازای هر راس طول کوتاه ترین مسیر از راس :math:`sc` به بقیه رئوس را پیدا کنیم که طول یک مسیر برابر جمع وزن های یال های آن است.
+Now we want to find, for each vertex, the length of the shortest path from vertex :math:`sc` to all other vertices, where the length of a path is equal to the sum of the weights of its edges.
 
-الگوریتم دایکسترا
--------------------
+Dijkstra's Algorithm
+--------------------
 
-یک آرایه به نام :math:`dis` تعریف میکنیم. در هنگام انجام الگوریتم، :math:`dis_u` نشان دهنده کوتاه ترین مسیر به راس :math:`u` است که راس قبلی مسیر حتما انتخاب شده باشد.(انتخاب شدن در جلوتر توضیح داده میشود). در ابتدا همه خانه های ارایه :math:`dis` برابر
-:math:`\infty`
-است. ابتدا میدانیم
-:math:`dis_{sc} = 0`
-است. حال :math:`sc` را انتخاب میکنیم حال :math:`dis` رئوس همسایه :math:`sc` را اپدیت میکنیم. 
-   
-حال در مرحله از الگوریتم از بین رئوسی که تا حالا انتخاب نکرده ایم آن راسی را انتخاب میکنیم که مقدار :math:`dis` آن کمینه است و آن را :math:`v` مینامیم.
+We define an array called :math:`dis`. During algorithm execution, :math:`dis_u` represents the shortest path to vertex :math:`u` where the previous vertex in the path has definitely been selected (selection will be explained later). Initially, all elements of the :math:`dis` array are set to :math:`\infty`. First, we know :math:`dis_{sc} = 0`. Now we select :math:`sc` and update the :math:`dis` values of :math:`sc`'s neighboring vertices.
 
-حال اثبات میکنیم که طول کوتاه ترین مسیر از :math:`sc`  به :math:`v` همان مقدار فعلی :math:`dis_v` است. برای این کار از برهان خلف استفاده میکنیم و فرض میکنیم مسیر کوتاه تری وجود دارد (مسیری به طول :math:`P`). اخرین راس انتخاب شده در این مسیر را بگیرید و آن را :math:`last` بنامید. (حتما وجود دارد چون راس :math:`sc` انتخاب شده است.) راس بعدی 
-:math:`last`
-را :math:`u` مینامیم. (راس بعدی نیز وجود دارن چون راس اخر انتخاب نشده بود). 
+In each step of the algorithm, from among the vertices not yet selected, we choose the vertex with the minimal :math:`dis` value and name it :math:`v`.
 
-طبق فرض خلف طول مسیر تا :math:`v` کمتر از :math:`dis_v` بوده و چون یال ها منفی نیستند طول مسیر تا :math:`u` نیز کمتر از :math:`dis_v` است. چون راس قبلی :math:`u` در مسیر راسی انتخاب شده بوده و فاصله نهایی راس های انتخاب شده همان :math:`dis` آن ها است، آنگاه :math:`dis_u` در زمان انتخاب شدن :math:`last` برابر طول کوتاهترین تا :math:`u` شده است. و چون 
-:math:`dis_u < P` و :math:`P < dis_v`
-است پس
-:math:`dis_u < dis_v`
-می باشد که با کمینه بودن :math:`dis_v` در بین مقدار های فعلی در تناقض است. پس فرض خلف ما غلط بوده و حکم اثبات میشود.
+We now prove that the length of the shortest path from :math:`sc` to :math:`v` is exactly the current value of :math:`dis_v`. For this proof, we use contradiction: assume there exists a shorter path (a path of length :math:`P`). Take the last selected vertex in this path and call it :math:`last` (it must exist since vertex :math:`sc` is selected). Name the next vertex after :math:`last` as :math:`u` (this next vertex must also exist since the final vertex wasn't selected yet).
 
+By contradiction assumption, the path length to :math:`v` is less than :math:`dis_v`, and since edges have non-negative weights, the path length to :math:`u` is also less than :math:`dis_v`. Since the previous vertex of :math:`u` in the path was a selected vertex and the final distances of selected vertices are exactly their :math:`dis` values, then :math:`dis_u` at the time of selecting :math:`last` was equal to the shortest path length to :math:`u`. Given that :math:`dis_u < P` and :math:`P < dis_v`, we have :math:`dis_u < dis_v`, which contradicts the minimality of :math:`dis_v` among current values. Therefore, our initial assumption is false and the proof holds.
 
-حال که اثبات شد مقدار :math:`dis_v` دقیقا برابر طول کوتاهترین مسیر به :math:`v` است، آنرا انتخاب کرده سپس به ازای تمام همسایه های آن مانند :math:`adj` که یال از :math:`v` به :math:`adj` وزن :math:`w` دارد،
-:math:`dis_{adj} = min(dis_{adj}, dis_v + w)`
-را انجام میدهیم. و همین فرآیند را ادامه میدهیم تا همه رئوس انتخاب شده باشند.
+Now that we've proven :math:`dis_v` exactly equals the shortest path length to :math:`v`, we select it and then for all its neighbors like :math:`adj` where the edge from :math:`v` to :math:`adj` has weight :math:`w`, we perform:
+:math:`dis_{adj} = min(dis_{adj}, dis_v + w)`.
+We continue this process until all vertices are selected.
 
-تحلیل اردر
+.. code-block:: python
+   :linenos:
+
+   def order_analysis(graph):
+       # peymayesh graph va mohaseye order 
+       order = len(graph.nodes())
+       # bazgasht ehsas has order
+       return order
+
+Order Analysis
 ------------
-برای این الگوریتم دو راه کلی پیاده سازی وجود دارد.
+There are two main approaches to implement this algorithm.
 
-راه اول با اردر :math:`\mathcal{O}(n^2)`
+First Method with Order :math:`\mathcal{O}(n^2)`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-در هر مرحله روی کل رئوس انتخاب نشده حلقه اجرا کنیم و کمینه را پیدا کنیم. در هر مرحله از فرایند ما 
-:math:`\mathcal{O}(n)`
-انجام میدهیم. چون الگوریتم دارای :math:`n` مرحله است اردر برنامه ما 
-:math:`\mathcal{O}(n^2)`
-میشود.
+In each step, we loop through all unselected vertices and find the minimum. In each step of the process, we perform :math:`\mathcal{O}(n)` operations. Since the algorithm has :math:`n` steps, the order of the program becomes :math:`\mathcal{O}(n^2)`.
 
+The Second Method with Order :math:`\mathcal{O}(n + m.lg(n))`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-راه دوم با اردر :math:`\mathcal{O}(n + m.lg(n))`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In each step, instead of iterating over all vertices, we use data structures that can find the minimum faster, such as :math:`set` and :math:`priority-queue` in :math:`C++`. (Assume we are using :math:`set` here.)
 
-در هر مرحله به جای اجرای حلقه رو کل رئوس، از داده ساختار هایی استفاده میکنیم که کمینه را سریع تر پیدا بکنند. مانند :math:`set` و :math:`priority-queue` در :math:`C++`.( فرض کنید در اینجااز :math:`set` استفاده میکنیم)
+In each step, the minimum value of :math:`dis` can be found in :math:`\mathcal{O}(1)`. Each time we change the value of an entry in :math:`dis`, we must update it in the :math:`set`, which has an order of :math:`\mathcal{O}(lg(n))`.
 
-در هر مرحله کمینه مقدار :math:`dis` را میتوان با 
-:math:`\mathcal{O}(1)`
-پیدا کرد. هر بار که مقدار خانه ای از :math:`dis` را عوض میکنیم باید مقدار ان را در :math:`set` اپدیت کنیم که  از اردر
-:math:`\mathcal{O}(lg(n))`
-میباشد.
+Because in each step, the number of :math:`dis` entries that may change is equal to the number of neighbors of the selected vertex. Therefore, we change the values of :math:`dis` equal to the total number of neighbors of all vertices. We know the total number of neighbors is :math:`\mathcal{O}(m)`. Thus, the total time cost for updates is :math:`\mathcal{O}(m.log(n))`, resulting in an overall order of :math:`\mathcal{O}(n + m.lg(n))`.
 
-چون ممکن است هر مرحله به اندازه تعداد همسایه های راس انتخاب شده خانه های :math:`dis` عوض بشود پس ما به انداره مجموع تعداد همسایه های کل رئوس مقادیر :math:`dis` را عوض میکنیم. میدانیم جمع تعداد همسایه ها از
-:math:`\mathcal{O}(m)`
-است. پس در کل 
-:math:`\mathcal{O}(m.log(n))`
-هزینه زمانی به ازای اپدیت ها میدهیم پس اردر برنامه :math:`\mathcal{O}(n + m.lg(n))` میشود.

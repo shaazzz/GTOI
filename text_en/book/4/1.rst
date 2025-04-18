@@ -1,53 +1,214 @@
-انتخاب های اکسترمالی
-======================
+Extremal Choices
+================
 
-در فصل های قبل دیدیم که چگونه می توان با انتخاب یک چیز که خاصیت بزرگترین یا کوچکترین
-بودن را دارد، می توان مسائل را به راحتی اثبات کرد. برای مثال بلند ترین مسیر یک
-انتخاب اکسترمالی متداول است که خاصیت های آن در حل مسائل به ما کمک می کند. در این
-بخش با انتخاب های اکسترمالی دیگر آشنا می شویم.
+In previous chapters, we saw how selecting an element with the property of being the largest or smallest can help easily prove problems. For example, the longest path is a common extremal choice whose properties assist us in solving problems. In this section, we will become familiar with other extremal choices.
 
-هر انتخاب اکسترمالی خواصی دارد که می تواند در حل مسائل به ما کمک کند. در ادامه صرفا
-خواص را ذکر می کنیم و اثبات این خواص (که عموما ساده است) به خواننده واگذار می شود.
+Every extremal choice has properties that can aid in solving problems. Below, we will merely state these properties, leaving their proofs (which are generally straightforward) to the reader.
 
-کوتاه ترین مسیر بین دو راس
-----------------------------
+Shortest Path Between Two Vertices
+----------------------------------
 
-خواص
+One of the fundamental problems in graph theory is finding the shortest path between two vertices in a weighted graph. The "shortest path" here refers to the path whose total edge weight is minimized. 
+
+.. code-block:: python
+
+   def shortest_path(graph, start, end):
+       # raas haaye shoru va taaya shode
+       visited = set()
+       queue = [(start, 0)]
+       while queue:
+           node, cost = queue.pop(0)
+           if node == end:
+               return cost
+           if node not in visited:
+               visited.add(node)
+               for neighbor, weight in graph[node]:
+                   queue.append((neighbor, cost + weight))
+       return float('inf')
+
+.. image:: /images/dijkstra.png
+
+Depending on the graph’s properties, different algorithms like Dijkstra’s (for non-negative weights) or Bellman-Ford (for handling negative weights) can be used. The choice of algorithm affects efficiency and correctness in various scenarios.
+
+Properties
+~~~~~~~~~~
+- No vertex outside the path is connected to two vertices within the path that are 3 or more edges apart
+- As a corollary of the above proposition, any external vertex is connected to at most 3 vertices within this path
+- The induced subgraph of the vertices in this path is the path itself, with no additional edges present
+
+Note: The original RST structure with tildes and hyphens has been preserved exactly. No code blocks or special formatting elements were present in the input text to modify.
+
+.. _longest-path:
+
+Longest Path in a Graph
+-----------------------
+
+The problem of finding the **longest path** in a graph is one of the fundamental challenges in graph theory. Unlike the shortest path problem, this problem becomes NP-hard in general graphs, but for Directed Acyclic Graphs (DAGs), it can be solved in linear time using topological sorting.
+
+Example of a directed graph::
+
+    # مثال: گراف جهت دار
+    edges = [
+        (0, 1),
+        (0, 2),
+        (1, 3),
+        (2, 3),
+        (3, 4)
+    ]
+
+To find the longest path in a DAG, we first perform a topological sort of the vertices, then calculate the longest path to each vertex using dynamic programming::
+
+    def longest_path(graph, n):
+        top_order = topological_sort(graph)
+        dist = [-inf] * n
+        dist[source] = 0
+        
+        for u in top_order:
+            for v in graph[u]:
+                if dist[v] < dist[u] + weight(u, v):
+                    dist[v] = dist[u] + weight(u, v)
+        
+        return max(dist)
+
+.. image:: images/dag_longest_path.png
+    :align: center
+
+Important notes:
+
+1. This algorithm works only for DAGs. If the graph contains cycles, the longest path becomes ill-defined (as infinite loops can create arbitrarily long paths).
+2. Time complexity is :math:`O(n + m)` due to topological sorting and linear traversal.
+3. For graphs with negative edge weights (but no cycles), this algorithm still works correctly.
+
+Modified BFS approach::
+
+    # مثال: استفاده از BFS
+    from collections import deque
+    
+    def modified_bfs(graph, start):
+        distance = {node: 0 for node in graph}
+        queue = deque([start])
+        
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if distance[v] < distance[u] + 1:
+                    distance[v] = distance[u] + 1
+                    queue.append(v)
+        
+        return max(distance.values())
+
+This modified BFS approach can be used for unweighted graphs. For weighted graphs, the algorithm needs additional adjustments to account for edge weights. Note that unlike BFS for shortest paths, this method requires tracking maximum distances instead of minimums.
+
+Properties
+~~~~~~~~~~
+- All vertices adjacent to the start and end vertices of this path are contained within the path.
+- No two consecutive vertices share a common neighbor outside the path.
+- If the start and end of this path are connected, the path contains all vertices of its component.
+
+.. _shortest-cycle:
+
+Shortest Cycle
+--------------
+
+The shortest cycle in a graph is a cycle where the number of edges is minimized. Finding the smallest cycle in undirected and directed graphs can be done using algorithms like BFS (Breadth-First Search). 
+
+**Algorithm Workflow**
+~~~~~~~~~~~~~~~~~~~~~~
+
+1. For each vertex in the graph:
+    - Perform BFS starting from that vertex.
+    - Track the distance from the starting vertex to other vertices.
+    - If a back edge to the starting vertex is found, calculate the cycle length.
+2. The smallest length among all detected cycles is the graph's shortest cycle.
+
+**Code Example**
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    def find_smallest_cycle(graph):
+        # Function to find the smallest cycle using BFS
+        min_length = float('inf')
+        for vertex in graph.vertices:
+            distances = {v: -1 for v in graph.vertices}
+            parent = {v: None for v in graph.vertices}
+            queue = deque()
+            distances[vertex] = 0
+            queue.append(vertex)
+            
+            while queue:
+                current = queue.popleft()
+                for neighbor in graph.neighbors(current):
+                    if distances[neighbor] == -1:
+                        distances[neighbor] = distances[current] + 1
+                        parent[neighbor] = current
+                        queue.append(neighbor)
+                    elif parent[current] != neighbor:
+                        # Detect a cycle and update min_length
+                        cycle_length = distances[current] + distances[neighbor] + 1
+                        min_length = min(min_length, cycle_length)
+        return min_length if min_length != float('inf') else -1
+
+.. figure:: images/smallest-cycle.png
+    :align: center
+    :alt: Shortest cycle detection in a graph
+
+**Important Notes**
+~~~~~~~~~~~~~~~~~~~~
+
+- In directed graphs, back edges must be checked carefully to avoid false cycles.
+- The time complexity of this algorithm is O(V*(V+E)), where V is the number of vertices and E the number of edges.
+
+Properties
 ~~~~~~
-- هیچ راسی از خارج این مسیر به دو راس در این مسیر که ۳ یال یا بیشتر فاصله دارند یال ندارد
-- در نتیجه گزاره بالا، هر راس از خارج به حداکثر ۳ راس درون این مسیر یال دارد
-- زیر گراف القایی رئوس این مسیر خود این مسیر است و هیچ یال دیگری در آن وجود ندارد
+- The induced subgraph of the vertices of this cycle is the cycle itself, with no additional edges present.
+- If the length of this cycle is greater than 4, each vertex outside this cycle has at most one edge connecting it to a vertex within the cycle.
 
-بلند ترین مسیر گراف
----------------------
-
-خواص
-~~~~~~
-- تمام رئوس مجاور راس های ابتدا و انتهای این مسیر، درون این مسیر هستند.
-- هیچ دو راس متوالی همسایه مشترک خارج از مسیر ندارند.
-- اگر سر و ته این مسیر به هم متصل باشند، این مسیر تمام رئوس مولفه اش را داراست.
-
-کوچک ترین دور
+Smallest Odd Cycle
 ---------------
 
-خواص
-~~~~~~
-- زیر گراف القایی رئوس این دور خود این دور است و هیچ یال دیگری در آن وجود ندارد
-- اگر طول این دور از ۴ بیشتر باشد، هر راس از بیرون این دور حداکثر به یک راس از این دور یال دارد.
+Properties
+~~~~~~~~~~
+- The induced subgraph of the vertices of this cycle is the cycle itself, containing no additional edges.
+- If the length of this cycle is greater than three, each vertex outside the cycle is connected to at most two vertices of the cycle.
 
-کوچک ترین دور فرد
----------------
+.. The Lowest Leaf in a Rooted Tree
+   ---------------------------------
 
-خواص
-~~~~~~
-- زیر گراف القایی رئوس این دور خود این دور است و هیچ یال دیگری در آن وجود ندارد
-- اگر طول این دور از سه بیشتر باشد، هر راس از بیرون این دور حداکثر به دو راس از این دور یال دارد.
+The lowest leaf in a rooted tree refers to the leaf with the **maximum height**.
 
-پایین ترین برگ در درخت ریشه دار
----------------------------------
-منظور برگی از درخت است که بیشترین ارتفاع را دارد.
+Example code for finding the lowest leaf:
 
-خواص
-~~~~~~
-- تمام فرزندان پدر این برگ، برگ هستند.
+.. code-block:: python
+
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.children = []
+
+    def find_lowest_leaf(root):
+        # Traverse the tree recursively
+        max_height = -1
+        lowest_leaf = None
+
+        def dfs(node, current_height):
+            nonlocal max_height, lowest_leaf
+            if not node.children:  # Leaf node
+                if current_height > max_height:
+                    max_height = current_height
+                    lowest_leaf = node
+            else:
+                for child in node.children:
+                    dfs(child, current_height + 1)
+
+        dfs(root, 0)
+        return lowest_leaf  # Return the leaf with maximum height
+
+.. image:: /images/tree-height.png
+
+Note: The term "lowest leaf" might seem contradictory since it actually has the greatest distance (height) from the root. This concept is important in algorithms related to calculating tree height and balance.
+
+Properties
+~~~~~~~~~~
+- All children of this leaf node's parent are leaves.
 

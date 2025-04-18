@@ -1,64 +1,47 @@
-راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین
-=============================================
+.. code-block:: python
+   :caption: مرور کلی بر پیاده‌سازی
+   
+   def find(u, v):  # تابع پیدا کردن LCA به همراه محاسبه جواب
+       ans = 0
+       while u != v:  # تا زمانی که به هم برسند
+           if depth[u] < depth[v]:  # مطمئن شو u پایین‌تر است
+               u, v = v, u
+           # ...
+           u = parent[u]  
+       return ans
 
-در این بخش برای مساله‌های گفته شده یک راه حل
-:math:`O(n+q*lg(n))`
-را بیان می‌کنیم.
+An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition  
+============================================================
 
-جداسازی سبک-سنگین
--------------------
-این جداسازی یک جداسازی پرکاربرد در درخت هاست. این جداسازی یال‌های
-درخت را به دو دسته **سبک** و **سنگین** تقسیم می کند.
-یال های سنگین یال هایی هستند که اندازه زیردرخت فرزند مربوط به آن از یال های
-فرزند های دیگر بیشتر است. تنها یک فرزند می‌تواند یال سنگین داشته باشد و اگر
-چند فرزند ماکسیمم بودند، یال یکی را به دلخواه به عنوان سنگین انتخاب می‌کنیم.
+In this section, we present an :math:`O(n+q\cdot\lg(n))` solution for the mentioned problems using heavy-light decomposition.
 
-تعداد یال های سبک در مسیر به ریشه
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-تعداد یال‌های سبک در مسیر هر راس به ریشه، حداکثر
-:math:`O(lg(n))`
-است. زیرا
-از راس دلخواهی شروع کرده و به سمت ریشه بالا میرویم. متغیر
-:math:`X`
-را هم سایز زیردرخت راس فعلی تعریف میکنیم. هر بار که به سمت ریشه بالا میرویم
-(از ‍‍‍‍‍v به u)
-و از روی یک یال سبک رد میشویم,
-:math:`X`
-حداقل دوبرابر میشود. وگرنه
-:math:`2sz_v>sz_u`
-که به این معنی است که این راس، بیش از نیمی از زیر درخت پدرش را در اختیار دارد
-و در نتیجه یالش حتما باید سنگین باشد. حال چون
-:math:`X`
-در نهایت برابر
-:math:`n`
-خواهد شد، تعداد یال های سبک حداکثر
-:math:`lg(n)`
-می باشد.
+Heavy-Light Decomposition
+--------------------------
+This decomposition is a widely-used technique in trees. It divides the tree edges into two categories: **heavy** and **light**.
+Heavy edges are those where the size of the corresponding child subtree is larger than that of the other child edges. Only one child can have a heavy edge, and if multiple children have the maximum size, we arbitrarily choose one of their edges as heavy.
 
-حل مساله جد در ارتفاع خاص
----------------------------
-حداکثر یک فرزند یک راس می تواند سنگین باشد پس می توانیم در
-DFS
-اول به سراغ راس با یال سنگین برویم تا زمان ورود فرزند سنگین دقیقا یک واحد بیشتر از
-پدرش باشد. به این ترتیب اگر راس ها را بر اساس زمان ورود مرتب کنیم، هر کس که یال
-به پدرش سنگین است، دقیقا بعد پدرش قرار می‌گیرد.
+Number of Light Edges on the Path to the Root  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+The number of light edges on the path from any vertex to the root is at most  
+:math:`O(\lg(n))`. This is because  
+starting from an arbitrary vertex and moving upward toward the root, we define  
+the variable :math:`X` as the size of the subtree of the current vertex. Every time we move upward  
+(from vertex *v* to *u*) and traverse a light edge,  
+:math:`X` at least doubles. Otherwise,  
+:math:`2sz_v > sz_u`  
+implies that this vertex occupies more than half of its parent's subtree,  
+meaning its edge must necessarily be heavy. Since :math:`X`  
+will ultimately equal :math:`n`,  
+the maximum number of light edges is :math:`\lg(n)`.
 
-این ترتیب را به دست بیاورید و هم‌چنین برای هر راس به دست بیاورید چند پدرش
-دقیقا به ترتیب پشت سرش قرار گرفته‌اند یا به عبارت دیگر به دست بیاورید که
-اولین یال سبک در مسیر این راس به ریشه متعلق به کدام راس است.
+Solving the Problem of Ancestor at a Specific Height
+---------------------------------------------------
 
-حال برای اینکه جد یک راس در ارتفاع خاصی را به دست بیاوریم، اگر تعداد پدر هایی
-که پشت این راس آمده اند از ارتفاع مطلوب بیشتر باشد، یا به عبارت دیگر همه یال ها
-به جد مطلوب، یال سنگین باشند. در این حالت می‌توانیم در زمان
-:math:`O(1)`
-جد مطلوب را به دست بیاوریم. اما اگر یال سبکی این وسط بود باید به جدی که یال به پدرش سبک
-است برویم، سپس پدر آن را بدست آوریم و از آن پدر کار را ادامه دهیم. چون حداکثر
-:math:`O(lg(n))`
-یال سبک در مسیر هر راس به ریشه وجود دارد، این کار در نهایت
-:math:`O(lg(n))`
-به ازای هر پرسش طول می‌کشد و بنابراین پیچیدگی زمانی کل،
-:math:`O(n+q*lg(n))`
-است.
+A vertex can have at most one heavy child. Therefore, during **DFS**, we first visit the vertex through its heavy edge so that the entry time of the heavy child is exactly one unit greater than its parent. This way, if we sort vertices based on their entry time, any vertex connected to its parent via a heavy edge will be positioned immediately after its parent.
+
+Obtain this ordering, and also determine for each vertex how many of its ancestors are positioned immediately behind it in this order. In other words, find the first light edge on the path from this vertex to the root.
+
+Now, to find an ancestor of a vertex at a specific height: If the number of ancestors positioned behind this vertex exceeds the desired height (i.e., all edges up to the target ancestor are heavy), we can retrieve the target ancestor in :math:`O(1)` time. However, if a light edge exists along the path, we must climb to the ancestor connected via a light edge to its parent, then find its parent, and continue from there. Since there are at most :math:`O(\lg(n))` light edges on any path from a vertex to the root, this process takes :math:`O(\lg(n))` time per query. Thus, the total time complexity is :math:`O(n + q \cdot \lg(n))`.
 
 .. code-block:: cpp
 		
@@ -116,22 +99,23 @@ DFS
     // sepas porsesh ha ra ba parat pasokh dahid
   }
 
-حل مساله LCA
--------------
-طبق چیزی که در قسمت قبل گفتیم با راه بالا می توان یک راه
-:math:`O(n+q*lg^2(n))`
-برای مساله پایین ترین جد مشترک ارائه داد. اما به سادگی می‌توانیم راه حل را بهینه‌تر
-کنیم. پایین ترین جد مشترک را در نظر بگیرید. مسیر یکی از راس ها به این راس یالش
-حتما سبک است
-(هر دو یال نمی‌توانند سنگین باشند)
-بنابراین با الگوریتم زیر می توانیم پایین ترین جد مشترک را پیدا کنیم.
-بدست بیاورید که یال سبک کدام راس پایین‌تر است. آن راس را بدست آورید و جد هم ارتفاع
-متناظرش با راس دیگر را به دست آورید. سپس پدر هر دو راس را حساب کنید.
-اگر مساوی بودند که ما جد مشترک را پیدا کرده‌ایم و در غیر این صورت با دو راس جدیدی که پیدا کردیم
-کار را ادامه می‌دهیم. چون حداکثر دو برابر لاگ رئوس درخت یال سبک در مسیر وجود خواهد داشت
-این الگوریتم پیچیدگی زمانی
-:math:`O(n+q*lg(n))`
-دارد.
+Solving the LCA Problem
+-----------------------
+According to what we discussed in the previous section, the described approach provides an 
+:math:`O(n+q*lg^2(n))` 
+solution for the Lowest Common Ancestor (LCA) problem. However, we can easily optimize this solution. 
+Consider the lowest common ancestor. The path from one of the vertices to this ancestor must contain 
+a light edge (both edges cannot be heavy simultaneously). 
+Thus, we can find the LCA using the following algorithm:
+
+1. Determine which vertex's light edge is lower. 
+2. Find the corresponding ancestor of the other vertex at the same height.
+3. Compute the parent of both vertices.
+4. If they are equal, we have found the common ancestor. Otherwise, repeat the process with the new vertices.
+
+Since there are at most :math:`O(log\ n)` light edges in any path of the tree, this algorithm achieves 
+a time complexity of 
+:math:`O(n+q*lg(n))`.
 
 .. code-block:: cpp
 
@@ -199,3 +183,4 @@ DFS
     }
     // sepas porsesh ha ra ba parat pasokh dahid
   }
+

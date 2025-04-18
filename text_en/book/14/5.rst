@@ -1,124 +1,142 @@
+.. Random Walk
+.. ============
+
 Random Walk
 ============
 
-تصور کنید که در یک هزارتو گیر افتاده اید. همه جا تاریک است و شما به هر تقاطعی که می رسید به صورت تصادفی یکی از مسیر ها را در پیش می گیرید. همچنین هیچگونه اطلاعاتی از مسیر ها و تقاطع ها به خاطر نمی سپارید. احتمال اینکه در نهایت بتوانید از هزار تو خارج شوید چقدر است؟ امیدریاضی زمانی که طول می کشد که از هزار تو خارج شوید چقدر است؟
+Imagine you are trapped in a maze. It is completely dark, and at every intersection you reach, you randomly choose one of the paths. You also do not memorize any information about the paths or intersections. What is the probability that you will eventually escape the maze? What is the expected time it takes to escape?
 
-مسئله کلی random walk به این شکل است که یک گراف جهت دار داده شده است. روی یال های مجاور هر راس یک توزیع احتمالاتی داریم. یعنی روی هر راس مثل :math:`v` که باشیم به ازای هر کدام از مجاور های :math:`v` مثل :math:`u` احتمال :math:`p_{vu}` را احتمال طی کردن این یال تعریف می کنیم. همچنین جمع احتمال تمام یال های مجاور :math:`v` باید برابر با 1 باشد. حالا می توانیم تصور کنیم که فردی روی راس :math:`s` ایستاده است و هر مرحله به صورت تصادفی و طبق توزیع احتمالاتی راسی که روی آن ایستاده است جا به جا می شود. فضای کلی مسئله به این شکل است. حالا می توان سوال های مختلفی در این فضا پرسید. دو تا از مهم ترین سوال ها که در این بخش آنها را بررسی می کنیم این است که احتمال و امیدریاضی تعداد حرکات رسیدن فرد به راس :math:`t` چقدر است؟
+The general problem of a random walk is as follows: A directed graph is given. For the edges adjacent to each vertex, we have a probability distribution. That is, for each vertex like :math:`v`, and for each of its neighbors like :math:`u`, we define :math:`p_{vu}` as the probability of traversing the edge from :math:`v` to :math:`u`. Additionally, the sum of probabilities for all edges adjacent to :math:`v` must equal 1. Now, we can imagine a person standing on vertex :math:`s`, moving randomly at each step according to the probability distribution of their current vertex. This defines the general framework of the problem. Within this framework, various questions can be asked. Two of the most important questions we will explore in this section are: What is the probability of reaching vertex :math:`t`? And what is the expected number of steps to reach vertex :math:`t`?
 
- 
+Converting Problems to Random Walk
+----------------------------------
 
-تبدیل مسائل به Random Walk
-----------------------------
+If you pay attention to probability problems, many of them can be converted to Random Walk. This is done by considering a vertex for each possible state (you'll understand more precisely by examining the examples below). The operations we perform are essentially edges that probabilistically change our state (moving us from one vertex to another).
 
-اگر به مسائل احتمالات توجه کنید خیلی از آنها به Random Walk تبدیل می شوند. به این صورت که به ازای هر وضعیت ممکن (با بررسی مثال های پایین دقیق تر متوجه می شوید) یک راس در نظر می گیریم. عملیات هایی که انجام می دهیم هم در واقع یال هایی هستند که به صورت احتمالاتی وضعیت ما را عوض می کنند (ما را از یک راس به راس دیگر می برند).
+We will examine several examples.
 
-چند مثال را بررسی می کنیم.
-
-موش و پنیر
+The Mouse and the Cheese
 ~~~~~~~~~~~~~~~~~~
 
-یک محور اعداد صحیح داریم. موشی  نابینا روی نقطه :math:`s` است و به دنبال یک پنیر می گردد که روی نقطه :math:`t` است. موش در هر مرحله به احتمال :math:`p` به جلو می رود و به احتمال :math:`1-p` به عقب می رود. امیدریاضی مراحلی که طول می کشد تا موش به پنیر برسد چند است؟
+Consider an integer number line. A blind mouse is positioned at point :math:`s` and is searching for a piece of cheese located at point :math:`t`. At each step, the mouse moves forward with probability :math:`p` and backward with probability :math:`1-p`. What is the expected number of steps for the mouse to reach the cheese?
 
-تبدیل
+Conversion
 ~~~~~~~~~~~
 
-برای تبدیل این مسئله به random walk کافی است گرافی با نامتناهی راس در نظر بگیریم. که راس :math:`x` نشان دهنده نقطه :math:`x` در محور اعداد است. هر راس :math:`x` به :math:`x+1` یال دارد که روی آن احتمال :math:`p` نوشته شده است همچنین به :math:`x-1` یال دارد که روی آن احتمال :math:`1-p` نوشته شده است. حالا مسئله معادل با امیدریاضی یال های طی شده برای رسیدن از :math:`s` به :math:`t` است.
+To convert this problem into a random walk, consider a graph with infinitely many vertices where vertex :math:`x` represents the point :math:`x` on the number line. Each vertex :math:`x` has an edge to :math:`x+1` labeled with probability :math:`p`, and an edge to :math:`x-1` labeled with probability :math:`1-p`. The problem now becomes equivalent to finding the expected number of edges traversed to reach from :math:`s` to :math:`t`.
 
-توجه کنید که صرفا توانستیم این مسئله را به random walk تبدیل کنیم ولی هنوز آن را حل نکرده ایم!
+Note that we have merely converted this problem into a random walk but have not yet solved it!
 
-بمب
+Bomb
 ~~~~~~~~~
 
-یک تروریست داریم که دکمه ای در دست دارد. بعد از گذشت هر ساعت تروریست دکمه را فشار می دهد. بعد از فشار دادن دکمه بمب به احتمال :math:`p` منفجر می شود و به احتمال :math:`1-p` هیچ اتفاقی نمی افتد. این روند انقدر ادامه پیدا می کند که بالاخره بمب منفجر بشود (یا این روند تا بی نهایت به طول می انجامد). امیدریاضی زمانی که طول می کشد تا بمب منفجر شود را بیابید.
+We have a terrorist holding a button. Every hour, the terrorist presses the button. After pressing the button, the bomb explodes with probability :math:`p` and nothing happens with probability :math:`1-p`. This process continues until the bomb finally explodes (or continues indefinitely). Find the expected time until the bomb explodes.
 
-تبدیل
-~~~~~~~~~
-
-تبدیل این مسئله به random walk در نگاه اول واضح نیست. اما همانطور که گفتیم، اکثر مسائل احتمالاتی را می توان به random walk تبدیل کرد (اما لزومی ندارد که گراف کوچک باشد و حل مسئله اصلی از طریق حل مسئله random walk ساده تر باشد). 
-
-در اینجا وضعیت های ما منفجر شدن و یا نشدن بمب است پس کافیست دو راس :math:`A` و :math:`B` در نظر بگیریم که :math:`A` یعنی در وضعیتی هستیم که بمب منفجر نشده است. حالا بعد از گذشت هر ساعت (هر عملیات) به احتمال :math:`p` بمب منفجر می شود. پس راس :math:`A` یالی به :math:`B` دارد که روی آن احتمال :math:`p` نوشته شده است. همچنین به احتمال :math:`1-p` بمب منفجر نمی شود که به وضعیت قبل خود بر می گردیم پس راس :math:`A` یک یال به خودش دارد که روی آن احتمال :math:`1-p` نوشته شده است. 
-
-در نهایت مسئله ما تبدیل به امیدریاضی تعداد یال های مورد نیاز برای رسیدن از :math:`A` به :math:`B` شد. گراف مورد بحث هم دارای دو راس و دو یال می باشد!
-
-سه دزد بز دزد
-~~~~~~~~~~~~~~~~~
-
-در این مسئله سه دزد بز دزد داریم که آن ها را اولی، دومی و سومی می نامیم. سه دزد با هم مشغول بازی کردن هستند. هر مرحله از بازی به این صورت است :
-
-- به صورت تصادفی آن ها از بین خودشان یکی را انتخاب می کنند. در هر گام به احتمال  :math:`\frac 1 2` اولی، به احتمال :math:`\frac 1 3` دومی و به احتمال :math:`\frac 1 6` سومی انتخاب می شود. فرض کنید دزدی که در اینجا انتخاب شده را آقای :math:`D` بنامیم.
-- آقای :math:`D` به مزرعه می رود و یک بز می دزد. بز دزدیده شده به دارایی های آقای :math:`D` اضافه می شود.
-- در اینجا اگر بز های آقای :math:`D` از یکی از دوستانش حداقل 2 تا بیشتر باشد، آقای آقای :math:`D` سلطان دزد ها می شود و بازی تمام می شود. در غیر اینصورت دوباره یک نفر دیگر از بین خودشان انتخاب می کنند و این روند ادامه پیدا می کند.
-
-پس به صورت کلی دزد ها آنقدر این روند را انجام می دهند که دزدی که بیشترین دارایی را دارد از دزدی که کمترین دارایی را دارد حداقل دو بز بیشتر داشته باشد...
+.. code-block:: python
+    :linenos:
+    :emphasize-lines: 3-5,8
+    :caption: مثالی از یک تابع در پایتون
+    
+    def factorial(n):
+        if n == 0:   # agar n sefr bood
+            return 1
+        else:
+            return n * factorial(n-1)
 
 
-حالا شما باید احتمال اینکه اولی سلطان دزد ها بشود را حساب کنید!
-
-تبدیل
+Conversion
 ~~~~~~~~~~~
 
-لیستی از وضعیت های مختلف بازی به این شکل است.
+Converting this problem into a random walk is not immediately obvious. However, as we mentioned earlier, most probabilistic problems can be transformed into random walks (though the resulting graph doesn't necessarily need to be small, nor does solving the original problem through this random walk conversion need to be simpler).
 
-- همه تعداد بز های برابر داشته باشند. راس :math:`s` 
-- تعداد بز های اولی یکی بیشتر از بقیه باشد. راس :math:`A_1`
-- تعداد بز های دومی یکی بیشتر از بقیه باشد. راس :math:`B_1`
-- تعداد بز های سومی یکی بیشتر از بقیه باشد. راس :math:`C_1`
-- تعداد بز های اولی یکی کمتر از بقیه باشد. راس :math:`A_{-1}`
-- تعداد بز های دومی یکی کمتر از بقیه باشد. راس :math:`B_{-1}`
-- تعداد بز های سومی یکی کمتر از بقیه باشد. راس :math:`C_{-1}`
-- اولی سلطان باشد. راس :math:`A_2`
-- دومی سلطان باشد. راس :math:`B_2`
-- سومی سلطان باشد. راس :math:`C_3`
+Here, our states are "bomb exploded" and "bomb not exploded". Therefore, it's sufficient to consider two vertices :math:`A` and :math:`B`, where :math:`A` represents the state where the bomb has not exploded. Now, after each hour (each operation), the bomb explodes with probability :math:`p`. Thus, vertex :math:`A` has an edge to :math:`B` labeled with probability :math:`p`. Additionally, with probability :math:`1-p` the bomb doesn't explode, returning us to the previous state - hence vertex :math:`A` has a self-loop edge labeled with probability :math:`1-p`.
 
-هر کدام از راس ها (به جز سه تای آخر)، دقیقا سه یال خروجی دارند که هر کدام بستگی به این دارد که کدام یک از دزد ها برای دزدیدن انتخاب شوند. به عنوان مثال مجاور های راس :math:`A_{-1}` به این صورت هستند :
+Ultimately, our problem reduces to finding the expected number of edges needed to transition from :math:`A` to :math:`B`. The discussed graph consequently contains two vertices and two edges!
 
-- اگر اولی انتخاب شود به راس :math:`s` می رویم که احتمال :math:`\frac 1 2` دارد.
-- اگر دومی انتخاب شود به راس :math:`B_2` می رویم که احتمال :math:`\frac 1 3` دارد.
-- اگر سومی انتخاب شود به راس :math:`C_2` می رویم که احتمال :math:`\frac 1 6` دارد.
+.. image:: images/state_transition.png
+    :align: center
+    :width: 200px
+    :alt: State transition diagram
 
-در نهایت مسئله معادل با احتمال رسیدن از راس :math:`s` به راس :math:`A_2` می باشد.
+Three Goat-Thief Thieves
+~~~~~~~~~~~~~~~~~~~~~~~~
 
+In this problem, we have three goat-thieving thieves whom we will refer to as the first, second, and third. The three thieves are engaged in a game. Each round proceeds as follows:
 
+- They randomly select one among themselves. In each step, the first thief has a probability of :math:`\frac 1 2`, the second :math:`\frac 1 3`, and the third :math:`\frac 1 6` of being chosen. Let's call the selected thief Mr. :math:`D`.
+- Mr. :math:`D` goes to the farm and steals a goat. The stolen goat is added to Mr. :math:`D`'s assets.
+- If Mr. :math:`D`'s goats now exceed those of one of his friends by at least 2, Mr. :math:`D` becomes the Sultan of Thieves and the game ends. Otherwise, they select another person from among themselves, and the process continues.
 
-حل مسئله Random Walk
+In general, the thieves repeat this process until a thief who has the highest assets exceeds the thief with the lowest assets by at least two goats...
+
+Now, you must calculate the probability that the first thief becomes the Sultan of Thieves!
+
+Conversion
+~~~~~~~~~~~
+
+The list of different game states is as follows:
+
+- All players have equal number of goats. Vertex :math:`s`
+- First player has one more goat than others. Vertex :math:`A_1`
+- Second player has one more goat than others. Vertex :math:`B_1` 
+- Third player has one more goat than others. Vertex :math:`C_1`
+- First player has one fewer goat than others. Vertex :math:`A_{-1}`
+- Second player has one fewer goat than others. Vertex :math:`B_{-1}`
+- Third player has one fewer goat than others. Vertex :math:`C_{-1}`
+- First player becomes sultan. Vertex :math:`A_2`
+- Second player becomes sultan. Vertex :math:`B_2`
+- Third player becomes sultan. Vertex :math:`C_3`
+
+Each vertex (except the last three) has exactly three outgoing edges depending on which thief is chosen. For example, the adjacent vertices to :math:`A_{-1}` are:
+
+- If first is chosen, we go to vertex :math:`s` with probability :math:`\frac 1 2`
+- If second is chosen, we go to vertex :math:`B_2` with probability :math:`\frac 1 3`
+- If third is chosen, we go to vertex :math:`C_2` with probability :math:`\frac 1 6`
+
+Ultimately, the problem is equivalent to finding the probability of reaching vertex :math:`A_2` from vertex :math:`s`.
+
+Solving the Random Walk Problem
 ----------------------------
 
-در قسمت قبل دیدم که بسیاری از مسائل احتمال را می توان با Random Walk مدل سازی کرد. اما اگر این مدل سازی ما را به حل مسئله اصلی نزدیک تر نکند برای ما سودی نخواهد داشت! در این قسمت می بینیم که می توان مسئله احتمال و امیدریاضی رسیدن از :math:`s` به :math:`t` در  Random Walk را به صورت الگوریتمی و با استفاده از دستگاه چند معادله و چند مجهول حل کرد!
+In the previous section, we saw that many probability problems can be modeled using Random Walk. However, if this modeling doesn't bring us closer to solving the original problem, it will be of no use to us! In this section, we will see how the probability problem and the expected value of reaching from :math:`s` to :math:`t` in a Random Walk can be solved algorithmically using a system of equations!
 
-فرض کنید احتمال رفتن از راس :math:`A` به راس :math:`B` برابر با :math:`P_{AB}` باشد. در صورتیکه در گراف از :math:`A` به :math:`B` یالی نباشد، :math:`P_{AB}=0` در نظر بگیرید. همچنین لزوما :math:`P_{AB}` با :math:`P_{BA}` مساوی نیست (چون گراف جهت دار است).
+Assume the probability of moving from vertex :math:`A` to vertex :math:`B` is :math:`P_{AB}`. If there is no edge from :math:`A` to :math:`B` in the graph, consider :math:`P_{AB}=0`. Also, :math:`P_{AB}` is not necessarily equal to :math:`P_{BA}` (since the graph is directed).
 
-در این قسمت فرض می کنیم که راس :math:`t` به ما داده شده است و ما می خواهیم به ازای تمام راس ها مثل :math:`u` احتمال و امیدریاضی رسیدن از :math:`u` به :math:`t` را بیابیم.
+In this section, we assume vertex :math:`t` is given, and for all vertices like :math:`u`, we want to find the probability and the expected number of edges traversed to reach from :math:`u` to :math:`t`.
 
-احتمال رسیدن از :math:`u` به :math:`t` را :math:`ansP_u` می نامیم و امیدریاضی تعداد یال های طی شده برای رسیدن از :math:`u` به :math:`t` را :math:`ansE_u` می نامیم. 
+We denote the probability of reaching from :math:`u` to :math:`t` as :math:`ansP_u`, and the expected number of edges traversed to reach from :math:`u` to :math:`t` as :math:`ansE_u`.
 
-واضح است که :math:`ansP_t = 1` و :math:`ansE_t = 0`.
+Clearly, :math:`ansP_t = 1` and :math:`ansE_t = 0`.
 
-معادلات زیر به ازای هر :math:`u \neq t` برقرار هستند.
+The following equations hold for every :math:`u \neq t`:
 
 :math:`ansP_u = \sum P_{uv} \times ansP_v`
 
 :math:`ansE_u = 1 + \sum P_{uv} \times ansE_v`
 
-که اگر :math:`n` راس داشته باشیم این معادلات به ما یک دستگاه :math:`n-1` معادله و :math:`n-1` مجهول می دهند. همچنین به طور خاص اگر گراف جهت دار ما DAG باشد دیگر نیازی به حل دستگاه معادلات نیست. بلکه گراف را به صورت ترتیب توپولوژیکی در نظر می گیریم و از آخر به اول جواب ها را به دست می آوریم (و این بسیار شبیه به کاری است که در توابع بازگشتی انجام می دهیم).
+If we have :math:`n` vertices, these equations give us a system of :math:`n-1` equations with :math:`n-1` unknowns. Additionally, if our directed graph is a DAG, solving the system of equations is unnecessary. Instead, we consider the graph in topological order and compute the solutions from last to first (and this is very similar to what we do in recursive functions).
 
-حل یک مثال 
-~~~~~~~~~~~~~~~~~
+.. code-block:: rst
 
-در اینجا می خواهیم مسئله بمب که در بالا گفته شد را حل کنیم. اگر دستگاه معادلات را شکل بدهیم نتیجه به این شکل است :
+   Solving an Example
+   ~~~~~~~~~~~~~~~~~
 
-:math:`ansE_B = 0`
+   Here, we aim to solve the bomb problem mentioned earlier. By formulating the system of equations, the result is as follows:
 
-:math:`ansE_A = 1 + (1-p) \times ansE_A + p \times ansE_B`
+   :math:`ansE_B = 0`
 
-که به راحتی نتیجه می شود :math:`ansE_A = \frac 1 p`
+   :math:`ansE_A = 1 + (1-p) \times ansE_A + p \times ansE_B`
 
-نتیجه گیری
+   which easily yields :math:`ansE_A = \frac 1 p`
+
+Conclusion
 --------------
 
-در اینجا وارد فضای Random Walk شدیم و در مورد بعضی از مسائلی که در این فضا تعریف می شوند کمی صحبت کردیم اما حقیقت این است که انواع پرسش هایی که در فضای Random Walk مطرح می شوند بسیار زیاد است و بحث در این مورد از حوصله کتاب خارج است.
+Here, we entered the space of Random Walks and briefly discussed some problems defined in this space. However, the truth is that the variety of questions raised in the Random Walk domain is vast, and a detailed discussion would be beyond the scope of this book.
 
-روشی که برای تبدیل به Random Walk و سپس حل آن گفتیم بسیار کلی است. این کار برای شهود گرفتن ما نسبت به مسائل خوب است اما در خیلی از اوقات گرافی که ساخته می شود بسیار بزرگ تر از آن است که بتوان به صورت دستی معادلات مربوط به آن را حل کرد (مثل مسئله سه دزد بز دزد).
+The method we described for converting to a Random Walk and solving it is very general. This approach is good for building our intuition about problems, but often the constructed graph becomes too large to solve its equations manually (like the *three thieves problem*).
 
-گاهی اوقات می توانیم از خاص بودن گراف استفاده کنیم. مثلا فرض کنید می خواهیم امیدریاضی رسیدن از راس :math:`s` به :math:`t` را بیابیم و ساختار گراف طوری است که هر مسیر از :math:`s` به :math:`t` حتما از راس :math:`w` می گذرد. در اینجا طبق قوانین امیدریاضی می توانیم بفهمیم که امیدریاضی تعداد یال ها برای رسیدن از :math:`s` به :math:`t` برابر است با جمع امیدریاضی رسیدن از :math:`s` به :math:`w` و سپس رسیدن از :math:`w` به :math:`t`. از این موضوع می توانید برای حل مسئله موش و پنیر استفاده کنید!
+Sometimes, we can leverage the graph's specific properties. For example, suppose we want to find the expected number of steps to reach vertex :math:`t` from :math:`s`, and the graph's structure is such that every path from :math:`s` to :math:`t` necessarily passes through vertex :math:`w`. According to the laws of expectation, we can conclude that the expected number of edges to reach from :math:`s` to :math:`t` equals the sum of the expected steps from :math:`s` to :math:`w` and then from :math:`w` to :math:`t`. You can use this idea to solve the *Mouse and Cheese problem*!
 
-پس در کل می توان گفت تبدیل مسائل به Random Walk به ما کمک می کند ولی اغلب به تنهایی برای حل سوال کافی نیست و ما باید خلاقیت بیشتری برای ساده تر کردن مسئله استفاده کنیم.
+In summary, converting problems into Random Walks can be helpful, but often it is not sufficient on its own. We must employ more creativity to simplify the problem further.
+

@@ -1,33 +1,88 @@
-رنگ آمیزی
+Coloring
 ============
-رنگ آمیزی راسی
----------------
-در رنگ آمیزی راسی، به هر راس یک رنگ تعلق می گیرد به طوری که دو راس مجاور دو رنگ مختلف داشته باشند.
 
-K رنگ پذیر
+In graph theory, **vertex coloring** refers to the process of assigning colors to the vertices of a graph such that no two adjacent vertices share the same color. The smallest number of colors needed for a valid coloring is called the **chromatic number** of the graph.
+
+A simple greedy algorithm for vertex coloring:
+
+.. code-block:: python
+
+   def greedy_color(graph, order):
+       color = {}
+       for v in order:  # default order
+           # neighboring colors
+           neighboring_colors = {color[u] for u in graph[v] if u in color}
+           # first available color
+           for c in itertools.count(0):
+               if c not in neighboring_colors:
+                   color[v] = c
+                   break
+       return color
+
+.. image:: images/4coloring.png
+
+Edge coloring and face coloring (for planar graphs) are also fundamental concepts. The **Four Color Theorem** states that any planar graph can be colored with at most four colors such that no adjacent regions share the same color.
+
+Special cases:
+- Bipartite graphs: Chromatic number = 2
+- Trees: Chromatic number = 2
+- Odd cycles: Chromatic number = 3
+
+Example of checking bipartiteness:
+
+.. code-block:: python
+
+   def is_bipartite(graph):
+       color = {}
+       for v in graph:
+           if v not in color:
+               stack = [v]
+               color[v] = 0
+               while stack:
+                   node = stack.pop()
+                   for neighbor in graph[node]:
+                       if neighbor in color:
+                           if color[neighbor] == color[node]:
+                               return False
+                       else:
+                           color[neighbor] = 1 - color[node]
+                           stack.append(neighbor)
+       return True  # graph is bipartite
+
+Applications include scheduling, register allocation, and Sudoku puzzles.
+
+Vertex Coloring
+---------------
+In vertex coloring, each vertex is assigned a color such that no two adjacent vertices share the same color.
+
+.. _k-colorable:
+
+k-colorable
 ~~~~~~~~~~~
-اگر بتوانیم با حداکثر k رنگ راس های گرافی را رنگ کنیم به آن گراف k رنگ پذیر می گوییم.
+If we can color the vertices of a graph using at most k colors, the graph is called **k-colorable**.
 
-K رنگ آمیزی مناسب
+Proper k-Coloring
 ~~~~~~~~~~~~~~~~~~~~
-اگر در رنگ آمیزی راس ها از k رنگ استفاده کنیم (به ازای هر رنگ z، راسی وجود داشته باشد که در رنگ آمیزی به رنگ z باشد)، به رنگ آمیزی انجام شده، k رنگ آمیزی مناسب می گوییم.
+If in vertex coloring we use k colors (such that for each color z, there exists at least one vertex colored with z), then the resulting coloring is called a proper k-coloring.
 
-عدد رنگی
+Chromatic Number
 ~~~~~~~~~
-به گرافی k رنگ پذیر باشد ولی k - 1 رنگ پذیر نباشد، k رنگی گفته می شود.
-به k، عدد رنگی گراف گفته می شود که آن را به صورت χ(G) = k نشان می دهند.
-در واقع عدد رنگی یک گراف کمترین تعداد رنگ مورد نیاز برای رنگ کردن راس های گراف را نشان می دهد.
+A graph is called **k-chromatic** if it is k-colorable but not (k-1)-colorable.  
+The value **k** is referred to as the chromatic number of the graph, denoted by χ(G) = k.  
+Essentially, the chromatic number of a graph indicates the minimum number of colors required to color the vertices of the graph.
 
-رنگ آمیزی یالی
----------------
-اگر بتوان یال های یک گراف را با k رنگ رنگ آمیزی کرد گوییم آن گراف k رنگ پذیر یالی است.
+Edge Coloring
+-------------
+If the edges of a graph can be colored with k colors, we say that the graph is **k-edge-colorable**.
 
-عدد رنگی یالی
-~~~~~~~~~~~~~~
-اگر گرافی k رنگ پذیر یالی باشد ولی k - 1 رنگ پذیر یالی نباشد گوییم این گراف k رنگی یالی است.
-در اینجا k عدد رنگی یالی گراف محسوب می شود و آن را به صورت χ′(G) = k نشان می دهیم.
+Edge Chromatic Number
+~~~~~~~~~~~~~~~~~~~~~
+If a graph is edge-colorable with k colors but not edge-colorable with k-1 colors, we say the graph is k-edge-colorable. Here, k is considered the edge chromatic number of the graph and is denoted as χ′(G) = k.
 
-اطلاعاتی درباره رنگ آمیزی
+.. Information about Coloring
 ---------------------------
-نقشه ها را جوری رنگ آمیزی می کنند تا دو کشور همسایه رنگ یکسان نداشته باشند.
-اما سوال اینجا بود که کمترین تعداد رنگ مورد نیاز برای رنگ کردن چقدر است و فرانسیس گاثری اولین کسی بود که احتمال داد هر نقشه با ۴ رنگ قابل رنگ آمیزی است و در سال ۱۹۷۶ احتمال گاثری به کمک کامپیوتر اثبات شد و به قضیه تبدیل شد.
+Maps are colored in such a way that two neighboring countries do not share the same color.  
+However, the question remained: what is the minimum number of colors required for such coloring?  
+Francis Guthrie was the first to conjecture that every map can be colored with 4 colors.  
+In 1976, Guthrie's conjecture was proven with computer assistance and became a theorem.
+

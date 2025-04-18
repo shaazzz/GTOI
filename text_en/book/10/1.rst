@@ -1,57 +1,23 @@
-شرح مساله
-============
+Problem Statement
+=================
 
-در این فصل با یک درخت ریشه دار سر و کار داریم و دو مساله زیر را روی این درخت بررسی می‌کنیم.
+In this chapter, we deal with a rooted tree and examine the following two problems on this tree.
 
-مساله جد در ارتفاع خاص
-----------------------
+.. The Problem of Ancestor at a Specific Height
+-------------------------------------------
 
-در این مساله یک درخت ریشه دار
-n
-راسی ورودی داده می‌شود و سپس
-q
-پرسش از ما انجام می‌شود. در هر پرسش یک راس مانند v و یک عدد مانند
-h
-داده می‌شود. تضمین می‌شود که ارتفاع راس از
-h
-بیشتر است و از ما جد راس
-v
-که در ارتفاع
-h
-قرار دارد
-(و یکتاست)
-از ما خواسته می‌شود.
+In this problem, a rooted tree with *n* vertices is given as input, followed by *q* queries. In each query, a vertex *v* and a number *h* are provided. It is guaranteed that the vertex's height is greater than *h*, and we are asked to find the **ancestor** of vertex *v* located at height *h* (which is unique).
 
-مساله پایین ترین جد مشترک
--------------------------
+The Problem of the Lowest Common Ancestor
+-----------------------------------------
 
-در این مساله یک درخت ریشه دار
-n
-راسی ورودی داده می‌شود و سپس
-q
-پرسش از ما انجام می‌شود. در هر پرسش دو راس مانند
-v و u
-به ما داده می‌شود و از ما پایین ترین جد مشترک
-این دو راس خواسته می‌شود.
-به پایین ترین جد مشترک دو راس عموما
-LCA
-می گویند که مخفف
-Lowest Common Ansector
-است.
+In this problem, a rooted tree with **n** vertices is given as input, followed by **q** queries. In each query, two vertices **v** and **u** are provided, and we are asked to find the lowest common ancestor (LCA) of these two vertices. The term *lowest common ancestor* is commonly abbreviated as **LCA**, which stands for *Lowest Common Ansector*.
 
-ارتباط این دو مساله
+The Relationship Between These Two Problems
 --------------------
 
-اگر برای مساله اول یک راه حل داشته باشیم که هر پرسش را از
-:math:`O(x)`
-پاسخ دهد، می‌توانیم هر پرسش از مساله دوم را با
-:math:`O(x*lg(n))`
-پاسخ دهیم.
+If we have a solution for the first problem that answers each query in :math:`O(x)`, we can answer each query of the second problem in :math:`O(x*lg(n))`.
 
 LCA
-این دو راس را در نظر بگیرید. جدهایی که از ارتفاع آن راس
-بالاتر هستند مشترک هستند و جدهای پایین‌تر متفاوت هستند. پس می‌توانیم
-روی ارتفاع باینری سرچ بزنیم. برای این که چک کنیم جد ارتفاع x این دو راس
-مشترک است یا خیر کافیست که جد ارتفاع
-x
-هر دو راس را به کمک راه اول به دست آوریم و مقایسه کنیم که آیا یکی هستند یا خیر.
+Consider these two vertices. The ancestors above their height are common, and the lower ancestors differ. Therefore, we can perform a binary search on the height. To check if the ancestor at height x of these two vertices is common, we can obtain the ancestor at height x of both vertices using the first method and compare whether they are identical.
+
