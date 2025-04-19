@@ -25,7 +25,7 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
   <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   </head>
-  <body dir="rtl">
+  <body dir="ltr">
     <div id="body-top">
       <a><i class="fa fa-users"></i>&nbsp; Contributors</a>
       <a style="float: left; padding-right: 20px;" href="/" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
