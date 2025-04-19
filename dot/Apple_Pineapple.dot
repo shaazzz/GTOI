@@ -1,12 +1,12 @@
 graph G {
     node [fixedsize=true, shape=oval, width=0.7];
 
-    A [label=سیب]
-    B [label=آناناس]
-    C [label=خیار]
-    D [label=پرتقال]
-    E [label=انار]
-    F [label=هلو]
+    A [label=Apple]
+    B [label=Pineapple]
+    C [label=Cucumber]
+    D [label=Orange]
+    E [label=Pomegranate]
+    F [label=Peach]
 
     A -- B;
     B -- C;
