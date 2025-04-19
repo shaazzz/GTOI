@@ -35,10 +35,10 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
     Many people have worked hard and put their time and energy into this book. Even those who fixed just one line helped the book become what it is today. Some may have helped anonymously, or we may have accidentally left their names off the list. But we appreciate everyone’s efforts.
     <h2>Statistics</h2>
     <h3>Authors</h3>
-    ${textSpans.join('،')}
+    ${textSpans.join(', ')}
     <canvas id="text-chart"></canvas>
     <h3>Problem Collectors</h3>
-    ${probSpans.join('،')}
+    ${probSpans.join(', ')}
     <table style="width:100%">
       <tr>
         <th style="width:50%">Theoretical Problems</th>
