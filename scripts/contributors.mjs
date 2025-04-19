@@ -27,25 +27,22 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
   </head>
   <body dir="rtl">
     <div id="body-top">
-      <a><i class="fa fa-users"></i>&nbsp; مشارکت کنندگان</a>
+      <a><i class="fa fa-users"></i>&nbsp; Contributors</a>
       <a style="float: left; padding-right: 20px;" href="/" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
       <a style="float: left; padding-right: 20px;" href="/problems" id="problems-link"><i class="fa fa-question"></i>&nbsp; سوالات</a>    
     </div>
     <div>
-    افراد زیادی زحمت کشیده اند و وقت و انرژی خود را به پای این کتاب ریخته اند. حتی
-    کسانی که یک خط از کتاب را اصلاح کرده اند اگر نبودند کتاب به این نقطه ای که اکنون
-    در آن قرار دارد نمی رسید. ممکن است برخی به صورت گمنام مشارکت کرده باشند یا به دلیل
-    اشتباهی از ما، اسم آن ها در این فهرست نیامده باشد. اما ما قدردان زحمات همه آنان هستیم.
-    <h2>آمار</h2>
-    <h3>نویسندگان</h3>
+    Many people have worked hard and put their time and energy into this book. Even those who fixed just one line helped the book become what it is today. Some may have helped anonymously, or we may have accidentally left their names off the list. But we appreciate everyone’s efforts.
+    <h2>Statistics</h2>
+    <h3>Authors</h3>
     ${textSpans.join('،')}
     <canvas id="text-chart"></canvas>
-    <h3>گرد آورندگان سوال</h3>
+    <h3>Question Collectors</h3>
     ${probSpans.join('،')}
     <table style="width:100%">
       <tr>
-        <th style="width:50%">سوالات تئوری</th>
-        <th style="width:50%">سوالات کد</th>
+        <th style="width:50%">Theoretical Problems</th>
+        <th style="width:50%">Coding Problems</th>
       </tr>
       <tr>
         <td><canvas id="problem-chart"></canvas></td>
