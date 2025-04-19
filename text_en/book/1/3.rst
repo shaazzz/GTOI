@@ -66,36 +66,41 @@ Try implementing this yourself before viewing the code:
 
 .. code-block:: cpp
 
- const int M = 1e5 + 5; // bishine tedad rase momken ke dar soal maloom mishavad
+    #include <bits/stdc++.h>
+    using namespace std;
 
- vector <int> list_peyvandi[M];
+    const int M = 1e5 + 5;  // Maximum possible number of vertices as specified in the problem statement
 
- int main() {
- int n, m;
- cin >> n >> m;
- for (int i = 1; i <= m; i += 1) {
- int u, v;
- cin >> u >> v;
- list_peyvandi[u].push_back(v);
- list_peyvandi[v].push_back(u);
- }
- int dmin = M + 5;
- int dmax = -1;
- for (int u = 1; u <= n; u += 1) {
- cout << "Rase shomare: " << u << "\n";
- int d = list_peyvandi[u].size();
- cout << "Daraje: " << d << "\n";
- if (dmin > d) dmin = d;
- if (dmax < d) dmax = d;
- cout << "Hamsaye ha: ";
- for (int v: list_peyvandi[u]) {
- cout << v << " ";
- }
- cout << "\n";
- }
- cout << "Delta koochak: " << dmin << "\n";
- cout << "Delta bozorg: " << dmax << "\n";
- }
+    vector<int> list_peyvandi[M];
+
+    int main() {
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= m; ++i) {
+            int u, v;
+            cin >> u >> v;
+            list_peyvandi[u].push_back(v);
+            list_peyvandi[v].push_back(u);
+        }
+        int dmin = M + 5;
+        int dmax = -1;
+        for (int u = 1; u <= n; ++u) {
+            cout << "Rase shomare: " << u << "\n";
+            int d = list_peyvandi[u].size();
+            cout << "Daraje: " << d << "\n";
+            if (dmin > d) dmin = d;
+            if (dmax < d) dmax = d;
+            cout << "Hamsaye ha: ";
+            for (int v : list_peyvandi[u]) {
+                cout << v << " ";
+            }
+            cout << "\n";
+        }
+        cout << "Delta koochak: " << dmin << "\n";
+        cout << "Delta bozorg: " << dmax << "\n";
+        return 0;
+    }
+
 
 Extended Example
 ----------------
@@ -119,35 +124,41 @@ maintain separate arrays for edge data. Here's the implementation:
 
 .. code-block:: cpp
 
- const int Mras = 1e5 + 5; // bishine tedad rase momken ke dar soal maloom mishavad
- const int Myal = 3e5 + 5; // bishine tedad yale momken ke dar soal maloom mishavad
+    #include <bits/stdc++.h>
+    using namespace std;
 
- vector<int> list_peyvandi[Mras];
- int sib[Mras];
- int u[Myal], v[Myal];
- double zaman[Myal];
+    const int Mras = 1e5 + 5;  // Maximum possible number of vertices as specified in the problem statement
+    const int Myal = 3e5 + 5;  // Maximum possible number of edges as specified in the problem statement
 
- int main() {
- int n, m;
- cin >> n >> m;
- for (int e = 1; e <= m; e += 1) { // e shomare yal ast
- int x, y;
- cin >> x >> y;
- list_peyvandi[x].push_back(e); // deghat konid ke ba bala fargh darad
- list_peyvandi[y].push_back(e); // shomare yal rikhte shode
- }
- // dar edame hamsaye haye har ras raa chap mikonim
- for (int x = 1; x <= n; x += 1) {
- cout << "Rase shomare: " << x << "\n";
- cout << "Hamsaye ha: \n";
- for (int e: list_peyvandi[x]) {
- int y = u[e] ^ v[e] ^ x; // be dast avardane sare digar
- // y = u[e] + v[e] - x; ham mishod
- // y = u[e] == x ? v[e] : u[e]; ham mishod
- cout << " hamsaye = " << y << ", zaman = " << zaman[e] << "\n";
- }
- }
- }
+    vector<int> list_peyvandi[Mras];
+    int sib[Mras];
+    int u[Myal], v[Myal];
+    double zaman[Myal];
+
+    int main() {
+        int n, m;
+        cin >> n >> m;
+        for (int e = 1; e <= m; ++e) {  // 'e' is the edge index
+            int x, y;
+            cin >> x >> y;
+            list_peyvandi[x].push_back(e);  // Note that this differs from the previous version
+            list_peyvandi[y].push_back(e);  // The edge index is stored
+        }
+        // Next, we print the neighbors of each vertex
+        for (int x = 1; x <= n; ++x) {
+            cout << "Vertex number: " << x << "\n";
+            cout << "Neighbors:\n";
+            for (int e : list_peyvandi[x]) {
+                int y = u[e] ^ v[e] ^ x;  // Compute the other endpoint
+                // Alternative implementations that would also work:
+                // y = u[e] + v[e] - x;
+                // y = (u[e] == x ? v[e] : u[e]);
+                cout << " neighbor = " << y << ", time = " << zaman[e] << "\n";
+            }
+        }
+        return 0;
+    }
+
 
 Practical Algorithm
 -------------------
@@ -156,51 +167,61 @@ algorithm picks the shortest available edge until time runs out:
 
 .. code-block:: cpp
 
- const int Mras = 1e5 + 5; // bishine tedad rase momken ke dar soal maloom mishavad
- const int Myal = 3e5 + 5; // bishine tedad yale momken ke dar soal maloom mishavad
+    #include <bits/stdc++.h>
+    using namespace std;
 
- vector <int> list_peyvandi[Mras];
- int sib[Mras];
- int u[Myal], v[Myal];
- double zaman[Myal];
- bool chide[Mras];
+    const int Mras = 1e5 + 5;   // Maximum possible number of vertices as specified in the problem statement
+    const int Myal = 3e5 + 5;   // Maximum possible number of edges as specified in the problem statement
 
- int main() {
- int n, m;
- cin >> n >> m;
- for (int e = 1; e <= m; e += 1) { // e shomare yal ast
- int x, y;
- cin >> x >> y;
- list_peyvandi[x].push_back(e); // deghat konid ke ba bala fargh darad
- list_peyvandi[y].push_back(e); // shomare yal rikhte shode
- }
- // liste peyvandi ra bar hasbe zaman moratab mikonim
- for (int x = 1; x <= n; x += 1) {
- sort(list_peyvandi[x].begin(), list_peyvandi[x].end(), [](int a, int b) {
- return zaman[a] < zaman[b];
- });
- }
- int cur = 1; // rase mabda raa ras 1 dar nazar migirim
- int score = 0; // sib haye chide shode in ja zakhire mishavand
- while (k > 0) {
- chide[cur] = true;
- score += sib[cur];
- bool berim = false;
- int koja = -1;
- for (int e: list_peyvandi[cur]) {
- int nxt = u[e] ^ v[e] ^ cur;
- if (chide[nxt]) continue;
- if (zaman[e] > k) break;
- berim = true;
- koja = nxt;
- k -= zaman[e];
- break;
- }
- if (!berim) break;
- cur = koja;
- }
- cout << score;
- }
+    vector<int> list_peyvandi[Mras];
+    int sib[Mras];
+    int u[Myal], v[Myal];
+    double zaman[Myal];
+    bool chide[Mras];
+
+    int main() {
+        int n, m;
+        cin >> n >> m;
+        for (int e = 1; e <= m; ++e) {  // 'e' is the edge index
+            int x, y;
+            cin >> x >> y;
+            list_peyvandi[x].push_back(e);  // Note that this differs from the previous version
+            list_peyvandi[y].push_back(e);  // The edge index is stored
+        }
+        // Sort adjacency lists by time
+        for (int x = 1; x <= n; ++x) {
+            sort(
+                list_peyvandi[x].begin(),
+                list_peyvandi[x].end(),
+                [](int a, int b) {
+                    return zaman[a] < zaman[b];
+                }
+            );
+        }
+        int cur = 1;   // We consider vertex 1 as the starting vertex
+        int score = 0; // Accumulated score is stored here
+        // WARNING: 'k' is used below but never declared
+        while (k > 0) {
+            chide[cur] = true;
+            score += sib[cur];
+            bool berim = false;
+            int koja = -1;
+            for (int e : list_peyvandi[cur]) {
+                int nxt = u[e] ^ v[e] ^ cur;  // Compute the other endpoint
+                if (chide[nxt]) continue;
+                if (zaman[e] > k) break;
+                berim = true;
+                koja = nxt;
+                k -= zaman[e];
+                break;
+            }
+            if (!berim) break;
+            cur = koja;
+        }
+        cout << score;
+        return 0;
+    }
+
 
 Note: This greedy approach isn't optimal but demonstrates adjacency list usage.
 Time complexity is :math:`O(n+mlogm)`, significantly better than a naive
