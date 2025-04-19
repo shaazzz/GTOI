@@ -9,7 +9,7 @@ const writeFile = promisify(fs.writeFile);
 
 
 const render = ({ labels, websites, textData, problemData, codeData }) => {
-  const color = (i) => `hsl(${i/labels.length*360},100%,50%)`
+  const color = (i) => `hsl(${i/labels.length*360},100%,30%)`
   const textSpans = labels.map((x, i) => {
     if (textData[i] !== 0) 
       return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
