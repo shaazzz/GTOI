@@ -9,7 +9,7 @@ const writeFile = promisify(fs.writeFile);
 
 
 const render = ({ labels, websites, textData, problemData, codeData }) => {
-  const color = (i) => `hsl(${i/labels.length*360},100%,30%)`
+  const color = (i) => `hsl(${i/labels.length*360},100%,35%)`
   const textSpans = labels.map((x, i) => {
     if (textData[i] !== 0) 
       return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
@@ -53,7 +53,7 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
       const cf = function(context) {
         var index = context.dataIndex;
         var len = context.dataset.data.length;
-        return 'hsl('+(index/len*360)+',100%,50%)';
+        return 'hsl('+(index/len*360)+',100%,35%)';
       };
       var ctx = document.getElementById('text-chart').getContext('2d');
       Chart.defaults.global.display = false;
