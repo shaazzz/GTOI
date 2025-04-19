@@ -1,4 +1,4 @@
-- name: حمیدرضا کلباسی
+- name: Hamidreza Kalbasi
   website: https://hkalbasi.github.io/
   text:
     - "1.1"
@@ -26,7 +26,8 @@
   codeProblem: 4
   problem: 40
 
-- name: شایان پردیس
+- name: Shayan Pardis
+  website: https://www.shayanp.me/
   text:
     - "2.2"
     - "2.3"
@@ -52,7 +53,8 @@
   problem: 5
   codeProblem: 13 
 
-- name: علی توسلی
+- name: Ali Tavassoly
+  website: https://linkedin.com/in/ali-tavassoly
   codeProblem: 4
   text:
     - "3.1"
@@ -64,7 +66,8 @@
     - "3.7"
     - "14.2"
 
-- name: متین انصاری پور
+- name: Matin Ansaripour
+  website: https://linkedin.com/in/matin-ansaripour-b2b7a81a3
   text:
     - "3.1"
     - "3.2"
@@ -75,45 +78,45 @@
     - "3.7"
     - "14.2"
 
-- name: علی صفری
+- name: Ali Safari
   website: https://codeforces.com/profile/Amoo_Safar
   text:
     - "6.1"
     - "6.2"
     - "6.3"
 
-- name: مهدی قائم پناه
+- name: Mehdi Ghaempanah
   text:
     - "2.1"
     - "2.2"
     - "2.6"
 
-- name: ارشیا دادرس
+- name: Arshia Dadras
   text:
     - "13.1"
     - "13.2"
 
-- name: علی شاه‌علی
+- name: Ali Shahali
   website: https://codeforces.com/profile/AliShahali1382
   codeProblem: 11
   text:
     - "2.7"
     - "11.6"
 
-- name: علی پاشا منتصری
+- name: Alipasha Montaseri
   text:
     - "11.3"
 
-- name: کسری مظاهری
+- name: Kasra Mazaheri
   website: https://codeforces.com/profile/KMAASZRAA
   codeProblem: 30
   text:
     - "8.4"
 
-- name: پوریا جلالی
+- name: Pouria Jalali
   problem: 8
 
-- name: محمد امین هاشمی
+- name: MohammadAmin Hashemi
   problem: 65
   website: https://codeforces.com/profile/_Seyed37_
   codeProblem: 426
