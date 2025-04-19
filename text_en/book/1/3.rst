@@ -38,20 +38,21 @@ looks like this:
 
 .. code-block:: cpp
 
- const int M = 1e5 + 5; // The maximum number of vertices which is specified in the problem's statement
+    const int M = 1e5 + 5;  // The maximum number of vertices which is specified in the problem's statement
 
- vector<int> list_peyvandi[M];
+    vector<int> list_peyvandi[M];
 
- int main() {
- int n, m;
- cin >> n >> m;
- for (int i = 1; i <= m; i += 1) {
- int u, v;
- cin >> u >> v;
- list_peyvandi[u].push_back(v);
- list_peyvandi[v].push_back(u);
- }
- }
+    int main() {
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= m; i += 1) {
+            int u, v;
+            cin >> u >> v;
+            list_peyvandi[u].push_back(v);
+            list_peyvandi[v].push_back(u);
+        }
+    }
+
 
 Advantages include:
 1. Neighbor traversal in O(degree) time
