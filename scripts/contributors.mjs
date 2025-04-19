@@ -28,8 +28,8 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
   <body dir="ltr">
     <div id="body-top">
       <a><i class="fa fa-users"></i>&nbsp; Contributors</a>
-      <a style="float: left; padding-right: 20px;" href="/" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
-      <a style="float: left; padding-right: 20px;" href="/problems" id="problems-link"><i class="fa fa-question"></i>&nbsp; سوالات</a>    
+      <a style="float: right; padding-right: 20px;" href="/" id="problems-link"><i class="fa fa-book"></i>&nbsp; Tutorial</a>    
+      <a style="float: right; padding-right: 20px;" href="/problems" id="problems-link"><i class="fa fa-question"></i>&nbsp; Problems</a>    
     </div>
     <div>
     Many people have worked hard and put their time and energy into this book. Even those who fixed just one line helped the book become what it is today. Some may have helped anonymously, or we may have accidentally left their names off the list. But we appreciate everyone’s efforts.
