@@ -37,7 +37,7 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
     <h3>Authors</h3>
     ${textSpans.join('،')}
     <canvas id="text-chart"></canvas>
-    <h3>Question Collectors</h3>
+    <h3>Problem Collectors</h3>
     ${probSpans.join('،')}
     <table style="width:100%">
       <tr>
