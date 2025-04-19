@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Segment Tree &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Tree data structures" href="index.html" />
+        <link rel="next" title="Search (Search)" href="6.html" />
+        <link rel="prev" title="DSU" href="4.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tree data structures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">DSU</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Segment Tree</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/8/5.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="segment-tree">
+<h1>Segment Tree<a class="headerlink" href="#segment-tree" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>Undoubtedly, one of the most widely used data structures in computer Olympiads is the Segment Tree.
+Its binary tree type is a <a class="reference external" href="https://gtoi.shaazzz.ir/book/8/1.html#full-binary-tree">Full Binary Tree</a>.</p>
+<p>Using this data structure, one can compute the sum of a range in an array and retrieve the maximum or minimum value of an array.</p>
+<section id="structure">
+<span id="id1"></span><h2>Structure<a class="headerlink" href="#structure" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Each node of this tree represents an interval of the queried array.
+The children of a node (if they exist, there are naturally two) split the parent node's interval in half. In other words, if a node's interval is <span class="math notranslate nohighlight">\([Begin, End)\)</span>, the intervals of its left and right children will be <span class="math notranslate nohighlight">\([Begin, Middle)\)</span> and <span class="math notranslate nohighlight">\([Middle, End)\)</span>, respectively.
+Leaf nodes (nodes without children) contain a single element of the array.</p>
+<p>To better understand the relationship between nodes and their intervals, refer to the figure below:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/SegmentTree.png"><img alt="Segment Tree" src="../../_images/SegmentTree.png" style="width: 75%;" /></a>
+</figure>
+<p>Each node stores specific information about its corresponding interval in the array, which varies depending on the use case of this data structure.
+For example, if we want to calculate the sum of an interval in the array, each node stores the sum of its corresponding interval.</p>
+<p>To better grasp this concept, observe the figure below showing how values are stored in each node:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/construction.png"><img alt="Segment Tree" src="../../_images/construction.png" style="width: 85%;" /></a>
+</figure>
+<p>The height of this tree is <span class="math notranslate nohighlight">\(\lg n\)</span>, and the maximum number of nodes used is <span class="math notranslate nohighlight">\(2n\)</span>. Thus, you can store this data structure using <span class="math notranslate nohighlight">\(2n\)</span> memory.
+It is worth noting that some implementations allocate <span class="math notranslate nohighlight">\(4n\)</span> memory. This is because they assign two children (with no attributes) to each leaf node (single-element nodes), effectively doubling the memory usage.</p>
+<p>For node numbering, the root can be assigned index 1. The left and right children of a node <span class="math notranslate nohighlight">\(k\)</span> are then assigned indices <span class="math notranslate nohighlight">\(2k\)</span> and <span class="math notranslate nohighlight">\(2k + 1\)</span>, respectively.</p>
+</section>
+<section id="algorithm">
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>The way this algorithm is executed for various types of problems solvable with this data structure is nearly identical. We will explain the algorithm using one of the well-known questions associated with this data structure.</p>
+<p>Initially, we are given an array. At each step, we are required to either modify the value of an array element or report the sum of a range.</p>
+<section id="id2">
+<span id="id3"></span><h3>Structure<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>First, we build a Segment Tree from the array. To do this, we first construct the main structure of the Segment Tree. Then we set each node's value equal to the sum of its children's values, and set the values of leaf nodes to their corresponding array elements.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">seg</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">];</span><span class="w">  </span><span class="c1">// gereftan meghdare avalie</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">seg</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w">  </span><span class="c1">// jahate be dast avordane majmue ye zir majmue ha</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">ur</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">ul</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">build</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">build</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="changing-the-value-of-an-element">
+<h3>Changing the value of an element<a class="headerlink" href="#changing-the-value-of-an-element" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>We modify the values of all vertices whose intervals contain this element. Note that the number of such intervals is at most equal to the tree's height, as each level of the tree partitions the array. Consequently, at each level, the value of at most one vertex needs to be updated, resulting in an operation order of <span class="math notranslate nohighlight">\(O(lg n)\)</span>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">ur</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="calculating-the-sum-of-a-range-in-an-array">
+<span id="range-sum-report"></span><h3>Calculating the Sum of a Range in an Array<a class="headerlink" href="#calculating-the-sum-of-a-range-in-an-array" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>We use a recursive method where at each step, we calculate the sum of the requested range assuming we're at node u.
+There are three cases for the relationship between the requested range and the node u's interval.</p>
+<ol class="arabic simple">
+<li><p><strong>First case</strong>: The two intervals are identical, in which case the answer is the value of node u.</p></li>
+<li><p><strong>Second case</strong>: The requested range is entirely within the interval of one of node u's children. Here, we find the answer in the child containing the requested range.</p></li>
+<li><p><strong>Third case</strong>: Part of the requested range lies in the left child's interval and the rest in the right child's interval. In this case, we recursively calculate the sum of the portion in the left child, then the sum in the right child, and add the two results together.</p></li>
+</ol>
+<p>To calculate the sum of the requested range, we start this process from the root node (node 1).</p>
+<p>For better understanding, let <span class="math notranslate nohighlight">\(F(u, ul, ur, l, r)\)</span> be the recursive function described above. It returns the answer given the current node, its interval [ul, ur], and the requested range [l, r] (assuming the requested range is within the node's interval). Here, <span class="math notranslate nohighlight">\(sum[u]\)</span> represents the value stored in node u. The three cases can be summarized as:</p>
+<div class="math notranslate nohighlight">
+\[Middle = (ul + ur) / 2\]</div>
+<div class="math notranslate nohighlight">
+\[(ul = l \text{ and } ur = r) \implies F(u, ul, ur, l, r) = sum[u]\]</div>
+<div class="math notranslate nohighlight">
+\[(r \leq Middle) \implies F(u, ul, ur, l, r) = F(2u, ul, Middle, l, r)\]</div>
+<div class="math notranslate nohighlight">
+\[(l \geq Middle) \implies F(u, ul, ur, l, r) = F(2u+1, Middle, ur, l, r)\]</div>
+<div class="math notranslate nohighlight">
+\[(l &lt; Middle &lt; r) \implies F(u, ul, ur, l, r) = F(2u, ul, Middle, l, Middle) + F(2u+1, Middle, ur, Middle, r)\]</div>
+<p><strong>Time Complexity</strong>: This operation is <span class="math notranslate nohighlight">\(O(\log n)\)</span> because at each level of the recursion tree, at most 4 nodes are processed. To prove this, observe that only the leftmost and rightmost nodes at a level may call their children, meaning at most 4 nodes per level are invoked.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="delayed-propagation-lazy-propagation">
+<h2>Delayed Propagation (Lazy Propagation)<a class="headerlink" href="#delayed-propagation-lazy-propagation" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Suppose in the first operation, instead of changing a single value, we need to modify an interval. For example, we're told to add two units to the interval <span class="math notranslate nohighlight">\(L\)</span> to <span class="math notranslate nohighlight">\(R\)</span>. Changing all elements in this interval directly would be cumbersome and increase the number of operations. Using the lazy propagation technique, we can reduce the number of operations. For each node, we maintain an additional value stored in a <strong>Lazy</strong> array.</p>
+<p>We partition the given modification interval into smaller sub-intervals (on the segment tree) using the same method as in the second operation (query operation). We then update the <strong>Lazy</strong> array values for all these partitioned nodes. Whenever we access a node in the algorithm, we:
+1. Add its <strong>Lazy</strong> value to the node's own value
+2. Propagate the <strong>Lazy</strong> value to its children's <strong>Lazy</strong> arrays
+3. Reset the node's <strong>Lazy</strong> value to zero</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">upd</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">ur</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ul</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">upd</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">upd</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">,</span><span class="w"> </span><span class="n">lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">increase</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">r</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">upd</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">shift</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">increase</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">increase</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">ul</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ur</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="n">seg</span><span class="p">[</span><span class="n">u</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">shift</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ur</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ul</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">ur</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="4.html" style="float:left;" title="DSU" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="6.html" style="float:right;" title="Search (Search)" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at آوریل 19, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>
