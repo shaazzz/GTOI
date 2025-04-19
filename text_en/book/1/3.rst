@@ -38,6 +38,9 @@ looks like this:
 
 .. code-block:: cpp
 
+    #include <bits/stdc++.h>
+    using namespace std;
+    
     const int M = 1e5 + 5;  // The maximum number of vertices which is specified in the problem's statement
 
     vector<int> list_peyvandi[M];
