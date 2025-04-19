@@ -2,10 +2,10 @@ graph G {
     node [fixedsize=true, shape=oval, width=0.7];
 
     A [label=Apple]
-    B [label=Pineapple]
-    C [label=Cucumber]
+    B [label=Plum]
+    C [label=Lime]
     D [label=Orange]
-    E [label=Pomegranate]
+    E [label=Kiwi]
     F [label=Peach]
 
     A -- B;
