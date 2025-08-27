@@ -1,35 +1,35 @@
-# متن کتاب
-انتظار می رود که مطالب کتاب خاصیت های زیر را داشته باشند
-* مطلب درست باشد :)
-* خواننده ای که کتاب را دنبال کرده قادر به فهم آن باشد
-  * ارجاع به چیز پیچیده ای خارج از کتاب نداشته باشد
-* برای فهم بهتر مطلب از عکس استفاده شود.
+# Book Content
+It is expected that the book contents have the following properties
+* The content should be correct :)
+* A reader who has followed the book should be able to understand it
+  * No reference to something complex outside the book
+* Use images for a better understanding of the content.
 
-# استایل کتاب
-در این بخش قرارداد هایی برای یک دست بودن استایل کتاب قرار می دهیم.
-* کامنت های کد ها به صورت فینگیلیش نوشته شود.
+# Book Style
+In this section, we place conventions for a uniform book style.
+* Code comments should be written in English.
 
-# سوالات
-* سوال ها در پوشه problems و به فرمت yaml است.
-* حتما سوال ها در لایه سوم قرار بگیرند
-  * یعنی پوشه فصل / پوشه زیر فصل / فایل سوال
-* سوالات تئوری
-  * هر کدام یک فایل جدا هستند.
-  * اسمشان شماره سوال است.
-  * پارامتر ها
-    * text: اجباری و به صورت مارک داون
-    * hint: اختیاری - مارک داون
-    * solution: اختیاری - مارک داون
-    * cat: اختیاری - یکی زیر مجموعه از علامت های *!+- طبق کتاب وست
-* سوالات کد
-  * درون فایل extra.yaml قرار می گیرند.
-  * آرایه ای از سوال ها هستند
-  * پارامتر های هر سوال
-    * name: اجباری - یک رشته فارسی
-    * hint: اختیاری - مارک داون
-    * solution: اختیاری - مارک داون
-    * cat: اختیاری - یکی زیر مجموعه از علامت های *!+- طبق کتاب وست
-* سعی کنید سوالات نسبت به سختی حدودا مرتب باشند
-  * خیلی سخت نگیرید. همین که یک سوال بدیهی در انتهای سوالات نباشد کافیست
-  * چون شیفت دادن سوالات سخت و زمان بر است، به جای شیفت دادن یک سوال مناسب را پیدا کرده و با آن swap کنید.
-* حتما از اعداد طبیعی برای نام گذاری سوالات استفاده کنید.
+# Problems
+* Problems are in the "problems" folder and in YAML format.
+* Problems must be placed in the third layer
+  * That is, chapter folder / sub-chapter folder / problem file
+* Theory problems
+  * Each one is a separate file.
+  * Their name is the problem number.
+  * Parameters
+    * text: mandatory and in markdown
+    * hint: optional - markdown
+    * solution: optional - markdown
+    * cat: optional - one subset of the signs *!+- according to the "Introduction to Graph Theory by West Douglas" book
+* Code problems
+  * Placed inside extra.yaml file.
+  * They are an array of problems
+  * Parameters of each problem
+    * name: mandatory - a Persian string
+    * hint: optional - markdown
+    * solution: optional - markdown
+    * cat: optional - one subset of the signs *!+- according to the "Introduction to Graph Theory by West Douglas" book
+* Try to sort problems approximately by difficulty
+  * Don't take it too hard. It's enough that an obvious problem is not at the end of the problems
+  * Because shifting problems is hard and time-consuming, instead of shifting, find a suitable problem and swap it with it.
+* Be sure to use natural numbers for naming problems.
