@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Graph Implementation &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Basic definitions" href="index.html" />
+        <link rel="next" title="Walk, Trail, Path, Extremal" href="4.html" />
+        <link rel="prev" title="Types of Graphs" href="2.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Basic definitions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Types of Graphs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Graph Implementation</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/1/3.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="graph-implementation">
+<h1>Graph Implementation<a class="headerlink" href="#graph-implementation" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>In this section, we aim to input and store a graph in a computer. Modeling
+graphs in computers allows us to leverage their immense processing power to
+implement theoretical methods and algorithms. In programming competitions,
+many problems are graph-related, and solving them requires properly inputting
+and storing the graph.</p>
+<section id="how-is-the-graph-given-as-input">
+<h2>How is the graph given as input?<a class="headerlink" href="#how-is-the-graph-given-as-input" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>A standard input format commonly used in competition problems is as follows:
+The first line contains the number of vertices and edges. Subsequent lines
+each specify the two endpoints of an edge. For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="mi">2</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This represents a graph with 5 vertices and 6 edges. For instance, vertex 4
+has a degree of 3. You can visualize this graph using the web tool at
+<a class="reference external" href="https://csacademy.com/app/graph_editor/">https://csacademy.com/app/graph_editor/</a>.</p>
+</section>
+<section id="adjacency-list">
+<h2>Adjacency List<a class="headerlink" href="#adjacency-list" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>While we could store the graph as an array of edges, this is inefficient.
+Accessing a vertex's neighbors would require traversing all edges, which is
+unacceptable for many applications.</p>
+<p>A better approach is the adjacency list. Here, we maintain a dynamic array
+(vector in C++) for each vertex to store its neighbors. The code implementation
+looks like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">  </span><span class="c1">// The maximum number of vertices which is specified in the problem&#39;s statement</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">M</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Advantages include:
+1. Neighbor traversal in O(degree) time
+2. Memory and time complexity of <span class="math notranslate nohighlight">\(O(N+E)\)</span> (sum of degrees equals twice the edge count)
+This linear complexity is optimal as input processing itself requires this time.</p>
+</section>
+<section id="extracting-graph-information">
+<h2>Extracting Graph Information<a class="headerlink" href="#extracting-graph-information" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Let's calculate key graph metrics: vertex degrees, neighbors, and min/max degrees.
+Try implementing this yourself before viewing the code:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">  </span><span class="c1">// Maximum possible number of vertices as specified in the problem statement</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">M</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Rase shomare: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Daraje: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dmin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="n">dmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="n">dmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hamsaye ha: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Delta koochak: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dmin</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Delta bozorg: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dmax</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="extended-example">
+<h2>Extended Example<a class="headerlink" href="#extended-example" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Consider this problem: A garden with trees connected by roads. Each road has
+a traversal time, and each tree has apples. We want to collect maximum apples
+within k minutes. Input format:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mf">43.2</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mf">3.5</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mf">7.1</span><span class="w"></span>
+<span class="mi">2</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mf">100.2</span><span class="w"></span>
+<span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">31</span><span class="w"></span>
+<span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mf">1.1</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To store edge weights, we modify our adjacency list to store edge indices and
+maintain separate arrays for edge data. Here's the implementation:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Mras</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">  </span><span class="c1">// Maximum possible number of vertices as specified in the problem statement</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Myal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">  </span><span class="c1">// Maximum possible number of edges as specified in the problem statement</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">Mras</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">sib</span><span class="p">[</span><span class="n">Mras</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">Myal</span><span class="p">],</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">Myal</span><span class="p">];</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">Myal</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// &#39;e&#39; is the edge index</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">  </span><span class="c1">// Note that this differs from the previous version</span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">y</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">  </span><span class="c1">// The edge index is stored</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Next, we print the neighbors of each vertex</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Vertex number: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Neighbors:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">x</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">  </span><span class="c1">// Compute the other endpoint</span>
+<span class="w">            </span><span class="c1">// Alternative implementations that would also work:</span>
+<span class="w">            </span><span class="c1">// y = u[e] + v[e] - x;</span>
+<span class="w">            </span><span class="c1">// y = (u[e] == x ? v[e] : u[e]);</span>
+<span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; neighbor = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, time = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="practical-algorithm">
+<h2>Practical Algorithm<a class="headerlink" href="#practical-algorithm" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Let's implement a greedy solution for the apple collection problem. The
+algorithm picks the shortest available edge until time runs out:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Mras</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">   </span><span class="c1">// Maximum possible number of vertices as specified in the problem statement</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Myal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">   </span><span class="c1">// Maximum possible number of edges as specified in the problem statement</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">Mras</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">sib</span><span class="p">[</span><span class="n">Mras</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">Myal</span><span class="p">],</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">Myal</span><span class="p">];</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">Myal</span><span class="p">];</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">chide</span><span class="p">[</span><span class="n">Mras</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// &#39;e&#39; is the edge index</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">  </span><span class="c1">// Note that this differs from the previous version</span>
+<span class="w">        </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">y</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">  </span><span class="c1">// The edge index is stored</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Sort adjacency lists by time</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">sort</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">begin</span><span class="p">(),</span><span class="w"></span>
+<span class="w">            </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">end</span><span class="p">(),</span><span class="w"></span>
+<span class="w">            </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">b</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="c1">// We consider vertex 1 as the starting vertex</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Accumulated score is stored here</span>
+<span class="w">    </span><span class="c1">// WARNING: &#39;k&#39; is used below but never declared</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">chide</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sib</span><span class="p">[</span><span class="n">cur</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">berim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">koja</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">list_peyvandi</span><span class="p">[</span><span class="n">cur</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">nxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span><span class="w">  </span><span class="c1">// Compute the other endpoint</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">chide</span><span class="p">[</span><span class="n">nxt</span><span class="p">])</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">zaman</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">berim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">koja</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nxt</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">k</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">zaman</span><span class="p">[</span><span class="n">e</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">berim</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">koja</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">score</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note: This greedy approach isn't optimal but demonstrates adjacency list usage.
+Time complexity is <span class="math notranslate nohighlight">\(O(n+mlogm)\)</span>, significantly better than a naive
+<span class="math notranslate nohighlight">\(O(nm)\)</span> implementation.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="2.html" style="float:left;" title="Types of Graphs" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="4.html" style="float:right;" title="Walk, Trail, Path, Extremal" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اوت 27, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

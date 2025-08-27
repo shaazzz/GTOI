@@ -1,0 +1,121 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/1/7" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 1.7</h1>
+<p>در این قسمت 7 سوال وجود دارد
+
+<div id="d1x7x2">
+  <h2>سوال <a href="1.7.2.html">1.7.2</a>  <button id="b1x7x2" onclick="swapButton('1x7x2')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید گراف k منتظم دو بخشی ( k &gt; 1 ) یال برشی ندارد.</p>
+
+</div>
+
+<div id="d1x7x3">
+  <h2>سوال <a href="1.7.3.html">1.7.3</a>  <button id="b1x7x3" onclick="swapButton('1x7x3')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید تعداد راس های هر بخش گرافی که منتظم و دوبخشی است و تهی نیست، برابر نصف تعداد راس های آن گراف است.</p>
+
+</div>
+
+<div id="d1x7x4">
+  <h2>سوال <a href="1.7.4.html">1.7.4</a>  <button id="b1x7x4" onclick="swapButton('1x7x4')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید هر گراف دو بخشی است اگر و تنها اگر تمام زیر گراف های آن مجموعه مستقلی به اندازه حداقل نصف رئوس داشته باشد.</p>
+
+</div>
+
+<div id="d1x7x5">
+  <h2>سوال <a href="1.7.5.html">1.7.5</a> (!) <button id="b1x7x5" onclick="swapButton('1x7x5')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید که اگر دو گوشه مقابل جدول شطرنج حذف شود، جدول شطرنج را نمی توان با دومینو ها (مستطیل های دو در یک) پوشاند. سپس نتیجه را به همه گراف های دو بخشی تعمیم دهید.</p>
+
+</div>
+
+<div id="d1x7x6">
+  <h2>سوال <a href="1.7.6.html">1.7.6</a>  <button id="b1x7x6" onclick="swapButton('1x7x6')">حل کردم</button> </h2>
+  
+  <p>ثابت یا رد کنید که گراف های مکعبی دو بخشی است.</p>
+
+</div>
+
+<div id="d1x7x7">
+  <h2>سوال <a href="1.7.7.html">1.7.7</a>  <button id="b1x7x7" onclick="swapButton('1x7x7')">حل کردم</button> </h2>
+  
+  <p>یک صفحه شطرنجی ۳ در ۳ را در نظر بگیرید که در چهار گوشه آن چهار مهره اسب با دو رنگ سفید و سیاه وجود دارد. اگر اسب های همرنگ در نگاه اول در خانه های متقابل به هم وجود داشته باشند آیا می توان با حرکت اسب ها به حالتی رسید که در آن اسب ها با رنگ های متفاوت در خانه های متقابل به هم باشند (توجه کنید که اسب ها مانند اسب های بازی شطرنج حرکت می کنند).</p>
+
+</div>
+
+<div id="d1x7x8">
+  <h2>سوال <a href="1.7.8.html">1.7.8</a>  <button id="b1x7x8" onclick="swapButton('1x7x8')">حل کردم</button> </h2>
+  
+  <p>یک جدول ۳ در ۳ را در نظر بگیرید که در تمامی خانه های دور جدول عدد صفر و خانه وسط جدول عدد یک نوشته شده. در هر مرحله می توانیم دو خانه مجاور یالی را انتخاب و یک مقدار صحیح x را به هر دو خانه اضافه کنیم. آیا می توان مقدار تمامی خانه ها را برابر کرد؟</p>
+
+</div>
+
+<h1>برگرد به <a href="1.html">بخش 1</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Basic Properties &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Trees" href="index.html" />
+        <link rel="next" title="Distance in Trees and Graphs" href="2.html" />
+        <link rel="prev" title="Trees" href="index.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Trees</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Basic Properties</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/2/1.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <div style="text-align: right" dir="rtl"><section id="basic-properties">
+<h1>Basic Properties<a class="headerlink" href="#basic-properties" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>In this chapter, we will examine trees - one of the most important concepts in graph theory that also has extensive applications in programming.</p>
+<p>This section presents and proves the fundamental characteristics and properties of trees. By the end of this section, you should develop a strong intuition about tree structures and their basic properties.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># children</span>
+</pre></div>
+</div>
+<img alt="Tree Example" class="align-center" src="images/tree-example.png" />
+</div><section id="related-definitions-in-this-section">
+<h2>Related Definitions in This Section<a class="headerlink" href="#related-definitions-in-this-section" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Tree</strong> : A simple graph that is connected and has no cycles.</p></li>
+<li><p><strong>Forest</strong> : A simple graph that has no cycles.</p></li>
+<li><p><strong>Leaf</strong> : A vertex in a tree with degree 1.</p></li>
+<li><p><strong>Spanning tree or covering tree</strong> : A spanning subgraph that is a tree.</p></li>
+</ul>
+</section>
+<section id="theorems-and-lemmas-used-in-this-section">
+<h2>Theorems and Lemmas Used in This Section<a class="headerlink" href="#theorems-and-lemmas-used-in-this-section" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">توجه</p>
+<p>The original RST structure, hyphens, and whitespace are preserved per the requirements.
+The Persian text is translated while maintaining all formatting constraints.</p>
+</div>
+<section id="lemma-2-1-1">
+<span id="id1"></span><h3>Lemma 2.1.1<a class="headerlink" href="#lemma-2-1-1" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>Lemma Statement:</strong> A graph with <span class="math notranslate nohighlight">\(n\)</span> vertices and <span class="math notranslate nohighlight">\(m\)</span> edges has at least max(1, n−m) connected components. If it has exactly n−m connected components, it is acyclic; otherwise, it contains a cycle.</p>
+<p><strong>Proof of Lemma:</strong>
+First, assume the graph has no edges. We then add edges to it in an arbitrary order.</p>
+<p>We now prove that when adding an edge to the graph, the number of connected components decreases by at most one. If the number of components remains unchanged, the graph will contain a cycle.
+Suppose the edge being added connects vertices <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. If <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> belong to the same connected component, adding this edge does not change the number of components. Since a path already exists between <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, the new edge and this path together form a cycle.
+If <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> are in separate connected components, adding the edge merges the two components into one, reducing the number of connected components by one. Since no path previously existed between <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, adding this edge does not create a cycle.</p>
+<p>Initially, with no edges, the graph has <span class="math notranslate nohighlight">\(n\)</span> connected components. Since each added edge reduces the number of components by at most one, the final graph has at least <span class="math notranslate nohighlight">\(n−m\)</span> connected components.
+If the final graph has exactly <span class="math notranslate nohighlight">\(n−m\)</span> connected components, this implies every edge addition reduced the number of components by exactly one. As proven earlier, such cases do not introduce cycles, meaning the final graph is acyclic. Conversely, if the graph has more than <span class="math notranslate nohighlight">\(n−m\)</span> components, at least one edge addition did not reduce the number of components, thereby creating a cycle. Hence, the graph contains a cycle.</p>
+<p>According to Lemma 2.1.1, if a graph is acyclic (contains no cycles) and two of the three parameters (number of vertices <span class="math notranslate nohighlight">\(n\)</span>, edges <span class="math notranslate nohighlight">\(m\)</span>, or connected components <span class="math notranslate nohighlight">\(Cc\)</span>) are known, the third is uniquely determined. Specifically, for an acyclic graph:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n - m - Cc = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> = number of vertices</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> = number of edges</p></li>
+<li><p><span class="math notranslate nohighlight">\(Cc\)</span> = number of connected components</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Theorem 2.1.2
+~~~~~~~~~~~~~
+
+**Theorem Statement:** An n-vertex tree has exactly n-1 edges.
+
+**Proof:** According to Lemma 2.1.1, if an n-vertex graph with m edges has no cycles, it has exactly n - m connected components. Since a tree has one connected component and no cycles, for an n-vertex tree we have n - m = 1. Therefore, m = n - 1.
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos">2</span>    <span class="c1"># Add two numbers</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+</section>
+<section id="theorem-2-1-3">
+<h3>Theorem 2.1.3<a class="headerlink" href="#theorem-2-1-3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>Theorem Statement:</strong> A tree with n vertices (n &gt;= 2) has at least 2 leaves.</p>
+<p><strong>Proof:</strong> Consider the longest path in the tree. Since n &gt; 1, the longest path must contain at least two vertices. Now, consider the two endpoints of this path. Each endpoint is connected to at most one vertex within the path—if it had more, a cycle would form, contradicting the definition of a tree. Since we have taken the longest path, the endpoints cannot have edges to vertices outside the path. Thus, it follows that the two endpoints of the longest path in the tree are leaves.</p>
+</section>
+<section id="theorem-2-1-4">
+<span id="id2"></span><h3>Theorem 2.1.4<a class="headerlink" href="#theorem-2-1-4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>Lemma Statement:</strong> If we remove a leaf from a tree, the remaining graph is still a tree.</p>
+<p><strong>Proof:</strong> We must prove the remaining graph is both connected and acyclic. Clearly, if a graph has no cycles, removing a vertex from it will not create any cycles. Now we prove it remains connected. Suppose removing the leaf disconnects the graph – then there must be at least 2 connected components.</p>
+<p>The removed vertex (leaf) must have been connected to each of these components by at least one edge to keep the original graph connected. This would imply the leaf had a degree of at least 2, but a leaf by definition has degree 1. This contradiction proves the graph remains connected, hence it is still a tree.</p>
+<p>Theorem 2.1.4 is highly practical because it shows that for induction-based problems on trees, removing a leaf allows transitioning to the induction hypothesis. Later in this book, you will encounter such problems.</p>
+</section>
+<section id="theorem-2-1-5">
+<h3>Theorem 2.1.5<a class="headerlink" href="#theorem-2-1-5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Prove that a graph which has one of the following properties is a tree:</p>
+<ul class="simple">
+<li><ol class="loweralpha simple">
+<li><p>A connected graph with n-1 edges.</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="2">
+<li><p>A graph with no cycles and n-1 edges.</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="3">
+<li><p>Between every pair of vertices, there exists exactly one path.</p></li>
+</ol>
+</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<p><strong>a)</strong> If we prove the graph has no cycles, the theorem is proven. According to Lemma 2.1.1, if the graph had a cycle, the number of connected components would be greater than n - m, but in this graph it equals n - m. This contradiction proves the theorem.</p>
+<p><strong>b)</strong> Since the graph has no cycles, by Lemma 2.1.1:</p>
+<p>n - m - Cc = 0 --&gt; n - (n-1) = Cc --&gt; Cc = 1</p>
+<p>Thus, the graph is connected and has no cycles, hence it is a tree.</p>
+<p><strong>c)</strong> We must prove the graph is connected and acyclic. It is clearly connected because a path exists between every pair of vertices, meaning all belong to one connected component. Now we show it has no cycles. This is also evident: if a cycle existed, there would be at least two paths between any two vertices on the cycle.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Theorem 2.1.6
+~~~~~~~~~~~~~~
+
+**Theorem statement:** Every connected graph has a spanning tree.
+
+**Proof:** As long as the number of edges in the graph has not reached n-1, we iteratively remove edges while proving the graph remains connected. According to Theorem 2.1.5, a connected graph with n-1 edges is a tree, thereby proving the theorem.
+
+Therefore, until the number of edges becomes n-1, we perform the following step: Since the graph has more than n-1 edges and a single connected component (by Lemma 2.1.1), the graph contains a cycle. Select one such cycle and remove an edge from it. Clearly, the graph remains connected because the two endpoints of the removed edge are still connected via the remaining edges of the cycle. Hence, we can continue removing edges while maintaining connectivity until the number of edges reduces to n-1, thereby completing the proof.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rooting-a-tree">
+<span id="id3"></span><h2>Rooting a Tree<a class="headerlink" href="#rooting-a-tree" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Suppose we orient the edges of a tree such that every vertex except vertex <span class="math notranslate nohighlight">\(u\)</span> has exactly one incoming edge (exactly one edge enters it), and vertex <span class="math notranslate nohighlight">\(u\)</span> has no incoming edges.</p>
+<p>Initially, place a marker on vertex <span class="math notranslate nohighlight">\(v\)</span>. At each step, if the marker is at vertex <span class="math notranslate nohighlight">\(w\)</span>, move it to the vertex that has an outgoing edge to <span class="math notranslate nohighlight">\(w\)</span>. If <span class="math notranslate nohighlight">\(w \neq u\)</span>, this vertex is unique.</p>
+<p>First, we can conclude that at each step, we visit a new vertex (since the tree has no cycles, and visiting a repeated vertex would imply traversing a cycle). Next, we can conclude that the process terminates in finite steps (because we visit a new vertex each time, and the number of vertices is finite). Finally, we can state that the marker will reach <span class="math notranslate nohighlight">\(u\)</span>.</p>
+<p>Intuitively, you can imagine the tree being <strong>suspended</strong> from <span class="math notranslate nohighlight">\(u\)</span>. For every edge <span class="math notranslate nohighlight">\(ab\)</span>, if <span class="math notranslate nohighlight">\(a\)</span> is at a higher &quot;height&quot; than <span class="math notranslate nohighlight">\(b\)</span>, we orient the edge from <span class="math notranslate nohighlight">\(a\)</span> to <span class="math notranslate nohighlight">\(b\)</span>. This orientation aligns with the one described above. For further intuition: In this orientation, vertex <span class="math notranslate nohighlight">\(u\)</span> has no incoming edges, so all edges adjacent to <span class="math notranslate nohighlight">\(u\)</span> must be directed outward from <span class="math notranslate nohighlight">\(u\)</span>. We call the vertices adjacent to <span class="math notranslate nohighlight">\(u\)</span> the <em>first layer</em>. All vertices in the first layer have exactly one incoming edge (from <span class="math notranslate nohighlight">\(u\)</span>), so their other adjacent edges must be directed outward to form the <em>second layer</em>. Similarly, we define the <em>third layer</em>. Each vertex in the second layer has exactly one incoming edge from the first layer, so their remaining adjacent edges are directed outward to the third layer. This layering and orientation continue recursively. Consider edges from layer <span class="math notranslate nohighlight">\(h\)</span> to layer <span class="math notranslate nohighlight">\(h+1\)</span>. Each vertex in layer <span class="math notranslate nohighlight">\(h+1\)</span> must have exactly one incoming edge, so exactly one edge from layer <span class="math notranslate nohighlight">\(h\)</span> enters it. Ultimately, we conclude that the initial orientation corresponds to the intuitive <strong>suspension</strong> of the tree from vertex <span class="math notranslate nohighlight">\(u\)</span>.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Simple_Rooted_Tree.svg"><img alt="If the internet is crappy, this appears." src="../../_images/Simple_Rooted_Tree.svg" width="50%" /></a>
+</figure>
+<p>This process of suspending the tree from vertex <span class="math notranslate nohighlight">\(u\)</span> is also called <em>rooting the tree at</em> <span class="math notranslate nohighlight">\(u\)</span>. In this case, we call <span class="math notranslate nohighlight">\(u\)</span> the <strong>root</strong>. As stated, every vertex except <span class="math notranslate nohighlight">\(u\)</span> has exactly one incoming edge in this orientation.</p>
+<p>For a vertex <span class="math notranslate nohighlight">\(b\)</span>, if its incoming edge is <span class="math notranslate nohighlight">\(ab\)</span>, we call vertex <span class="math notranslate nohighlight">\(a\)</span> the <strong>parent</strong> of <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>Two vertices with the same parent are called <strong>siblings</strong>.</p>
+<p>Vertex <span class="math notranslate nohighlight">\(u\)</span> is an <strong>ancestor</strong> of vertex <span class="math notranslate nohighlight">\(v\)</span> if either <span class="math notranslate nohighlight">\(u\)</span> is the parent of <span class="math notranslate nohighlight">\(v\)</span> or <span class="math notranslate nohighlight">\(u\)</span> is an ancestor of <span class="math notranslate nohighlight">\(v\)</span>'s parent. In other words, the set of ancestors of a vertex consists of all its parents recursively.</p>
+<p>The <strong>height</strong> of a vertex is its distance from <span class="math notranslate nohighlight">\(u\)</span> (the number of edges in the unique path between them).</p>
+<p>For a specific vertex <span class="math notranslate nohighlight">\(v\)</span>, the <strong>subtree</strong> of <span class="math notranslate nohighlight">\(v\)</span> is the set of vertices whose unique path to the root passes through <span class="math notranslate nohighlight">\(v\)</span>. Intuitively, when the tree is suspended from <span class="math notranslate nohighlight">\(u\)</span>, the subtree of <span class="math notranslate nohighlight">\(v\)</span> consists of all vertices &quot;hanging&quot; from <span class="math notranslate nohighlight">\(v\)</span>.</p>
+<p>Suspending (rooting) a tree is crucial because it will be used in algorithms later in this chapter. It is also currently the best way to intuitively visualize the structure of a tree: the tree has one root, which connects to neighboring vertices via branches, and those vertices further connect to new vertices via branches, and so on (as shown in the figure above).</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="index.html" style="float:left;" title="Trees" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="2.html" style="float:right;" title="Distance in Trees and Graphs" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اوت 27, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

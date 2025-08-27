@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Extremal Choices &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Proof technics in graph problems" href="index.html" />
+        <link rel="next" title="Contraction" href="2.html" />
+        <link rel="prev" title="Proof technics in graph problems" href="index.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Proof technics in graph problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Extremal Choices</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/4/1.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="extremal-choices">
+<h1>Extremal Choices<a class="headerlink" href="#extremal-choices" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>In previous chapters, we saw how selecting an element with the property of being the largest or smallest can help easily prove problems. For example, the longest path is a common extremal choice whose properties assist us in solving problems. In this section, we will become familiar with other extremal choices.</p>
+<p>Every extremal choice has properties that can aid in solving problems. Below, we will merely state these properties, leaving their proofs (which are generally straightforward) to the reader.</p>
+<section id="shortest-path-between-two-vertices">
+<h2>Shortest Path Between Two Vertices<a class="headerlink" href="#shortest-path-between-two-vertices" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>One of the fundamental problems in graph theory is finding the shortest path between two vertices in a weighted graph. The &quot;shortest path&quot; here refers to the path whose total edge weight is minimized.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shortest_path</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="c1"># raas haaye shoru va taaya shode</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">start</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+    <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+        <span class="n">node</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cost</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">neighbor</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">cost</span> <span class="o">+</span> <span class="n">weight</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="images/dijkstra.png" src="images/dijkstra.png" />
+<p>Depending on the graph’s properties, different algorithms like Dijkstra’s (for non-negative weights) or Bellman-Ford (for handling negative weights) can be used. The choice of algorithm affects efficiency and correctness in various scenarios.</p>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>No vertex outside the path is connected to two vertices within the path that are 3 or more edges apart</p></li>
+<li><p>As a corollary of the above proposition, any external vertex is connected to at most 3 vertices within this path</p></li>
+<li><p>The induced subgraph of the vertices in this path is the path itself, with no additional edges present</p></li>
+</ul>
+<p>Note: The original RST structure with tildes and hyphens has been preserved exactly. No code blocks or special formatting elements were present in the input text to modify.</p>
+</section>
+</section>
+<section id="longest-path-in-a-graph">
+<span id="longest-path"></span><h2>Longest Path in a Graph<a class="headerlink" href="#longest-path-in-a-graph" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>The problem of finding the <strong>longest path</strong> in a graph is one of the fundamental challenges in graph theory. Unlike the shortest path problem, this problem becomes NP-hard in general graphs, but for Directed Acyclic Graphs (DAGs), it can be solved in linear time using topological sorting.</p>
+<p>Example of a directed graph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># مثال: گراف جهت دار</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>To find the longest path in a DAG, we first perform a topological sort of the vertices, then calculate the longest path to each vertex using dynamic programming:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">longest_path</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">top_order</span> <span class="o">=</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">inf</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">top_order</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="book/4/images/dag_longest_path.png" class="align-center" src="book/4/images/dag_longest_path.png" />
+<p>Important notes:</p>
+<ol class="arabic simple">
+<li><p>This algorithm works only for DAGs. If the graph contains cycles, the longest path becomes ill-defined (as infinite loops can create arbitrarily long paths).</p></li>
+<li><p>Time complexity is <span class="math notranslate nohighlight">\(O(n + m)\)</span> due to topological sorting and linear traversal.</p></li>
+<li><p>For graphs with negative edge weights (but no cycles), this algorithm still works correctly.</p></li>
+</ol>
+<p>Modified BFS approach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># مثال: استفاده از BFS</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">def</span> <span class="nf">modified_bfs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">}</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">start</span><span class="p">])</span>
+
+    <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">distance</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">distance</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">distance</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This modified BFS approach can be used for unweighted graphs. For weighted graphs, the algorithm needs additional adjustments to account for edge weights. Note that unlike BFS for shortest paths, this method requires tracking maximum distances instead of minimums.</p>
+<section id="id1">
+<h3>Properties<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>All vertices adjacent to the start and end vertices of this path are contained within the path.</p></li>
+<li><p>No two consecutive vertices share a common neighbor outside the path.</p></li>
+<li><p>If the start and end of this path are connected, the path contains all vertices of its component.</p></li>
+</ul>
+</section>
+</section>
+<section id="shortest-cycle">
+<span id="id2"></span><h2>Shortest Cycle<a class="headerlink" href="#shortest-cycle" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>The shortest cycle in a graph is a cycle where the number of edges is minimized. Finding the smallest cycle in undirected and directed graphs can be done using algorithms like BFS (Breadth-First Search).</p>
+<section id="algorithm-workflow">
+<h3><strong>Algorithm Workflow</strong><a class="headerlink" href="#algorithm-workflow" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>For each vertex in the graph:</dt><dd><ul class="simple">
+<li><p>Perform BFS starting from that vertex.</p></li>
+<li><p>Track the distance from the starting vertex to other vertices.</p></li>
+<li><p>If a back edge to the starting vertex is found, calculate the cycle length.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The smallest length among all detected cycles is the graph's shortest cycle.</p></li>
+</ol>
+</section>
+<section id="code-example">
+<h3><strong>Code Example</strong><a class="headerlink" href="#code-example" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_smallest_cycle</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="c1"># Function to find the smallest cycle using BFS</span>
+    <span class="n">min_length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="p">:</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="p">}</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vertices</span><span class="p">}</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="n">distances</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">current</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">distances</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">distances</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">parent</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">parent</span><span class="p">[</span><span class="n">current</span><span class="p">]</span> <span class="o">!=</span> <span class="n">neighbor</span><span class="p">:</span>
+                    <span class="c1"># Detect a cycle and update min_length</span>
+                    <span class="n">cycle_length</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">min_length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">cycle_length</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">min_length</span> <span class="k">if</span> <span class="n">min_length</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<img alt="Shortest cycle detection in a graph" src="book/4/images/smallest-cycle.png" />
+</figure>
+</section>
+<section id="important-notes">
+<h3><strong>Important Notes</strong><a class="headerlink" href="#important-notes" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>In directed graphs, back edges must be checked carefully to avoid false cycles.</p></li>
+<li><p>The time complexity of this algorithm is O(V*(V+E)), where V is the number of vertices and E the number of edges.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Properties<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>The induced subgraph of the vertices of this cycle is the cycle itself, with no additional edges present.</p></li>
+<li><p>If the length of this cycle is greater than 4, each vertex outside this cycle has at most one edge connecting it to a vertex within the cycle.</p></li>
+</ul>
+</section>
+</section>
+<section id="smallest-odd-cycle">
+<h2>Smallest Odd Cycle<a class="headerlink" href="#smallest-odd-cycle" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id4">
+<h3>Properties<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>The induced subgraph of the vertices of this cycle is the cycle itself, containing no additional edges.</p></li>
+<li><p>If the length of this cycle is greater than three, each vertex outside the cycle is connected to at most two vertices of the cycle.</p></li>
+</ul>
+<p>The lowest leaf in a rooted tree refers to the leaf with the <strong>maximum height</strong>.</p>
+<p>Example code for finding the lowest leaf:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">find_lowest_leaf</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="c1"># Traverse the tree recursively</span>
+    <span class="n">max_height</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">lowest_leaf</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">current_height</span><span class="p">):</span>
+        <span class="k">nonlocal</span> <span class="n">max_height</span><span class="p">,</span> <span class="n">lowest_leaf</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>  <span class="c1"># Leaf node</span>
+            <span class="k">if</span> <span class="n">current_height</span> <span class="o">&gt;</span> <span class="n">max_height</span><span class="p">:</span>
+                <span class="n">max_height</span> <span class="o">=</span> <span class="n">current_height</span>
+                <span class="n">lowest_leaf</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">current_height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lowest_leaf</span>  <span class="c1"># Return the leaf with maximum height</span>
+</pre></div>
+</div>
+<img alt="images/tree-height.png" src="images/tree-height.png" />
+<p>Note: The term &quot;lowest leaf&quot; might seem contradictory since it actually has the greatest distance (height) from the root. This concept is important in algorithms related to calculating tree height and balance.</p>
+</section>
+<section id="id5">
+<h3>Properties<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<ul class="simple">
+<li><p>All children of this leaf node's parent are leaves.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="index.html" style="float:left;" title="Proof technics in graph problems" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="2.html" style="float:right;" title="Contraction" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اوت 27, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

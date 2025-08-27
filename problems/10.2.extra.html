@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/10/2" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="10.2.html">بخش 10.2</a></h1><ul><li><a href=https://quera.ir/problemset/olympiad/9783/%D8%B3%D8%A4%D8%A7%D9%84-%D8%AF%D8%A7%D8%AF%D9%87-%D8%B3%D8%A7%D8%AE%D8%AA%D8%A7%D8%B1-%D8%AF%D9%88%D8%B1%D9%87-%DB%B2%DB%B6-%D8%AA%D8%B9%D8%B7%DB%8C%D9%84%D8%A7%D8%AA-%D8%AF%D8%B1-%D9%BE%D9%88%D8%B3%D8%AA%D9%88%D9%86>تعطیلات در پوستون</a></li><li><a href=http://codeforces.com/problemset/problem/192/E>احمق ها و جاده ها</a></li><li><a href=http://codeforces.com/problemset/problem/466/E>گراف اطلاعات</a></li><li><a href=https://quera.ir/problemset/contest/4070/>چارلی در کازابلانکا</a></li><li><a href=https://www.spoj.com/problems/ADAAPPLE/>Ada and Apple</a></li><li><a href=https://www.spoj.com/problems/ADAVISIT/>Ada and Plum</a></li><li><a href=https://www.spoj.com/problems/ADALICI/>Ada and Lychees</a></li><li><a href=https://www.spoj.com/problems/ADAORANG/>Ada and Orange Tree</a></li><li><a href=https://www.spoj.com/problems/COWGATH/>The Cow Gathering</a></li><li><a href=https://codeforces.com/gym/101908/problem/L>Subway Lines</a></li><li><a href=https://codeforces.com/gym/101808/problem/K>Another Shortest Path Problem</a></li><li><a href=https://www.spoj.com/problems/LCA/>Lowest Common Ancestor</a></li><li><a href=https://codeforces.com/contest/916/problem/E>Jamie and Tree</a></li><li><a href=https://codeforces.com/contest/911/problem/F>Tree Destruction</a></li><li><a href=https://devskill.com/CodingProblems/ViewProblem/141>Motku</a></li><li><a href=https://www.codechef.com/problems/PSHTTR>Pishty and tree</a></li><li><a href=https://www.codechef.com/problems/CLOSEFAR>So Close Yet So Far</a></li><li><a href=https://codeforces.com/contest/733/problem/F>Drivers Dissatisfaction</a></li><li><a href=https://www.spoj.com/problems/POLICEMEN/>Police Men</a></li><li><a href=https://www.spoj.com/problems/QTREE2/>Query on a tree II</a></li><li><a href=https://codeforces.com/contest/828/problem/F>Best Edge Weight</a></li><li><a href=https://codeforces.com/contest/832/problem/D>Misha, Grisha and Underground</a></li><li><a href=https://www.spoj.com/problems/DRTREE/>Dynamically-Rooted Tree</a></li><li><a href=https://codeforces.com/problemset/problem/838/B>Diverging Directions</a></li><li><a href=https://www.spoj.com/problems/NTICKETS/>Nlogonian Tickets</a></li><li><a href=https://www.spoj.com/problems/GRASSPLA/>Grass Planting</a></li><li><a href=https://codeforces.com/contest/855/problem/D>Rowena Ravenclaw's Diadem</a></li><li><a href=https://codeforces.com/contest/208/problem/E>Blood Cousins</a></li><li><a href=https://codeforces.com/contest/191/problem/C>Fools and Roads</a></li><li><a href=https://codeforces.com/contest/519/problem/E>A and B and Lecture Rooms</a></li><li><a href=https://codeforces.com/contest/587/problem/C>Duff in the Army</a></li><li><a href=https://codeforces.com/contest/609/problem/E>Minimum spanning tree for each edge</a></li><li><a href=https://codeforces.com/contest/178/problem/B3>Greedy Merchants</a></li><li><a href=https://codeforces.com/contest/176/problem/E>Archaeology</a></li><li><a href=https://codeforces.com/contest/466/problem/E>Information Graph</a></li><li><a href=https://codeforces.com/contest/504/problem/E>Misha and LCP on Tree</a></li><li><a href=https://codeforces.com/contest/342/problem/E>Xenia and Tree</a></li><li><a href=https://codeforces.com/contest/372/problem/D>Choosing Subtree is Fun</a></li><li><a href=https://codeforces.com/contest/629/problem/E>Famil Door and Roads</a></li><li><a href=https://www.codechef.com/problems/TOMJERGA>Tom & Jerry</a></li><li><a href=https://codeforces.com/contest/916/problem/E>Jamie and Tree</a></li><li><a href=https://codeforces.com/contest/986/problem/E>Prince's Problem</a></li><li><a href=https://www.spoj.com/problems/DISQUERY/>Distance Query</a></li><li><a href=https://codeforces.com/contest/1062/problem/E>Company</a></li><li><a href=https://www.codechef.com/problems/MOAT>Marathon on a Tree</a></li><li><a href=https://open.kattis.com/problems/tourists>Tourists</a></li><li><a href=https://open.kattis.com/problems/boxes>Boxes</a></li><li><a href=https://open.kattis.com/problems/pokegene>Pokegene</a></li><li><a href=https://codeforces.com/contest/1304/problem/E>1-Trees and Queries</a></li><li><a href=https://codeforces.com/contest/1328/problem/E>Tree Queries</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>
