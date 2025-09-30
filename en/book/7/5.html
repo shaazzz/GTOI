@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Number of Walks of Length n &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Matrix" href="index.html" />
+        <link rel="next" title="Deriving Recursive Functions Using Graphs and Matrices" href="6.html" />
+        <link rel="prev" title="Adjacency Matrix" href="4.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Matrix</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Number of Walks of Length n</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/7/5.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="number-of-walks-of-length-n">
+<h1>Number of Walks of Length n<a class="headerlink" href="#number-of-walks-of-length-n" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>Using the adjacency matrix of a graph and defined matrix operations, we can provide an algorithm to determine the number of walks of length <em>n</em>. To understand this section, it is necessary to be familiar with the operation of matrix multiplication (a well-known operation) and have good intuition about it. You can search for matrix multiplication on the internet to familiarize yourself with it.</p>
+<hr class="docutils" />
+<p>Consider two graphs with
+n
+vertices. For example, let's call the blue graph with adjacency matrix
+A
+and the red graph with adjacency matrix B.
+We want to find the number of walks between two vertices
+i and j
+that have two edges, where the first edge is blue and the second edge is red.
+We denote this number by
+<span class="math notranslate nohighlight">\(C_{i,j}\)</span>.
+Clearly, to calculate this value we can consider all possible intermediate vertices
+(a vertex like k)
+then multiply the blue edges from i to k by the red edges from k to j,
+and sum the results over all possible k. Mathematically:</p>
+<div class="math notranslate nohighlight">
+\[C_{i,j} = \sum\limits_{k=1}^{n} A_{i,k}B_{k,j}\]</div>
+<p>With careful attention, we can see that matrix
+C
+is equal to the matrix product of A and B.</p>
+<p>The power of a matrix is defined similarly to the power of numbers, such that
+<span class="math notranslate nohighlight">\(A^n\)</span>
+means multiplying A by itself n times.</p>
+<p>According to the theorem we demonstrated above, it can be concluded that <strong>the number of walks of length n from i to j</strong>
+is equal to the (i,j) entry in
+<span class="math notranslate nohighlight">\(A^n\)</span>.</p>
+<p>To prove this: For each walk of length n-1, place a red edge, and for each edge of the graph, place a blue edge.
+Clearly, every walk of length n corresponds to a walk with one red edge and one blue edge.
+Since
+<span class="math notranslate nohighlight">\(A^n = A^{n-1}A\)</span>,
+the statement can be proven by induction.</p>
+<section id="algorithm-and-complexity">
+<h2>Algorithm and Complexity<a class="headerlink" href="#algorithm-and-complexity" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Therefore, to solve the problem, it is sufficient to compute matrix powers in reasonable time.
+Since matrix multiplication is associative (i.e.,
+<span class="math notranslate nohighlight">\((AB)C = A(BC)\)</span>),
+the order of exponentiation does not matter. For even exponents:</p>
+<div class="math notranslate nohighlight">
+\[A^{2k} = (A^k)^2\]</div>
+<p>And for odd exponents:</p>
+<div class="math notranslate nohighlight">
+\[A^{2k+1} = A(A^k)(A^k)\]</div>
+<p>If we compute matrix multiplication using the naive algorithm with
+<span class="math notranslate nohighlight">\(O(n^3)\)</span>
+complexity, we can recursively compute
+<span class="math notranslate nohighlight">\(A^k\)</span>
+by first calculating
+<span class="math notranslate nohighlight">\(A^{\lfloor\frac{k}{2}\rfloor}\)</span>
+and then using the above relations. The time complexity of this recursive algorithm is:</p>
+<div class="math notranslate nohighlight">
+\[T(k) = T(\frac{k}{2}) + O(n^3) = O(n^3lg(k))\]</div>
+<p>This algorithm is called the <strong>fast exponentiation algorithm</strong>, which can be used whenever we need to repeatedly apply an associative operation to an element.
+For example, the same algorithm can be used for number exponentiation.</p>
+</section>
+<section id="generalization">
+<h2>Generalization<a class="headerlink" href="#generalization" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>The algorithm we examined here is not only used for computing the number of walks of fixed length,
+but can also be used to derive other properties of fixed-length walks
+(such as the largest walk or the walk with the minimum edge weight).
+For example, suppose we want to find a walk of length k between two vertices
+where the sum of edge weights is maximized.
+If we want to solve this problem for a graph with red and blue edges, considering walks that alternate
+between one red edge and one blue edge, the solution can be obtained as follows:</p>
+<div class="math notranslate nohighlight">
+\[C_{i,j} = \max\limits_{k=1}^{n} A_{i,k} + B_{k,j}\]</div>
+<p>We can define matrix C as the combination of matrices A and B.
+Upon closer inspection, we can see that the combination operation is associative, similar to matrix multiplication.
+To prove this, consider a graph with red, blue, and green edges, and derive the maximum-weight
+red-blue-green walk using two different approaches.
+Thus, similar to before, we can define matrix powers and use induction to prove that
+<span class="math notranslate nohighlight">\(A^k_{i,j}\)</span>
+represents the maximum-weight walk of length k between vertices i and j,
+and that there exists an
+<span class="math notranslate nohighlight">\(O(n^3lg(k))\)</span>
+algorithm to compute this matrix.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="4.html" style="float:left;" title="Adjacency Matrix" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="6.html" style="float:right;" title="Deriving Recursive Functions Using Graphs and Matrices" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at سپتامبر 30, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

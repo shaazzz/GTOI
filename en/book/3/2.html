@@ -1,0 +1,628 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Tournament &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Directed graph" href="index.html" />
+        <link rel="next" title="Directed Acyclic Graph (DAG)" href="3.html" />
+        <link rel="prev" title="Definitions" href="1.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Directed graph</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Definitions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Tournament</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/3/2.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="tournament">
+<span id="id1"></span><h1>Tournament<a class="headerlink" href="#tournament" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<section id="adjacency-matrix-of-a-tournament">
+<h2>Adjacency Matrix of a Tournament<a class="headerlink" href="#adjacency-matrix-of-a-tournament" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of vertices</span>
+<span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>  <span class="c1"># Initialize matrix with zeros</span>
+
+<span class="c1"># Fill adjacency matrix for tournament</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Edge from i to j</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Edge from j to i</span>
+</pre></div>
+</div>
+<p>In a tournament graph, for every pair of distinct vertices <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, exactly one of the edges <span class="math notranslate nohighlight">\((i,j)\)</span> or <span class="math notranslate nohighlight">\((j,i)\)</span> exists in the graph. The adjacency matrix of a tournament is a square matrix where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_{ij} = 1\)</span> if there is a directed edge from vertex <span class="math notranslate nohighlight">\(i\)</span> to vertex <span class="math notranslate nohighlight">\(j\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a_{ij} = 0\)</span> otherwise</p></li>
+</ul>
+<p>with the properties:
+1. <span class="math notranslate nohighlight">\(a_{ij} + a_{ji} = 1\)</span> for all <span class="math notranslate nohighlight">\(i \neq j\)</span>
+2. <span class="math notranslate nohighlight">\(a_{ii} = 0\)</span> for all <span class="math notranslate nohighlight">\(i\)</span></p>
+</section>
+<section id="generating-random-tournament">
+<h2>Generating Random Tournament<a class="headerlink" href="#generating-random-tournament" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">generate_random_tournament</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">tournament</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">tournament</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tournament</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tournament</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">random_tournament</span> <span class="o">=</span> <span class="n">generate_random_tournament</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="book/3/images/tournament.png" src="book/3/images/tournament.png" />
+<p>This algorithm generates a random tournament by independently choosing the direction of each edge with equal probability (50%). For each pair of vertices <span class="math notranslate nohighlight">\((i, j)\)</span> where <span class="math notranslate nohighlight">\(i &lt; j\)</span>, we randomly assign the edge direction using a coin flip. This process guarantees the resulting graph will satisfy the tournament property where exactly one directed edge exists between every pair of vertices.</p>
+<section id="definition-3-2-1-tournament">
+<h3><strong>Definition 3.2.1 (Tournament)</strong><a class="headerlink" href="#definition-3-2-1-tournament" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>A tournament is a simple complete graph with directed edges (Figure 1 shows a tournament with 5 vertices).</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/tournament_1.png"><img alt="This appears if the internet connection is poor" src="../../_images/tournament_1.png" style="width: 50%;" /></a>
+</figure>
+<p>An
+<span class="math notranslate nohighlight">\(n\)</span>
+-vertex tournament can model a competition among
+<span class="math notranslate nohighlight">\(n\)</span>
+teams where there is a directed edge from vertex 1 to vertex 2 if and only if team 1 has defeated team 2 (as shown in Figure 1).</p>
+</section>
+<section id="the-king-in-tournaments">
+<h3>The King in Tournaments<a class="headerlink" href="#the-king-in-tournaments" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>A tournament is a complete directed graph where every pair of vertices is connected by a single directed edge. In tournaments, a <em>king</em> vertex is a vertex that can reach every other vertex in the graph via a path of length at most 2.</p>
+<p><strong>Algorithm to Find the King in a Tournament</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_king</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">):</span>
+    <span class="c1"># Tournament adjacency matrix</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">)</span>
+    <span class="n">king</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="c1"># if v defeats the current king</span>
+        <span class="k">if</span> <span class="n">adj_matrix</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">king</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">king</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="c1"># verify if the king is indeed a king</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">king</span> <span class="ow">and</span> <span class="n">adj_matrix</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">king</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># if defeated, the king is invalid</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">king</span>
+</pre></div>
+</div>
+<img alt="A tournament with a king" src="book/3/images/tournament.png" />
+<p><strong>Algorithm Description</strong>:
+The above algorithm uses a greedy approach to first identify a potential king vertex and then verifies its validity.</p>
+<section id="definition-3-2-2-king">
+<h4><strong>Definition 3.2.2 (King)</strong><a class="headerlink" href="#definition-3-2-2-king" title="پیوند ثابت به این سر مقاله">¶</a></h4>
+<p>A <strong>king</strong> is a vertex in a tournament that has a directed path of length at most 2 to all other vertices in the tournament. For example, vertex 3 is a king in Figure 1.</p>
+</section>
+<section id="theorem-3-2-3">
+<h4><strong>Theorem 3.2.3</strong><a class="headerlink" href="#theorem-3-2-3" title="پیوند ثابت به این سر مقاله">¶</a></h4>
+<p><strong>Theorem Statement:</strong> Every tournament has at least one king.</p>
+<p><strong>Proof:</strong> Let
+<span class="math notranslate nohighlight">\(v\)</span>
+be a vertex with out-degree
+<span class="math notranslate nohighlight">\(\Delta^{+}\)</span>
+in the tournament, i.e., a vertex with the maximum out-degree. If there exists a vertex
+<span class="math notranslate nohighlight">\(u\)</span>
+that cannot be reached from
+<span class="math notranslate nohighlight">\(v\)</span>
+via a path of length at most 2, then
+<span class="math notranslate nohighlight">\(u\)</span>
+must have directed edges to
+<span class="math notranslate nohighlight">\(v\)</span>
+and all vertices
+<span class="math notranslate nohighlight">\(w\)</span>
+where
+<span class="math notranslate nohighlight">\((v,w) \in E\)</span>
+(Figure 2). This would imply
+<span class="math notranslate nohighlight">\(d^{+}(u) \geq \Delta^{+}+1\)</span>,
+contradicting the maximality of
+<span class="math notranslate nohighlight">\(v\)</span>'s
+out-degree. Hence, no such vertex
+<span class="math notranslate nohighlight">\(u\)</span>
+exists that is unreachable from
+<span class="math notranslate nohighlight">\(v\)</span>
+within at most two edges, and therefore
+<span class="math notranslate nohighlight">\(v\)</span>
+is a king.</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/tournament_2.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/tournament_2.png" style="width: 50%;" /></a>
+</figure>
+<p>Theorem 3.2.3 can be interpreted as follows: in a tournament competition, there exists an individual
+<span class="math notranslate nohighlight">\(v\)</span>
+such that for every other individual
+<span class="math notranslate nohighlight">\(u\)</span>,
+either
+<span class="math notranslate nohighlight">\(v\)</span>
+has defeated
+<span class="math notranslate nohighlight">\(u\)</span>
+directly or has defeated someone who defeated
+<span class="math notranslate nohighlight">\(u\)</span>.</p>
+<hr class="docutils" />
+<p>Every tournament contains a Hamiltonian path. We can prove this claim using strong induction.</p>
+<p><strong>Proof by induction:</strong></p>
+<p><strong>Base case:</strong> For a tournament with 2 vertices, the Hamiltonian path is trivially the directed edge between them.</p>
+<p><strong>Inductive step:</strong> Assume every tournament with <cite>n</cite> vertices has a Hamiltonian path. Consider a tournament with <cite>n+1</cite> vertices. Remove a vertex <cite>v</cite>, resulting in a tournament of <cite>n</cite> vertices. By the induction hypothesis, this subtournament has a Hamiltonian path, say <cite>v₁ → v₂ → ... → vₙ</cite>. Now, reinsert <cite>v</cite> and find its position in the path:</p>
+<ol class="arabic simple">
+<li><p>If there's an edge from <cite>v</cite> to <cite>v₁</cite>, prepend <cite>v</cite> to the path: <cite>v → v₁ → v₂ → ... → vₙ</cite>.</p></li>
+<li><p>If there's an edge from <cite>vₙ</cite> to <cite>v</cite>, append <cite>v</cite> to the path: <cite>v₁ → v₂ → ... → vₙ → v</cite>.</p></li>
+<li><p>Otherwise, find the smallest <cite>i</cite> where <cite>vᵢ → v</cite> and <cite>v → vᵢ₊₁</cite>, then insert <cite>v</cite> between <cite>vᵢ</cite> and <cite>vᵢ₊₁</cite>:
+<cite>v₁ → ... → vᵢ → v → vᵢ₊₁ → ... → vₙ</cite>.</p></li>
+</ol>
+<p>Since tournaments are complete oriented graphs, one of these cases must hold. ∎</p>
+<p><strong>Example:</strong> Find a Hamiltonian path in the following tournament:</p>
+<a class="reference internal image-reference" href="book/3/images/tournament-example.png"><img alt="book/3/images/tournament-example.png" src="book/3/images/tournament-example.png" style="width: 200px;" /></a>
+<p><strong>Solution:</strong> Using the inductive algorithm:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Tournament adjacency matrix</span>
+<span class="linenos"> 2</span><span class="c1"># Rows: outgoing edges from vertex i</span>
+<span class="linenos"> 3</span><span class="c1"># Columns: incoming edges to vertex j</span>
+<span class="linenos"> 4</span><span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos"> 5</span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># First row: edges from vertex 1</span>
+<span class="linenos"> 6</span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Second row: edges from vertex 2</span>
+<span class="linenos"> 7</span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Third row: edges from vertex 3</span>
+<span class="linenos"> 8</span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Fourth row: edges from vertex 4</span>
+<span class="linenos"> 9</span><span class="p">]</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">def</span> <span class="nf">find_hamiltonian_path</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+<span class="linenos">12</span>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="linenos">13</span>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="linenos">14</span>        <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos">15</span>    <span class="c1"># Recursive step for n vertices</span>
+<span class="linenos">16</span>    <span class="n">path</span> <span class="o">=</span> <span class="n">find_hamiltonian_path</span><span class="p">([</span><span class="n">row</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="linenos">17</span>    <span class="n">v</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Last vertex index</span>
+<span class="linenos">18</span>    <span class="c1"># Check insertion position</span>
+<span class="linenos">19</span>    <span class="k">if</span> <span class="n">matrix</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]]:</span>  <span class="c1"># Case 1: prepend</span>
+<span class="linenos">20</span>        <span class="k">return</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+</span> <span class="n">path</span>
+<span class="linenos">21</span>    <span class="k">if</span> <span class="n">matrix</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]][</span><span class="n">v</span><span class="p">]:</span>  <span class="c1"># Case 2: append</span>
+<span class="linenos">22</span>        <span class="k">return</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+<span class="linenos">23</span>    <span class="c1"># Case 3: find intermediate position</span>
+<span class="linenos">24</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<span class="linenos">25</span>        <span class="k">if</span> <span class="n">matrix</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">v</span><span class="p">]</span> <span class="ow">and</span> <span class="n">matrix</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]:</span>
+<span class="linenos">26</span>            <span class="k">return</span> <span class="n">path</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+<span class="linenos">27</span>    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Shouldn&#39;t reach here for tournaments</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="c1"># First path: 1 2 3 4 → After inserting vertex 4:</span>
+<span class="linenos">30</span><span class="nb">print</span><span class="p">(</span><span class="n">find_hamiltonian_path</span><span class="p">(</span><span class="n">adjacency_matrix</span><span class="p">))</span>  <span class="c1"># Output: [3, 1, 2, 4]</span>
+</pre></div>
+</div>
+</section>
+<section id="definition-3-2-4-hamiltonian-path-in-a-directed-graph">
+<h4><strong>Definition 3.2.4 (Hamiltonian Path in a Directed Graph)</strong><a class="headerlink" href="#definition-3-2-4-hamiltonian-path-in-a-directed-graph" title="پیوند ثابت به این سر مقاله">¶</a></h4>
+<p>A Hamiltonian path in a directed graph is a directed path that traverses all vertices.</p>
+</section>
+<section id="theorem-3-2-5">
+<h4><strong>Theorem 3.2.5</strong><a class="headerlink" href="#theorem-3-2-5" title="پیوند ثابت به این سر مقاله">¶</a></h4>
+<p><strong>Statement of the theorem:</strong> Every tournament contains at least one Hamiltonian path.</p>
+<p><strong>Proof of the theorem:</strong> Let the vertices
+<span class="math notranslate nohighlight">\(a_1\)</span>
+to
+<span class="math notranslate nohighlight">\(a_k\)</span>
+form the longest directed path in the tournament (Figure 3).</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/tournament_3.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/tournament_3.png" style="width: 50%;" /></a>
+</figure>
+<p>If
+<span class="math notranslate nohighlight">\(k = n\)</span>,
+the theorem is proved. Otherwise, there exists a vertex
+<span class="math notranslate nohighlight">\(v\)</span>
+not in this path. There cannot be a directed edge from
+<span class="math notranslate nohighlight">\(v\)</span>
+to
+<span class="math notranslate nohighlight">\(a_1\)</span>
+or from
+<span class="math notranslate nohighlight">\(a_k\)</span>
+to
+<span class="math notranslate nohighlight">\(v\)</span>
+(Why?). Thus, let
+<span class="math notranslate nohighlight">\(a_i\)</span>
+be the vertex with the smallest index
+<span class="math notranslate nohighlight">\(i\)</span>
+among all vertices from
+<span class="math notranslate nohighlight">\(a_1\)</span>
+to
+<span class="math notranslate nohighlight">\(a_k\)</span>
+such that
+<span class="math notranslate nohighlight">\(v\)</span>
+has an edge to it. In this case, the vertices
+<span class="math notranslate nohighlight">\(a_1,...,a_{i-1},v,a_i,...,a_k\)</span>
+form a path of length
+<span class="math notranslate nohighlight">\(k+1\)</span>,
+contradicting the assumption that the longest path has length
+<span class="math notranslate nohighlight">\(k\)</span>.
+Therefore,
+<span class="math notranslate nohighlight">\(k = n\)</span>
+and
+<span class="math notranslate nohighlight">\(a_1\)</span>
+to
+<span class="math notranslate nohighlight">\(a_k\)</span>
+form a Hamiltonian path.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="1.html" style="float:left;" title="Definitions" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="3.html" style="float:right;" title="Directed Acyclic Graph (DAG)" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at سپتامبر 30, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

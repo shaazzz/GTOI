@@ -1,0 +1,555 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Bellman-Ford &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Shortest path algorithms" href="index.html" />
+        <link rel="next" title="Dijkstra" href="2.html" />
+        <link rel="prev" title="Shortest path algorithms" href="index.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Shortest path algorithms</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Bellman-Ford</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/6/1.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="bellman-ford">
+<h1>Bellman-Ford<a class="headerlink" href="#bellman-ford" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>The Bellman-Ford algorithm is one of the fundamental algorithms in graph theory for finding the shortest path from a source vertex to all other vertices in a weighted graph. Unlike Dijkstra's algorithm, this method can handle graphs with <strong>negative edge weights</strong>, provided there are no negative cycles reachable from the source vertex.</p>
+<section id="mathematical-background">
+<h2>Mathematical Background<a class="headerlink" href="#mathematical-background" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(G = (V, E)\)</span> be a directed graph with edge weights <span class="math notranslate nohighlight">\(w(e)\)</span>. For each vertex <span class="math notranslate nohighlight">\(v \in V\)</span>, the algorithm maintains a distance estimate <span class="math notranslate nohighlight">\(d[v]\)</span>, initialized to <span class="math notranslate nohighlight">\(\infty\)</span> except for the source vertex <span class="math notranslate nohighlight">\(s\)</span> where <span class="math notranslate nohighlight">\(d[s] = 0\)</span>.</p>
+<p>The algorithm performs relaxation on all edges <span class="math notranslate nohighlight">\(|V| - 1\)</span> times. For each edge <span class="math notranslate nohighlight">\((u, v) \in E\)</span>, the relaxation step is:</p>
+<div class="math notranslate nohighlight">
+\[d[v] = \min(d[v], d[u] + w(u, v))\]</div>
+<p>If after <span class="math notranslate nohighlight">\(|V| - 1\)</span> iterations, a shorter path is still found, the graph contains a negative cycle.</p>
+</section>
+<section id="algorithm-steps">
+<h2>Algorithm Steps<a class="headerlink" href="#algorithm-steps" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ol class="arabic">
+<li><p>Initialize distances from the source to all vertices as infinity, except the source itself (distance 0).</p></li>
+<li><p>Repeat <a href="#id2"><span class="problematic" id="id3">|V|</span></a> - 1 times:
+a. For each edge (u, v) in the graph:</p>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li><p>If d[v] &gt; d[u] + weight(u, v), update d[v].</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Check for negative cycles by iterating through all edges again. If any distance can be updated, a negative cycle exists.</p></li>
+</ol>
+</section>
+<section id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Below is a Python implementation of the Bellman-Ford algorithm:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">def</span> <span class="nf">bellman_ford</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<span class="linenos"> 2</span>    <span class="c1"># Initialize distance from source node</span>
+<span class="linenos"> 3</span>    <span class="n">distance</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;infinity&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">}</span>
+<span class="linenos"> 4</span>    <span class="n">distance</span><span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="c1"># Relax all edges |V| - 1 times</span>
+<span class="linenos"> 7</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+<span class="linenos"> 8</span>        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+<span class="linenos"> 9</span>            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="linenos">10</span>                <span class="c1"># Update distance if shorter path found</span>
+<span class="linenos">11</span>                <span class="k">if</span> <span class="n">distance</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+<span class="linenos">12</span>                    <span class="n">distance</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="c1"># Check for negative cycles</span>
+<span class="linenos">15</span>    <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+<span class="linenos">16</span>        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="linenos">17</span>            <span class="k">if</span> <span class="n">distance</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+<span class="linenos">18</span>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Graph contains a negative cycle&quot;</span><span class="p">)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="k">return</span> <span class="n">distance</span>
+</pre></div>
+</div>
+<img alt="Bellman-Ford execution example" src="book/6/images/bellman-ford-example.png" />
+</section>
+<section id="key-properties">
+<h2>Key Properties<a class="headerlink" href="#key-properties" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Time Complexity</strong>: O(<a href="#id4"><span class="problematic" id="id5">|V|</span></a> * <a href="#id6"><span class="problematic" id="id7">|E|</span></a>)</p></li>
+<li><p><strong>Space Complexity</strong>: O(<a href="#id8"><span class="problematic" id="id9">|V|</span></a>)</p></li>
+<li><p><strong>Correctness</strong>: Guaranteed to find shortest paths if no negative cycles exist.</p></li>
+<li><p><strong>Use Cases</strong>: Network routing, currency arbitrage detection, and systems with negative weights.</p></li>
+</ul>
+</section>
+<section id="label-correcting-approach">
+<h2>Label Correcting Approach<a class="headerlink" href="#label-correcting-approach" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Bellman-Ford is considered a &quot;label correcting&quot; algorithm, as it iteratively updates distance labels until no further improvements are possible. This contrasts with &quot;label setting&quot; algorithms like Dijkstra's, which permanently fix distances once they are determined.</p>
+</section>
+<section id="problem-statement">
+<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>We have a directed weighted graph
+<span class="math notranslate nohighlight">\(G\)</span>. The weights of the edges in <span class="math notranslate nohighlight">\(G\)</span> can also be negative. We know that graph <span class="math notranslate nohighlight">\(G\)</span> contains no cycles with negative total weight.</p>
+<p>Now, for each vertex, we want to find the length of the shortest path from source vertex <span class="math notranslate nohighlight">\(sc\)</span> to all other vertices, where the length of a path is equal to the sum of its edge weights.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a code example, comments remain in Finglish</span>
+<span class="k">def</span> <span class="nf">bellman_ford</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;infinity&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">}</span>
+    <span class="n">distance</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="bellman-ford-algorithm">
+<h2>Bellman-Ford Algorithm<a class="headerlink" href="#bellman-ford-algorithm" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>To solve this problem, we first define a <span class="math notranslate nohighlight">\(dp\)</span> table with dimensions
+<span class="math notranslate nohighlight">\(|V(G)| \times |V(G)|\)</span>
+where <span class="math notranslate nohighlight">\(dp_{i,j}\)</span> represents the length of the shortest walk from vertex <span class="math notranslate nohighlight">\(sc\)</span> to vertex <span class="math notranslate nohighlight">\(j\)</span> with at most <span class="math notranslate nohighlight">\(i\)</span> edges.</p>
+<p>We know that the length of the shortest walk between two vertices in graph <span class="math notranslate nohighlight">\(G\)</span> is equal to the length of the shortest path. This is because if the shortest walk contains a repeated vertex, it implies the existence of a cycle with a positive length (according to the problem's assumption, cycles cannot have negative lengths). This cycle can be removed to obtain a shorter walk, which is a contradiction.</p>
+<p>For the base cases of this DP table, we have <span class="math notranslate nohighlight">\(dp_{i, sc} = 0\)</span> and
+<span class="math notranslate nohighlight">\(dp_{0, u \neq sc} = \infty\)</span>.
+To compute <span class="math notranslate nohighlight">\(dp_{i, j}\)</span>, we consider all incoming edges to <span class="math notranslate nohighlight">\(j\)</span>. For each edge <span class="math notranslate nohighlight">\(e\)</span> from <span class="math notranslate nohighlight">\(u_e\)</span> to <span class="math notranslate nohighlight">\(j\)</span> with weight <span class="math notranslate nohighlight">\(w_e\)</span>, we calculate the value
+<span class="math notranslate nohighlight">\(dp_{i-1, u_e} + w_e\)</span>.
+The minimum of these values gives the solution for
+<span class="math notranslate nohighlight">\(dp_{i, j}\)</span>. Thus:</p>
+<div class="math notranslate nohighlight">
+\[dp_{i, j} = \displaystyle{\min_{\forall \, e \: \in \: N_{j}^{-}(j)}} dp_{i-1, u_e} + w_e\]</div>
+<p>To find the length of the shortest path from vertex <span class="math notranslate nohighlight">\(sc\)</span> to vertex <span class="math notranslate nohighlight">\(u\)</span>, the value <span class="math notranslate nohighlight">\(dp_{n-1, u}\)</span> suffices. This is because a path from <span class="math notranslate nohighlight">\(sc\)</span> to any other vertex can have at most <span class="math notranslate nohighlight">\(n\)</span> vertices and <span class="math notranslate nohighlight">\(n-1\)</span> edges. Based on the DP definition and the fact that the shortest walk between two vertices in <span class="math notranslate nohighlight">\(G\)</span> is necessarily a path, this value is exactly the required one.</p>
+<img alt="images/bellman-ford.png" class="align-center" src="images/bellman-ford.png" />
+</section>
+<section id="order-analysis">
+<h2>Order Analysis<a class="headerlink" href="#order-analysis" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>To update all cells of <span class="math notranslate nohighlight">\(dp_i\)</span> for each vertex, we perform operations proportional to its in-degree. We know that the sum of in-degrees of all vertices equals
+<span class="math notranslate nohighlight">\(|E(G)|\)</span>
+(edge count). Therefore in total, we've performed
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(|V(G)|.|E(G)|\right)\)</span>
+operations. The memory order used is also
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(|V(G)|^2\right)\)</span>
+.</p>
+</section>
+<section id="memory-order-optimization">
+<h2>Memory Order Optimization<a class="headerlink" href="#memory-order-optimization" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>To optimize the amount of memory used, the first dimension can be removed. As a result, the memory complexity becomes
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(|V(G)|\right)\)</span>.</p>
+<p>Then, for each edge,
+<span class="math notranslate nohighlight">\(|V(E)| - 1\)</span>
+steps are performed to update the <strong>dp</strong> value of the destination vertex of the edge. By &quot;updating&quot;, we mean that if edge <span class="math notranslate nohighlight">\(e\)</span> goes from vertex <span class="math notranslate nohighlight">\(u_e\)</span> to <span class="math notranslate nohighlight">\(v_e\)</span> with weight <span class="math notranslate nohighlight">\(w_e\)</span>, we set:
+<span class="math notranslate nohighlight">\(dp_{v_e} = \min(dp_{v_e}, dp_{u_e} + w_e)\)</span>.</p>
+<p>Now, a question arises: Does performing this operation keep the <strong>dp</strong> entries at their desired values? The answer is yes.</p>
+<p>If we consider the <strong>dp</strong> from the previous section as
+<span class="math notranslate nohighlight">\(dp^{\prime}\)</span>,
+after the <span class="math notranslate nohighlight">\(i\)</span>-th update step of <strong>dp</strong>, we know that <span class="math notranslate nohighlight">\(dp_u\)</span> equals one of
+<span class="math notranslate nohighlight">\(dp_{i, u}^{\prime}, dp_{i+1, u}^{\prime}, \dots, dp_{n-1, u}^{\prime}\)</span>
+(the proof of this lemma is left to the reader).</p>
+<p>Now, if we check after the <span class="math notranslate nohighlight">\(n-1\)</span>-th step, we find that
+<span class="math notranslate nohighlight">\(dp_u = dp_{n-1, u}^{\prime}\)</span>.
+Therefore, after the <span class="math notranslate nohighlight">\(n-1\)</span>-th step, the <strong>dp</strong> entries have the desired values.</p>
+</section>
+<section id="finding-the-shortest-path">
+<h2>Finding the Shortest Path<a class="headerlink" href="#finding-the-shortest-path" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>After all this discussion, a question arises: if we want the optimal path itself from <span class="math notranslate nohighlight">\(sc\)</span> to another vertex like <span class="math notranslate nohighlight">\(des\)</span>, what should we do?</p>
+<p>To solve this question, we need to slightly modify the previous algorithm. We consider an auxiliary array called <span class="math notranslate nohighlight">\(par\)</span> with <span class="math notranslate nohighlight">\(|V(G)|\)</span> elements. Initially, we set all elements of <span class="math notranslate nohighlight">\(par\)</span> to -1. Now, when we consider an edge <span class="math notranslate nohighlight">\(e\)</span> and
+<span class="math notranslate nohighlight">\(dp_{v_e} &gt; dp_{u_e} + w_e\)</span>
+holds, we set
+<span class="math notranslate nohighlight">\(par_{v_e}\)</span>
+to <span class="math notranslate nohighlight">\(u_e\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(par_u\)</span>
+effectively represents the previous vertex in the optimal path from <span class="math notranslate nohighlight">\(sc\)</span> to <span class="math notranslate nohighlight">\(u\)</span>. To obtain the path from <span class="math notranslate nohighlight">\(sc\)</span> to <span class="math notranslate nohighlight">\(des\)</span>, we maintain a variable <span class="math notranslate nohighlight">\(nw\)</span> and until
+<span class="math notranslate nohighlight">\(nw \neq sc\)</span>,
+we set <span class="math notranslate nohighlight">\(nw\)</span> to <span class="math notranslate nohighlight">\(par_{nw}\)</span> and prepend <span class="math notranslate nohighlight">\(nw\)</span> to the current obtained path.</p>
+<p>To prove that we will definitely reach the vertex <span class="math notranslate nohighlight">\(sc\)</span> and that the obtained path is optimal, we assume an array <span class="math notranslate nohighlight">\(lst\)</span>. <span class="math notranslate nohighlight">\(lst_u\)</span> equals the number of the last stage in which <span class="math notranslate nohighlight">\(dp_u\)</span> was changed. We know
+<span class="math notranslate nohighlight">\(lst_u &gt; lst_{par_u}\)</span>
+holds. (Proof is left to the reader) Therefore, every time we set <span class="math notranslate nohighlight">\(nw\)</span> to
+<span class="math notranslate nohighlight">\(par_{nw}\)</span>,
+<span class="math notranslate nohighlight">\(lst_{nw}\)</span> decreases, so we do not loop and will definitely reach <span class="math notranslate nohighlight">\(sc\)</span>.</p>
+<p>The path length will also be equal to <span class="math notranslate nohighlight">\(dp_{des}\)</span> because at each step, if we add an edge with weight <span class="math notranslate nohighlight">\(w\)</span> to the path, the value of <span class="math notranslate nohighlight">\(dp_{nw}\)</span> decreases exactly by <span class="math notranslate nohighlight">\(w\)</span>. Since <span class="math notranslate nohighlight">\(dp_{sc} = 0\)</span>, the path length will be exactly equal to <span class="math notranslate nohighlight">\(dp_{des}\)</span>.</p>
+</section>
+<section id="negative-cycle">
+<span id="id1"></span><h2>Negative Cycle<a class="headerlink" href="#negative-cycle" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>You might wonder, if it's not guaranteed whether the graph has a negative cycle or not, how can we determine if a negative cycle exists? (Assuming we have optimized memory usage).</p>
+<p>First, suppose instead of
+<span class="math notranslate nohighlight">\(|V(G)| - 1\)</span>
+iterations, we run the algorithm for
+<span class="math notranslate nohighlight">\(|V(G)|\)</span>
+iterations. We call an iteration of the algorithm &quot;good&quot; if the value of at least one cell in the <span class="math notranslate nohighlight">\(dp\)</span> array changes. We know that if iteration <span class="math notranslate nohighlight">\(i\)</span> is not good, then subsequent iterations will also not be good. (If no values change, subsequent iterations will behave exactly like iteration <span class="math notranslate nohighlight">\(i\)</span>, and no cells will change).</p>
+<p>Now, if there is no negative cycle, based on previous reasoning, iteration <span class="math notranslate nohighlight">\(|V(G)|\)</span> will definitely not be good. (All cells will have reached their final values in the previous iteration and will not change). However, if a negative cycle exists, we know the <span class="math notranslate nohighlight">\(dp\)</span> values of its vertices will never stabilize. The negative cycle itself can be traversed multiple times, causing the <span class="math notranslate nohighlight">\(dp\)</span> values of the cycle's vertices to approach
+<span class="math notranslate nohighlight">\(-\infty\)</span>. We also know that if an iteration is not good, then all values have stabilized. From these arguments, it follows that if a negative cycle exists, all iterations will be good.</p>
+<p>Thus, we conclude: If there is no negative cycle, iteration <span class="math notranslate nohighlight">\(|V(G)|\)</span> will not be good, and if a negative cycle exists, iteration <span class="math notranslate nohighlight">\(|V(G)|\)</span> will definitely be good. Therefore, to check for the existence of a negative cycle, it suffices to check whether iteration <span class="math notranslate nohighlight">\(|V(G)|\)</span> is good.</p>
+<p>To find the negative cycle itself, similar to the case without negative cycles, maintain an auxiliary array called <span class="math notranslate nohighlight">\(par\)</span>. Starting from a vertex whose value changed in iteration <span class="math notranslate nohighlight">\(|V(G)|\)</span>, trace back the optimal path from <span class="math notranslate nohighlight">\(sc\)</span> — the negative cycle will necessarily lie along this path. (This part can be proven based on the reasoning in this section).</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="index.html" style="float:left;" title="Shortest path algorithms" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="2.html" style="float:right;" title="Dijkstra" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at سپتامبر 30, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

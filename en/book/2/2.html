@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Distance in Trees and Graphs &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Trees" href="index.html" />
+        <link rel="next" title="Counting the Number of Trees" href="3.html" />
+        <link rel="prev" title="Basic Properties" href="1.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction and Modeling with Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walk, Trail, Path, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Trees</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Basic Properties</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Distance in Trees and Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-representation">گراف و نمایش ماتریسی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#directed-graphs">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#undirected-graphs">Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id11">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#adjacency-list">Adjacency List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#edge-list">Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id12">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id15">نمایش گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#depth-first-search-dfs">Depth-First Search (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#dfs">الگوریتم جستجوی اول عمق (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id22">Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id24">الگوریتم جستجوی عمق اول (DFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#bipartite-graphs">Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#spanning-trees">Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id31">الگوریتم جستجوی اول سطح (BFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id35">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id37">لیست مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id39">لیست یالها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#breadth-first-search">الگوریتم جستجوی اول سطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#bfs-dfs">BFS و DFS در یک گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-definitions">تعاریف گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#representing-a-graph-using-an-edge-list">Representing a Graph Using an Edge List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id50">گراف‌های جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#id52">Graph Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#graph-traversal">Graph Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html#important-algorithms">Important Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Algorithm for Finding the Diameter of a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">Checking Ancestor-Descendant Relationship in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html#finding-the-k-th-ancestor">Finding the k-th Ancestor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html#bi-connecting-with-minimum-number-of-paths">Bi-connecting with Minimum Number of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">Vertex and Edge Cut Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph (DAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">Strongly Connected Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof technics in graph problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graphs and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Euler circuit and hamiltonian cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html#dynamic-tsp">مسئله فروشنده دورهگرد (الگوریتم پویا)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest path algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Kirchhoff's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Deriving Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree data structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Search (Search)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#insertion-insertion">Insertion (Insertion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">Definition of NP and NP-Completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Problem Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html#reducing-the-circuit-sat-problem-to-sat">Reducing the circuit-sat Problem to sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">NP-Complete Graph Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">LCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">An O(n + q*lg(n)) Solution Using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">The Relationship Between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">A Linear Approach to LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced tree algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Guni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-Connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Minimum Cut and Maximum Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matchings in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Minimax Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matchings in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Extra topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Drawing a Planar Graph on a Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#euler-s-theorem">Euler's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html#dual-graph">Dual Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Isomorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html#id1">مکمل گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Some Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Distance in Trees and Graphs</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/2/2.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="distance-in-trees-and-graphs">
+<h1>Distance in Trees and Graphs<a class="headerlink" href="#distance-in-trees-and-graphs" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>In this section, by introducing the concept of distance in graphs, we examine related definitions of distance both in the general case and specifically in trees. Discussing distance in trees is considerably easier than in general graphs, because as we analyzed in the previous section, the path between any two vertices in a tree is unique.</p>
+<section id="what-is-distance">
+<h2>What is Distance?<a class="headerlink" href="#what-is-distance" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Consider two vertices <span class="math notranslate nohighlight">\(u,v\)</span> in a graph. The distance between these two vertices is defined as the length (number of edges) of the shortest path between them.</p>
+<p>Note: If two vertices are in two separate connected components, their distance is infinite.</p>
+<p>The distance between two vertices <span class="math notranslate nohighlight">\(u,v\)</span> is denoted as <span class="math notranslate nohighlight">\(d(u,v)\)</span>.</p>
+</section>
+<section id="diameter">
+<h2>Diameter<a class="headerlink" href="#diameter" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Definition: The diameter of a graph is equal to
+<span class="math notranslate nohighlight">\(Max_{u,v} d(u,v)\)</span>,
+or in other words, the maximum distance between any pair of vertices in the graph.</p>
+<p>Note that the diameter is not the longest <strong>path</strong>, but rather the longest <strong>distance</strong>. However, in a tree, the longest path and the diameter coincide. If you take the two endpoints of the longest path in a tree, there is exactly one path between them. Since this path is the longest possible, its length equals the distance between those two vertices. Thus, the diameter equals the length of the longest path.</p>
+<p>The distinction between the longest path and the diameter becomes significant in general graphs: finding the diameter of a graph can be solved in polynomial time, whereas finding the longest path is an NP-hard problem.</p>
+</section>
+<section id="eccentricity">
+<h2>Eccentricity<a class="headerlink" href="#eccentricity" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>If we consider the vertex name as <span class="math notranslate nohighlight">\(u\)</span>, the eccentricity of <span class="math notranslate nohighlight">\(u\)</span> equals the maximum <span class="math notranslate nohighlight">\(d(u,v)\)</span> for all vertices <span class="math notranslate nohighlight">\(v\)</span>.</p>
+<p>If the graph is a tree and we root the tree at <span class="math notranslate nohighlight">\(u\)</span>, the eccentricity of <span class="math notranslate nohighlight">\(u\)</span> becomes the height of the vertex with the maximum height in the tree.</p>
+<p>The eccentricity of vertex <span class="math notranslate nohighlight">\(u\)</span> is denoted by <span class="math notranslate nohighlight">\(\varepsilon{(u)}\)</span>.</p>
+</section>
+<section id="theorem-2-2-1">
+<span id="id1"></span><h2>Theorem 2.2.1<a class="headerlink" href="#theorem-2-2-1" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p><strong>Theorem Statement</strong>: In a tree, the eccentricity of a vertex equals the maximum distance from that vertex to the two endpoints of the diameter.</p>
+<p><strong>Proof</strong>: We use proof by contradiction. Let vertex <span class="math notranslate nohighlight">\(a\)</span> be our target vertex, and let <span class="math notranslate nohighlight">\(u, v\)</span> be the two endpoints of the diameter. Let vertex <span class="math notranslate nohighlight">\(b\)</span> be the vertex whose distance from <span class="math notranslate nohighlight">\(a\)</span> is <span class="math notranslate nohighlight">\(\varepsilon(a)\)</span> (the eccentricity of <span class="math notranslate nohighlight">\(a\)</span>). If <span class="math notranslate nohighlight">\(a\)</span> were one of the diameter's endpoints, the statement would trivially hold. Thus, assume <span class="math notranslate nohighlight">\(a\)</span> is neither endpoint.</p>
+<p>Hang the tree from <span class="math notranslate nohighlight">\(a\)</span>. Let <span class="math notranslate nohighlight">\(mh\)</span> be the vertex with the greatest height such that all three vertices <span class="math notranslate nohighlight">\(b, u, v\)</span> lie in its subtree. Since <span class="math notranslate nohighlight">\(mh\)</span> is the highest common ancestor of these three vertices, either <span class="math notranslate nohighlight">\(mh = b\)</span> or one of <span class="math notranslate nohighlight">\(mh\)</span>'s children (which is an ancestor of <span class="math notranslate nohighlight">\(b\)</span>) lacks at least one of <span class="math notranslate nohighlight">\(u\)</span> or <span class="math notranslate nohighlight">\(v\)</span> in its subtree. This implies <span class="math notranslate nohighlight">\(mh = \text{lca}(u, b)\)</span> or <span class="math notranslate nohighlight">\(\text{lca}(v, b)\)</span>. Without loss of generality, assume <span class="math notranslate nohighlight">\(mh = \text{lca}(u, b)\)</span>. We now prove <span class="math notranslate nohighlight">\(d(b, u) &gt; d(u, v)\)</span>, which will lead to a contradiction with the diameter's maximality.</p>
+<ul>
+<li><p><strong>Step 1</strong>: Show <span class="math notranslate nohighlight">\(d(b, u) &gt; d(u, v)\)</span>.</p></li>
+<li><p><strong>Step 2</strong>: Since <span class="math notranslate nohighlight">\(mh = \text{lca}(b, u)\)</span>, we have <span class="math notranslate nohighlight">\(d(b, u) = h(b) + h(u) - 2 \times h(mh)\)</span>.</p></li>
+<li><p><strong>Step 3</strong>: Even if <span class="math notranslate nohighlight">\(mh \neq \text{lca}(u, v)\)</span>, it remains a common ancestor, so <span class="math notranslate nohighlight">\(d(u, v) \leq h(u) + h(v) - 2 \times h(mh)\)</span>.</p></li>
+<li><p><strong>Step 4</strong>: Combining these:</p>
+<div class="math notranslate nohighlight">
+\[h(b) + h(u) - 2 \times h(mh) &gt; h(u) + h(v) - 2 \times h(mh) \implies h(b) &gt; h(v).\]</div>
+<p>This contradicts the assumption that <span class="math notranslate nohighlight">\(v\)</span> is an endpoint of the diameter (and thus has maximal height). Hence, the theorem is proven.</p>
+</li>
+</ul>
+</section>
+<section id="radius-and-center">
+<h2>Radius and Center<a class="headerlink" href="#radius-and-center" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>A vertex which has the minimum eccentricity among the graph's vertices is called the graph's center, and its eccentricity is called the graph's radius.</p>
+</section>
+<section id="theorem-2-2-2">
+<span id="id2"></span><h2>Theorem 2.2.2<a class="headerlink" href="#theorem-2-2-2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ol class="loweralpha simple">
+<li><p>In a tree, if the diameter is <span class="math notranslate nohighlight">\(Q\)</span>, then the radius is <span class="math notranslate nohighlight">\(\lceil{Q/2}\rceil\)</span>.</p></li>
+<li><p>In a tree, if <span class="math notranslate nohighlight">\(Q\)</span> is odd, the two middle vertices of the diameter path are the centers. If <span class="math notranslate nohighlight">\(Q\)</span> is even, the middle vertex of the diameter is the center.</p></li>
+</ol>
+<p><strong>Proof</strong>: First, we prove that a vertex not lying on the diameter path cannot be a center. Consider a vertex <span class="math notranslate nohighlight">\(u\)</span> not on the diameter path, and let <span class="math notranslate nohighlight">\(v\)</span> be a vertex on the diameter path whose distance to <span class="math notranslate nohighlight">\(u\)</span> is minimal. According to Theorem 2.2.1, we have <span class="math notranslate nohighlight">\(\varepsilon{(u)} = \varepsilon{(v)} + d(u,v)\)</span>. Thus, <span class="math notranslate nohighlight">\(u\)</span> cannot be a center.</p>
+<p>Now, number the vertices along the diameter path sequentially from one end (i.e., from 0 to <span class="math notranslate nohighlight">\(Q\)</span>). By Theorem 2.2.1, the eccentricity of the <span class="math notranslate nohighlight">\(i\)</span>-th vertex on the diameter path is <span class="math notranslate nohighlight">\(\max(i, Q-i)\)</span>. The minimum of this expression occurs when <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(Q-i\)</span> have the smallest possible difference. Therefore:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(Q\)</span> is even, the solution is <span class="math notranslate nohighlight">\(\max(Q - Q/2, Q/2) = Q/2\)</span>. Hence, the radius is <span class="math notranslate nohighlight">\(Q/2\)</span>, and the only center is the middle vertex of the diameter path (vertex <span class="math notranslate nohighlight">\(Q/2\)</span>).</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(Q\)</span> is odd, the radius becomes <span class="math notranslate nohighlight">\(\max((Q-1)/2, (Q+1)/2) = (Q+1)/2\)</span>. The only vertices on the diameter path satisfying this condition are the <span class="math notranslate nohighlight">\((Q-1)/2\)</span>-th and <span class="math notranslate nohighlight">\((Q+1)/2\)</span>-th vertices, which are the two middle vertices of the diameter path.</p></li>
+</ul>
+</section>
+<section id="centroid">
+<h2>Centroid<a class="headerlink" href="#centroid" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>A vertex in a graph whose sum of distances to all other vertices is minimized is called the <strong>centroid</strong> of the graph. Similar to the previous definitions, the centroid in a tree also has an interesting property, which is stated in the following theorem.</p>
+</section>
+<section id="theorem-2-2-3">
+<span id="id3"></span><h2>Theorem 2.2.3<a class="headerlink" href="#theorem-2-2-3" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ol class="loweralpha simple">
+<li><p>A vertex is a centroid in a tree if and only if, when removed, the size of every connected component is at most <span class="math notranslate nohighlight">\(n/2\)</span>.</p></li>
+<li><p>A tree has at most two centroids. If there are two, the graph has an even number of vertices, and the two centroids are adjacent.</p></li>
+</ol>
+<p><strong>Proof</strong>
+We label the vertices and let <span class="math notranslate nohighlight">\(a_i\)</span> denote the sum of distances from vertex <span class="math notranslate nohighlight">\(i\)</span> to all other vertices. First, we prove the &quot;if&quot; part of (a). Assume vertex <span class="math notranslate nohighlight">\(u\)</span> is a centroid. If removing <span class="math notranslate nohighlight">\(u\)</span> results in a connected component with size greater than <span class="math notranslate nohighlight">\(n/2\)</span>, consider the neighbor of <span class="math notranslate nohighlight">\(u\)</span> in this component, say <span class="math notranslate nohighlight">\(v\)</span>. The distance from <span class="math notranslate nohighlight">\(v\)</span> to vertices within this component is one less than the distance from <span class="math notranslate nohighlight">\(u\)</span> to them, while its distance to other vertices is one more than that of <span class="math notranslate nohighlight">\(u\)</span>. Thus, <span class="math notranslate nohighlight">\(a_v = a_u - sz + (n - sz)\)</span>, where <span class="math notranslate nohighlight">\(sz\)</span> is the size of this component. Since <span class="math notranslate nohighlight">\(sz &gt; n/2\)</span>, we have <span class="math notranslate nohighlight">\(n - 2 \times sz &lt; 0\)</span>, implying <span class="math notranslate nohighlight">\(a_v &lt; a_u\)</span>. This contradicts the minimality of <span class="math notranslate nohighlight">\(a_u\)</span> for a centroid, thereby proving (a).</p>
+<p>Next, we prove that any two vertices <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> satisfying the &quot;if&quot; condition in (a) must have <span class="math notranslate nohighlight">\(a_i = a_j\)</span>. Since all centroids satisfy this condition, they must share the same <span class="math notranslate nohighlight">\(a_i\)</span> value. Root the tree at vertex <span class="math notranslate nohighlight">\(i\)</span>. Define a variable <span class="math notranslate nohighlight">\(A\)</span> such that at vertex <span class="math notranslate nohighlight">\(z\)</span>, <span class="math notranslate nohighlight">\(A = a_z\)</span>. Initially, <span class="math notranslate nohighlight">\(A = a_i\)</span>. Traverse the path from <span class="math notranslate nohighlight">\(i\)</span> to <span class="math notranslate nohighlight">\(j\)</span>. When moving from a parent to its child, <span class="math notranslate nohighlight">\(A\)</span> decreases by the size of the child’s subtree and increases by the number of vertices outside this subtree. Since the size of <span class="math notranslate nohighlight">\(j\)</span>'s subtree (when rooted at <span class="math notranslate nohighlight">\(i\)</span>) is at least <span class="math notranslate nohighlight">\(n/2\)</span> (as removing <span class="math notranslate nohighlight">\(j\)</span> leaves its parent’s component with size at most <span class="math notranslate nohighlight">\(n/2\)</span>), the size of all ancestors’ subtrees along this path is also at least <span class="math notranslate nohighlight">\(n/2\)</span>. Thus, <span class="math notranslate nohighlight">\(A\)</span> either decreases or remains constant, yielding <span class="math notranslate nohighlight">\(a_i \geq a_j\)</span>. Repeating this process by rooting at <span class="math notranslate nohighlight">\(j\)</span> gives <span class="math notranslate nohighlight">\(a_j \geq a_i\)</span>. Hence, <span class="math notranslate nohighlight">\(a_i = a_j\)</span>.</p>
+<p>For part (b), assume two centroids <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> exist. Root the tree at <span class="math notranslate nohighlight">\(i\)</span> and traverse the path to <span class="math notranslate nohighlight">\(j\)</span>. For <span class="math notranslate nohighlight">\(A\)</span> to remain unchanged during traversal, the size of the child’s subtree must equal <span class="math notranslate nohighlight">\(n/2\)</span>. Since the size of <span class="math notranslate nohighlight">\(j\)</span>'s subtree is at least <span class="math notranslate nohighlight">\(\lceil{n/2}\rceil\)</span>, <span class="math notranslate nohighlight">\(j\)</span> must be a direct child of <span class="math notranslate nohighlight">\(i\)</span> with subtree size exactly <span class="math notranslate nohighlight">\(n/2\)</span>. This requires <span class="math notranslate nohighlight">\(\lfloor{n/2}\rfloor = \lceil{n/2}\rceil\)</span>, implying <span class="math notranslate nohighlight">\(n\)</span> is even. Additionally, the two centroids must be adjacent. Thus, a tree can have at most two centroids, and if two exist, the graph has an even number of vertices with the centroids adjacent. This precludes cycles, completing the proof.</p>
+</section>
+<section id="sum-of-distances">
+<h2>Sum of Distances<a class="headerlink" href="#sum-of-distances" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Assume in a problem the goal is to minimize or maximize the sum of distances between every pair of vertices. Let's call this sum the <strong>graph density</strong>. Intuitively, the lower the graph density, the more compact the graph is, and the higher the graph density, the more spread out and expansive the graph becomes.</p>
+<p>Additionally, for distance to be well-defined, we assume our subject of discussion is connected graphs.</p>
+<img alt="Graph with different densities" class="align-center" src="book/2/images/graph-density.png" />
+<hr class="docutils" />
+<p>The distance between two vertices is at least 1. In the graph <span class="math notranslate nohighlight">\(K_n\)</span>, the distance between any two vertices is exactly 1. Therefore, the minimal possible density is achieved in the graph <span class="math notranslate nohighlight">\(K_n\)</span>, which equals <span class="math notranslate nohighlight">\(n \choose 2\)</span>.</p>
+<p>If we restrict the domain of discussion to trees, the problem becomes slightly more complex. However, we can still infer the following:</p>
+<ul class="simple">
+<li><p>Exactly <span class="math notranslate nohighlight">\(n-1\)</span> pairs of vertices have a distance of exactly 1. This is because a tree has <span class="math notranslate nohighlight">\(n-1\)</span> edges.</p></li>
+<li><p>Every pair of vertices not connected by an edge has a distance of at least 2.</p></li>
+</ul>
+<p>Thus, the minimal possible density is at least <span class="math notranslate nohighlight">\(2 \times {n \choose 2} - (n-1)\)</span>. The only example satisfying this bound is the case where the distance between any two vertices is <strong>at most</strong> 2. The only tree with this property is the star graph (as shown in the figure). This is because if two leaves in this graph do not share a common parent, their distance will be at least 3.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/S_7.svg"><img alt="This appears if the internet connection is poor" src="../../_images/S_7.svg" width="50%" /></a>
+</figure>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span> <span class="nf">compute_density</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+<span class="linenos">2</span>    <span class="c1"># vertices_count = تعداد راس ها</span>
+<span class="linenos">3</span>    <span class="n">vertices_count</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">vertices_count</span><span class="p">()</span>
+<span class="linenos">4</span>    <span class="c1"># edges_count = تعداد یال ها</span>
+<span class="linenos">5</span>    <span class="n">edges_count</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges_count</span><span class="p">()</span>
+<span class="linenos">6</span>    <span class="k">return</span> <span class="n">edges_count</span> <span class="o">/</span> <span class="n">vertices_count</span>
+</pre></div>
+</div>
+<section id="maximizing-graph-density">
+<h3>Maximizing Graph Density<a class="headerlink" href="#maximizing-graph-density" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>In this case, note that if removing an edge does not disconnect the graph, we must do so. Because removing an edge increases the density (why?). Therefore, the graph with maximum density must be sought among trees (since as we stated earlier, all its edges must be bridges).</p>
+<p>Now consider a specific vertex like <span class="math notranslate nohighlight">\(u\)</span>. We claim the sum of distances from <span class="math notranslate nohighlight">\(u\)</span> to all other vertices is at most <span class="math notranslate nohighlight">\(n \choose 2\)</span>.</p>
+<p>To prove this, assume we've rooted the tree at <span class="math notranslate nohighlight">\(u\)</span>. For each depth level, we know how many vertices exist at that height, with the maximum height being <span class="math notranslate nohighlight">\(H\)</span>. In this case, we must have at least one vertex at every height from 0 to <span class="math notranslate nohighlight">\(H\)</span>. Now if there are at least two vertices at the same height, one can be moved to a higher height, thereby increasing the total sum of distances. By repeating this process, we reach a state where exactly one vertex exists at each height from 0 to <span class="math notranslate nohighlight">\(n-1\)</span> (i.e., the tree becomes a path). In this case, the total sum of distances from <span class="math notranslate nohighlight">\(u\)</span> will be <span class="math notranslate nohighlight">\(1 + 2 + ... + (n-1) = {n \choose 2}\)</span>. Thus, we've proven that the sum of distances from any vertex <span class="math notranslate nohighlight">\(u\)</span> is at most <span class="math notranslate nohighlight">\(n \choose 2\)</span>.</p>
+<p>Therefore, to establish a bound, iteratively remove a <strong>leaf</strong> from the tree and calculate the sum of distances from this leaf. The total sum of all these values equals the graph's density, which according to our earlier reasoning will be at most <span class="math notranslate nohighlight">\(\sum\limits_{i=1}^{n} {i \choose 2} = {{n+1} \choose 3}\)</span> (by Cauchy's identity).</p>
+<p>We can conclude that the only graph achieving equality in this bound is the path graph.</p>
+</section>
+</section>
+<section id="support-tree">
+<span id="id4"></span><h2>Support Tree<a class="headerlink" href="#support-tree" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Suppose we have a communication network connecting <span class="math notranslate nohighlight">\(n\)</span> cities. To ensure reliability, we have prepared a backup communication network so that if the main network fails, we can use the backup to maintain connectivity.</p>
+<p>In graph terms, we have two <span class="math notranslate nohighlight">\(n\)</span>-vertex trees <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(T^{\prime}\)</span>. We aim to prove that if an edge <span class="math notranslate nohighlight">\(uv\)</span> in <span class="math notranslate nohighlight">\(T\)</span> is disconnected, we can add an edge <span class="math notranslate nohighlight">\(u^{\prime}v^{\prime}\)</span> from <span class="math notranslate nohighlight">\(T^{\prime}\)</span> to <span class="math notranslate nohighlight">\(T\)</span> such that the structure remains connected.</p>
+<p>After removing <span class="math notranslate nohighlight">\(uv\)</span> from <span class="math notranslate nohighlight">\(T\)</span>, the tree splits into two connected components. Let us color one component blue and the other red. In the tree <span class="math notranslate nohighlight">\(T^{\prime}\)</span>, there exists a path between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span>. Along this path, there must be an edge where one endpoint is in the blue component and the other is in the red component (why?). If this edge is <span class="math notranslate nohighlight">\(u^{\prime}v^{\prime}\)</span>, we can add it to <span class="math notranslate nohighlight">\(T\)</span> to restore connectivity!</p>
+</section>
+<section id="covering-tree-edges-with-paths">
+<h2>Covering Tree Edges with Paths<a class="headerlink" href="#covering-tree-edges-with-paths" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>In this section, we aim to find the minimum number of paths whose union covers all edges of <span class="math notranslate nohighlight">\(T\)</span>. This problem is similar to the previous case with the difference that in the previous case, we partitioned edges into paths (i.e., each edge belonged to exactly one path). Here, we have the freedom to allow a path to cover an edge multiple times. It can be concluded that the solution to this problem will be smaller than the previous one.</p>
+<p>At first glance, one realizes that since extending paths does not harm our goal, there exists an optimal solution where both ends of every path are leaves!</p>
+<p>On the other hand, consider the edge connecting each leaf to its adjacent vertex. Each path can cover at most 2 of these edges. Thus, if there are <span class="math notranslate nohighlight">\(X\)</span> leaves, we need at least <span class="math notranslate nohighlight">\(\frac{X}{2}\)</span> paths. Now, we try to achieve this bound. That is, if <span class="math notranslate nohighlight">\(X\)</span> is even, we cover the tree edges with <span class="math notranslate nohighlight">\(\frac{X}{2}\)</span> paths, and if <span class="math notranslate nohighlight">\(X\)</span> is odd, with <span class="math notranslate nohighlight">\(\frac{X+1}{2}\)</span> paths.</p>
+<p>Hence, we try to iteratively transform the tree after selecting each path into a tree with two fewer leaves (except in the last step when <span class="math notranslate nohighlight">\(X\)</span> is odd). If this is possible, the number of selected paths will be half the number of leaves, as desired.</p>
+<p>Take two arbitrary leaves <span class="math notranslate nohighlight">\(u, v\)</span> and consider the tree &quot;hung&quot; from the path between them. First, select this path (which covers the edges between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span>). Suppose the vertices of this path are <span class="math notranslate nohighlight">\(a_1, ..., a_k\)</span>. We now construct a new tree where instead of <span class="math notranslate nohighlight">\(a_1, ..., a_k\)</span>, we have a single vertex! An edge exists between this vertex and a vertex <span class="math notranslate nohighlight">\(w\)</span> if and only if there was an edge between <span class="math notranslate nohighlight">\(w\)</span> and any of <span class="math notranslate nohighlight">\(a_1, ..., a_k\)</span> (intuitively, this is like compressing all vertices of the path into a single vertex). Now, every path in the new graph corresponds to a path in the original graph, and we only need to cover all edges of the new tree with paths!</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Tree_to_Path_1.svg"><img alt="درخت اولیه" src="../../_images/Tree_to_Path_1.svg" width="50%" /></a>
+</figure>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Tree_to_Path_2.svg"><img alt="درخت پس از فشرده کردن یک یال" src="../../_images/Tree_to_Path_2.svg" width="50%" /></a>
+</figure>
+<p>Thus, in each step, we compress a path connecting two leaves into a single vertex. In each step, the number of leaves in the new graph decreases by two, unless the newly added vertex (the compressed vertex) becomes a leaf. This happens if all vertices on the path between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> have degree 2 except one, which must have degree 3. Such a pair <span class="math notranslate nohighlight">\(u, v\)</span> is called an <strong>incompatible pair</strong>.</p>
+<p>Therefore, if we can select two leaves <span class="math notranslate nohighlight">\(u, v\)</span> in each step that do not form an incompatible pair, we proceed (reducing the number of leaves by two after compression). What if we cannot? In this case, we claim that the tree has exactly one vertex of degree 3 and all other vertices have degree 1 or 2 (why?). As shown in the figure, such a tree will have exactly 3 leaves and can be covered with 2 paths.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Tree_to_Path_3.svg"><img alt="درخت نهایی" src="../../_images/Tree_to_Path_3.svg" width="50%" /></a>
+</figure>
+</section>
+<section id="tree-embedding">
+<span id="id5"></span><h2>Tree Embedding<a class="headerlink" href="#tree-embedding" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Suppose we have a tree <span class="math notranslate nohighlight">\(T\)</span> with <span class="math notranslate nohighlight">\(n\)</span> vertices. We also have a graph <span class="math notranslate nohighlight">\(G\)</span> such that <span class="math notranslate nohighlight">\(\delta(G) \geq n-1\)</span>. We aim to prove that there exists a subset of edges in <span class="math notranslate nohighlight">\(G\)</span> that forms <span class="math notranslate nohighlight">\(T\)</span> (intuitively, that <span class="math notranslate nohighlight">\(T\)</span> can be embedded as a subgraph in <span class="math notranslate nohighlight">\(G\)</span>).</p>
+<p>Consider an arbitrary leaf <span class="math notranslate nohighlight">\(u\)</span> (whose only neighbor is <span class="math notranslate nohighlight">\(v\)</span>) and remove <span class="math notranslate nohighlight">\(u\)</span> from the tree! Then, by induction, embed the smaller tree <span class="math notranslate nohighlight">\(T-u\)</span> into <span class="math notranslate nohighlight">\(G\)</span>. Now, we want to add the edge <span class="math notranslate nohighlight">\(uv\)</span> back to our tree. Suppose vertex <span class="math notranslate nohighlight">\(v\)</span> in the original tree corresponds to vertex <span class="math notranslate nohighlight">\(v^{\prime}\)</span> in graph <span class="math notranslate nohighlight">\(G\)</span>. It suffices to select a neighbor of <span class="math notranslate nohighlight">\(v^{\prime}\)</span> in <span class="math notranslate nohighlight">\(G\)</span> that has not yet been mapped to any vertex in the embedded tree. This neighbor can then be assigned to <span class="math notranslate nohighlight">\(u\)</span>, completing the inductive step.</p>
+<p>To find such a vertex, we use the assumption <span class="math notranslate nohighlight">\(\delta(G) \geq n-1\)</span>. Since <span class="math notranslate nohighlight">\(v^{\prime}\)</span> has at least <span class="math notranslate nohighlight">\(n-1\)</span> neighbors and at most <span class="math notranslate nohighlight">\(n-2\)</span> of them are already mapped to vertices in the embedded tree, at least one neighbor of <span class="math notranslate nohighlight">\(v^{\prime}\)</span> remains unmapped. We can assign <span class="math notranslate nohighlight">\(u\)</span> to this neighbor, thereby satisfying the inductive hypothesis.</p>
+<p>This problem illustrates the inductive structure of trees. Observe how removing a leaf allows us to apply the inductive hypothesis to the remaining tree, then extend the embedding by reattaching the leaf.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="1.html" style="float:left;" title="Basic Properties" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="3.html" style="float:right;" title="Counting the Number of Trees" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at سپتامبر 30, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>
