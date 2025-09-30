@@ -25,6 +25,7 @@
     - "14.7"
   codeProblem: 4
   problem: 40
+  englishTranslate: 1
 
 - name: Shayan Pardis
   website: https://www.shayanp.me/
@@ -65,6 +66,7 @@
     - "3.6"
     - "3.7"
     - "14.2"
+  englishTranslate: 1
 
 - name: Matin Ansaripour
   website: https://linkedin.com/in/matin-ansaripour-b2b7a81a3
