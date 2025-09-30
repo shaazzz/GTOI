@@ -108,7 +108,7 @@ const render = ({ labels, websites, textData, problemData, codeData, englishTran
 const normalize = ({
   name, text = [], problem = 0, codeProblem = 0, englishTranslate = 0, website = 'https://shaazzz.ir',
 }) => ({
-  name, text, problem, codeProblem, website, englishTranslate,
+  name, text, problem, codeProblem, englishTranslate, website,
 })
 
 const main = async () => {
