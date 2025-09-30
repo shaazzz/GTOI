@@ -14,7 +14,7 @@
     {% if pagename != "search" %}
         <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
         <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
-        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language</a>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
         <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
         {% if display_github %}
             <a href="https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ source_suffix }}" id="top-src" target="_blank"><i class="fa fa-github"></i>&nbsp; {{glossary.on_github}}</a>
