@@ -8,7 +8,7 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 
-const render = ({ labels, websites, textData, problemData, codeData }) => {
+const render = ({ labels, websites, textData, problemData, codeData, englishTranslatorsData }) => {
   const color = (i) => `hsl(${i/labels.length*360},100%,35%)`
   const textSpans = labels.map((x, i) => {
     if (textData[i] !== 0) 
@@ -16,6 +16,10 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
   }).filter(x => x);
   const probSpans = labels.map((x, i) => {
     if (problemData[i] !== 0 || codeData[i] !== 0) 
+      return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
+  }).filter(x => x);
+  const englishTranslatorSpans = labels.map((x, i) => {
+    if (englishTranslatorsData[i] !== 0) 
       return `<a href="${websites[i]}"><span style="color:${color(i)}">${x}</span></a>`;
   }).filter(x => x);
   return `
@@ -37,6 +41,8 @@ const render = ({ labels, websites, textData, problemData, codeData }) => {
     <h3>Authors</h3>
     ${textSpans.join(', ')}
     <canvas id="text-chart"></canvas>
+    <h3>English Translators</h3>
+    ${englishTranslatorSpans.join(', ')}
     <h3>Problem Collectors</h3>
     ${probSpans.join(', ')}
     <table style="width:100%">
@@ -114,7 +120,8 @@ const main = async () => {
   const textData = data.map(({ text })=>text.length);
   const problemData = data.map(({ problem })=>problem);
   const codeData = data.map(({ codeProblem })=>codeProblem);
-  const result = render({ labels, textData, problemData, codeData, websites });
+  const englishTranslatorsData = data.map(({ englishTranslate })=>englishTranslate);
+  const result = render({ labels, textData, problemData, codeData, websites, englishTranslatorsData });
   await writeFile(path.join(projectRoot, '_build', 'contributors.html'), result);
 };
 
