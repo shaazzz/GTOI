@@ -1,0 +1,130 @@
+DSU
+============
+DSU, or Disjoint-set/Union-find, also known as disjoint sets, is a useful algorithm for graph connectivity problems and for calculating `MST <https://gtoi.shaazzz.ir/book/11/1.html>`_.
+
+This algorithm has two main operations: union and find. In this algorithm, each set has a representative.
+
+Methods of DSU Implementation
+------------------
+Before starting, it should be mentioned that there are two well-known methods for implementing DSU: one is the list method and the other is the forest method. In the list method, each member of a set is placed in a list, and there is also an array that shows which member is the representative of member :math:`x`, for example :math:`Rep[x] = X`. The other method is the forest method, where we consider each member as a vertex, and in each set, we have a tree where all its vertices are all the members of that set. This tree is rooted at one vertex (the set's representative), and the other vertices each have a parent. It's sufficient to maintain an array that shows which vertex is the parent of each vertex (the parent of a vertex that has no parent in the tree (the set representative) can be set to itself to indicate it's the root of the tree). :math:`Par[x] = X`
+
+Commands
+-------------
+
+Find
+~~~~~~~~~~~~~
+
+The Find command is used to find the representative of a member. You use it when you need to know who the representative of the set containing member :math:`x` is.
+
+- The first method, used for the list implementation, is simply to return the value of the :math:`Rep[x]` array.
+
+.. code-block:: cpp
+
+    int Find(int x){
+        return Rep[x];
+    }
+
+- The second method, used for the forest implementation, involves traversing up to the parents of vertex :math:`x` at each step via the `Par` array until reaching the root (the set representative).
+
+.. code-block:: cpp
+
+    int Find(int x){
+        if (Par[x] == x)
+            return x;
+        return Find(Par[x]);
+    }
+
+Union
+~~~~~~~~~~~~~
+
+This command merges two sets to form a new set. Suppose we want to merge two sets containing members :math:`x` and :math:`y`.
+
+- First, we find the representatives of these two members. Let's assume they are :math:`X` and :math:`Y` respectively. If :math:`X` and :math:`Y` are the same, it means these two members are already in the same set, and no merge is needed. If they are not equal, we make the representative of the members of one set equal to the representative of the members of the other set. The important point is that we change the representative of the set with fewer members. This is because the order of this operation is :math:`O(n \lg(n))` (the representative of each member changes at most :math:`\lg(n)` times because at each step, the number of members in the set whose representative changes doubles). This technique of merging the smaller set into the larger set is called Union by Rank.
+
+.. code-block:: cpp
+
+    void Union(int x, int y){
+        x = Find(x);
+        y = Find(y);
+        if (x == y)
+            return;
+        if (sz[x] < sz[y])
+            swap(x, y);
+        sz[x] += sz[y];
+        for (int z : lst[y]){
+            Rep[z] = x;
+            lst[x].push_back(z);
+        }
+        lst[y].clear();
+    }
+
+- Another method available for Union, when sets are considered as forests, is similar to the above. We can compare the number of vertices (size) of each component (set) and make the representative of the component with fewer vertices point to the representative of the other component. In this case, to find the root of a component for an arbitrary vertex, the Find function is called at most :math:`\lg(n)` times (in other words, the height of any vertex in the forest is at most :math:`\lg(n)`).
+
+.. code-block:: cpp
+
+    void Union(int x, int y){
+        x = Find(x);
+        y = Find(y);
+        if (x == y)
+            return;
+        if (sz[x] < sz[y])
+            swap(x, y);
+        sz[x] += sz[y];
+        Par[y] = x;
+    }
+
+Path Compression
+~~~~~~~~~~~~~
+Now, if we use the Path Compression technique to find the root in the Find function, we can improve our order. This method works by, when searching for the root of :math:`x`, eventually making :math:`x`'s parent equal to the root. This method, called Path Compression, causes all vertices along the path from :math:`x` to the root to change their parent to the root, which increases the number of children of the root. This shortens the path from :math:`x` to the root (for a better understanding of this part, see the Find function) and results in an amortized order of :math:`O(\lg^*n)` for each operation. This means that for :math:`n = 10^6`, five operations are performed (:math:`\lg^*n` means the number of times one must take the logarithm of :math:`n` to reach one. For example, :math:`\lg^*4 = 2` because taking the logarithm of 4 once yields 2, and taking the logarithm again yields 1. Since we took the logarithm twice in this process, the answer is 2). In general, :math:`\lg^*n` is at most 5 for :math:`n` values smaller than :math:`2^{65536}`, which indicates the fast performance of the Path Compression method.
+It is important to note that even if Path Compression is used without Union by Rank, the amortized order of each operation will be :math:`O(\lg(\lg(n)))`, which in practice has no significant difference from using Union by Rank!
+
+.. code-block:: cpp
+
+    int Find(int x){
+        if(Par[x] != x)
+            Par[x] = Find(Par[x]);
+        return Par[x];
+    }
+
+Undo
+~~~~~~~~~~~~~
+This operation undoes the last merge operation and separates the two sets that were merged. Suppose we don't use the Path Compression method. In this case, with each call to the Union function, only two values, :math:`sz_x` and :math:`Par[y]`, change. So, we can store the changes we've made to refer to them if an undo is needed, and replace the current values of these two variables with their previous values. This way, we can implement each undo operation in :math:`O(1)`.
+
+Note that if we have an undo function, we can no longer use Path Compression because our order will no longer be good (recall that the order of Path Compression is good in an amortized sense, and each individual call to the Find function might even be :math:`O(n)`).
+
+.. code-block:: cpp
+
+    int Find(int x){
+        if(Par[x] == x)
+            return x;
+        return Find(Par[x]);
+    }
+
+    void Union(int x, int y){
+        x = Find(x);
+        y = Find(y);
+        if (x == y)
+            return;
+        if (sz[x] < sz[y])
+            swap(x, y);
+        operations.push_back(make_pair(y, sz[y]));
+        sz[x] += sz[y];
+        Par[y] = x;
+    }
+
+    void Undo(){
+        int y = operations.back().first;
+        sz[y] = operations.back().second;
+        operations.pop_back();
+        int x = Find(y);
+        sz[x] -= sz[y];
+        Par[y] = y;
+    }
+
+List or Forest?
+---------------
+
+You might be wondering which method to use for implementing the algorithm.
+Should the set be implemented as a list or as a graph (forest)?
+In some problems, we might need to keep track of the set (component) of each vertex or have the ability to undo previous merge operations. In such cases, the list method is required.
+Otherwise, it is generally better to use the forest method. This is because when Path Compression is used, the order of both Find and Union operations drastically decreases to :math:`O(\lg^*n)`.

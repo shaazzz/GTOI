@@ -1,0 +1,63 @@
+   :class: file
+
+.. default-role:: raw-html
+
+Ramsey Numbers
+==============
+
+Introduction
+------------
+
+First Problem
+~~~~~~~~~~~~~
+
+We have a group of 6 people, where any two are either friends or enemies. Prove that there are 3 people who are all mutual enemies or all mutual friends.
+
+Definition
+~~~~~~~~~~
+
+The function :math:`R(a,b)` is the smallest :math:`n` such that any 2-coloring (blue and red) of the edges of a :math:`K_n` contains either a blue :math:`K_a` or a red :math:`K_b`.
+
+You can easily prove that the above problem is equivalent to proving :math:`R(3,3) \leq 6`.
+
+Bounds
+------
+
+Finding the exact value of :math:`R(a,b)` is not possible, but bounds can be provided for it.
+
+First, we must prove that :math:`R(a, b)` exists. (It might be that for no :math:`n` does the desired property hold for :math:`K_n`.)
+
+The idea of the solution is to find a vertex that has sufficiently many blue or red neighbors, then consider only the neighbors of that vertex, and find a smaller blue or red clique there.
+
+More precisely, suppose there exists a vertex :math:`u` that has at least :math:`R(a-1,b)` blue neighbors. In this case, if you consider the neighbors of this vertex, two scenarios arise:
+
+- It contains a blue :math:`K_{a-1}`, in which case we can add vertex :math:`u` to it to obtain a blue :math:`K_a`.
+- It contains a red :math:`K_b`.
+
+So, if there is a vertex with at least :math:`R(a-1,b)` blue neighbors, the problem is solved. Similarly, if there is a vertex with at least :math:`R(a, b-1)` red neighbors, the problem is also solved.
+
+Therefore, we conclude that :math:`R(a,b) \leq R(a-1,b) + R(a,b-1)` because if our graph has at least :math:`R(a-1,b) + R(a,b-1)` vertices, any arbitrary vertex you consider will either have enough blue neighbors or enough red neighbors.
+
+The above inequality reminds us of Pascal's Identity. ( :math:`\binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}` )
+
+It can also be proven by induction that :math:`R(a, b) \leq \binom{a+b}{a}`.
+
+Generalization to k-sets
+------------------------
+
+Imagine we have an :math:`n`-element set, and every :math:`k`-subset of it is colored with either blue or red. Now, we call a subset like :math:`A` a :math:`k`-homogeneous set if all :math:`k`-subsets of :math:`A` have the same color. (If this color is blue, we call it a blue :math:`k`-homogeneous set; if red, a red :math:`k`-homogeneous set).
+
+Now, we define :math:`R_k(a,b)` as the minimum :math:`n` such that any 2-coloring (blue and red) of its :math:`k`-subsets contains either a blue :math:`a`-homogeneous set or a red :math:`b`-homogeneous set.
+
+The proof idea is similar to the above. Let :math:`n = R_k(a,b)`. Consider a specific element :math:`u` from the :math:`n`-element set :math:`A`. Let :math:`B = A - \{u\}`. We color each :math:`(k-1)`-subset of :math:`B`, say :math:`S`, with the color of the :math:`k`-subset :math:`S \cup \{u\}`. If the number of elements in :math:`B` is at least :math:`R_{k-1}( R_k(a-1,b), R_k(a,b-1) )`, then one of the following two events occurs:
+
+- :math:`B` contains a blue :math:`(k-1)`-homogeneous set, say :math:`S`, of size at least :math:`R_k(a-1,b)`. In this case, either :math:`S` contains a red :math:`k`-homogeneous set of size :math:`b` (in which case the problem is solved), or :math:`S` contains a blue :math:`k`-homogeneous set of size :math:`a-1`. In this case, we can add :math:`u` to this set to obtain a blue :math:`k`-homogeneous set of size :math:`a`.
+
+- :math:`B` contains a red :math:`(k-1)`-homogeneous set, say :math:`S`, of size at least :math:`R_k(a,b-1)`. In this case, either :math:`S` contains a blue :math:`k`-homogeneous set of size :math:`a` (in which case the problem is solved), or :math:`S` contains a red :math:`k`-homogeneous set of size :math:`b-1`. In this case, we can add :math:`u` to this set to obtain a red :math:`k`-homogeneous set of size :math:`b`.
+
+According to the above, it can be proven that :math:`R_k(a,b) \leq R_{k-1}(R_k(a-1,b),R_k(a,b-1))`.
+
+Generalization to k-sets and c colors
+-------------------------------------
+
+Similarly, we can state and prove the problem for more than two colors. We leave finding bounds for :math:`R_k(a_1,a_2,...,a_c)` to the reader.

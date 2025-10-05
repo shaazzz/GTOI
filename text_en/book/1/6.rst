@@ -1,0 +1,25 @@
+Connectivity, Cut Edge, and Cut Vertex
+=======================================
+
+Connectivity
+------------
+A graph G is connected if for any two vertices u and v, there exists a path from u to v. Otherwise, it is disconnected. Every disconnected graph is a collection of several connected graphs, each of which is also called a **component**. It is clear that a connected graph has one component.
+
+If you consider vertices as balls and edges as threads, the components of a graph can be separated by hand, but the vertices within each component are connected by threads.
+
+Cut Vertex
+----------
+In graph G, a vertex v is called a cut vertex if its removal increases the number of connected components.
+
+Cut Edge
+--------
+In graph G, an edge e is called a cut edge if its removal increases the number of connected components.
+
+k-Connected Graph
+-----------------
+
+A graph G is called k-connected if it has more than k vertices and it cannot be disconnected by removing x (x<k) vertices. Thus, :math:`\kappa (G)` is defined as the maximum k such that G is k-connected, in other words, the minimum number of vertices that need to be removed to make the graph disconnected or a single vertex.
+
+Block
+-----
+A maximal subgraph of G that has no cut vertex is called a block.

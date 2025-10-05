@@ -1,0 +1,47 @@
+Binary Tree
+============
+
+The structure of a binary tree is like a regular tree, with the difference that it is layered.
+Layers start from zero, and in the zeroth layer, there is only one vertex called the root.
+Any two vertices connected by an edge are located in exactly two consecutive layers.
+Consider two vertices u and v that are connected by an edge, where vertex u is in the layer with the smaller number; vertex u is called the parent of vertex v, and vertex v is called the child of vertex u.
+In this graph, each vertex has at most two children and, obviously, one parent.
+Vertices that have no children are called leaves.
+The longest path among all paths from the root to a leaf is called the height.
+A subtree is defined as a subgraph of a binary tree that contains a specific vertex 'u' and all of its descendants.
+
+.. figure:: /_static/dot/Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Binary Tree
+
+**In this section, we will discuss three types of binary trees.**
+
+Full Binary Tree
+----------------
+A binary tree in which all vertices either have two children or are leaves.
+
+.. figure:: /_static/dot/Full_Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Full Binary Tree
+
+Complete Binary Tree
+--------------------
+A binary tree in which all leaves are in the last two layers, and the leaves in the last layer are filled from the left.
+
+.. figure:: /_static/dot/Complete_Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Complete Binary Tree
+
+Perfect Binary Tree
+-------------------
+A tree in which all leaves are in the last layer, and all other vertices have exactly two children.
+
+.. figure:: /_static/dot/Perfect_Binary_Tree.svg
+   :width: 60%
+   :align: center
+   :alt: Perfect Binary Tree
+
+One of the most common uses of a binary tree is the binary search tree, which we will become more familiar with later.

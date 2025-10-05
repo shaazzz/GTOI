@@ -1,0 +1,162 @@
+BFS
+=============
+In this section, we introduce the BFS algorithm, which is a method for traversing graphs, along with its properties.
+
+The BFS Algorithm
+-----------------
+
+First, we specify a vertex (we name it root) and place it in group :math:`A_0`. Then we place all its neighbors in group :math:`A_1`. In :math:`A_2`, we place all neighbors of groups :math:`A_0` and :math:`A_1` that have not yet been included in any group. In this manner, in group :math:`A_i`, we place all vertices that are neighbors of vertices in groups :math:`A_j` where :math:`0 \leqslant j < i` and have not been placed in those groups.
+
+Assume that :math:`Dis_i` is the group number in which :math:`i` is placed (for example, :math:`Dis_{root} = 0`). It is clear that using this method, all vertices in the connected component of the root will be placed in groups. So, for simplicity, we assume the graph is connected, but everything we say is actually true for the connected component of the root.
+
+First, we prove that for two vertices :math:`i,j` connected by an edge, :math:`1` :math:`\leqslant` :math:`|Dis_{i}-Dis_{j}|`.
+
+Proof: We use proof by contradiction. Suppose there are two adjacent vertices :math:`i,j` such that :math:`Dis_{j} - Dis_{i} > 1`. Now consider the moment when we were filling group :math:`A_{Dis_{i}+1}`. At that moment, :math:`j` had not yet been placed in any group, and it was a neighbor of :math:`i`. Thus, it should have been in group :math:`A_{Dis_{i}+1}`. This contradiction proves the theorem. Therefore, we can assume that in group :math:`A_i`, we place all vertices that are neighbors of vertices in groups :math:`A_{i-1}` and have not yet been included in those groups.
+
+.. figure:: /_static/dot/BFS_Groups.svg
+   :width: 100%
+   :align: left
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+.. figure:: /_static/dot/BFS_Graph.svg
+   :width: 100%
+   :align: right
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+
+Now we prove that :math:`Dis_{i}` = :math:`dis(i,root)`.
+
+Proof: We use proof by contradiction. Consider a vertex with the minimum `Dis` value for which our claim does not hold (let's name it `i`). Now consider a neighbor of `i` (named `j`) on a path to `root` whose number of edges is equal to :math:`dis(root,i)`. Since vertex `i` had the minimum `Dis` among vertices that violated the claim, `j` did not violate the claim. Thus:
+
+- :math:`Dis_{j}=dis(root,i)-1`
+-  And since :math:`Dis_{i} > Dis_{j}` and :math:`1` :math:`\leqslant` :math:`|Dis_{i}-Dis_{j}|`, then:
+- :math:`Dis_{i} = Dis_{j}+1`
+
+And with the obtained contradiction, the theorem is proven.
+
+Now we slightly modify the algorithm and prove that we are still doing the same work:
+
+We create a new group named B, initially placing the root vertex in it. Then, as long as B is not empty, we perform the following: We take a vertex `i` from B that has the minimum `Dis` value. We remove `i` from B. Then, for all its neighbors that were not yet in any `A` group, we place them into group :math:`A_{Dis_i} + 1` and also add them to B. This algorithm is similar to the previous one, except instead of considering all vertices of :math:`A_i` together and placing all their neighbors (that haven't been in any group yet) into the next group, we iterate over the vertices inside group :math:`A_i` in an arbitrary order. Each vertex of the next group enters :math:`A_{i+1}` at the first moment we see one of its neighbors in :math:`A_i`. It is clear that when a vertex enters B, its `Dis` value is greater than or equal to the `Dis` values of vertices already in B. So, if we keep the vertices inside B in their order of entry, we effectively always take the vertex at the front of B, remove it, and add its neighbors (that haven't been in B yet) to the back of the queue.
+
+BFS Tree
+--------
+
+Consider the moment when the BFS algorithm finishes (i.e., when each vertex has been assigned to a group). Now, for vertex `i`, we arbitrarily choose one of its neighbors `j` as :math:`par_i` such that :math:`Dis_{i} = Dis_{j}+1` (it is clear that `par` is not defined for the root, but it is certainly defined for every other vertex). Then, for every vertex except the root, we keep the edge between `i` and :math:`par_i` and remove all other edges. The number of remaining edges is n-1, and every vertex also has a path to the root (why?). Thus, our new graph is connected and consequently a tree.
+
+.. figure:: /_static/dot/BFS_Tree.svg
+    :width: 100%
+    :align: left
+    :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+In fact, the BFS tree can be considered a spanning subtree in the graph, "hanging" from the root, and possessing the following two properties:
+
+- For any vertex `i`, :math:`dis(root,i) = h_i` (:math:`h_i` is the height of vertex `i` when the tree is hung from the root).
+- For any edge in the **original graph**, the difference in height between its two endpoints is at most one.
+
+Besides its uses in programming, which might be helpful in a problem, the BFS tree can also be instrumental in solving some theoretical problems, as we will demonstrate in the two examples below.
+
+|
+|
+|
+|
+|
+|
+|
+
+Theorem
+~~~~~~~
+
+Theorem Statement:
+
+BFS Code
+--------
+
+Input format: First, two numbers `n` and `m` are given, representing the number of vertices and edges in the graph, respectively. Then, in the next `m` lines, two numbers `i` and `j` are given, indicating that an edge exists between `i` and `j` in the graph.
+
+We should print `n` numbers, where the `i`-th number is :math:`dis(1,i)`. It is guaranteed that the graph is connected so that the distance of each vertex from 1 is a valid integer.
+
+Solution:
+
+We use a `queue` in the code, which is a First-In-First-Out (FIFO) data structure. A `queue` has many capabilities, but the ones we use are listed below:
+
+- :math:`queue<int>q`
+- :math:`q.size( )` is the number of elements inside `q`.
+- :math:`q.front( )` is the value of the element at the front of `q`.
+- :math:`q.pop( )` removes the element at the front of `q`.
+- :math:`q.push(x)` adds `x` to the back of `q`.
+- In essence, the `queue` plays the role of group B for us.
+
+We also use a `Mark` array, whose initial value for each vertex is zero, and if a vertex enters B, its `Mark` value becomes 1. And we also use a `Dis` array where the answer for each vertex is stored.
+
+.. code-block:: cpp
+
+  const int maxn = 1e5 + 10; // maximum value of n
+  int n, m; // number of vertices and edges
+  int Dis[maxn]; // answer for each vertex
+  bool Mark[maxn]; // indicates whether a vertex has entered the queue yet
+  queue <int> q; // its explanation is written
+  vector<int> adj[maxn]; // list of neighbors for each vertex is written in it
+  
+  void bfs(int root){ // distance of each from root will be obtained
+      Dis[root] = 0; // dis(root , root) = 0
+      Mark[root] = 1;
+      q.push(root); 
+      while(q.size()){ // continue the while loop as long as there are vertices in q
+          int u = q.front(); // vertex at the front of q (which has the minimum Dis value among those in q for standard BFS)
+          q.pop(); // remove it
+          for(int i = 0; i < adj[u].size(); i++){ // we look at the neighbors of u and if they haven't entered the queue yet, we add them
+              int v = adj[u][i];
+                if(!Mark[v]){
+                    Mark[v] = 1;
+                    Dis[v] = Dis[u] + 1;
+                    q.push(v);
+                }
+          }
+      }
+  }
+  
+  int main(){
+      cin >> n >> m ;
+      for(int i = 1; i <= m; i++){ // fill the adjacency list for vertices
+          int u, v;
+          cin >> u >> v ;
+          adj[u].push_back(v);
+          adj[v].push_back(u);
+      }
+      bfs(1); // meaning call the bfs function with root = 1
+      for(int i = 1; i <= n; i++) // output loop
+         cout << Dis[i] << ' ';
+  }
+
+In this algorithm, each vertex enters `q` at most once, and each edge is processed at most once for each of its endpoints. Therefore, our algorithm is :math:`O(n+m)`.
+
+Conclusion
+----------
+
+In this section, we introduced the BFS algorithm and its properties. Some of the most important applications of BFS include:
+
+- Finding the distance of each vertex from a specific vertex.
+- Finding the vertices within the connected component of a specific vertex (and consequently determining if the graph is connected or not).
+- Graph traversal for a specific purpose.
+- Using the concept of BFS and BFS tree in solving theoretical problems.
+
+It is highly recommended to refer to the exercises in this section for a deeper understanding.

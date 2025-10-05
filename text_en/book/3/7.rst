@@ -1,0 +1,45 @@
+Functional Graph and Permutation Graph
+=============================================
+
+Definition 3.7.1 (Permutation Graph)
+------------------------------
+Consider a permutation
+:math:`P: p_{1}, p_{2}, p_{3}, ..., p_{n}`
+of numbers 1 to n.
+
+Consider an
+:math:`n`
+-vertex graph
+:math:`G`
+whose vertices are numbered from 1 to n.
+
+For each
+:math:`1 \le i \le n`
+, draw a directed edge from
+:math:`i`
+to
+:math:`p_{i}`
+. We call this graph a permutation graph, constructed from the permutation
+:math:`P`
+.
+
+For example, consider the permutation
+:math:`P: 2, 3, 1, 5, 4, 6`
+. The following graph is a permutation graph for this permutation:
+
+.. figure:: /_static/dot/Permutation_Graph.svg
+   :width: 80%
+   :align: center
+   :alt: If the user's internet is slow, this will appear
+
+Theorem 3.7.2
+------------------------------
+**Statement of the Theorem :** The vertices of a permutation graph are partitioned into a set of cycles.
+
+**Proof of the Theorem :** For every vertex in a permutation graph, its in-degree and out-degree are exactly one. We know that a directed graph where the in-degree and out-degree of every vertex are equal to one is partitioned into a set of cycles (why?!).
+
+Theorem 3.7.3
+------------------------------
+**Statement of the Theorem :** If two elements in a permutation are swapped, then the number of cycles in its permutation graph changes by exactly one.
+
+**Proof of the Theorem :** The proof of this theorem is left as an exercise for the reader.

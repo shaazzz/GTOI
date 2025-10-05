@@ -1,0 +1,94 @@
+Here's the translated text, preserving the reStructuredText format:
+
+```rst
+Idea Cultivation Workshop
+=========================
+
+Trees are known as the simplest connected graphs. In other words, a tree is like the skeleton of a graph. We know that every connected graph has at least one spanning tree because we can construct one. This can be done by repeatedly removing an edge from any cycle until no cycles remain. Which edges are removed at each step will play a role in the structure of the final spanning tree. Specifically, the DFS and BFS algorithms give us two distinct and interesting spanning trees with interesting properties!
+
+In this section, we discuss problems that will help you gain a better intuition for trees and also enhance your problem-solving skills and perspective. Be sure to think sufficiently about the problems before reading the solutions!
+
+Square Eraser
+-------------
+
+We have a "Square Eraser" device that, at each step, can select a :math:`C_4` (cycle of length 4) from the graph and remove one of its edges. Initially, we have a :math:`K_n` (complete graph) with :math:`n \geq 4`. Our goal is to use the Square Eraser in such a way that the number of remaining edges in the graph is minimized. Find this minimum number.
+
+Solution
+~~~~~~~~
+
+The Square Eraser preserves two properties:
+
+1.  The connectivity of the graph is maintained.
+2.  It will always contain an odd cycle.
+
+Perhaps the second point is a bit harder to grasp. You probably initially guessed that the answer should be :math:`n-1` (due to the first property), but no matter how you use the Square Eraser, a troublesome odd cycle will remain!
+
+For the second property, first note that since :math:`n \geq 3`, we initially must have an odd cycle. Suppose we removed edge :math:`AB` from a :math:`C_4` (say :math:`ABCD`), and the odd cycle we had in the previous step was destroyed. Now, traverse the previous odd cycle, but instead of using edge :math:`AB`, use the walk :math:`ACDB`. It is clear that we will eventually reach an odd walk, and as we mentioned in Chapter 1, every odd walk contains an odd cycle!
+
+From the two points mentioned, we can conclude that due to graph connectivity, we must have at least :math:`n-1` edges. And since having exactly :math:`n-1` connected edges implies a tree, which has no odd cycles, we must therefore have at least :math:`n` edges.
+
+We leave the construction of an example with exactly :math:`n` edges to the reader!
+
+Edge Numbering
+--------------
+
+We have a connected graph with :math:`m` edges. We want to assign a permutation of numbers from 1 to :math:`m` to the edges of this graph such that for every vertex :math:`v` with degree greater than 1, the greatest common divisor (GCD) of the numbers on the edges incident to :math:`v` is 1.
+
+Solution
+~~~~~~~~~
+
+To solve the problem, we use the fact that the GCD of any two consecutive numbers is 1.
+
+Start a DFS traversal from an arbitrary vertex. Assign the number 1 to the first edge encountered, 2 to the second, and so forth. What does 'seeing an edge' mean? Suppose we are at vertex :math:`u` and performing DFS. We look at the list of all edges incident to :math:`u` in order. When we reach edge :math:`uv`, if no number has been assigned to this edge yet, we assign one. Then, if vertex :math:`v` has not been visited before, we call dfs(v).
+
+Thus, the number assigned to each edge is its order of discovery. The GCD of the numbers on the edges incident to the root is 1 because the first edge we traverse is 1 and it is incident to the root. For any non-root vertex :math:`u`, the GCD of its incident edge numbers is 1, because if we entered :math:`u` via an edge numbered :math:`x`, according to the recursive logic of DFS, we will immediately assign the number :math:`x+1` to one of the edges incident to :math:`u` (unless the degree of vertex :math:`u` is 1, in which case there is no specific restriction on this vertex).
+
+.. figure:: /_static/dot/DFS_Magic.svg
+   :width: 50%
+   :align: center
+   :alt: DFS Magic (if image fails to load)
+
+Note that due to the structure of DFS, each back-edge (which is not part of the spanning tree) is 'seen' from its lower vertex! (Why?) Therefore, for vertices that are leaves of the DFS tree but have degree greater than 1 in the original graph, this poses no issue.
+
+Leaf Leaf Leaf
+--------------
+
+Prove that in a tree :math:`n > 1` with no degree-2 vertices, the number of leaves is greater than the number of non-leaves.
+
+Solution
+~~~~~~~~~
+
+We solve the problem using induction. The base case is :math:`n = 2`, for which the statement is clearly true (two leaves, zero non-leaves). We root the tree :math:`T` at an arbitrary vertex and call a 'deepest' leaf :math:`u`. Let :math:`v` be the parent of this deepest leaf. In this case, all children of :math:`v` are leaves (Why?). If :math:`v` is the root, the claim is obvious (since all vertices except :math:`v` are leaves, and :math:`d(v) \ge 3` implies it has at least 3 children, so at least 3 leaves). Otherwise, by removing all children of :math:`v` (which are leaves), we obtain a tree :math:`T'` with fewer vertices, which has at least 2 vertices and no degree-2 vertices, so the inductive hypothesis holds for it.
+
+Suppose that in this tree :math:`T'`, the number of leaves is :math:`A'` and the number of non-leaves is :math:`B'`, and by the inductive hypothesis, :math:`A' > B'`.
+
+Now, add back the children of :math:`v`. If :math:`v` had :math:`d` children, the changes applied to the tree are as follows:
+
+-   Vertex :math:`v` ceases to be a leaf (if it was one in :math:`T'`).
+-   All :math:`d` children of :math:`v` are added to the set of leaves.
+
+Thus, if we denote the new number of leaves and non-leaves as :math:`A` and :math:`B` respectively, we have :math:`A = A' + d - 1` and :math:`B = B' + 1`. Since there are no degree-2 vertices, and :math:`v` is not the root of :math:`T` (which was handled as a base case), :math:`v` must have degree at least 3. In the context of :math:`T'`, after removing its children, :math:`v` would have degree 1 (to its parent). When we add back its children, :math:`d` children are added. In :math:`T'`, the degree of :math:`v` must be at least 3, meaning :math:`d \ge 2`. (If :math:`v` was a leaf in :math:`T'`, it means it only had one parent in :math:`T'`, and no children, which contradicts it being a parent of :math:`u`). If :math:`v` itself was a leaf in :math:`T'` (after removing its children, it only has a parent edge), then when we add :math:`d` children, it changes from a leaf to a non-leaf. If :math:`v` was a non-leaf in :math:`T'`, it remains a non-leaf. So the number of leaves changes by :math:`d-1` (add :math:`d` children, :math:`v` potentially ceases to be a leaf). The number of non-leaves changes by :math:`1` (if :math:`v` was a leaf in :math:`T'` it becomes non-leaf; if it was non-leaf it stays non-leaf, but then its children are leaves).
+Since :math:`d \geq 2` (as :math:`v` is not degree 2), then :math:`d-1 \geq 1`. Therefore, :math:`A' + d - 1 \geq A' + 1`. This leads to :math:`A = A' + d - 1` and :math:`B = B' + \delta` where :math:`\delta` is 1 if :math:`v` became a non-leaf, and 0 if it already was. As :math:`d \ge 2`, we have :math:`d-1 \ge 1`. If :math:`v` was a leaf in :math:`T'`, then :math:`A=A'+d-1` and :math:`B=B'+1`. If :math:`v` was a non-leaf in :math:`T'`, then :math:`A=A'+d` and :math:`B=B'`. In either case, :math:`A > B` still holds.
+
+Note
+~~~~
+
+The problem just discussed was a classic lemma that helps us in solving certain problems. In general, in some problems, we can compress degree-2 vertices and eliminate them. That is, if we color all degree-2 vertices of a tree red, these degree-2 vertices form a number of disjoint paths (Why?). Now, suppose for each path consisting of degree-2 vertices, starting at a vertex like :math:`A` and ending at a vertex like :math:`B`, we remove this path and simply add an edge from :math:`A` to :math:`B`. After performing these operations, all degree-2 vertices are eliminated, and the overall structure of the tree is preserved. Now, if the problem's tree has a small number of leaves, we can conclude that the total number of vertices in the tree is also small!
+
+BFS Magic
+---------
+
+We have a connected graph. We know that if you consider any odd cycle in this graph and remove its edges, the graph becomes disconnected. Prove that the vertices of this graph can be colored with 4 colors such that any two adjacent vertices have different colors!
+
+Solution
+~~~~~~~~~
+
+How hard would this problem be if we didn't know we should think about BFS?
+
+Now, perform a BFS from an arbitrary vertex. The graph is now partitioned into several layers, where edges are either within a layer or between two adjacent layers.
+
+We claim that the subgraph induced by the vertices of each layer is bipartite. Assume for contradiction that there is a layer that is not bipartite. Then it must contain an odd cycle. Now, if you remove the edges of this odd cycle from the layer, according to the problem statement, the graph should become disconnected, but we know this doesn't happen! This is because the graph remains connected by the edges of the BFS tree, and BFS tree edges only exist between adjacent layers.
+
+So we have proven that each layer is bipartite. Thus, each layer can be 2-colored such that adjacent vertices have different colors. Now, color the odd layers with colors 1 and 2, and the even layers with colors 3 and 4. No problem arises because two vertices with the same color are either within the same layer (where bipartiteness solves the issue) or are not in adjacent layers (meaning there is no edge between them).
+
+It's that simple!

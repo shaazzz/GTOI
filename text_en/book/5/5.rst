@@ -1,0 +1,268 @@
+الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی
+=========================================================
+
+Exponential Algorithms for Finding Hamiltonian Cycles and Paths
+=========================================================
+
+In this section, we will explore 4 algorithms along with their implementations. These 4 algorithms are very similar to each other, but they have subtle differences that require careful attention to these differences and the underlying idea behind each one.
+
+مسیر همیلتونی
+--------------
+
+Hamiltonian Path
+--------------
+
+الگوریتم 1
+~~~~~~~~~~~~~
+
+Algorithm 1
+~~~~~~~~~~~~~
+
+From previous sections, we understood that there is no necessary and sufficient condition for finding Hamiltonian cycles and paths. In other words, this is an NP-hard problem, and there is no polynomial-time algorithm for it. Now we try to present an exponential algorithm for it.
+
+Now, using dynamic programming, we define :math:`dp_{mask, a, b}` as a boolean array that indicates whether a Hamiltonian path exists using vertices in the set :math:`mask`, starting from vertex :math:`a` and ending at vertex :math:`b`.
+
+To update this function, it is sufficient to consider the vertex before :math:`b`. Suppose this vertex is :math:`c`. It is necessary that :math:`c` is a member of the set :math:`mask` and an edge exists between :math:`b` and :math:`c`.
+Finally, to determine if a Hamiltonian path exists, one can check all possible :math:`dp_{2^n-1,i,j}` for all possible :math:`i` and :math:`j`.
+
+So the algorithm implementation will be as follows:
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  bool dp[1<<maxn][maxn][maxn];
+  bool adj[maxn][maxn];
+
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            cin >> adj[i][j];
+
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)][__builtin_ctz(mask)] = 1;
+	      continue;
+	  }
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		    if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0)
+		        continue;
+		    for(int k = 0; k < n; k++){
+		        if(k == j || bit(mask, k) == 0 || adj[k][j] == 0)
+			        continue;
+		        dp[mask][i][j] |= dp[mask ^ (1<<j)][i][k];
+		    }
+	      }
+	  }
+      }
+      bool ans = 0;
+      for(int i = 0; i < n; i++)
+	     for(int j = 0; j < n; j++)
+	         ans |= dp[(1<<n)-1][i][j];
+
+      if(ans)
+	      cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+As you can see, we have presented an algorithm with a time complexity of :math:`O(2^n * n^3)`.
+
+الگوریتم 2
+~~~~~~~~~~~~~~~~~
+
+Algorithm 2
+~~~~~~~~~~~~~~~~~
+
+Now we want to present a better algorithm by changing the definition of the recursive function.
+
+Assume :math:`dp_{mask,u}` is a subset of vertices, say :math:`mask2`, such that for every member :math:`v` of it, a Hamiltonian path exists from :math:`u` to :math:`v` using vertices in the subset :math:`mask`.
+
+To update this recursive function, we need to consider the vertex we see after :math:`u`. Finally, to find the answer to the problem, we need to check :math:`dp_{2^n-1,u}` for all possible :math:`u`.
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  int dp[1<<maxn][maxn];
+  bool adj[maxn][maxn];
+
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+    	  for(int j = 0; j < n; j++)
+	          cin >> adj[i][j];
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	     if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)] = mask;
+	      continue;
+	  }	
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || adj[i][j] == 0){
+		      continue;
+		  }
+		  dp[mask][i] |= dp[mask ^ (1<<i)][j];
+	      }		    
+	  }
+      }
+      bool ans = 0;
+      for(int i = 0; i < n; i++)
+	  if(dp[(1<<n)-1][i] != 0){
+	      ans = 1;
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+So we were able to reduce the time complexity of the algorithm to :math:`O(2^n * n^2)`.
+
+دور همیلتونی
+-------------
+
+Hamiltonian Cycle
+-------------
+
+الگوریتم 1
+~~~~~~~~~~~~~
+
+Algorithm 1
+~~~~~~~~~~~~~
+
+To check whether a Hamiltonian cycle exists in a graph, it is sufficient to consider an arbitrary vertex, say :math:`a`. Then, for all neighbors of vertex :math:`a`, say :math:`b`, determine if a Hamiltonian path exists from :math:`a` to :math:`b`. (If it exists, first traverse the Hamiltonian path, then traverse the edge :math:`ab`).
+
+This can be done using the recursive function we performed in Algorithm 1 of the previous section.
+
+Now we try to improve the algorithm. Since vertex :math:`a` was chosen arbitrarily, we guess that we can change the definition of the recursive function to achieve an algorithm with better time complexity.
+
+We define :math:`dp_{mask,u}` as a boolean array that indicates whether it is possible to start from vertex :math:`u`, visit all vertices in the set :math:`mask`, and finally reach the smallest member of the set :math:`mask`.
+
+The difference between this definition and the previous one is that now the end vertex of the Hamiltonian path is determined by :math:`mask`, and there is no need to assign an additional dimension to it.
+
+For updating, you can condition on the vertex after :math:`u`.
+
+.. code-block:: cpp
+
+  #include<bits/stdc++.h>
+  
+  #define bit(n,k) (((n)>>(k))&1)
+  
+  using namespace std;
+  
+  const int maxn = 16;
+  
+  bool dp[1<<maxn][maxn];
+  bool adj[maxn][maxn];
+  
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+  	  for(int j = 0; j < n; j++)
+	      cin >> adj[i][j];
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)] = 1;
+	      continue;
+	  }
+	  int low_bit = __builtin_ctz(mask);
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || i == low_bit || adj[i][j] == 0)
+		      continue;
+		  dp[mask][i] |= dp[mask ^ (1<<i)][j];
+	      }		    
+	  }
+      }
+      bool ans = 0;
+      for(int i = 1; i < n; i++){ // i != 0
+	  if(dp[(1<<n)-1][i] && adj[0][i])
+	      ans = 1;
+      }
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+So we reached an algorithm with a time complexity of :math:`O(2^n * n^2)`.
+
+الگوریتم 2
+~~~~~~~~~~~
+
+Algorithm 2
+~~~~~~~~~~~
+
+Now, inspired by Algorithm 2 of the previous section, we improve the time complexity of the solution.
+
+We define :math:`dp_{mask}` as a subset of vertices, say :math:`mask2`, such that from any vertex :math:`u` in :math:`mask2`, one can start, visit all vertices in the set :math:`mask`, and finally reach the smallest member of :math:`mask`.
+
+For updating, one can condition on the starting vertex of the Hamiltonian path.
+
+Pay attention to the following code. The array :math:`adj\_mask_u` shows the set of vertices adjacent to vertex :math:`u`.
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  int dp[1<<maxn];
+  int adj_mask[maxn];
+
+  int main(){
+
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++){
+	  for(int j = 0; j < n; j++){
+	      bool x;
+	      cin >> x;
+	      if(x){
+	  	  adj_mask[i] |= 1<<j;
+	      }
+	  }
+      }
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask] = mask;
+	      continue;
+	  }
+	  int low_bit = __builtin_ctz(mask);
+	  for(int i = 0; i < n; i++){
+	      if(bit(mask, i) == 0 || i == low_bit)
+	  	  continue;
+	      if(dp[mask ^ (1<<i)] & adj_mask[i])
+	          dp[mask] |= 1<<i;
+	  }
+      }
+      bool ans = 0;
+      if(dp[(1<<n)-1] != 0)
+	  ans = 1;
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+Finally, we arrived at an algorithm with a time complexity of :math:`O(2^n * n)`.

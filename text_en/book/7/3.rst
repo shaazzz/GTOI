@@ -1,0 +1,19 @@
+   _static/IncidenceMatrixDirected.png
+   IncidenceMatrixDirected
+
+Incidence Matrix
+================
+
+Incidence Matrix
+----------------
+
+In simple graphs, it is an n × m matrix where :math:`a_{ij}` is one if vertex i is an endpoint of edge j, and zero if vertex i is not an endpoint of edge j. All entries in this matrix are either zero or one.
+
+If multiple edges exist, the incidence matrix will not encounter issues because only the number of columns increases, and it does not change the structure or overall nature of the incidence matrix. However, if we have loops, the situation changes slightly because a vertex with a loop takes the value two instead of one, meaning :math:`a_{ij}` takes the value two if vertex i has loop j.
+
+In directed graphs, a different structure appears in the incidence matrix. Such that :math:`a_{ij}` takes the value one if edge j leaves vertex i, or if edge j is a loop; it takes the value negative one if edge j enters vertex i; and it takes the value zero if none of the above conditions apply. The sum of the entries in the incidence matrix of a directed graph gives us the number of loops.
+
+.. figure:: /_static/IncidenceMatrixDirected.png
+   :width: 80%
+   :align: center
+   :alt: IncidenceMatrixDirected

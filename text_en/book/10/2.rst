@@ -1,0 +1,184 @@
+راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین
+=============================================
+
+In this section, we present an :math:`O(n+q*lg(n))` solution for the stated problems.
+
+جداسازی سبک-سنگین
+-------------------
+Heavy-Light Decomposition
+-------------------------
+This decomposition is a common technique used in trees. It divides the edges of a tree into two categories: **light** and **heavy**.
+Heavy edges are those where the size of the subtree rooted at the child connected by that edge is greater than the sizes of subtrees rooted at other children. Only one child can have a heavy edge. If multiple children have subtrees of maximum size, we arbitrarily choose one of their edges as heavy.
+
+تعداد یال های سبک در مسیر به ریشه
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Number of light edges on the path to the root
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The number of light edges on the path from any node to the root is at most
+:math:`O(lg(n))`
+. This is because if we start from an arbitrary node and go up towards the root, defining a variable
+:math:`X`
+as the size of the current node's subtree, each time we move up towards the root
+(from ‍‍‍‍‍v to u)
+and traverse a light edge,
+:math:`X`
+at least doubles. Otherwise,
+:math:`2sz_v > sz_u`
+, which means that this node accounts for more than half of its parent's subtree, and therefore its edge must be heavy. Now, since
+:math:`X`
+will eventually become equal to
+:math:`n`
+, the number of light edges is at most
+:math:`lg(n)`
+.
+
+حل مساله جد در ارتفاع خاص
+---------------------------
+Solving the ancestor at a specific depth problem
+-------------------------------------------------
+Since at most one child of a node can be heavy, we can prioritize visiting the child with the heavy edge during the first DFS. This way, the entry time of the heavy child will be exactly one unit greater than its parent. Thus, if we sort the nodes by their entry times, any node with a heavy edge to its parent will immediately follow its parent.
+
+Obtain this order, and also for each node, find out how many of its ancestors are precisely sequentially behind it, or in other words, find the node to which the first light edge on the path from this node to the root belongs.
+
+Now, to find an ancestor of a node at a specific depth, if the number of ancestors that sequentially precede this node is greater than the desired depth, or in other words, all edges to the desired ancestor are heavy edges, then we can find the desired ancestor in
+:math:`O(1)`
+time. However, if there's a light edge in between, we must go to the ancestor whose edge to its parent is light, then find its parent, and continue from that parent. Since there are at most
+:math:`O(lg(n))`
+light edges on the path from any node to the root, this operation eventually takes
+:math:`O(lg(n))`
+per query, and thus the total time complexity is
+:math:`O(n+q*lg(n))`
+.
+
+.. code-block:: cpp
+		
+  #include<bits/stdc++.h>
+
+  using namespace std;
+
+  const int M = 1e5+5;
+  
+  int edge_counter = 1;
+  
+  int st[M], stp[M], hld[M], par[M], h[M];
+  vector<int> g[M];
+  int time = 0;
+
+  int dfsz(int x, int p = 0) {
+    int sz = 1, mxsz = -2;
+    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size()-1]);
+    for (int i = 0; i < g[x].size(); i++) {
+      if (g[x][i] == p) continue;
+      int szy = dfsz(g[x][i], x);
+      sz += szy;
+      if (szy > mxsz) {
+        mxsz = szy;
+        swap(g[x][0], g[x][i]); // enteghale yal sangin be g[x][0]
+      }
+    }
+    return sz;
+  }
+
+  void dfst(int stpx, int p = 0) {
+    int x = st[stpx] = time++; // shomare ras ha ra joori avaz mikonim ke yal haye sangin
+    stp[x] = stpx; // motevali bashand. in jayghasht ra dar st[x] va barakse aan ra dar stp[x] mirizim
+    for (int stpy: g[stpx]) {
+      if (stpy == p) continue;
+      dfst(stpy, stpx);
+      par[st[stpy]] = x;
+    }
+  }
+
+  int parat(int stpx, int hgoal) { // jadi az rase voroodi ke ertefae hadaf ra darad ra mikhahim
+    int x = hld[st[stpx]];
+    while (h[x] > hgoal) x = hld[par[x]];
+    return stp[x + hgoal - h[x]];
+  }
+
+  int main(){
+    // derakht ra voroodi begirid va yal ha ra dar g berizid
+    dfsz(0);
+    dfst(0);
+    for (int x = 1; x < n; x++) {
+      h[x] = h[par[x]] + 1;
+      hld[x] = par[x] == x - 1 ? hld[x-1] : x; // hld[x] bala tarin jadi ast ke be aan yale sangin darim
+    }
+    // sepas porsesh ha ra ba parat pasokh dahid
+  }
+
+حل مساله LCA
+-------------
+Solving the LCA problem
+-----------------------
+As we mentioned in the previous section, the above method can provide an
+:math:`O(n+q*lg^2(n))`
+solution for the Lowest Common Ancestor (LCA) problem. However, we can easily optimize the solution. Consider the Lowest Common Ancestor. The path from one of the nodes to this ancestor must contain a light edge (both edges cannot be heavy). Therefore, we can find the Lowest Common Ancestor using the following algorithm. Find which node has a lower light edge. Get that node and find its ancestor at the same height as the other node. Then calculate the parents of both nodes. If they are equal, we have found the common ancestor. Otherwise, we continue with the two new nodes we found. Since there will be at most twice the logarithm of nodes in the tree with light edges on the path, this algorithm has a time complexity of
+:math:`O(n+q*lg(n))`
+.
+
+.. code-block:: cpp
+
+  const int M = 1e5+5;
+  
+  int edge_counter = 1;
+  
+  int st[M], stp[M], hld[M], par[M], h[M];
+  vector <int> g[M];
+  int time = 0;
+
+  int dfsz(int x, int p = 0) {
+    int sz = 1, mxsz = -2;
+    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size() - 1]);
+    for (int i = 0; i < g[x].size(); i++) {
+      if (g[x][i] == p) continue;
+      int szy = dfsz(g[x][i], x);
+      sz += szy;
+      if (szy > mxsz) {
+        mxsz = szy;
+        swap(g[x][0], g[x][i]); // enteghale yal sangin be g[x][0]
+      }
+    }
+    return sz;
+  }
+
+  void dfst(int stpx, int p = 0) {
+    int x = st[stpx] = time++; // shomare ras ha ra joori avaz mikonim ke yal haye sangin
+    stp[x] = stpx; // motevali bashand. in jayghasht ra dar st[x] va barakse aan ra dar stp[x] mirizim
+    for (int stpy: g[stpx]) {
+      if (stpy == p) continue;
+      dfst(stpy, stpx);
+      par[st[stpy]] = x;
+    }
+  }
+
+  int parat(int x, int hgoal) { // jadi az rase voroodi ke ertefae hadaf ra darad ra mikhahim
+    x = hld[x];
+    while (h[x] > hgoal) x = hld[par[x]];
+    return x + hgoal - h[x];
+  }
+
+  int lca(int stpx, int stpy) {
+    int x = st[stpx], y = st[stpy];
+    if (h[x] < h[y]) swap(x,y);
+    x = parat(x, h[y]); // do ras ra ham ertefa mikonim ta kod sade tar shavad  
+    while (x != y) {
+      x = hld[x];
+      y = hld[y];
+      if (h[x] < h[y]) swap(x, y);
+      y += h[x] - h[y];
+      x = par[x];
+      y = par[y];  
+    }
+    return stp[x];
+  }
+
+  int main(){
+    // derakht ra voroodi begirid va yal ha ra dar g berizid
+    dfsz(0);
+    dfst(0);
+    for (int x = 1; x < n; x++) {
+      h[x] = h[par[x]] + 1;
+      hld[x] = par[x] == x - 1 ? hld[x-1] : x; // hld[x] bala tarin jadi ast ke be aan yale sangin darim
+    }
+    // sepas porsesh ha ra ba parat pasokh dahid
+  }

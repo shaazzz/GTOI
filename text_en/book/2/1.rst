@@ -1,0 +1,124 @@
+
+Preliminary Properties
+======================
+
+In this chapter, we will examine trees, which are one of the most important definitions in graph theory and have numerous applications in programming.
+
+In this section, we will state and prove the main features and properties of trees. By the end of this section, you are expected to have a good intuition about the structure of trees and their basic characteristics.
+
+Relevant Definitions
+--------------------
+
+- **Tree**: A simple graph that is connected and has no cycles.
+- **Forest**: A simple graph that has no cycles.
+- **Leaf**: A vertex in a tree whose degree is 1.
+- **Spanning Tree**: A spanning subgraph that is a tree.
+
+Theorems and Lemmas
+--------------------
+
+Lemma 2.1.1
+~~~~~~~~~~~~~~
+
+**Statement**: An :math:`n`-vertex and :math:`m`-edge graph has at least max(1, n-m) connected components. If it has exactly n-m connected components, it has no cycles; otherwise, it has cycles.
+
+**Proof**:
+First, assume the graph has no edges, and we add its edges in an arbitrary order.
+
+Now, we prove that when we add an edge to the graph, the number of connected components decreases by at most one. If the number of components remains constant, the graph will have a cycle.
+Suppose the edge we are currently adding is between two vertices `i` and `j`. If `i` and `j` were in the same connected component before adding the edge, the number of connected components does not change. Since there is a path between `i` and `j`, the new edge and the path between `i` and `j` form a cycle.
+If `i` and `j` were in two different connected components, after adding the edge, the components of `i` and `j` merge into one component, meaning the number of connected components decreases by one. Since there was no path between `i` and `j`, no cycle is formed with this new edge.
+
+When no edges have been added yet, the graph has `n` connected components. Since adding each edge reduces the number of components by at most one, we ultimately have at least `n-m` connected components.
+Therefore, if the graph ultimately has exactly `n-m` connected components, it means that adding each edge reduced the number of connected components by exactly one. We have shown that when the number of connected components decreases by one, no cycle is added.
+Thus, the graph ultimately has no cycles. If it had more than `n-m` components, it means there was an edge whose addition did not reduce the number of connected components, which implies a cycle was formed. So, our graph has cycles.
+
+According to Lemma 2.1.1, if we know a graph has no cycles, and we know at least two of the following: number of edges, number of vertices, and number of connected components, then the third is uniquely determined. In fact, if a graph has no cycles:
+
+- n - m - Cc = 0
+- n = number of vertices
+- m = number of edges
+- Cc = number of connected components
+
+Theorem 2.1.2
+~~~~~~~~~~~~~
+
+**Statement**: An :math:`n`-vertex tree has exactly :math:`n-1` edges.
+
+**Proof**: According to Lemma 2.1.1, if an :math:`n`-vertex, :math:`m`-edge graph has no cycles, it has exactly :math:`n-m` connected components. Since a tree has one connected component and no cycles, for an :math:`n`-vertex tree, :math:`n - m = 1`, which implies :math:`m = n - 1`.
+
+Theorem 2.1.3
+~~~~~~~~~~~~~
+
+**Statement**: An :math:`n`-vertex tree (where :math:`n \ge 2`) has at least 2 leaves.
+
+**Proof**: Consider the longest path in the tree. Since :math:`n > 1`, the longest path certainly has at least 2 vertices. Now, consider the two endpoints of this path. Each endpoint can be connected to at most one other vertex *on* the path, because if it were connected to more, a cycle would be formed, which contradicts the definition of a tree. And since we have chosen the longest path, its two endpoints cannot be connected to any vertex *not* on the path. Thus, it is proven that the two endpoints of the longest path in a tree are leaves.
+
+Theorem 2.1.4
+~~~~~~~~~~~~
+
+**Statement**: If we remove a leaf from a tree, the remaining graph is still a tree.
+
+**Proof**: We need to prove that the remaining graph is connected and has no cycles. It is clear that if a graph has no cycles, removing a vertex from it will still result in a graph with no cycles. Now, let's prove it is connected. If removing a leaf makes the graph disconnected, it would mean it has at least 2 connected components. The removed vertex (the leaf) would then have to be connected to at least one vertex in *each* of these components to make the original graph connected. This would imply its degree was at least 2, but the degree of a leaf is 1. This contradiction proves that the graph remains connected, and therefore, it is a tree.
+
+Theorem 2.1.4 is very practical because it shows that if you want to use induction on a tree in a problem, you can proceed to the inductive hypothesis by removing a leaf. You will encounter such problems later in the book.
+
+Theorem 2.1.5
+~~~~~~~~~~~~~
+
+Prove that a graph possessing any of the following properties is a tree:
+
+- a) A graph with :math:`n-1` edges that is connected.
+- b) A graph with no cycles and :math:`n-1` edges.
+- c) There is exactly one path between any two vertices in the graph.
+
+**Solution**:
+
+**a)** We need to prove that the graph has no cycles. Given that it is connected, it has :math:`Cc = 1` connected component. We are also given that it has :math:`n-1` edges, so :math:`m = n-1`. Therefore, :math:`n - m = n - (n-1) = 1`. Since :math:`Cc = n-m = 1`, by Lemma 2.1.1, the graph has no cycles. A connected graph with no cycles is a tree.
+
+**b)** Since the graph has no cycles, according to Lemma 2.1.1:
+
+n - m - Cc = 0  -->  n - (n-1) = Cc  -->  Cc = 1
+
+Therefore, the graph is connected and has no cycles, hence it is a tree.
+
+**c)** We need to prove that the graph is connected and has no cycles. It is clear that the graph is connected because there is a path between any two vertices, so all vertices are in one connected component. Now, we must show it has no cycles. This is also clear because if it had a cycle, there would be at least two distinct paths between any two vertices on that cycle.
+
+Theorem 2.1.6
+~~~~~~~~~~~~~~
+
+**Statement**: Every connected graph has a spanning tree.
+
+**Proof**: We repeatedly remove an edge from the graph as long as the number of edges is not :math:`n-1`, proving that the graph remains connected at each step. According to Theorem 2.1.5 (a), a graph with :math:`n-1` edges that is connected is a tree, thus proving the theorem.
+
+So, as long as the number of edges is not :math:`n-1`, we perform the following operation: Since the number of edges is greater than :math:`n-1` and the graph has 1 connected component, by Lemma 2.1.1, the graph must contain a cycle. Take one of these cycles and remove one of its edges. It is clear that the graph remains connected because the two endpoints of this removed edge are still connected to each other via the other edges of that cycle. Therefore, we can continue removing edges until the number of edges is :math:`n-1`, while keeping the graph connected, thus proving the theorem.
+
+Rooting a Tree
+--------------------
+
+Suppose we direct the edges of a tree such that every vertex, except for a specific vertex :math:`u`, has exactly one incoming edge (i.e., exactly one edge enters it), and vertex :math:`u` has no incoming edges.
+
+Initially, place a token on a vertex :math:`v`. In each step, if the token is at vertex :math:`w`, move the token to the vertex from which an edge enters :math:`w` (i.e., :math:`w`'s parent). If :math:`w \neq u`, this vertex is unique.
+
+First, it can be concluded that at each step, we visit a new vertex (because a tree has no cycles; if we revisit a vertex, we would have traversed a cycle). Then, it can be concluded that the process is finite (because we visit a new vertex at each step, and the number of vertices is finite). Finally, it can be stated that the token will eventually reach :math:`u`.
+
+Intuitively, you can imagine **hanging** the tree from vertex :math:`u`. For any edge :math:`ab`, if :math:`a` is at a higher level than :math:`b`, we direct the edge from :math:`a` to :math:`b`. In this case, the aforementioned directionality will be the same as the one we described above. For further intuition, you can think of it this way: In the above directionality, vertex :math:`u` has no incoming edges, so all edges incident to :math:`u` must be directed outwards from :math:`u`. We call the vertices adjacent to :math:`u` the first layer. Now, all vertices in the first layer have exactly one incoming edge (which is from :math:`u`), so all their other incident edges must be directed outwards from the first layer; we call these vertices the second layer. Similarly, the third layer can be defined. Every vertex in the second layer has exactly one incoming edge, which is from the first layer. So, we place all its other neighbors in the third layer and direct the edges from the second layer to the third. You can continue this process of directing and layering. Consider the edges from layer :math:`h` to layer :math:`h+1`, and note that each vertex in layer :math:`h+1` must have exactly 1 incoming edge. Thus, exactly one edge from layer :math:`h` reaches each vertex in layer :math:`h+1`. Ultimately, you will conclude that the directionality we initially imagined is the same as the one obtained by the intuition of **hanging** the tree from vertex :math:`u`.
+
+.. figure:: /_static/dot/Simple_Rooted_Tree.svg
+   :width: 50%
+   :align: center
+   :alt: Diagram of a simple rooted tree.
+
+This act of hanging the tree from vertex :math:`u` is also called rooting the tree at vertex :math:`u`. In this case, vertex :math:`u` is called the **root**. As mentioned, in this directionality, every vertex except :math:`u` has exactly one incoming edge.
+
+For a vertex :math:`b`, if the incoming edge to it is :math:`ab`, then vertex :math:`a` is called the **parent** of vertex :math:`b`.
+
+Any two vertices that share a common parent are called **siblings**.
+
+Vertex :math:`u` is an **ancestor** of vertex :math:`v` if :math:`u` is the parent of :math:`v`, or if :math:`u` is an ancestor of the parent of :math:`v`. In other words, the ancestors of a vertex comprise its parent and all its parent's ancestors.
+
+The distance between :math:`u` (the root) and any other vertex (the number of edges in the unique path between them) is called the **depth** of that vertex.
+
+For a specific vertex, say :math:`v`, the set of all vertices whose unique path to the root passes through :math:`v` is called the **subtree** rooted at :math:`v`. Intuitively, when we hang the tree from :math:`u`, the set of vertices 'hanging' from :math:`v` forms the subtree rooted at :math:`v`.
+
+Rooting a tree is very important because it will be used in algorithms later in this chapter, and it is currently the best way to gain intuition about the structure of a tree. This intuition describes a tree as having a root, which is connected by several branches to other vertices, and those vertices are in turn connected by several branches to new vertices, and so on (as shown in the figure above).

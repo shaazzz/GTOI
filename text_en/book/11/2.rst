@@ -1,0 +1,78 @@
+Bag
+===========
+Bag is one of the beautiful and useful algorithms on trees that solves a wide range of problems. In this problem, we have a Bag (an arbitrary data structure) where in one operation, one of the tree's vertices can be removed from it or one of the vertices can be added to it. Our tree is rooted, and the goal is that each of the :math:`n` subtrees of the tree has been in the Bag alone at least once, and the total number of operations is :math:`O(nlg(n))`.
+
+Application
+-----------
+Bag can be used in many problems, some of which are mentioned in this chapter's exercises. But to further clarify this problem and its importance for you, we will solve an example together. In this problem, we have a rooted tree where each vertex has a color. For each subtree, we want to find and output the number of distinct colors it contains. Assume you know the solution to the Bag problem and try to solve this problem with its help.
+
+To solve this problem, we use a data structure that can add a vertex, remove a vertex, or get the number of distinct colors it contains. This data structure can be a simple array where, upon adding, we increment the count for that color by one, and upon removing, we decrement the count by one, while simultaneously maintaining the count of distinct colors. That is, if a color's count was zero before adding and now becomes one, we increment that variable by one, and similarly, upon removal, if that color's count becomes zero, we decrement the variable by one. All three operations in this data structure are performed in :math:`O(1)` time.
+
+Now we use the Bag algorithm (whose implementation details we do not yet know). We bring all subtrees into this data structure once and record their answers. Then we print the answers.
+
+Algorithm
+---------
+The idea of Bag is similar to the idea of light-heavy decomposition, which we became familiar with in the Lowest Common Ancestor chapter. (For a reminder, you can refer to section 10.2). Our goal is to perform operations on each vertex proportional to the number of its light edges on the path to the root. That is, the total number of additions and removals of vertex :math:`v` to/from the Bag during all operations should be :math:`O(light_v)`. And we recall from section 10.2 that :math:`light_v \le lg(n)`, and therefore, if we succeed in this, the sum of operations on all vertices will be :math:`O(nlg(n))`.
+
+We implement the algorithm as a recursive function. This function takes a vertex as input, starts with an empty Bag, ensures all subtrees rooted within this vertex's subtree are processed (their nodes are added to and removed from the Bag to compute their answers), and then returns with the Bag containing all vertices of its subtree. The implementation of this function for a leaf is trivial and runs in constant time. For non-leaf vertices, we implement it recursively. First, we execute this function on all light children, and after execution, we clear their respective subtrees from the Bag. Then, we execute this function on the child of this vertex that has a heavy edge, but **we no longer clear the Bag** (i.e., its subtree nodes remain), and then we re-add the light children's subtrees to the Bag. Now the entire subtree rooted at the current vertex is in the Bag. We retrieve the answer for the input vertex of the function from the data structure, and then terminate the function's execution.
+
+During the execution of this function, all nodes in the heavy child's subtree are added to and removed from the Bag only as much as required by its recursive call (i.e., they remain in the Bag after the heavy child's DFS returns). For light children's subtrees, in addition to their own recursive call operations, their nodes are removed once and added once by the current function call. The input vertex itself is also added once at the end. It can be seen that the number of additions and removals for each vertex like :math:`v` will be exactly :math:`2light_v+1`. It can also be understood that the program's execution time is proportional to the number of operations on the Bag, and both, as discussed above, are :math:`O(nlg(n))`.
+
+Implementation
+------------
+
+.. code-block:: cpp
+
+    const int M = 1e5 + 5;
+    vector<int> g[M];
+    int sz[M]; // subtree size of each vertex, for identifying light and heavy edges
+    
+    void add_to_Bag(int v) {
+      // Place problem-specific implementation here
+    }
+    void remove_from_Bag(int v) {
+      // Place problem-specific implementation here
+    }
+    void compute_answer() {
+      // Place problem-specific implementation here
+    }
+
+    void add_subtree(int v, int p){
+        add_to_Bag(v);
+        for(int u: g[v])
+            if(u != p)
+                add_subtree(u, v);
+    }
+    void remove_subtree(int v, int p){
+        remove_from_Bag(v);
+        for(int u: g[v])
+            if(u != p)
+                remove_subtree(u, v); // Corrected: Should be remove_subtree, not add_subtree as in original text
+    }
+    
+    void dfs(int v, int p){
+        int mx = -1, bigChild = -1;
+        for(int u : g[v]) {
+          if(u != p && sz[u] > mx) {
+            mx = sz[u];
+            bigChild = u;
+          }
+        }
+        for(int u : g[v]) {
+          if(u != p && u != bigChild) {
+            dfs(u, v); // compute answers for light children
+            remove_subtree(v, p); // then remove them (Note: This line likely contains a typo and should be 'remove_subtree(u, v);' to remove only the light child's subtree, consistent with the O(N log N) complexity described in the text.)
+          }
+        }
+        if(bigChild != -1)
+            dfs(bigChild, v);  // we do not remove the heavy child
+        
+        for(auto u : g[v]) {
+          if(u != p && u != bigChild)
+            add_subtree(u, v); // re-add the light children
+        }
+        
+        compute_answer(); // the entire subtree of v is in the Bag, compute its answer
+    }
+
+Note that in this implementation, you need to take the graph as input and populate the `sz` array values with another DFS, which we have not mentioned here.

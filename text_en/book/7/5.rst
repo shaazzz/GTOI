@@ -1,0 +1,41 @@
+Number of Walks of Length n
+========================
+
+Using the graph's adjacency matrix and operations defined on matrices, an algorithm can be provided to find the number of walks of length n. To understand this section, it is necessary to be familiar with matrix multiplication, a well-known operation, and have good intuition about it. You can search for matrix multiplication online to familiarize yourself with it.
+
+Meaning of Matrix Multiplication in Graphs
+-------------------------------------------
+
+Consider two graphs with n vertices. For example, let's call these two graphs 'blue' with adjacency matrix A and 'red' with adjacency matrix B. We want to find the number of walks between two vertices i and j, such that they have two edges, where the first edge is blue and the second edge is red. We denote this number as :math:`C_{i,j}`. It is clear that to calculate this value, one can enumerate over the intermediate vertex (a vertex like k) of this walk, then multiply the number of blue edges from i to k by the number of red edges from k to j, and sum the resulting values for all possible k's. In mathematical terms:
+
+.. math:: C_{i,j} = \sum\limits_{k=1}^{n} A_{i,k}B_{k,j}
+
+With a little observation, it can be seen that matrix C is equal to the product of matrices A and B.
+
+Matrix Power
+--------------
+We define matrix power, similar to powers of numbers, such that :math:`A^n` means multiplying A by itself n times. According to the theorem we showed above, it can be understood that the number of walks of length n from i to j is equal to the (i,j)-th entry in :math:`A^n`. For proof, consider each walk of length n-1 as a 'red' edge, and each edge of the graph as a 'blue' edge. Clearly, every walk of length n is equivalent to a walk composed of one 'red' edge and one 'blue' edge. And since :math:`A^n = A^{n-1}A`, the claim can be proven by induction.
+
+Algorithm and Complexity
+--------------------------
+Therefore, to solve the problem, it is sufficient to be able to compute matrix power in good time. Since matrix multiplication is associative (i.e., :math:`(AB)C = A(BC)`), the order in which we calculate the power does not matter. If the power is even, we have:
+
+.. math:: A^{2k} = (A^k)^2
+
+And if it is odd, we have:
+
+.. math:: A^{2k+1} = A(A^k)(A^k)
+
+If we compute matrix multiplication using its naive algorithm, which is :math:`O(n^3)`, we can recursively calculate :math:`A^k` by first computing :math:`A^{\lfloor\frac{k}{2}\rfloor}` and then using the above relations to find the answer. The runtime of this recursive algorithm is:
+
+.. math:: T(k) = T(\frac{k}{2}) + O(n^3) = O(n^3lg(k))
+
+This algorithm is called fast exponentiation (or binary exponentiation), which can be used when we want to repeat an associative operation on an element multiple times. For instance, you can also use this algorithm for powers of numbers.
+
+Generalization
+-----------------
+The algorithm we examined here is not only applicable for calculating the number of walks of fixed length, but can also be used to obtain other properties of fixed-length walks (such as the largest walk or the walk with the least weighted edge). For example, suppose we want to find a walk of length k between two vertices such that the sum of its edge weights is maximized. If we want to solve this problem for a graph where its edges are 'red' and 'blue', and we are interested in walks consisting of one red edge and one blue edge, the answer is obtained as follows:
+
+.. math:: C_{i,j} = \max\limits_{k=1}^{n} A_{i,k} + B_{k,j}
+
+We can define matrix C as the composition of matrices A and B. With a little observation, it can be seen that this composition operation is associative, similar to matrix multiplication. For proof, you can consider a graph with red, blue, and green edges, and find the walk that is red-blue-green and has the maximum sum of edge weights using two different methods. Therefore, similar to before, matrix power can be defined, and it can be proven by induction that :math:`A^k_{i,j}` represents the largest walk of length k between two vertices i and j, and an :math:`O(n^3lg(k))` algorithm exists for computing this matrix.

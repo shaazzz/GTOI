@@ -1,0 +1,18 @@
+Heap
+============
+Heap is divided into two categories: min heap and max heap.
+In a min heap, the value of each node is smaller than the values of its children, and in a max heap, the value of each node is larger than the values of its children.
+In a heap, leaf nodes are located in the last two levels.
+
+(Insertion)
+----------------------
+The steps for inserting x into a min heap are as follows (the steps are similar for a max heap):
+
+- We attach x as a child to one of the nodes in the second-to-last level that does not yet have two children. If no such node exists, we add a new level and attach x as a child to one of the nodes in the level above it.
+- Now, we compare x with its parent. If its value is less than its parent's, we swap their positions. We continue this step until either x becomes the root or its value is greater than its parent's.
+
+(Deletion)
+-------------------
+The steps for deletion in a min heap are as follows (the steps are similar for a max heap):
+
+- We swap the value of the root with the value of one of the leaf nodes in the last level, and then delete that leaf node. At this stage, the value of the root has changed, so we must check that it satisfies the min heap property. Suppose y is the smaller value among the children of the root. If the root's value is greater than y, we swap y and the root. Now, we perform this step for the subtree where the (new) root is located.

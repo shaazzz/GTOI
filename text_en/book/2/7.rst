@@ -1,0 +1,106 @@
+DFS Start/Finish Time
+======================
+
+In this section, we want to convert a graph into an array using a trick.
+
+There are various ideas to convert a graph into an array, and starting time is one of them. Using this idea, the given graph can be converted into an array, and various problems can be solved with greater ease.
+
+For each vertex, we can consider the first time the DFS algorithm enters it. In this way, each vertex has a unique number, and vertices can be sorted based on this time to form an array.
+
+Suppose the array we want to create from the graph vertices is a[i], and the time when the DFS algorithm enters vertex u is st[u]. In this case, we place vertex u at index st[u], or in other words, a[st[u]] = u.
+
+It is clear that each subtree of the DFS tree corresponds to a range in the array.
+
+Finishing time is defined similarly to starting time, with the difference that it indicates the time when the DFS algorithm exits a vertex.
+
+Now we will examine a few problems.
+
+Checking Ancestor/Descendant Relationship in Linear Time
+--------------------------------------------
+
+Given a tree with :math:`n` vertices and :math:`q` queries. In each query, we need to check if vertex :math:`u` is an ancestor of vertex :math:`v` or not. :math:`O(n+q)`
+
+Solution
+~~~~
+
+We use the lemma that the necessary and sufficient condition for an ancestor-descendant relationship is as follows:
+:math:`stt[u]<=stt[v] and fnt[v]<=fnt[u]`
+or
+:math:`stt[u]<=stt[v] and stt[v]<fnt[u]`
+
+The correctness of this lemma can be easily verified.
+So, to solve the problem, we first perform DFS on the tree, and then for each query, we check the given condition in :math:`O(1)`.
+
+
+Finding the k-th Parent
+--------------------
+
+Given a tree with :math:`n` vertices and :math:`q` queries. In each query, we need to find the :math:`k`-th parent of vertex :math:`v`. :math:`O(n+q.log(n))`
+
+Solution
+~~~~
+
+Consider all vertices at height
+:math:`h[v]-k`.
+Using the lemma from the previous problem, it can be concluded that the answer is the vertex with the maximum starting time less than the starting time of vertex
+:math:`v`
+among vertices at height
+:math:`k`
+levels higher. In other words,
+
+- u with maximum stt such that h[u] = h[v] - k and stt[u] <= stt[v]
+
+For each height, create a vector of all vertices at that height, where the vertices in each vector are sorted by starting time.
+:math:`O(n)`
+
+Now, each query transforms into a binary search on one of these vectors!
+
+
+`Blood Cousins <https://codeforces.com/problemset/problem/208/E>`_
+-----------------------------------------------
+
+Given a tree with :math:`n` vertices and :math:`m` queries of the form v p. In each query, you must output the number of :math:`u`'s such that the p-th parent of v and u are the same.
+:math:`O(n+qlg(n))`
+
+Solution
+~~~~
+First, find the p-th parent of vertex v, similar to the previous problem. Let's call this vertex w.
+Now, the answer is the number of :math:`u`'s such that
+:math:`h[u] = h[v] , stt[w]<=stt[u] , stt[u] < fnt[w]`
+.
+That is, in the vector corresponding to height :math:`h[v]`, we want the number of starting times belonging to a specific range, which can be solved with a simple binary search.
+
+
+Biconnecting with Minimum Number of Paths
+-----------------------------------
+
+Given a tree with :math:`n` vertices and :math:`2k` leaves. In each operation, we can choose two leaves and color all edges along the path between them. Find the minimum number of operations required and a method with the minimum number of operations to color all edges.
+:math:`O(n)`
+
+Solution
+~~~~
+
+Answer = k
+Below, we will present a method and demonstrate its correctness.
+If n=2, the problem is trivially solved.
+So, assume n>2 and we have at least one non-leaf vertex.
+Root the tree at a non-leaf vertex and number the leaves based on their starting times.
+Now, perform operations on these pairs of leaves:
+
+.. math:: (1, k+1)
+.. math:: (2, k+2)
+.. math:: (3, k+3)
+.. math:: ...
+.. math:: (k, 2k)
+
+Clearly, the complexity of this pairing is :math:`O(n)`.
+
+Now we need to show that all edges are colored.
+The subtree corresponding to each edge contains a range of leaves, and for an edge to be colored, we must have a pair of leaves where one end is inside this range and the other end is outside it.
+Suppose the range of leaf indices for the edge in question is :math:`[l, r]`.
+We consider two cases.
+First, if :math:`l<=k && k+1<=r`. In this case, if :math:`l!=1`, the pair (1, k+1) colors the edge. Otherwise (if :math:`l==1`), the pair (k, 2k) colors the edge.
+
+If the corresponding range for the edge was not like the previous case, without loss of generality, we assume :math:`l,r<=k`. In this case, the pair (r, r+k) also colors this edge.
+
+Thus, in both cases, the edge in question is colored, and the pairs we constructed are valid.

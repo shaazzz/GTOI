@@ -1,0 +1,19 @@
+Isomorphism
+============
+
+Identical Graphs
+----------------
+Consider graphs G and H.
+If V(G) = V(H) and E(G) = E(H), we say that graphs G and H are identical.
+
+Isomorphism
+----------
+Consider graphs G and H.
+Let's define a bijective function f, mapping each vertex u in graph G to a corresponding vertex f(u) in graph H, with the condition that f(u) and f(v) are equal if and only if u and v are equal.
+If such a function f can be established between the vertices of G and H that, by mapping each vertex u in graph G to its image f(u), the two graphs become identical, we say these two graphs are isomorphic.
+In other words, an edge uv exists in G if and only if an edge f(u)f(v) exists in H; in this case, the two graphs are isomorphic.
+
+Automorphism
+-----------
+The simple definition of automorphism is an isomorphism of a graph to itself.
+That is, by permuting the vertices of the graph, the set of edges does not change.

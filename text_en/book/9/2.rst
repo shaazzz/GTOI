@@ -1,0 +1,133 @@
+Proof of SAT's NP-completeness
+==============================
+
+In the previous section, we became familiar with the definitions of
+NP-complete
+and
+NP-hard
+problems. You might think that an
+NP-complete
+problem might not exist, but in this section, we will prove that the
+SAT
+problem is an
+NP-complete
+problem. This proof paves the way for proving other
+NP-complete
+and
+NP-hard
+problems.
+
+Problem Definitions
+----------------
+In this section, we will look at several problems from the
+SAT
+family of problems, which we will refer to later. The word
+SAT
+is short for
+satisfiability,
+meaning the ability to fulfill conditions. Each problem is a decision problem where we must provide
+an algorithm to check if outputs can be assigned in such a way
+that the input becomes true (or one) or not.
+
+**circuit-sat**:
+In this problem, we are given a logical circuit consisting of OR, AND, and NOT gates. This
+circuit has several inputs and exactly one output. The
+algorithm must determine whether it is possible to set the
+inputs in such a way that the output becomes one?
+Note that the circuits this problem takes as input are combinational logical circuits,
+meaning there are no cycles, and the output of a gate does not affect its own inputs.
+
+.. figure:: /_static/logic_circuit.png
+   :width: 90%
+   :align: center
+   :alt: A logical circuit
+
+**sat**:
+This problem is a special case of the above problem, where the output is connected to a large AND gate, and
+each input of the AND gate is connected to a large OR gate, where each input of the OR gate
+is either connected to an input variable itself or to its negation.
+In other words, you are given an expression in the form
+:math:`(x_1 \lor x_7 \lor \overline{x_3}) \land ... \land (x_2 \lor \overline{x_1} \lor ... \lor x_7)`
+and you must determine whether the variables can be replaced with
+0s and 1s
+such that the result of the
+expression (the seven-like symbol means logical OR, the eight-like symbol means logical AND, and
+the bar over a variable means logical NOT) becomes one.
+
+**3-sat**:
+This problem is a special case of the above problem, where each clause (parenthesis) has exactly 3 variables. Similarly,
+**2-sat**
+is defined, whose solution algorithm you will become familiar with in other chapters.
+
+
+Proof of circuit-sat's NP-completeness
+--------------------------------
+Consider an arbitrary
+NP
+problem. This problem has a polynomial-time verifier. Each
+verifier is itself a decision problem. The key point is that any decision algorithm that
+has a polynomial running time can be converted into a combinational logical circuit. Although
+the precise proof of this requires a deeper understanding of algorithms and is not suitable for this book,
+you can try it on problems at hand. For example, provide a circuit for the verifier of the
+Hamiltonian cycle problem or the graph coloring problem.
+
+Thus, for a fixed-length input, we convert the decision maker into a combinational logical circuit
+whose number of gates is polynomial with respect to the input. Now, if the verifier
+can be given an input that it accepts, then its equivalent circuit can also be given an input such that its output
+becomes one. Therefore, the answer to the original problem is equivalent to the result of
+circuit-sat
+on this circuit. Hence, any problem in the
+NP
+class can be reduced to the
+circuit-sat
+problem in polynomial time, and therefore circuit-sat is an
+NP-complete
+problem.
+
+Reduction of circuit-sat to sat
+-------------------------------
+In this section, we will prove that the
+3-SAT
+problem is also an
+NP-complete
+problem, and from this, it follows that the more general case, the
+SAT
+problem, is also
+NP-complete.
+First, note that having exactly three variables in clauses is not of crucial importance, because clauses can be extended
+by adding redundant variables, for example, converting
+:math:`(x \lor \overline{y})`
+to
+:math:`(x \lor \overline{y} \lor \overline{y})`.
+
+Now consider a combinational circuit. First, convert all AND or OR gates that have more than
+two inputs into two-input gates. This will linearly increase the input length, which is not
+significant for us. Now, for each set of equipotential points
+(i.e., points connected by wires),
+we assign a variable. Then, for each gate, we add several clauses (conditions)
+to ensure the gate's behavior. That is, the clauses should only be satisfied if the gate's
+output corresponds to its inputs and its function. For example, suppose
+:math:`a`
+and
+:math:`b`
+are the inputs to an AND gate, and
+:math:`x`
+is its output.
+By adding the clauses
+:math:`\overline{a} \lor \overline{b} \lor x`
+and
+:math:`a \lor \overline{x}`
+and
+:math:`b \lor \overline{x}`,
+we can ensure that the value of
+:math:`x`
+is indeed equal to the logical AND of
+:math:`a` and :math:`b`.
+Similarly, such clauses can be defined for OR gates and NOT gates.
+By taking the conjunction (AND) of these clauses and the circuit's output variable itself,
+we can construct an input for 3-SAT such that its satisfiability is equivalent to the satisfiability of the same circuit in
+circuit-SAT.
+Therefore, this problem and its general case,
+SAT,
+are both
+NP-complete.

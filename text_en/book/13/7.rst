@@ -1,0 +1,104 @@
+Matching in General Graphs
+========================
+
+In previous chapters, we examined the necessary and sufficient condition for the existence of a perfect matching in bipartite graphs. In this section, we will examine the existence of a perfect matching in any graph.
+
+Tutte's Theorem
+-------------------
+
+For every subset :math:`S` of vertices (which can also be empty), let :math:`O(S)` be the number of connected components with an odd number of vertices in :math:`G - S`.
+
+Tutte's Theorem states that the following condition is necessary and sufficient:
+
+:math:`\forall_S : |S| \geq O(S)`
+
+Tutte's condition is clearly necessary for the existence of a perfect matching. For the proof, assume for a set :math:`S` that :math:`|S| < O(S)`. In this case, for a perfect matching to exist, one vertex from each odd component counted in :math:`O(S)` must be matched to a vertex in :math:`S`. Since we assumed :math:`|S| < O(S)`, it is not possible to find a perfect matching.
+
+To prove the sufficiency of the condition, we use an extremal argument. That is, by contradiction, assume graph :math:`G` does not have a perfect matching but satisfies Tutte's condition. Note that by adding an edge to graph :math:`G`, Tutte's condition remains valid (why?). So, our general idea is to add an edge that is not present in our graph until a perfect matching is formed. Eventually, we reach a maximal graph :math:`H` such that:
+
+- Tutte's condition holds in it.
+- It does not have a perfect matching.
+- For every edge :math:`uv` not in :math:`H`, if we add it to :math:`H`, a perfect matching will be formed.
+
+Now our goal is to prove that graph :math:`H` already has a perfect matching (in which case we reach a contradiction with the assumption by contradiction, and the theorem is proven).
+
+First, note that the validity of Tutte's condition for :math:`S = \phi` implies that :math:`H` has no connected component with an odd number of vertices, consequently, the number of vertices in the graph is even.
+
+- **Pear**: Vertices :math:`a,b,c,d` such that :math:`ab,ac` are edges of the graph, but :math:`bc,ad` are not edges of the graph.
+
+- **Apple**: Vertices :math:`a,b,c` such that :math:`ab,ac` are edges of the graph, but :math:`bc` is not an edge of the graph.
+
+.. figure:: /_static/sib_golabi.png
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is trash, this will appear
+
+We claim that if we can find a Pear in :math:`H`, we can prove that :math:`H` has a perfect matching. So, consider an arbitrary Pear and let its vertices be :math:`a,b,c,d` according to the definition.
+
+If you add edge :math:`ad` to :math:`H`, a matching :math:`M1` will exist in it, which includes :math:`ad`.
+
+If you add edge :math:`bc` to :math:`H`, a matching :math:`M2` will exist in it, which includes :math:`bc`.
+
+Now consider :math:`M = M1 \Delta M2`. According to what was said in previous sections, the edges of :math:`M` form a set of cycles.
+
+If edges :math:`ad` and :math:`bc` are in two different cycles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Then from the cycle containing :math:`ad`, choose edges of :math:`M2`, and from the cycle containing :math:`bc`, choose edges of :math:`M1`. (From the other cycles, arbitrarily choose edges of :math:`M1` or :math:`M2`, and also choose edges that are in :math:`M1 \cap M2`). In this case, we will have a perfect matching in :math:`H`!
+
+If edges :math:`ad` and :math:`bc` are in the same cycle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, we must say that this cycle is even. Now, since :math:`b,c` is one of the edges of the cycle, :math:`b,c` are two consecutive vertices in the cycle. Therefore, for exactly one of the edges :math:`ab` or :math:`ac`, the following happens:
+
+If we remove the endpoints of the edge from the graph, our cycle will become two paths with an even number of vertices.
+
+Without loss of generality, assume this edge is :math:`ab`. Now choose edge :math:`ab` for the matching. Then remove :math:`a,b` from the graph and alternately choose edges from the two resulting even paths for the matching. In this case, all vertices of our cycle are covered by the chosen edges. Similar to above, from the other cycles, arbitrarily choose edges of :math:`M1` or :math:`M2`, and also choose edges that are in :math:`M1 \cap M2`. In this case, we will have a perfect matching in :math:`H`!
+
+What if we don't have a Pear?
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the two sections above, we proved that if graph :math:`H` has a Pear, then :math:`H` has a perfect matching. Now we must also consider cases where :math:`H` does not contain a Pear.
+
+Consider the set :math:`C` to contain all vertices of :math:`H` that are adjacent to all other vertices (their degree is :math:`n-1`).
+
+Now, if :math:`C` includes all vertices of :math:`H`, this means that :math:`H` is a clique (and has an even number of vertices). So, it clearly has a perfect matching.
+
+So, consider the graph :math:`W = H-C`. In :math:`W`, for every vertex :math:`u`, there exists a vertex :math:`v` such that there is no edge between :math:`u` and :math:`v` (why?). So, if we can find an Apple in :math:`W`, we can also find a Pear (because it is only necessary to find a vertex :math:`d` for vertex :math:`a` in the Apple such that there is no edge between :math:`a` and :math:`d`).
+
+So, if an Apple exists in :math:`W`, the problem is solved. So, assume no Apple exists in :math:`W`. In this case, for any arbitrary :math:`a,b,c` where :math:`ab,ac` are edges of the graph, :math:`bc` must also be an edge of this graph. Consider an arbitrary vertex :math:`u` and let :math:`A` be the set containing :math:`u` itself and its neighbors. There must be an edge between any two vertices in :math:`A` (why?). Also, no vertex outside :math:`A` is adjacent to any vertex in :math:`A` (why?). So, it can be concluded that every connected component in :math:`W` is a clique. In each clique, match vertices arbitrarily. Exactly one vertex remains unmatched from each odd clique. Since Tutte's condition holds for :math:`S = C`, all remaining unmatched vertices in :math:`W` can be matched to vertices in :math:`C`. Finally, we arbitrarily match all remaining unmatched vertices in :math:`C` (which form an even clique). Thus, we finally found a perfect matching in :math:`H`.
+
+More General Case of Matching or k-factor
+-------------------------------
+
+By definition, a perfect matching in graph :math:`G` means a subset of edges of the graph, such as :math:`M`, where the degree of each vertex in :math:`M` is exactly 1.
+
+Now we want to generalize this definition. Suppose :math:`a_1,a_2,...,a_n` are given, and we need to determine if there exists a subset of edges of the graph, such as :math:`M`, where the degree of each vertex :math:`u` is equal to :math:`a_u`?
+
+At first glance, this problem is much more general and harder than matching, but in this section, we want to solve it using matching.
+
+A Wrong Idea
+~~~~~~~~~~~~~~~~~~
+
+Probably the first idea that comes to mind is to duplicate vertex :math:`u` exactly :math:`a_u` times. Then, for every edge :math:`uv` in :math:`G`, add an edge between all copies of :math:`u` and :math:`v`. Then check if a perfect matching exists in the new graph.
+
+This idea is very similar to what we discussed previously in the bipartite matching chapter, but it has a very subtle mistake. The problem is that we might simultaneously use several edges between :math:`u` and :math:`v` in the matching, and this would result in using one original edge multiple times, which is not desired for the problem.
+
+Correct Solution
+~~~~~~~~~~~~~~~~~~~~
+
+Let :math:`d_u` be the degree of vertex :math:`u`. We construct graph :math:`G^{\prime}` from graph :math:`G` as follows:
+
+For each vertex :math:`u`, we place a complete bipartite graph! Such that its first partition has :math:`d_u - a_u` vertices and its second partition has :math:`d_u` vertices. We call the bipartite graph corresponding to vertex :math:`u`, :math:`B_u`. Then, consider the edges of graph :math:`G` in an arbitrary order and add their counterparts (as we will explain) to graph :math:`G^{\prime}`. Suppose the :math:`i`-th edge we are considering is :math:`uv`, and before it, we have considered :math:`c1` edges incident to :math:`u` and :math:`c2` edges incident to :math:`v`. Now, the counterpart of edge :math:`uv` will be an edge between the following two vertices:
+
+- The :math:`c1`-th vertex of the **second partition** of graph :math:`B_u`
+- The :math:`c2`-th vertex of the **second partition** of graph :math:`B_v`
+
+Now we claim that the existence of a subset :math:`M` of edges that satisfies the problem's condition is equivalent to the existence of a perfect matching in graph :math:`G^{\prime}`!
+
+Note that in this graph, each edge in the original graph has exactly one corresponding edge, so the previous problem (using an edge multiple times) does not occur. The full proof of the correctness of the above theorem is left to the reader.
+
+.. figure:: /_static/k_factor.png
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is trash, this will appear

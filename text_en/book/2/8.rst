@@ -1,0 +1,108 @@
+Cut Vertex and Edge Algorithms
+==============================
+
+Finding Cut Edges
+--------------------
+To find cut edges, we first run the DFS algorithm on the graph. While the DFS algorithm is running, for each vertex `u`, we maintain a `dp[u]` value, which is equal to the minimum height reachable by a backedge from any vertex in the subtree of vertex `u`. The `dp[u]` value for each vertex is calculated such that its value is the minimum of its children's `dp` values and the heights reached by its own backedges. Now, an edge between vertex `v` and `parent[v]` is a cut edge if and only if `dp[v]` is not less than the height of `v`. This means there is no edge in the subtree of `v` that connects to a vertex higher than `v`.
+
+The time complexity of this algorithm is O(n+m), where n represents the number of vertices and m represents the number of edges.
+
+.. code-block:: cpp
+
+    const int maxn = 1e6 + 10;
+    
+    bool mark[maxn], is[maxn];
+    int dp[maxn], height[maxn];
+    pair<int, int> edge[maxn];
+    vector<pair<int, int> > adj[maxn];
+    
+    void dfs(int v,int parent,int index){
+        dp[v] = height[v];
+        mark[v] = true;
+        for(int i = 0; i < adj[v].size(); i++){
+            int u = adj[v][i].first;
+            int ind = adj[v][i].second;
+            if(!mark[u]){
+                height[u] = height[v] + 1;
+                dfs(u, v, ind);
+                dp[v] = min(dp[v], dp[u]);
+            }
+            else{
+                if(u != parent){
+                    dp[v] = min(dp[v], height[u]);
+                }
+            }
+        }
+        if(v != 1 && dp[v] == height[v])
+            is[index] = true;
+        return;
+    }
+    
+    int main(){
+        int n, m;
+        cin >> n >> m;
+        for(int i = 0; i < m; i++){
+            int u, v;
+            cin >> u >> v;
+            edge[i] = {u, v};
+            adj[u].push_back({v, i});
+            adj[v].push_back({u, i});
+        }
+        dfs(1, 0, 0);
+        for(int i = 0; i < m; i++)
+            if(is[i])
+                cout << edge[i].first << " " << edge[i].second << endl;
+        return 0;
+    }
+
+Finding Cut Vertices
+--------------------
+In this section, similar to cut edges, we compute the `dp[u]` value for vertex `u` with the same definition. Now, a vertex is a cut vertex if, when we remove it, the graph splits into more than one component. Therefore, in the DFS tree we constructed, vertex `v` is a cut vertex if the `dp` value of all its children is greater than or equal to the height of vertex `v`, meaning they have no edge pointing above `v`. Note that the root is a cut vertex only if it has more than one child in the DFS tree.
+
+The time complexity of this algorithm is also O(n+m).
+
+.. code-block:: cpp
+
+    const int maxn = 1e6 + 10;
+    
+    bool mark[maxn], is[maxn];
+    int dp[maxn], height[maxn];
+    vector<int> adj[maxn];
+    
+    void dfs(int v,int parent){
+        dp[v] = height[v];
+        mark[v] = true;
+        int num = 0;
+        for(int i = 0; i < adj[v].size(); i++){
+            int u = adj[v][i];
+            if(!mark[u]){
+                height[u] = height[v] + 1;
+                dfs(u, v);
+                if(v != 1 && dp[u] >= height[v])
+                    is[v] = true;
+                dp[v] = min(dp[v], dp[u]);
+                num++;
+            }
+            else if(u != parent)
+                dp[v] =min(dp[v], height[u]);
+        }
+        if(v == 1 && num > 1)
+            is[v] = true;
+        return;
+    }
+    
+    int main(){
+        int n, m;
+        cin >> n >> m;
+        for(int i = 0; i < m; i++){
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        dfs(1, 0);
+        for(int u = 1; u <= n; u++)
+            if(is[u])
+                cout << u << " ";
+        return 0;
+    }

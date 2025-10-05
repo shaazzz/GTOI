@@ -1,0 +1,31 @@
+Trie
+============
+A Trie is a rooted tree used to store multiple words. Each word is a chain of characters starting from the root. If two words share a common prefix, they share the same chain in the tree.
+
+Assume the number of distinct characters used in the words is X. In this case, each node has at most X children. Note that letters are not stored in the nodes themselves, but rather on the edges between nodes. For a better understanding, refer to the figure below.
+
+.. figure:: /_static/dot/Trie.svg
+   :width: 50%
+   :align: center
+   :alt: Trie example
+
+Each node can also have a marker (or flag), and if a node has a marker, it means that a word ends at this node, and the path from the root to this node represents that word. If duplicate words are possible among the set of words, instead of a marker, a number can be used to store the count of words ending at each node.
+
+Search
+------------------
+You can check if a word of length n exists in a Trie in :math:`O(n)`.
+
+To do this, you start from the root and proceed character by character. If you are at a node like u, and the next character in the word is X, if node u has an edge labeled X leading to a child v, you move to node v and consider the next character in the word. If node u does not have an edge labeled X, it means the word does not exist in the tree. This process continues until the word is exhausted (no more characters). Suppose the word ends at node w. If node w has a marker (or its numerical value is positive), it means the word exists; otherwise, the word does not exist.
+
+Insertion
+-----------------
+You can insert a word of length n into a Trie in :math:`O(n)`.
+
+To do this, you start from the root and proceed character by character. If you are at a node like u, and the next character in the word is X, if node u has an edge labeled X leading to a child v, you move to node v and consider the next character in the word. If the word is exhausted, you mark the current node (or increment its numerical count by one). If an edge labeled X does not exist, you create a new node, connect the current node to it with an edge labeled X, and move to the next character and the next node (the newly created node). This process continues until the word is exhausted.
+
+Applications
+---------
+*   It is used for some string autocomplete systems.
+*   It has extensive applications for storing and quickly accessing strings in a dictionary.
+*   It can be used as an alternative to hash tables in some situations.
+*   Tries are used for sorting data in linear time. For example, if we insert a set of strings into a Trie and print its pre-order traversal, the strings will be sorted lexicographically. Also, if we build a Trie with a set of numbers, a level-order traversal will visit the numbers in sorted order.

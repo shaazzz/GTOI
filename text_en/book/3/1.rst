@@ -1,0 +1,381 @@
+تعاریف
+=============
+
+تعریف 3.1.1 (گراف جهت دار)
+---------------------------
+فرض کنید تعدادی شهر داریم که توسط جاده هایی به هم متصل هستند و شما در شهر D هستید و می‌خواهید به شهر A بروید(شکل ۱).
+برای رسیدن به شهر A باید از تعدادی جاده عبور کنیم ولی از آنجا که جاده‌ها می‌توانند یک‌طرفه باشند، به گرافی نیاز داریم که جهت هر جاده را به ما نشان دهد که به آن گراف جهت دار گوییم(شکل ۲).
+
+.. figure:: /_static/dot/Simple_Graph.svg
+   :width: 50%
+   :align: center
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+.. figure:: /_static/dot/Simple_Directed_Graph.svg
+   :width: 50%
+   :align: center
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+به بیان دقیق تر، گراف جهت دار 
+:math:`G`
+یک زوج مرتب
+:math:`(V, E)`
+است که :math:`V` مجموعه راس های گراف است. همچنین :math:`E` یک مجموعه شامل زوج مرتب هایی به فرم
+:math:`(u, v)`
+است به این معنا که یک یال جهت دار از 
+:math:`u`
+به 
+:math:`v`
+در گراف وجود دارد.
+
+به گراف جهت دار 
+:math:`G`
+ساده می‌گوییم اگر شامل یال های جهت دار چند گانه و طوقه نباشد. البته توجه داشته باشید که ممکن است 
+:math:`G`
+ساده باشد و :math:`E` شامل 
+:math:`(u, v)`
+و
+:math:`(v, u)`
+باشد، ولی نمی‌تواند ۲ تا از زوج مرتب 
+:math:`(u, v)`	
+را داشته باشد.
+
+توجه داشته باشید که از این به بعد ما با گراف های جهت دار ساده کار خواهیم داشت و منظور ما از گراف جهت دار گراف جهت دار ساده خواهد بود، مگر اینکه در صورت سوال ذکر شود.
+
+درجه در گراف جهت دار
+--------------------------------
+در یک گراف جهت دار، هر راس یک درجه ورودی و یک درجه خروجی دارد. برای مثال در شکل۲، درجه ورودی راس D برابر با ۳ و درجه خروجی آن برابر با ۱ است!
+
+درجه ورودی راس :math:`v` را با نماد 
+:math:`d^{−}(v)`
+یا
+:math:`deg^{−}(v)`
+و درجه خروجی را با 
+:math:`d^{+}(v)`
+یا
+:math:`deg^{+}(v)`
+نمایش می‌دهیم.
+
+منظور از 
+:math:`\delta^{+}, \delta^{-}`
+به ترتیب مینیمم درجه ورودی و مینیمم درجه خروجی است.
+
+به طور مشابه منظور از 
+:math:`\Delta^{+}, \Delta^{-}`
+به ترتیب ماکسیمم درجه ورودی و ماکسیمم درجه خروجی است.
+
+
+دور و مسیر در گراف جهت دار 
+--------------------------------
+مشابه گراف های ساده، در گراف های جهت دار هم تعاریفی مانند گشت، گشت بسته، گذر، دور و مسیر داریم. 
+برای مثال در شکل۲، یک مسیر جهت دار می‌تواند مسیری به شکل (D -> C -> B -> A)
+باشد که راس شروع همان مبدا سفر(D) و راس پایان همان مقصد سفر(A) می‌باشد. دقت کنید در طی کردن یال ها، باید جهت یال رعایت شود. برای مثال هنگامی که در راس D هستیم، نمی‌توانیم به راس A به صورت مستقیم برویم!
+
+
+همچنین یک دور در شکل۲ می‌تواند به صورت (D -> C -> B -> D) باشد. بدیهتا در هنگام طی کردن دور، باید جهت یال ها رعایت شود.
+
+به طور مشابه، طول هر کدام از تعاریف بالا، برابر با تعداد یال های آن است.
+
+
+به بیان دقیق تر : 
+
+**گشت :**
+دنباله
+:math:`v_{1}, v_{2}, ..., v_{l}`
+یک گشت در گراف جهت دار 
+:math:`G`
+است، اگر به ازای هر 
+:math:`1 \leq i < l`
+یال
+:math:`(v_{i}, v_{i+1})`
+در :math:`G` باشد(به عبارتی یال فوق متعلق به مجموعه :math:`E` باشد) .
+
+**گشت بسته :**
+اگر در دنباله ای که تعریف کردیم،
+:math:`v_{1} = v_{l}` 
+باشد، به این گشت یک گشت بسته گوییم.
+
+**گذر :** اگر در دنباله ای که تعریف کردیم، هیچ یال تکراری نباشد، به این گشت یک گذر گوییم.
+
+**مسیر :** اگر در دنباله ای که تعریف کردیم، هیچ راس تکراری نباشد(و در نتیجه یال تکراری هم نباشد)، گشت حاصل یک مسیر است.
+
+
+**دور :** در آخر اگر در یک مسیر، راس شروع و پایان یکسان باشند(
+:math:`v_{1} = v_{l}`
+)
+به گشت حاصل یه دور گوییم.
+
+دقت کنید که تعاریف بالا دقیقا مانند تعاریف در گراف ساده هستند با این تفاوت که در گراف جهت دار باید جهت یال ها درست طی شوند!
+
+قضایا و لم های مورد استفاده در این بخش 
+--------------------------------------
+
+
+**قضیه 3.1.2**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**صورت قضیه :** در گراف جهت دار :math:`G`، داریم 
+:math:`\sum d^{-}(v) = \sum d^{+}(v)`
+
+
+**اثبات قضیه :** برهان این قضیه ساده است(این قضیه مشابه با زوج بودن مجموع درجات در گراف ساده است). هر یال از این گراف را که در نظر بگیرید، به راس شروع یک درجه خروجی اضافه می‌کند و به راس پایان یک درجه ورودی اضافه میکند. در نتیجه یک واحد به طرف راست تساوی و یک واحد به طرف چپ تساوی اضافه می‌شود!
+
+
+**قضیه 3.1.3**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**صورت قضیه :** اگر در گراف جهت دار :math:`G`، درجه خروجی(یا درجه ورودی) هر راس حداقل ۱ باشد، آنگاه این گراف حداقل یک دور جهت‌دار دارد.
+
+
+**اثبات قضیه :** این قضیه مشابه با دور داشتن گراف ساده‌ای است که درجه هر راس آن حداقل ۲ است. بلند ترین مسیر گراف را در نظر بگیرید.
+
+فرض کنید این بلند ترین مسیر به صورت 
+:math:`v_1, v_2, ..., v_l`
+باشد. طول این مسیر طبق تعاریف بالا برابر با‌ 
+:math:`l-1`
+است.
+
+حال راس
+:math:`v_l`
+را در نظر بگیرید. از آنجا که این راس حداقل یک درجه خروجی دارد، پس راسی مانند 
+:math:`x`
+وجود دارد به طوری که از
+:math:`v_l`
+به 
+:math:`x`
+یک یال جهت دار است. از طرفی راس
+:math:`x`
+نمی‌تواند خارج از مسیر بالا باشد(چرا؟).
+
+پس راس
+:math:`x`
+یکی از راس های مسیر است. برای مثال فرض کنید  
+:math:`x = v_j`
+
+در نتیجه دنباله
+:math:`v_{j}, v_{j+1}, ..., v_{l}, v_{j}`
+تشکیل یک دور می‌دهد!
+
+
+**قضیه 3.1.4**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**صورت قضیه :** اگر در گراف جهت دار :math:`G`، درجه خروجی(یا درجه ورودی) هر راس حداقل :math:`k` باشد، آنگاه این گراف یک دور به طول حداقل :math:`k+1` دارد.
+
+
+**اثبات قضیه :** این قضیه تعمیم قضیه 3.1.2 می‌باشد. اثبات این قضیه هم مشابه با قضیه 3.1.2 می‌باشد.
+
+به طور مشابه بلند ترین مسیر در :math:`G` را در نظر بگیرید. فرض کنید دنباله ای به صورت 
+:math:`v_1, v_2, ..., v_l`
+باشد.
+
+حال ادعا میکنیم 
+:math:`l > k`
+(به عبارتی می‌گوییم طول بلند ترین مسیر حداقل برابر با :math:`k` است).
+
+برهان ادعا واضح است، زیرا اگر راس :math:`v_l` را در نظر بگیریم، حداقل  :math:`k` یال از :math:`v_l` خارج می‌شود. که همه این راس ها(راس هایی که یال ورودی از :math:`v_l` دارند) داخل بلندترین مسیر هستند(چرا؟). پس این بلند ترین مسیر حداقل :math:`k+1` راس دارد(k تا از همسایه های :math:`v_l` و خود :math:`v_l`).
+
+
+حال کم‌ترین
+:math:`j`
+را در نظر بگیرید به طوری از 
+:math:`v_l`
+به
+:math:`v_j`
+یال باشد(به عبارتی سمت چپ ترین راس از مسیر را در نظر می‌گیریم تا در حد امکان طول دور را افزایش دهیم).
+حال دور رو به رو را در نظر بگیرید 
+:math:`v_{j}, v_{j + 1}, ..., v_{l}, v_{j}`
+ادعا می‌کنیم طول این دور حداقل برابر با :math:`k+1` است(چرا؟).
+
+
+چند تعریف دیگر
+--------------------------------------
+**گراف زمینه  :**
+اگر یال های یک گراف جهت دار را بی جهت کنیم، آنگاه به گراف به دست آمده گراف زمینه گوییم. برای مثال شکل۱ یک گراف زمینه برای شکل۲ است.
+
+
+Definitions
+=============
+
+Definition 3.1.1 (Directed Graph)
+---------------------------
+Suppose we have several cities connected by roads, and you are in city D, wanting to go to city A (Figure 1).
+To reach city A, we must pass through several roads, but since roads can be one-way, we need a graph that shows us the direction of each road, which we call a directed graph (Figure 2).
+
+.. figure:: /_static/dot/Simple_Graph.svg
+   :width: 50%
+   :align: center
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+.. figure:: /_static/dot/Simple_Directed_Graph.svg
+   :width: 50%
+   :align: center
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+More precisely, a directed graph 
+:math:`G`
+is an ordered pair
+:math:`(V, E)`
+where :math:`V` is the set of vertices of the graph. Also, :math:`E` is a set containing ordered pairs of the form
+:math:`(u, v)`
+meaning that there is a directed edge from 
+:math:`u`
+to 
+:math:`v`
+in the graph.
+
+A directed graph 
+:math:`G`
+is called simple if it does not contain multiple directed edges or loops. Note that 
+:math:`G`
+may be simple and :math:`E` may contain 
+:math:`(u, v)`
+and
+:math:`(v, u)`
+but it cannot have two of the ordered pair 
+:math:`(u, v)`.
+
+Note that from now on, we will be working with simple directed graphs, and by "directed graph" we will mean a simple directed graph, unless otherwise specified in the problem statement.
+
+Degree in a Directed Graph
+--------------------------------
+In a directed graph, each vertex has an in-degree and an out-degree. For example, in Figure 2, the in-degree of vertex D is 3, and its out-degree is 1!
+
+The in-degree of vertex :math:`v` is denoted by 
+:math:`d^{−}(v)`
+or
+:math:`deg^{−}(v)`,
+and the out-degree by 
+:math:`d^{+}(v)`
+or
+:math:`deg^{+}(v)`.
+
+:math:`\delta^{+}, \delta^{-}`
+refer to the minimum out-degree and minimum in-degree, respectively.
+
+Similarly, 
+:math:`\Delta^{+}, \Delta^{-}`
+refer to the maximum out-degree and maximum in-degree, respectively.
+
+
+Cycles and Paths in a Directed Graph 
+--------------------------------
+Similar to simple graphs, in directed graphs, we also have definitions like walk, closed walk, trail, cycle, and path.
+For example, in Figure 2, a directed path could be (D -> C -> B -> A), where the starting vertex is the origin of the journey (D) and the ending vertex is the destination (A). Be careful that when traversing edges, the direction of the edge must be observed. For example, when we are at vertex D, we cannot go directly to vertex A!
+
+Also, a cycle in Figure 2 could be (D -> C -> B -> D). Obviously, when traversing a cycle, the direction of the edges must be observed.
+
+Similarly, the length of each of the above definitions is equal to the number of its edges.
+
+
+More precisely:
+
+**Walk:**
+The sequence
+:math:`v_{1}, v_{2}, ..., v_{l}`
+is a walk in a directed graph 
+:math:`G`
+if for every 
+:math:`1 \leq i < l`,
+the edge
+:math:`(v_{i}, v_{i+1})`
+is in :math:`G` (i.e., the said edge belongs to the set :math:`E`).
+
+**Closed Walk:**
+If in the sequence we defined,
+:math:`v_{1} = v_{l}`,
+this walk is called a closed walk.
+
+**Trail:** If in the sequence we defined, no edge is repeated, this walk is called a trail.
+
+**Path:** If in the sequence we defined, no vertex is repeated (and consequently no edge is repeated), the resulting walk is a path.
+
+**Cycle:** Finally, if in a path, the starting and ending vertices are the same (
+:math:`v_{1} = v_{l}`
+),
+the resulting walk is called a cycle.
+
+Note that the above definitions are exactly like the definitions in a simple graph, with the difference that in a directed graph, the direction of the edges must be followed correctly!
+
+Theorems and Lemmas Used in this Section 
+--------------------------------------
+
+
+**Theorem 3.1.2**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement:** In a directed graph :math:`G`, we have 
+:math:`\sum d^{-}(v) = \sum d^{+}(v)`.
+
+
+**Proof:** The proof of this theorem is simple (this theorem is similar to the property that the sum of degrees in a simple graph is even). Consider any edge in this graph; it adds one unit to the out-degree of the starting vertex and one unit to the in-degree of the ending vertex. As a result, one unit is added to the right side of the equality and one unit to the left side of the equality!
+
+
+**Theorem 3.1.3**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement:** If in a directed graph :math:`G`, the out-degree (or in-degree) of every vertex is at least 1, then this graph has at least one directed cycle.
+
+
+**Proof:** This theorem is similar to a simple graph having a cycle if every vertex has a degree of at least 2. Consider the longest path in the graph.
+
+Assume this longest path is
+:math:`v_1, v_2, ..., v_l`.
+The length of this path, according to the above definitions, is 
+:math:`l-1`.
+
+Now consider vertex
+:math:`v_l`.
+Since this vertex has at least one out-degree, there exists a vertex 
+:math:`x`
+such that there is a directed edge from
+:math:`v_l`
+to 
+:math:`x`.
+On the other hand, vertex
+:math:`x`
+cannot be outside the path above (why?).
+
+So vertex
+:math:`x`
+is one of the vertices on the path. For example, suppose 
+:math:`x = v_j`.
+
+Consequently, the sequence
+:math:`v_{j}, v_{j+1}, ..., v_{l}, v_{j}`
+forms a cycle!
+
+
+**Theorem 3.1.4**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement:** If in a directed graph :math:`G`, the out-degree (or in-degree) of every vertex is at least :math:`k`, then this graph has a cycle of length at least :math:`k+1`.
+
+
+**Proof:** This theorem is a generalization of Theorem 3.1.2. The proof of this theorem is also similar to Theorem 3.1.2.
+
+Similarly, consider the longest path in :math:`G`. Assume it is a sequence of the form 
+:math:`v_1, v_2, ..., v_l`.
+
+Now we claim 
+:math:`l > k`
+(in other words, we say the length of the longest path is at least :math:`k`).
+
+The proof of the claim is clear, because if we consider vertex :math:`v_l`, at least :math:`k` edges emanate from :math:`v_l`. All these vertices (the vertices that have an incoming edge from :math:`v_l`) are within the longest path (why?). So this longest path has at least :math:`k+1` vertices (k neighbors of :math:`v_l` and :math:`v_l` itself).
+
+Now consider the smallest
+:math:`j`
+such that there is an edge from 
+:math:`v_l`
+to
+:math:`v_j`
+(in other words, we consider the leftmost vertex on the path to increase the cycle length as much as possible).
+Now consider the following cycle
+:math:`v_{j}, v_{j + 1}, ..., v_{l}, v_{j}`.
+We claim that the length of this cycle is at least :math:`k+1` (why?).
+
+
+A Few More Definitions
+--------------------------------------
+**Underlying Graph:**
+If we remove the directions from the edges of a directed graph, the resulting graph is called its underlying graph. For example, Figure 1 is an underlying graph for Figure 2.

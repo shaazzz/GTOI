@@ -1,0 +1,90 @@
+
+Huffman Coding
+==============
+
+Assume we have a sequence of characters that forms a given text. Now we want to convert each character into a sequence of 0s and 1s such that it can be retrieved back to its original characters. This is typically done with ASCII code, which maps each character to an 8-bit sequence of 0s and 1s. However, in reality, we don't use all characters equally often in a text (e.g., in English words, the letter 's' is used more frequently than the letter 'z'). For this reason, if we want to minimize the length of the resulting 0,1 string, using ASCII code would not be a good idea. Intuitively, we should assign shorter binary strings to frequently occurring characters and longer binary strings to characters that appear less often.
+
+Mapping Characters to 0s and 1s
+-----------------------------
+
+We call the process of converting a sequence of characters into a sequence of 0s and 1s "encoding," and the reverse process (i.e., converting a sequence of 0s and 1s back into a sequence of characters) "decoding."
+
+The first question that comes to mind is how to map each character to a binary sequence such that the decoding operation is unique and correct. A clever idea here is to use trees. We define a rooted binary tree and call it a "coding tree" which has the following properties:
+
+- Each node in this tree has at most two children. For each node, we write 0 or 1 on the edges leading to its children (0 for the left child and 1 for the right child).
+
+- Each leaf of this tree (the root is never considered a leaf) will correspond to one of our alphabet characters.
+
+In this case, for each character :math:`x` in the alphabet, let :math:`u` be the leaf corresponding to :math:`x`. Then, assign the sequence of 0s and 1s seen from the root to node :math:`u` as the binary code for character :math:`x`.
+
+Now, how can a binary text be decoded? Simply place a marker on the root node and start reading the binary text. If you see a 0, go to the left edge; if you see a 1, go to the right edge, until you reach a leaf that corresponds to a character. This means that the first character of our text is the one we reached. (Note that no non-leaf node corresponds to a character, so the first character of the text could not have been any other character). Then, return the marker to the root and start reading the binary string again to find the second character of the original string. By continuing this process, the string can be decoded. If, during this process, the marker tries to move along an edge that does not exist (e.g., if a 0 was read but there was no left edge) or if, at the end, the marker is not on the root, it means that our binary text is incorrect and no text exists that would be encoded into this string.
+
+.. figure:: /_static/derakht_ramz.png
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is poor, this will appear
+
+A Minimal Tree
+----------------
+
+Now, knowing that mapping characters to binary strings can be done by constructing a coding tree, we return to the main problem. Our goal is to provide a coding tree that minimizes the length of our encoded binary string.
+
+More precisely, assume we want to provide a coding tree that converts text :math:`s` into binary sequence :math:`p` such that the length of :math:`p` is minimized. Suppose we have :math:`c_i` occurrences of the :math:`i`-th character in string :math:`s`. Now, the length of :math:`p` will be :math:`\sum h_i \times c_i`, so we want to minimize this value.
+
+Assume the desired coding tree is :math:`T`. Pay attention to the following points:
+
+- If we sort the characters based on their frequencies (:math:`c_i`) from lowest to highest, the :math:`h_i` values will be sorted from highest to lowest. (Otherwise, we can swap the nodes corresponding to two characters to decrease the length of :math:`p`).
+- All leaves have siblings (unless there is only one leaf). Otherwise, that leaf can be removed, and the character assigned to it can be assigned to its parent. In this case, the length of :math:`p` decreases.
+- If two leaves :math:`a` and :math:`b` are at the same height, the characters assigned to :math:`a` and :math:`b` can be swapped without changing the length of :math:`p`.
+
+Therefore, it can be concluded that if we consider the two characters with the minimum frequencies as :math:`x,y`, they will be at the lowest height of the tree. Also, the nodes assigned to them can be rearranged such that they are siblings!
+
+So, there exists an optimal state where the leaves corresponding to :math:`x,y` are two siblings at the lowest height of the tree. Suppose the height of the nodes corresponding to :math:`x,y` is :math:`h`. Since the binary strings corresponding to :math:`x,y` differ only in their last digit (i.e., the :math:`h`-th digit), it can be understood that their :math:`h`-th digit has appeared a total of :math:`c_x + c_y` times.
+
+Furthermore, we can remove the two characters :math:`x` and :math:`y` and define a new character, say :math:`z`, which replaces :math:`x,y`. The node corresponding to :math:`z` will be the common parent of :math:`x,y`. So now, we have reduced the number of characters in our alphabet by one, and we can solve the problem recursively for them. If we assume the answer to the new problem (minimum length :math:`p`) is :math:`ans ^ {\prime}`, our current problem's answer will be :math:`ans = ans ^ {\prime} + c_x + c_y`.
+
+You can also see that the optimal tree :math:`T`, which we had assumed existed, will be implicitly constructed during the algorithm's steps!
+
+.. figure:: /_static/huffman.png
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is poor, this will appear
+
+So, the algorithm is as follows: In each step, combine the two characters with the minimum frequencies (e.g., :math:`x,y`), replace them with a new character whose frequency is :math:`c_x + c_y`, and then add :math:`c_x + c_y` to the total answer.
+
+You can see the implementation of this algorithm below.
+
+.. code-block:: cpp
+
+  typedef pair<int, int> pii;
+  
+  const int maxn = 1e5 + 10;
+  
+  vector<int> Tree[maxn]; // children of each node in the coding tree
+  
+  int c[maxn]; // frequency of each character
+  int Counter; // keeps track of the smallest unused node ID
+  priority_queue<pii, vector<pii>, greater<pii> > pq; // a min-heap
+  
+  int main(){
+      int n; // number of alphabet characters
+      cin >> n;
+      for(int i = 0; i < n; i++){
+  	    cin >> c[i];
+  	     pq.push({c[i], i});
+      }
+      Counter = n;
+      int ans = 0;
+      while(pq.size() > 1){
+         int x = pq.top().second, y = pq.top().second; // This line is likely a copy-paste error in the original code, taking the top element twice before popping.
+         pq.pop(), pq.pop();
+         int z = Counter;
+         Counter++;
+         Tree[z].push_back(x);
+         Tree[z].push_back(y);	    
+         c[z] = c[x] + c[y];
+         ans+= c[x] + c[y];
+         pq.push({c[z], z});
+      }
+      // here, ans is the minimum length of p, and in Tree, we have built an optimal coding tree.
+  }

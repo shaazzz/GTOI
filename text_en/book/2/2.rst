@@ -1,0 +1,198 @@
+
+Distance in Tree and Graph
+==========================
+
+In this section, by introducing distance in a graph, we will examine definitions related to distance, both in its general form and in its specific form (i.e., in a tree). In trees, discussing distance is much easier than in general graphs, because, as we discussed in the previous section, the path between any two vertices in a tree is unique.
+
+What is Distance?
+--------------------
+
+Consider two vertices :math:`u,v` in a graph. The distance between these two vertices is defined as the length (number of edges) of the shortest path between them.
+
+Note: If two vertices are in two separate connected components, their distance is infinite.
+
+The distance between two vertices :math:`u,v` is denoted as :math:`d(u,v)`.
+
+Diameter
+-----------
+
+Definition: The diameter of a graph is equal to
+:math:`Max_{u,v} d(u,v)`,
+or in other words, the maximum pairwise distance between vertices in the graph.
+
+Note that the diameter is not the longest path; it is actually the longest **distance**. However, in a tree, the longest path and the diameter are the same. This is because if you take the two endpoints of the longest path, since there is exactly one path between them, and that is the longest path, its length is equal to the distance between those two vertices. Thus, the diameter is equal to the longest path.
+The difference between the longest path and the diameter becomes apparent when, in the general case, finding the diameter of a graph is solvable in polynomial time, but finding the longest path is an NP-hard problem.
+
+Eccentricity
+--------------------
+
+If we consider the vertex name as :math:`u`, the eccentricity of :math:`u` is equal to the maximum :math:`d(u,v)` for all :math:`v`.
+
+If the graph is a tree and we root the tree at :math:`u`, the eccentricity of :math:`u` becomes the height of the vertex with the greatest height in the tree.
+
+The eccentricity of vertex :math:`u` is denoted by :math:`\varepsilon{(u)}`.
+
+Theorem 2.2.1
+------------------
+
+Theorem Statement: In a tree, the eccentricity of a vertex is equal to its maximum distance from the two endpoints of a diameter.
+
+Proof: We use proof by contradiction. Assume our vertex is :math:`a`, and the two endpoints of the diameter are vertices :math:`u, v`. The vertex whose distance from :math:`a` is equal to :math:`\varepsilon(a)` is named :math:`b`. It is clear that if :math:`a` were one of the diameter's endpoints, the claim would be true, so we assume it is not.
+
+We root the tree at :math:`a`. Let :math:`mh` be the vertex with the maximum height such that the three vertices :math:`b,u,v` are within its subtree.
+Since :math:`mh` has the greatest height among the common ancestors of these three vertices, either :math:`mh = b`, or a child of :math:`mh` that is an ancestor of :math:`b` does not have at least one of the two vertices :math:`u, v` in its subtree. This means :math:`mh = lca(u,b)` or :math:`lca(v,b)`. Without loss of generality, assume :math:`mh = lca(u,b)`. Now we prove that :math:`d(b,u)` > :math:`d(u,v)`.
+By proving this part, the contradiction obtained regarding the length of the diameter will prove the theorem.
+
+- :math:`d(b,u)` > :math:`d(u,v)`
+- :math:`mh = lca(b,u)` :math:`\longrightarrow`  :math:`h(b)+h(u)-2 \times h(Mh)` > :math:`d(u,v)`
+- Even if :math:`mh \neq lca(u,v)`, it is still their common ancestor, so :math:`d(u,v)` :math:`\leqslant` :math:`h(u)+h(v)-2 \times h(mh)` 
+- Consequently:
+  :math:`h(B) + h(u) - 2 \times h(mh) > h(u) + h(v) - 2 \times h(mh) \longrightarrow h(B) > h(u)`
+  which is the premise of the question, so the statement is true. The theorem is proven by the obtained contradiction.
+
+Radius and Center
+--------------------
+
+The vertex with the minimum eccentricity among the graph's vertices is called the graph's center, and its eccentricity is called the graph's radius.
+
+Theorem 2.2.2
+-------------------
+
+- a) In a tree, if the diameter is :math:`Q`, the radius is :math:`\lceil{Q/2}\rceil`.
+- b) In a tree, if :math:`Q` is odd, the two middle vertices of the diameter path are centers, and if :math:`Q` is even, the single middle vertex is the center.
+
+Proof: First, we prove that a vertex not on the diameter path cannot be a center. Consider a vertex :math:`u` that is not on the diameter path, and let :math:`v` be a vertex on the diameter path such that its distance to :math:`u` is minimized. According to Theorem 2.2.1, we can deduce that :math:`\varepsilon{(u)} = \varepsilon{(v)} + d(u,v)`. Thus, :math:`u` is certainly not a center.
+Now, let's number the vertices along the diameter path from one end (i.e., from 0 to :math:`Q`). According to Theorem 2.2.1, we know that the eccentricity of the :math:`i`-th vertex on the diameter path is equal to :math:`max(i,Q-i)`.
+We know that the minimum of the above expression occurs when :math:`i` and :math:`Q-i` have the smallest possible difference.
+
+- If :math:`Q` is even, the answer becomes :math:`max(Q - Q/2 , Q/2)` = :math:`Q/2`. So the radius is :math:`Q/2`, and the only center is the middle vertex of the diameter (the :math:`Q/2`-th vertex on the diameter path).
+- If :math:`Q` is odd, the radius becomes :math:`max((Q-1)/2 , (Q+1)/2)` = :math:`(Q+1)/2`. The only vertices on the diameter path with this property are the :math:`(Q-1)/2` and :math:`(Q+1)/2` vertices.
+
+Centroid
+-------------------
+
+A vertex in a graph whose sum of distances from other vertices is minimized is called the graph's centroid. Similar to the definitions above, the centroid in a tree also has an interesting property, as stated in the following theorem.
+
+Theorem 2.2.3
+-----------------
+
+- a) In a tree, a vertex is a centroid if and only if, when it is removed from the tree, the size of every connected component is less than or equal to :math:`n/2`.
+- b) In a tree, there are at most two centroids. If there are two, the graph has an even number of vertices, and the two centroids are adjacent.
+
+Proof: We number the vertices, and :math:`a_i` will be the sum of distances of vertex :math:`i` from other vertices. First, we prove the "if" part of (a). Assume :math:`u` is a centroid, and when we remove it, a connected component with size greater than :math:`n/2` is formed. Now, consider a vertex :math:`v` from that component that is adjacent to :math:`u`. The distance of :math:`v` from the vertices inside this connected component is one less than the distance of :math:`u` from them. For other vertices, its distance is one more than the distance of :math:`u`. So,
+:math:`a_v = a_u - sz + (n-sz)`
+where :math:`sz` is the size of that connected component.
+Since
+:math:`sz > n/2 \longrightarrow n - 2 \times sz < 0 \longrightarrow a_v < a_u`
+This contradicts the assumption that :math:`u` is a centroid, thus proving the "if" part of (a).
+
+Now, I will prove that for any two vertices :math:`i, j` that satisfy the "if" part of condition (a), :math:`a_i = a_j`. Since we know that our centroid satisfies the "if" part of (a), it follows that all vertices with the property from (a) are centroids.
+We root the tree at vertex :math:`i`. Now we have a variable named :math:`A` such that when we are at vertex :math:`z`, :math:`A = a_z`. Initially, :math:`A = a_i`. Now, we move from the root vertex :math:`i` towards vertex :math:`j` (i.e., we traverse the path between these two vertices, starting from :math:`i`). When we move from a vertex to its child, :math:`A` decreases by the size of the child's subtree and increases by the number of vertices minus the size of the child's subtree.
+We know that the size of the subtree rooted at :math:`j` is greater than or equal to :math:`n/2`, because when we remove :math:`j` from the tree, the size of the connected component containing its parent is, by assumption, less than or equal to :math:`n/2`. Therefore, the number of vertices not in this component (including :math:`j`) is greater than or equal to :math:`n/2`. Thus, the size of the subtree of all ancestors of :math:`j` that we traversed is also greater than or equal to :math:`n/2`. From this, we can conclude that the value of :math:`A` always either decreases or remains unchanged.
+So, :math:`a_i \geq a_j`. If we also root the tree at :math:`j` and traverse the path between them, we would reach the conclusion :math:`a_j \geq a_i`. Consequently, :math:`a_i = a_j`.
+
+Now, we move to proving part (b). Assume two vertices :math:`i,j` are centroids. We root the tree at :math:`i` and follow the algorithm described above. Now, we say that when we move from a vertex to its child, :math:`A` does not change if and only if the size of the child's subtree is exactly :math:`n/2`. Since the size of :math:`j`'s subtree is greater than or equal to :math:`\lceil{n/2}\rceil`, for :math:`A` not to change along the entire path, :math:`j` must be a child of :math:`i`, and the size of its subtree must be exactly :math:`n/2`. This implies that the tree has an even number of vertices, because the size of :math:`j`'s subtree is greater than or equal to :math:`\lceil{n/2}\rceil`, and the size of the subtrees of :math:`i`'s children must be less than or equal to :math:`\lfloor{n/2}\rfloor`. Therefore, it must be that :math:`\lfloor{n/2}\rfloor = \lceil{n/2}\rceil`, which means :math:`n` is even.
+We also understood above that if there are two centroids, they must be adjacent. It is then clear that we can have at most two centroids, otherwise we would have a cycle.
+
+Sum of Distances
+-----------------------
+
+Suppose in a problem, the goal is to minimize or maximize the sum of distances between every two vertices. Let's call this sum the graph's density. Intuitively, the lower the graph's density, the more compact the graph, and the higher the density, the more spread out the graph.
+
+Furthermore, for the distance to be defined, let's assume our discussion focuses on connected graphs.
+
+Minimizing Graph Density
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The distance between two vertices is at least 1. In a graph :math:`K_n`, the distance between any two vertices is exactly 1. Thus, the minimum possible density is achieved in :math:`K_n`, which is equal to :math:`n \choose 2`.
+
+Now, if we restrict the domain of discussion to trees, the problem becomes a bit harder. However, we can still deduce the following:
+
+- Exactly :math:`n-1` pairs of vertices have a distance of exactly 1. This is because a tree has :math:`n-1` edges.
+- Any pair of vertices that are not adjacent have a distance of at least 2.
+
+Consequently, the minimum possible density is at least :math:`2 \times {n \choose 2} - (n-1)`. The only example that satisfies this bound is a scenario where the distance between any two vertices is **at most** 2. The only tree with this property is the star graph (as shown in the figure). This is because if there were two leaves in a star graph that did not share a common parent, their distance would be at least 3.
+
+.. figure:: /_static/dot/S_7.svg
+  :width: 50%
+  :align: center
+  :alt: If the user's internet connection is bad, this will appear
+
+Maximizing Graph Density
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this case, note that if we remove an edge and this removal does not disconnect the graph, we should do so. This is because removing an edge increases the density (why?). Therefore, a graph with maximum density should be sought among trees (since, as we said, all its edges must be cut edges).
+
+Now consider a specific vertex, say :math:`u`. We claim that the sum of distances from all vertices to :math:`u` is at most :math:`n \choose 2`.
+
+To prove this, assume the tree is rooted at :math:`u`, and for each height, we know how many vertices are at that height, with :math:`H` being the maximum height. In this case, for every height from 0 to :math:`H`, we must have at least one vertex at that height. Now, if we had at least two vertices at one height, one of them could be moved to a higher height, and in doing so, the sum of heights would increase. By repeating this process, we reach a state where there is exactly one vertex at each height from 0 to :math:`n-1` (i.e., the tree has become a path). In this state, the sum of distances from :math:`u` will be :math:`1 + 2 + ... + (n-1) = {n \choose 2}`. Thus, we have proven that the sum of distances from any vertex :math:`u` is at most :math:`n \choose 2`.
+
+So now, to reach a bound, at each step, remove a **leaf** from the tree and calculate the sum of distances from this leaf. The sum of all these values will be the graph's density, which, according to what we said, will be at most :math:`\sum\limits_{i=1}^{n} {i \choose 2} = {{n+1} \choose 3}` (according to Chu-Shih-Chieh's identity).
+
+It can be concluded that the only graph that satisfies this bound with equality is the path graph.
+
+Support Tree
+------------------------
+
+Suppose we have a communication network connecting :math:`n` cities. For assurance, we have also prepared a support communication network, to be used if there is a disruption in the main network, to prevent communication loss.
+
+In graph theory terms, we have two :math:`n`-vertex trees :math:`T` and :math:`T ^ {\prime}`. We want to prove that if one of the edges of :math:`T`, say :math:`uv`, is cut, we can add one of the edges of :math:`T ^ {\prime}`, say :math:`u^{\prime}v^{\prime}`, to tree :math:`T` such that the structure remains connected.
+
+So, assume we removed :math:`uv` from :math:`T`. In this case, our tree will have two connected components. Let's consider one component blue and the other red. Now, in tree :math:`T^{\prime}`, a path between :math:`u` and :math:`v` can be found.
+On this path, there will be an edge that has one endpoint in the blue component and the other in the red component (why?). Now, if this edge is :math:`u^{\prime}v^{\prime}`, we can add this edge to :math:`T` and reconnect it!
+
+Partitioning a Tree into Paths
+-------------------------------
+
+Consider a tree :math:`T`. In this section, our goal is to partition the edges of this tree into the minimum possible number of paths. For better intuition, imagine we remove the edges of the paths one by one from the tree until we are left with a graph without edges.
+
+First of all, note that after removing each path, only the parity of the degrees of the two endpoints of the path changes. Also, at the end, the degree of all vertices will be even (zero). So, an odd-degree vertex must be selected as an endpoint an odd number of times, and an even-degree vertex an even number of times. Therefore, if the number of odd-degree vertices in the tree is :math:`X`, then we need at least :math:`\frac X 2` paths. (We know that the number of odd-degree vertices in any graph is even, so :math:`X` is even). 
+
+Now, if we remove a path between two odd-degree vertices at each step, we can reach the optimal state! We only need to ensure that our two odd-degree vertices belong to the same connected component.
+
+Now, the question that arises is: how did being a tree help us in this process?
+
+Ultimately, we used the fact that if a tree has no odd-degree vertices, it has no edges (however, this theorem does not hold for graphs in general). This is because if a graph has at least two vertices, it will have a leaf with degree 1 (which is odd).
+
+Covering Tree Edges with Paths
+-------------------------------
+
+In this section, we want to find the minimum number of paths whose union covers all edges of :math:`T`. This problem is similar to the previous case, with the difference that in the previous case, we partitioned the edges into paths, meaning each edge belonged to exactly one path. Here, we have the freedom for an edge to be covered by multiple paths. We can conclude that the answer to this problem is less than or equal to the answer to the previous problem.
+
+At first glance, you realize that since lengthening paths does not harm us, an optimal state exists where the two endpoints of each path are leaves!
+
+On the other hand, for each leaf, consider the edge that connects this leaf to its adjacent vertex. Each path covers at most 2 of these edges. So, if we have :math:`X` leaves, we need at least :math:`\frac X 2` paths. Now we try to meet this bound. That is, if :math:`X` is even, we cover the edges with :math:`\frac X 2` paths, and if :math:`X` is odd, with :math:`\frac {X+1} 2` paths.
+
+So, at each step, after selecting a path, we try to transform our tree into a tree with two fewer leaves (of course, when :math:`X` is odd, we cannot do this in the final step). If we can do this, the number of paths we selected will be half the number of leaves, as we wanted.
+
+Consider two arbitrary leaves, say :math:`u,v`, and root the tree from this path. First, select this path (which covers the edges between :math:`u,v`). Assume the vertices on our path are :math:`a_1,...,a_k`. Now we construct a new tree that has a single vertex instead of :math:`a_1,...,a_k`! There is an edge between this new vertex and a vertex like :math:`w` if and only if there is an edge between :math:`w` and one of :math:`a_1,...,a_k`. (Intuitively, it's like compressing all vertices on the path into a single vertex). Now, each path in our new graph corresponds to a path in the original graph, and now we just need to cover all edges in the new tree with paths! 
+
+.. figure:: /_static/dot/Tree_to_Path_1.svg
+  :width: 50%
+  :align: center
+  :alt: Initial tree
+
+.. figure:: /_static/dot/Tree_to_Path_2.svg
+  :width: 50%
+  :align: center
+  :alt: Tree after compressing an edge
+
+So, at each step, we compress a path whose endpoints are leaves and turn it into a single vertex. In each step, the number of leaves in our new graph decreases by two, unless the newly added compressed vertex is itself a leaf. This happens if all vertices on the path between :math:`u,v` have degree 2, except for one of them which must have degree 3. We call a pair :math:`u,v` an incompatible pair if the path between them has such a property.
+
+So, if at each step we can choose two leaves :math:`u,v` such that they are not an incompatible pair, we do so (which reduces the number of leaves by 2 after compression). What if we cannot do this? In this case, we claim that there is only one vertex of degree 3, and the remaining vertices have degree 1 or 2 (why?). In this situation, as you can see in the figure, our tree will have exactly 3 leaves, and we can cover it with 2 paths.
+
+.. figure:: /_static/dot/Tree_to_Path_3.svg
+  :width: 50%
+  :align: center
+  :alt: Final tree
+
+Tree Embedding
+---------------
+
+Suppose we have an :math:`n`-vertex tree called :math:`T`. We also have a graph :math:`G` such that :math:`\delta(G) \geq n-1`. We want to prove that a subset of edges of :math:`G` exists that forms :math:`T`. (Intuitively, a tree :math:`T` can be found in graph :math:`G`).
+
+Consider an arbitrary leaf :math:`u` whose only neighbor is :math:`v`, and remove :math:`u` from the tree! Then, inductively find the tree :math:`T-u` in :math:`G`. Now we want to add the edge :math:`uv` to our tree. Assume vertex :math:`v` in graph :math:`G` corresponds to :math:`v^{\prime}`. Now, it is sufficient to choose a vertex among the neighbors of :math:`v^{\prime}` that has not been previously mapped to any vertex of the tree. Then, this vertex can be mapped to :math:`u`, which proves our inductive hypothesis.
+
+To find such a vertex, it is sufficient to use the assumption :math:`\delta(G) \geq n-1`. So :math:`v^{\prime}` has at least :math:`n-1` neighbors, and at most :math:`n-2` of them have previously been mapped to vertices of the tree. Therefore, at least one of :math:`v`'s neighbors has not been mapped to any vertex of the tree yet, to which we can now map :math:`u` as discussed.
+
+This problem was presented to familiarize you with the inductive structure of trees. You saw how a leaf can be removed from a tree and the inductive hypothesis applied to the remaining tree.

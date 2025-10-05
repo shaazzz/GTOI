@@ -1,0 +1,70 @@
+
+Bellman-Ford
+============
+
+Problem Statement
+-----------------
+
+We have a weighted directed graph :math:`G`. Its edge weights can also be negative. We know that graph :math:`G` does not contain any cycles with a negative total weight.
+
+Now, for each vertex, we want to find the length of the shortest path from a source vertex :math:`sc` to all other vertices, where the length of a path is the sum of its edge weights.
+
+Bellman-Ford Algorithm
+----------------------
+
+To solve this problem, we first define a :math:`dp` table of dimensions :math:`|V(G)| * |V(G)|`, where :math:`dp_{i,j}` is the length of the shortest walk from source vertex :math:`sc` to vertex :math:`j` using at most :math:`i` edges.
+
+Now we know that the length of the shortest walk between two vertices in graph :math:`G` is also equal to the length of the shortest path. This is because if the shortest walk contains a repeated vertex, it implies a cycle with a positive length (as per the problem statement, a negative cycle is not allowed). This cycle can then be removed, leading to a shorter walk, which is a contradiction.
+
+For the base cases of this DP, we know that :math:`dp_{i, sc} = 0` and :math:`dp_{0, u \neq sc} = \infty`. To find :math:`dp_{i, j}`, we consider all edges entering :math:`j`. For each edge :math:`e` that goes from :math:`u_e` to :math:`j` with weight :math:`w_e`, we calculate the value :math:`dp_{i-1, u_e} + w_e`. The minimum of these values becomes :math:`dp_{i, j}`. Therefore:
+
+.. math:: dp_{i, j} = \displaystyle{\min_{\forall \, e \: \in \: N_{j}^{-}(j)}} dp_{i-1, u_e} + w_e`
+
+To find the length of the shortest path from vertex :math:`sc` to vertex :math:`u`, having the value :math:`dp_{n-1, u}` is sufficient. This is because a path from :math:`sc` to any other vertex has at most :math:`n` vertices and :math:`n-1` edges, and according to the DP definition and the fact that the shortest walk between two vertices in :math:`G` must be a path, this value is exactly what is needed.
+
+Complexity Analysis
+-------------------
+
+To update all entries of :math:`dp_i`, for each vertex, we perform operations proportional to its in-degree. We know that the sum of in-degrees of all vertices is equal to :math:`|E(G)|`. So, in total, we perform :math:`\mathcal{O}\left(|V(G)|.|E(G)|\right)` operations. The memory complexity used is :math:`\mathcal{O}\left(|V(G)|^2\right)`.
+
+Memory Optimization
+-------------------
+
+To optimize memory consumption, the first dimension can be removed. As a result, the memory complexity becomes :math:`\mathcal{O}\left(|V(G)|\right)`.
+
+Then, for :math:`|V(G)| - 1` iterations, for each edge, the :math:`dp` value of the edge's head vertex is updated. Updating means that if edge :math:`e` goes from vertex :math:`u_e` to :math:`v_e` with weight :math:`w_e`, we set :math:`dp_{v_e} = \min(dp_{v_e}, dp_{u_e} + w_e)`.
+
+Now a question arises: will the values in the :math:`dp` table remain the desired values after doing this? The answer to this question is yes.
+
+If we consider the DP from the previous section as :math:`dp^{\prime}`, then after the :math:`i`-th iteration of updating :math:`dp`, we know that :math:`dp_u` is equal to one of :math:`dp_{i, u}^{\prime}, dp_{i+1, u}^{\prime}, \dots, dp_{n-1, u}^{\prime}`. (Proof of this lemma is left to the reader).
+
+Now, if we check after the :math:`(n-1)`-th iteration, we find that :math:`dp_u = dp_{n-1, u}^{\prime}`. Consequently, after the :math:`(n-1)`-th iteration, the values in the :math:`dp` table are the desired values.
+
+Finding the Shortest Path
+-------------------------
+
+After all this discussion, a question might arise: what if we need the optimal path itself from :math:`sc` to another vertex like :math:`des`?
+
+To solve this, we need to slightly modify the previous algorithm. We introduce an auxiliary array of size :math:`|V(G)|` named :math:`par`. Initially, all entries of :math:`par` are set to -1. Now, if, when considering edge :math:`e`, we find that :math:`dp_{v_e} > dp_{u_e} + w_e`, we set :math:`par_{v_e}` equal to :math:`u_e`.
+
+:math:`par_u` effectively represents the previous vertex in the optimal path from :math:`sc` to :math:`u`. To obtain the path from :math:`sc` to :math:`des`, we maintain a variable :math:`nw` and, as long as :math:`nw \neq sc`, we set :math:`nw` equal to :math:`par_{nw}` and prepend :math:`nw` to the currently constructed path.
+
+To prove that we will definitely reach vertex :math:`sc` and that the path obtained is optimal, we assume an array :math:`lst`. :math:`lst_u` is the index of the last iteration in which :math:`dp_u` was updated. We know that :math:`lst_u > lst_{par_u}`. (Proof left to the reader) So, each time we set :math:`nw` equal to :math:`par_{nw}`, :math:`lst_{nw}` decreases, meaning we do not loop, and we will surely reach :math:`sc`.
+
+The path length will also be equal to :math:`dp_{des}` because if we add an edge with weight :math:`w` to the path at each step, the value of :math:`dp_{nw}` decreases by exactly :math:`w`. Since :math:`dp_{sc} = 0`, the path length becomes exactly :math:`dp_{des}`.
+
+Negative Cycles
+---------------
+
+You might wonder how to detect negative cycles if it's not guaranteed that the graph doesn't have them (in the case where memory has been optimized).
+
+First, assume we run :math:`|V(G)|` iterations instead of :math:`|V(G)| - 1` iterations.
+We call an iteration of the algorithm 'good' if at least one of the :math:`dp` values changes. Now we know that if the :math:`i`-th iteration is not good, then subsequent iterations will also not be good. (If no value changes, subsequent iterations will proceed exactly as the :math:`i`-th iteration, and no values will change).
+
+Now, if there are no negative cycles, according to previous arguments, the :math:`|V(G)|`-th iteration must not be good (all values would have reached their final states in the previous iteration and will not change).
+However, if a negative cycle exists, we know that the :math:`dp` values of its vertices will never stabilize. The negative cycle itself can be traversed multiple times, causing the :math:`dp` values of the cycle's vertices to approach :math:`-\infty`. We know that if an iteration is not good, then all values have stabilized. Based on this, it follows that if there are negative cycles, all iterations will be good.
+
+Therefore, we know that if there are no negative cycles, the :math:`|V(G)|`-th iteration is not good, and if there are negative cycles, the :math:`|V(G)|`-th iteration must be good.
+So, to check for the presence of negative cycles, it is sufficient to check if the :math:`|V(G)|`-th iteration is good.
+
+To find the negative cycle itself, similar to the case without negative cycles, use an auxiliary array named :math:`par`. From a vertex whose value was updated in the :math:`|V(G)|`-th iteration, find the path from :math:`sc`. The negative cycle must have appeared in this path. (This part is provable based on the arguments in this section).

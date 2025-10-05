@@ -1,0 +1,53 @@
+Tournament
+=============================================================================================
+
+**Definition 3.2.1 (Tournament)**
+----------------------------------------------------------------------
+A tournament is a simple, complete graph whose edges have been directed (Figure 1 shows a tournament with 5 vertices).
+
+.. figure:: /_static/tournament_1.png
+   :width: 50%
+   :align: left
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+An :math:`n`-vertex tournament can model competitions between :math:`n` teams such that there is a directed edge from vertex 1 to vertex 2 if and only if team 1 has defeated team 2 (as in Figure 1).
+
+Kings in Tournaments
+----------------------------------------------------------------------
+
+**Definition 3.2.2 (King)**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A king is a vertex in a tournament that has a directed path of length at most 2 to all other vertices in the tournament. For example, vertex 3 is a king in Figure 1.
+
+**Theorem 3.2.3**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Statement:** Every tournament has at least one king.
+
+**Proof:** Let :math:`v` be a vertex with out-degree :math:`\Delta^{+}` in the tournament, meaning it is a vertex with the maximum out-degree. If there exists a vertex :math:`u` such that we cannot reach it from :math:`v` by a path of length at most 2, then :math:`u` must have a directed edge to :math:`v` and to all vertices :math:`w` such that :math:`(v,w) \in E` (Figure 2). In this case, :math:`d^{+}(u) \geq \Delta^{+}+1`, which contradicts the maximality of the out-degree of :math:`v`. Therefore, no such vertex exists that cannot be reached from :math:`v` with at most two edges, and :math:`v` is a king.
+
+.. figure:: /_static/tournament_2.png
+   :width: 50%
+   :align: left
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+Theorem 3.2.3 implies, for example, that in a competition tournament, there is an individual :math:`v` who, for every other individual :math:`u`, either defeated :math:`u` directly or defeated someone who defeated :math:`u`.
+
+Hamiltonian Paths in Tournaments
+----------------------------------------------------------------------
+
+**Definition 3.2.4 (Hamiltonian Path in a Directed Graph)**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Hamiltonian path in a directed graph is a directed path that passes through all vertices.
+
+**Theorem 3.2.5**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Statement:** Every tournament has at least one Hamiltonian path.
+
+**Proof:** Let the vertices :math:`a_1` to :math:`a_k` form the longest directed path in the tournament (Figure 3).
+
+.. figure:: /_static/tournament_3.png
+   :width: 50%
+   :align: left
+   :alt: اگه اینترنت یارو آشغال باشه این میاد
+
+If :math:`k = n`, the statement is proven. Otherwise, there exists a vertex :math:`v` that is not on this path. There cannot be a directed edge from :math:`v` to :math:`a_1` or from :math:`a_k` to :math:`v` (why?). So, assume :math:`a_i` is the vertex with the smallest :math:`i` among all vertices from :math:`a_1` to :math:`a_k` such that :math:`v` has an edge to it. In this case, the vertices :math:`a_1,...,a_{i-1},v,a_i,...,a_k` form a path of length :math:`k+1`, while the length of the longest path is :math:`k`. Consequently, :math:`k = n`, and :math:`a_1` to :math:`a_k` form a Hamiltonian path.

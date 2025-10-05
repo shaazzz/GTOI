@@ -1,0 +1,28 @@
+قضیه های وجودی دور همیلتونی
+==============================
+
+لم اساسی
+----------------
+
+Consider a simple graph :math:`G` with :math:`n` vertices that has two non-adjacent vertices :math:`a, b` such that :math:`d_a + d_b \geq n`. Now consider graph :math:`H`, which is the same graph :math:`G` where vertices :math:`a, b` are connected by an edge. We claim that graph :math:`G` has a Hamiltonian cycle if and only if graph :math:`H` has a Hamiltonian cycle.
+
+The first part of the proof is obvious, because if :math:`G` has a Hamiltonian cycle, :math:`H` will also have that cycle. (We did not remove any edge.)
+
+Now, to prove the second part, assume that :math:`H` has a Hamiltonian cycle. If this cycle does not use the edge :math:`ab`, then :math:`G` also has the same cycle, and the claim is proven. So, assume this cycle uses the edge :math:`ab`. Consequently, there must exist a Hamiltonian path in :math:`G` that starts at :math:`a` and ends at :math:`b`.
+
+Now, suppose our Hamiltonian path is :math:`a = v_1, v_2, ..., v_n = b`. If :math:`v_1` has an edge to :math:`v_i` and :math:`v_n` has an edge to :math:`v_{i-1}`, then we can find a Hamiltonian cycle in graph :math:`G`. (Go directly from :math:`v_1` to :math:`v_i`, then traverse the path from :math:`v_i` to :math:`v_n`, then go directly from :math:`v_n` to :math:`v_{i-1}`, then traverse the path from :math:`v_{i-1}` to :math:`v_1`.)
+
+.. figure:: /_static/dot/Ore_Theorem_Proof.svg
+   :width: 80%
+   :align: center
+   :alt: If the user's internet is bad, this will show up
+
+Now, for every vertex :math:`v_i` such that :math:`v_1` has an edge to it, color :math:`v_{i-1}` red. And for every vertex :math:`v_i` such that :math:`v_n` has an edge to it, color :math:`v_i` blue. If we can prove that there exists a vertex that is both red and blue, the problem will be solved. We know that by assumption :math:`d_a + d_b \geq n`, so the total number of coloring instances is at least :math:`n`. On the other hand, vertex :math:`v_n` is never colored (why?). Thus, we have :math:`n-1` possible vertices to be colored, and there are at least :math:`n` coloring instances. Therefore, by the Pigeonhole Principle, there exists a vertex that has been colored twice. Thus, there exists a vertex that is simultaneously blue and red, which implies a Hamiltonian cycle exists in :math:`G`.
+
+دیگر قضایا
+-----------------
+
+Here we state a few theorems which you can easily prove using the fundamental lemma presented.
+
+- If in graph :math:`G` the degree of every vertex is at least :math:`\frac{n}{2}`, then a Hamiltonian cycle exists in this graph.
+- If in graph :math:`G` for any two non-adjacent vertices :math:`a` and :math:`b`, we have :math:`d_a + d_b \geq n`, then a Hamiltonian cycle exists in this graph.
