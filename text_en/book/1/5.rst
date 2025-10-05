@@ -1,0 +1,35 @@
+Subgraphs
+===============
+
+A subgraph of a graph has a subset of its vertices and a subset of the edges between those vertices.
+
+Induced Subgraph
+-------------------
+An induced subgraph is a subgraph whose vertices are a subset of the original graph's vertices, and whose edges are all the edges between those vertices. Every graph with :math:`n` vertices has :math:`2^n` induced subgraphs.
+
+Spanning Subgraph
+----------------
+A spanning subgraph is a subgraph whose vertices are all the vertices of the graph, and whose edges are an arbitrary subset of the edges. Every graph with :math:`m` edges has :math:`2^m` spanning subgraphs.
+
+Notes
+-----------
+- The only induced spanning subgraph is the graph itself.
+- The number of subgraphs of a graph depends on the graph's structure.
+
+Graph Partition
+------------
+A graph partition refers to presenting several subgraphs such that their edges do not overlap and all edges of the graph are covered. In other words, each edge of the graph appears in exactly one subgraph. You can think of a partition like categorizing or coloring the edges. The figure below shows the partition of graph :math:`K_4` into two :math:`P_4` graphs:
+
+.. figure:: /_static/dot/K_4_to_P_4.svg
+   :width: 30%
+   :align: center
+   :alt: Partition of graph k4 into p4
+
+
+Independence Number and Clique Number
+---------------------------
+The largest induced subgraph that has no edges is called the maximum independent set. The size of its vertices is called the independence number of the graph, and it is denoted by :math:`\alpha` or :math:`\alpha (G)`. (Read as the Greek letter alpha)
+
+The largest induced subgraph where there is an edge between every two of its vertices, or in other words, a complete graph, is called the maximum clique of the graph. The size of its vertices is called the clique number of the graph, and it is denoted by :math:`\omega` or :math:`\omega (G)`. (Read as the Greek letter omega)
+
+These two definitions are important, and interesting problems are posed around them.
