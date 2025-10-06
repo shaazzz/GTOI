@@ -1,0 +1,39 @@
+Maximum Flow and Matching
+=========================
+
+We became familiar with the maximum flow problem in the previous chapter. Here, we will learn about another application of this problem, which is solving the matching problem and its generalizations.
+
+Solving the Maximum Matching Problem in Bipartite Graphs
+--------------------------------------------------------
+This problem can be solved using the maximum flow problem. To do this, add two vertices, a source and a sink, to the bipartite graph. Connect the source vertex to all vertices in the "top" partition with capacity one, and connect the vertices in the "bottom" partition to the sink vertex with capacity one. For each edge in the original graph, draw an edge with capacity one from the top vertex to the bottom vertex. (As shown in the figure)
+
+.. figure:: /_static/flow_matching.svg
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is trash, this appears
+
+In this graph, the largest matching is equal to the maximum flow.
+
+Weighted Maximum Matching
+-------------------------
+In this problem, each edge has a weight, and the weight of a matching is equal to the sum of the weights of its edges. Various problems can be posed for weighted matching, such as matching with the highest total weight, maximum matching with the highest total weight, or matching of a specific size with the highest total weight. These problems can be solved using a generalization of the maximum flow problem, which we will examine below. It is a good idea to try to think about this problem yourself while reading and to have solved it before reaching the solution section.
+
+Minimum Cost Flow
+-----------------
+In this problem, the goal is to find a flow that has the minimum cost. The cost of any flow is equal to the sum of (flow passing through each edge * cost of that edge) for all edges. We want to find the minimum cost for all integer flow values (from 0 to maximum flow).
+
+Solution
+~~~~~~~~
+We use a method similar to the Ford-Fulkerson method that we learned in the previous chapter. The difference is that instead of choosing an arbitrary path, we choose the path with the minimum cost and then send one unit of flow through it. We continue this process until no more flow can be sent. At each step, the cost obtained is the minimum possible cost for that amount of flow. According to the correctness of Ford's algorithm, this algorithm finds the solution up to the maximum flow.
+
+Proof of Optimality
+~~~~~~~~~~~~~~~~~~~
+Similar to the proof of correctness for Ford's algorithm, it can be proven that at each step, if f is the target flow amount and c is its cost, and the shortest path from source to sink has cost x, then in the constructed graph, if f-1 is the target flow amount, the minimum cost with which this amount of flow can be sent is c-x.
+
+Complexity Analysis
+~~~~~~~~~~~~~~~~~~~
+To find the shortest path, the SPFA algorithm can be used (since we have negative edges, Dijkstra's algorithm cannot be used), which has a time complexity of :math:`O(E)`. Thus, the total time complexity is :math:`O(fE)`.
+
+Solution for Weighted Maximum Matching
+--------------------------------------
+We construct a graph similar to the one above, with the difference that the source and sink edges are given infinite capacity, and the intermediate edges are given capacity one and their cost is set equal to the edge's weight. Then, using the minimum cost flow algorithm, all the above problems can be answered.

@@ -1,0 +1,122 @@
+
+Eulerian Tour in Directed and Undirected Graphs
+=======================================
+
+Necessary and Sufficient Condition
+-------------------
+
+Undirected Graph
+~~~~~~~~~~~~~~~
+
+First, assume the graph in question is an undirected graph. Now, we examine the necessary and sufficient condition for the existence of an Eulerian tour. First, remove any isolated vertices from the graph. Now, it is necessary and sufficient that:
+
+- a) The graph is connected.
+- b) The degree of every vertex is even.
+
+First, we prove that the two conditions above are necessary.
+
+Condition (a) is clearly necessary because if two edges are in two different connected components, a traversal cannot include both of them simultaneously.
+
+To prove the necessity of condition (b), note that whenever we enter a vertex via an edge, we must immediately exit it via another edge. (Pay attention to the starting vertex.) Therefore, the number of edges incident to each vertex must be a multiple of 2.
+
+Now, we prove that the two conditions above are sufficient. For this purpose, we use induction on the number of edges.
+
+First, assume we have a closed walk that starts at vertex :math:`start` and returns to the same vertex. :math:`a_1 = start, a_2, ..., a_k = start`, which does not necessarily include all edges.
+
+Now, remove the edges of this walk from the graph. The graph is partitioned into several connected components. Assign to each component the first :math:`i` such that :math:`a_i` is within that component.
+
+Now, begin traversing the walk we removed. Whenever we reach a vertex :math:`a_i`, inductively construct and traverse the Eulerian tours of the components to which :math:`i` has been assigned.
+
+Finally, the walk we have traversed is the Eulerian tour of our graph!
+
+Only one part of the proof remains. Why could we assume that a closed walk including :math:`start` exists?
+
+It is sufficient to start from :math:`start` and at each step, if we are at vertex :math:`u` where
+:math:`u \neq start`
+traverse an adjacent edge of :math:`u` that has not been traversed before, and continue this process until we return to :math:`start`.
+
+Why does such an edge exist? Because when we arrived at vertex :math:`u`, we entered this vertex an odd number of times and exited an even number of times. So, the number of edges traversed so far is odd, and on the other hand, by assumption, the degree of every vertex is even. Therefore, there must be an edge that has not been traversed yet!
+
+Directed Graph
+~~~~~~~~~~~~~~~
+
+Examining Eulerian tours in directed graphs is very similar to undirected graphs. Similar to the above, first remove isolated vertices, then it is necessary and sufficient that:
+
+- a) The underlying graph (ignoring directions) is connected.
+- b) :math:`{d^+}_u = {d^-}_u`
+
+Here, :math:`{d^+}_u` is the out-degree of vertex :math:`u` and :math:`{d^-}_u` is the in-degree of vertex :math:`u`.
+
+The proof of necessity and sufficiency is carried out similarly to the proof for undirected graphs.
+
+Semi-Eulerian Graph
+~~~~~~~~~~~~~~~
+Any graph that has two odd-degree vertices and all other vertices have even degrees is called semi-Eulerian. This is because it has an Eulerian path where the start and end vertices are the two odd-degree vertices.
+
+For a directed graph, for every vertex :math:`u`, :math:`{d^+}_u = {d^-}_u`, except for two vertices where the difference between their out-degree and in-degree is one, and for one, the out-degree is greater, and for the other, the in-degree is greater than the out-degree.
+
+Implementation
+-------------
+
+First, we store the graph using an adjacency list (linked list). In the ``add_edge`` function (which is written here for a directed graph), two vertices are given as input, and the function draws an edge between them. (Directed or undirected)
+
+Note that the only difference in the code for finding an Eulerian tour in a directed graph versus an undirected graph is in the ``add_edge`` function.
+
+.. code-block:: cpp
+
+  const int max_edges = 1010, max_vertices = 1010;
+  
+  int edge_counter = 1;
+  
+  int to[max_edges], next[max_edges], top[max_edges];
+  bool used[max_edges];
+
+  void add_edge(int a, int b){
+  	to[edge_counter] = b;
+  	next[edge_counter] = top[a];
+  	top[a] = edge_counter;
+  	edge_counter++;
+  }
+
+  vector<int> ans;
+
+  void build(int start){
+  	while(top[start] != 0 && used[top[start]])
+		top[start] = next[top[start]];
+  	if(top[start] == 0)
+  		return;
+  	vector <int> tmp;
+  	int u = start;	
+	
+  	do{
+  		while(top[u] != 0 && used[top[u]])
+  			top[u] = next[top[u]];
+  		assert(top[u] == 0); // if the condition holds, the graph is not Eulerian.
+  		used[top[u]] = 1;
+  		tmp.push_back(top[u]);
+  		u = to[top[u]];		
+  	}while(start != u);
+
+  	u = start;
+  	for(int id : tmp){
+  		build(u);
+  		ans.push_back(id);
+  		u = to[id];
+  	}	
+  }
+  
+  int main(){
+	// take graph as input and call add_edge for each edge
+	// call the build function
+	// now the order of edges is in the ans vector
+  }
+
+
+What if the start and end vertices are not the same?
+------------------------------------
+
+Suppose you want to find a path that starts at vertex :math:`a` and ends at vertex :math:`b`, visiting all edges, and :math:`a \neq b`.
+
+Now, to transform this new problem into an Eulerian tour problem, it is sufficient to add an edge between :math:`a` and :math:`b`. (If the graph is directed, from :math:`b` to :math:`a`).
+
+Now, if we assume we traverse the new edge first (in an Eulerian tour, it doesn't matter which edge we start with), the rest of the path is what we were looking for. (Why?) Thus, we were able to transform this problem into an Eulerian tour problem.

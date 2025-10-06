@@ -1,0 +1,188 @@
+Definitions
+=============
+
+Definition 3.1.1 (Directed Graph)
+----------------------------------
+Suppose we have several cities connected by roads, and you are in city D wanting to go to city A (Figure 1). To reach city A, you must pass through a number of roads, but since roads can be one-way, we need a graph that shows us the direction of each road, which we call a directed graph (Figure 2).
+
+.. figure:: /_static/dot/Simple_Graph.svg
+   :width: 50%
+   :align: center
+
+.. figure:: /_static/dot/Simple_Directed_Graph.svg
+   :width: 50%
+   :align: center
+
+More precisely, a directed graph
+:math:`G`
+is an ordered pair
+:math:`(V, E)`
+where :math:`V` is the set of vertices of the graph. Also, :math:`E` is a set containing ordered pairs of the form
+:math:`(u, v)`
+, meaning there is a directed edge from
+:math:`u`
+to
+:math:`v`
+in the graph.
+
+A directed graph
+:math:`G`
+is called simple if it does not contain multiple directed edges or loops. However, note that
+:math:`G`
+can be simple and :math:`E` can contain both
+:math:`(u, v)`
+and
+:math:`(v, u)`
+, but it cannot have two instances of the ordered pair
+:math:`(u, v)`
+.
+
+Note that from now on, we will deal with simple directed graphs, and by "directed graph", we will mean a simple directed graph, unless otherwise specified in the problem statement.
+
+Degree in a Directed Graph
+--------------------------------
+In a directed graph, each vertex has an in-degree and an out-degree. For example, in Figure 2, the in-degree of vertex D is 3, and its out-degree is 1!
+
+The in-degree of vertex :math:`v` is denoted by
+:math:`d^{−}(v)`
+or
+:math:`deg^{−}(v)`
+, and the out-degree by
+:math:`d^{+}(v)`
+or
+:math:`deg^{+}(v)`
+.
+
+By
+:math:`\delta^{+}, \delta^{-}`
+we mean, respectively, the minimum in-degree and minimum out-degree.
+
+Similarly, by
+:math:`\Delta^{+}, \Delta^{-}`
+we mean, respectively, the maximum in-degree and maximum out-degree.
+
+
+Cycles and Paths in a Directed Graph
+--------------------------------
+Similar to simple graphs, in directed graphs, we also have definitions like walk, closed walk, trail, cycle, and path. For example, in Figure 2, a directed path could be (D -> C -> B -> A), where the starting vertex is the origin of the journey (D) and the ending vertex is the destination (A). Note that when traversing edges, the direction of the edge must be respected. For instance, when at vertex D, we cannot go directly to vertex A!
+
+
+Also, a cycle in Figure 2 could be (D -> C -> B -> D). Obviously, when traversing a cycle, the direction of the edges must be respected.
+
+Similarly, the length of each of the above definitions is equal to the number of its edges.
+
+
+More precisely:
+
+**Walk :**
+A sequence
+:math:`v_{1}, v_{2}, ..., v_{l}`
+is a walk in a directed graph
+:math:`G`
+if for every
+:math:`1 \leq i < l`
+, the edge
+:math:`(v_{i}, v_{i+1})`
+is in :math:`G` (i.e., the above edge belongs to the set :math:`E`).
+
+**Closed Walk :**
+If, in the sequence we defined,
+:math:`v_{1} = v_{l}`
+, then this walk is called a closed walk.
+
+**Trail :** If, in the sequence we defined, there are no repeated edges, then this walk is called a trail.
+
+**Path :** If, in the sequence we defined, there are no repeated vertices (and consequently, no repeated edges), the resulting walk is a path.
+
+
+**Cycle :** Finally, if in a path, the starting and ending vertices are the same (
+:math:`v_{1} = v_{l}`
+), the resulting walk is called a cycle.
+
+Note that the above definitions are exactly like those in a simple graph, with the difference that in a directed graph, the direction of the edges must be followed correctly!
+
+Theorems and Lemmas Used in This Section
+--------------------------------------
+
+
+**Theorem 3.1.2**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement :** In a directed graph :math:`G`, we have
+:math:`\sum d^{-}(v) = \sum d^{+}(v)`
+
+
+**Proof :** The proof of this theorem is straightforward (this theorem is analogous to the sum of degrees being even in a simple graph). Consider any edge in this graph; it adds one unit to the out-degree of the starting vertex and one unit to the in-degree of the ending vertex. Consequently, one unit is added to the right side of the equality and one unit to the left side!
+
+
+**Theorem 3.1.3**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement :** If, in a directed graph :math:`G`, the out-degree (or in-degree) of every vertex is at least 1, then this graph has at least one directed cycle.
+
+
+**Proof :** This theorem is analogous to a simple graph having a cycle if the degree of every vertex is at least 2. Consider the longest path in the graph.
+
+Suppose this longest path is of the form
+:math:`v_1, v_2, ..., v_l`
+. The length of this path, according to the above definitions, is
+:math:`l-1`
+.
+
+Now consider vertex
+:math:`v_l`
+. Since this vertex has an out-degree of at least 1, there exists a vertex
+:math:`x`
+such that there is a directed edge from
+:math:`v_l`
+to
+:math:`x`
+. Furthermore, vertex
+:math:`x`
+cannot be outside the path above (why?).
+
+So, vertex
+:math:`x`
+is one of the vertices in the path. For example, suppose
+:math:`x = v_j`
+
+Consequently, the sequence
+:math:`v_{j}, v_{j+1}, ..., v_{l}, v_{j}`
+forms a cycle!
+
+
+**Theorem 3.1.4**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Statement :** If, in a directed graph :math:`G`, the out-degree (or in-degree) of every vertex is at least :math:`k`, then this graph has a cycle of length at least :math:`k+1`.
+
+
+**Proof :** This theorem is a generalization of Theorem 3.1.2. The proof of this theorem is also similar to that of Theorem 3.1.2.
+
+Similarly, consider the longest path in :math:`G`. Suppose it is a sequence of the form
+:math:`v_1, v_2, ..., v_l`
+.
+
+Now we claim
+:math:`l > k`
+(in other words, we say the length of the longest path is at least :math:`k`).
+
+The proof of the claim is clear, because if we consider vertex :math:`v_l`, at least :math:`k` edges leave :math:`v_l`. All these vertices (vertices that have an incoming edge from :math:`v_l`) are within the longest path (why?). So, this longest path has at least :math:`k+1` vertices (k of :math:`v_l`'s neighbors and :math:`v_l` itself).
+
+
+Now consider the smallest
+:math:`j`
+such that there is an edge from
+:math:`v_l`
+to
+:math:`v_j`
+(in other words, we consider the leftmost vertex of the path to maximize the length of the cycle as much as possible).
+Now consider the cycle
+:math:`v_{j}, v_{j + 1}, ..., v_{l}, v_{j}`
+. We claim that the length of this cycle is at least :math:`k+1` (why?).
+
+
+A Few More Definitions
+--------------------------------------
+**Underlying Graph :**
+If we remove the directions from the edges of a directed graph, the resulting graph is called the underlying graph. For example, Figure 1 is an underlying graph for Figure 2.

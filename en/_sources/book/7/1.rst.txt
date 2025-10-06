@@ -1,0 +1,114 @@
+Matrices and Operations on Them
+===================================
+
+Matrices are abstract structures, similar to graphs, that are used in many sciences. Matrices are the foundation of linear algebra, which is widely used in artificial intelligence and machine learning algorithms. In Olympiads, matrices are also used in complex algorithms like FFT, and familiarity with them is beneficial for an Olympiad student.
+
+In this chapter, we will gain a brief understanding of matrices and then explore the relationship between matrices and graphs to develop fast algorithms for several problems with their help.
+
+Matrix
+------
+Any rectangular arrangement of real numbers, consisting of a certain number of rows and columns, is called a matrix. Each real number located within a matrix is called an **element** (or entry) of that matrix.
+
+:math:`\begin{equation*}
+A = 
+\begin{bmatrix}
+12 & 78 & -120 \\
+3.7 & -809 & 5
+\end{bmatrix}
+\end{equation*}`
+:math:`\begin{equation*}
+B = 
+\begin{bmatrix}
+1 & 3  \\
+4 & 2 
+\end{bmatrix}
+\end{equation*}`
+:math:`\begin{equation*}
+C = 
+\begin{bmatrix}
+-0.5 & -90 \\
+0 & 4.09 \\
+5 & 6 \\
+92 & 37 
+\end{bmatrix}
+\end{equation*}`
+
+Order of a Matrix
+-----------------
+A matrix with n rows and m columns is said to be of **order** n × m.
+
+Matrix Addition and Subtraction
+-------------------------------
+For matrix addition, the first step is to ensure that the number of rows and the number of columns of both matrices are equal (it is not necessary for the number of rows to be equal to the number of columns within a single matrix). In the next step, each element of matrix A is added to the corresponding element in matrix B to form the corresponding element in C. Subtraction operations are performed in the same manner.
+
+:math:`\begin{equation*}
+\begin{bmatrix}
+2 & 4  \\
+1 & 3 
+\end{bmatrix}
++
+\begin{bmatrix}
+3 & 2  \\
+4 & 1 
+\end{bmatrix}
+=
+\begin{bmatrix}
+5 & 6  \\
+5 & 4 
+\end{bmatrix}
+\end{equation*}`
+
+:math:`\begin{equation*}
+\begin{bmatrix}
+37 & 7  \\
+0 & 3 
+\end{bmatrix}
+-
+\begin{bmatrix}
+6 & 13  \\
+2 & -5 
+\end{bmatrix}
+=
+\begin{bmatrix}
+31 & -6  \\
+-2 & 8 
+\end{bmatrix}
+\end{equation*}`
+
+Matrix Multiplication
+---------------------
+For matrix multiplication, it is first important to note that if matrix A has n rows and m columns, then matrix B must have m rows and z columns. In this case, the resulting matrix C, which is the product of these two matrices, will have n rows and z columns. The element :math:`c_{ij}` is equal to the sum of :math:`a_{ik} × b_{kj}`, where k is a natural number whose maximum value is m.
+
+:math:`\begin{equation*}
+\begin{bmatrix}
+4 & 2 & 3 \\
+0 & 3 & -1
+\end{bmatrix}
+\begin{bmatrix}
+7  \\
+-5 \\
+10 
+\end{bmatrix}
+=
+\begin{bmatrix}
+48 \\
+-25 
+\end{bmatrix}
+\end{equation*}`
+
+Scalar Multiplication
+-------------------
+When a real number k is multiplied by a matrix, all elements of that matrix are multiplied by k.
+
+:math:`\begin{equation*}
+5
+\begin{bmatrix}
+0 & 1 \\
+2 & 3 
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 5 \\
+10 & 15 
+\end{bmatrix}
+\end{equation*}`

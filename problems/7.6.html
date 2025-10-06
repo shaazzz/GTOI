@@ -1,0 +1,91 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/7/6" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 7.6</h1>
+<p>در این قسمت 2 سوال وجود دارد
+
+<div id="d7x6x1">
+  <h2>سوال <a href="7.6.1.html">7.6.1</a>  <button id="b7x6x1" onclick="swapButton('7x6x1')">حل کردم</button> </h2>
+  
+  <p>فرض کنید دو گراف داریم که تعداد گشت های از راس i به j برابر $f_n$ و $g_n$ باشد. گرافی بسازید که در آن دو راس وجود داشته باشند که تعداد گشت های به طول n+c بین آن ها</p>
+<ul>
+<li>$f_n + g_n$</li>
+<li>$f_ng_n$</li>
+</ul>
+<p>باشد که c یک عدد ثابت و صحیح است. برای دو قسمت مساله مجازید c های متفاوتی انتخاب کنید</p>
+
+</div>
+
+<div id="d7x6x2">
+  <h2>سوال <a href="7.6.2.html">7.6.2</a>  <button id="b7x6x2" onclick="swapButton('7x6x2')">حل کردم</button> </h2>
+  
+  <p>رابطه بازگشتی $$ f_n = k_1f_{n-1} + k_2f_{n-2} + ... + k_xf_{n-x} $$ به همراه x پایه آن داده شده است. الگوریتمی با پیچیدگی $ O(x^3lg(n)) $ برای محاسبه جمله n ام این دنباله ارائه کنید.</p>
+
+</div>
+
+<h1>برگرد به <a href="7.html">بخش 7</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

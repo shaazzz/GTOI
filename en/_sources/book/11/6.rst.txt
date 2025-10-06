@@ -1,0 +1,64 @@
+Heavy-Light Decomposition (HLD)
+========================
+
+Definition
+----------
+
+A classic method for answering path queries in a tree. The main problem of HLD in a rooted tree is to partition the vertices of the tree into several upward paths (chains) such that moving from any leaf towards the root, we traverse vertices from at most :math:`O(lg(n))` paths.
+
+Decomposition Algorithm
+----------------------------
+
+First, we root the tree at vertex one and calculate the subtree size of each vertex (:math:`sz[i]`) in linear time. Now, we perform a :math:`dfs` from the root and find the chains such that the vertices of each :math:`chain` form a contiguous interval of the vertices we visit. If the current vertex (v) has a child whose subtree size is greater than or equal to :math:`sz[v]/2`, we move to that child and continue the chain of vertex v from that child. (If no such child exists, we end the chain of vertex v there.) Then, we perform dfs from the other children of the current vertex and make each of them the start of a new chain.
+
+Proof of Correctness
+----------------------------
+
+Start from an arbitrary vertex and move up towards the root. Define variable :math:`X` as the subtree size of the current vertex. Each time we move up towards the root (from `v` to `u`) and enter a new path, :math:`X` (referring to `sz[u]`) at least doubles (compared to `sz[v]`). Otherwise, :math:`sz[v]*2 > sz[u]`, which means vertex v is a continuation of the chain of vertex u, and we would not enter a new chain when moving up.
+
+There is an optimization in the decomposition that does not necessarily improve the running time, but it can be clearly concluded from the proof that it does not worsen the running time. During decomposition, in a case where vertex v has no child with a subtree size at least half of `sz[v]`, and vertex v is not a leaf (it has at least one child), instead of ending its chain, we continue it from its largest child. (That is, we assume the size of its largest child is at least half of :math:`sz[v]`.)
+
+Algorithm Implementation
+---------------------------
+
+.. code-block:: cpp
+
+	const int MAXN = 100010;
+
+	int n, m, k, u, v, x, y;
+	int par[MAXN], sz[MAXN], h[MAXN], head[MAXN];
+	int stt[MAXN], fnt[MAXN], timer = 1;
+
+	int dfs1(int node){ // finding subtree sizes
+		h[node] = h[par[node]] + 1;
+		for(int v: G[node])
+			if(v != par[node]){
+				par[v] = node;
+				sz[node] += dfs1(v);
+			}
+		return ++sz[node];
+	}
+	void dfs2(int node, int hd){
+		head[node] = hd;
+		stt[node] = timer++;
+		int big = 0;
+		for(int v: G[node]) if(v != par[node] && sz[big] < sz[v]) big = v;
+		if(big) dfs2(big, hd);
+		for(int v: G[node]) if(v != par[node] && v != big) dfs2(v, v);
+		fnt[node] = timer;
+	}
+
+	int main(){
+		cin >> n;
+		for (int i = 1; i < n; i++){
+			cin >> u >> v;
+			G[u].push_back(v);
+			G[v].push_back(u);
+		}
+		dfs1(1);
+		dfs2(1, 1);
+		return 0;
+	}
+
+Here, each chain forms an interval of vertices based on their starting time (in the `dfs2` traversal). Thus, for various problems, we can build a data structure like a segment tree on this order, converting path queries into :math:`O(lg(n))` queries on that data structure. (In most trees, this value is much less than :math:`lg(n)`)
+Furthermore, with this implementation method, we can also answer queries related to subtrees!

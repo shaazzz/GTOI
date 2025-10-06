@@ -1,0 +1,282 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/14/1" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 14.1</h1>
+<p>در این قسمت 30 سوال وجود دارد
+
+<div id="d14x1x1">
+  <h2>سوال <a href="14.1.1.html">14.1.1</a>  <button id="b14x1x1" onclick="swapButton('14x1x1')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید که گراف های $K_5$ و $K_{3,3}$ مسطح نیستند.</p>
+
+</div>
+
+<div id="d14x1x2">
+  <h2>سوال <a href="14.1.2.html">14.1.2</a>  <button id="b14x1x2" onclick="swapButton('14x1x2')">حل کردم</button> </h2>
+  
+  <p>یک گراف مسطح داریم که دور به طول سه ندارد. ثابت کنید که در این گراف $e \le 2n-4$ برقرار است.</p>
+
+</div>
+
+<div id="d14x1x3">
+  <h2>سوال <a href="14.1.3.html">14.1.3</a> (-) <button id="b14x1x3" onclick="swapButton('14x1x3')">حل کردم</button> </h2>
+  
+  <p>تمام مقادیر $r,s$ را بیابید به طوری که $K_{r,s}$ مسطح باشد.</p>
+
+</div>
+
+<div id="d14x1x4">
+  <h2>سوال <a href="14.1.4.html">14.1.4</a>  <button id="b14x1x4" onclick="swapButton('14x1x4')">حل کردم</button> </h2>
+  
+  <p>اثبات یا رد کنید که به ازای هر عدد طبیعی مانند $n$ یک گراف مسطح ۴-منتظم وجود دارد که تعداد راس هایش از $n$ بیشتر باشد.</p>
+
+</div>
+
+<div id="d14x1x5">
+  <h2>سوال <a href="14.1.5.html">14.1.5</a>  <button id="b14x1x5" onclick="swapButton('14x1x5')">حل کردم</button> </h2>
+  
+  <p>اثبات یا رد کنید که دوگان هر گراف مسطح دو همبند که تمام درجاتش بیشتر از دو باشد، یک گراف ساده است.</p>
+
+</div>
+
+<div id="d14x1x6">
+  <h2>سوال <a href="14.1.6.html">14.1.6</a>  <button id="b14x1x6" onclick="swapButton('14x1x6')">حل کردم</button> </h2>
+  
+  <p>اثبات کنید که هر گراف مسطح دو بخشی است، اگر و تنها اگر ناحیه هایش زوج یال داشته باشند.</p>
+
+</div>
+
+<div id="d14x1x7">
+  <h2>سوال <a href="14.1.7.html">14.1.7</a>  <button id="b14x1x7" onclick="swapButton('14x1x7')">حل کردم</button> </h2>
+  
+  <p>یک گراف مسطح داریم که تور اویلری دارد. ثابت کنید که می توان ناحیه های مجاور آن را با دو رنگ رنگ آمیزی کرد به طوری که ناحیه های مجاور هم رنگ نباشند.</p>
+
+</div>
+
+<div id="d14x1x8">
+  <h2>سوال <a href="14.1.8.html">14.1.8</a>  <button id="b14x1x8" onclick="swapButton('14x1x8')">حل کردم</button> </h2>
+  
+  <p>در گراف مسطح $G$ زوج ثابت کنيد ميشود يالهاي را طوري جهت دار کرد که حول هر راس جهت يال ها يکي در ميان عوض شود</p>
+
+</div>
+
+<div id="d14x1x9">
+  <h2>سوال <a href="14.1.9.html">14.1.9</a> (!) <button id="b14x1x9" onclick="swapButton('14x1x9')">حل کردم</button> </h2>
+  
+  <p>اگر درجه هر راس در گراف مسطح $G$ زوج باشد ثابت کنيد نواحي گراف دو رنگ پذير اند</p>
+
+</div>
+
+<div id="d14x1x10">
+  <h2>سوال <a href="14.1.10.html">14.1.10</a>  <button id="b14x1x10" onclick="swapButton('14x1x10')">حل کردم</button> </h2>
+  
+  <p>حالت خاص قضیه بالا را نیز اثبات کنید به این شکل که $n$ خط در صفحه داریم برای نواحی حاصل از آن خطوط ثابت کنید نواحی دو رنگ پذیر اند</p>
+
+</div>
+
+<div id="d14x1x11">
+  <h2>سوال <a href="14.1.11.html">14.1.11</a>  <button id="b14x1x11" onclick="swapButton('14x1x11')">حل کردم</button> </h2>
+  
+  <p>به گرافی مسطح که سه همبند یالی باشد چند وجهی گوییم حال در گراف چند وجهی $G$ درجه هر راس  4 است حداقل تعداد مثلث ها را بیابید</p>
+
+</div>
+
+<div id="d14x1x12">
+  <h2>سوال <a href="14.1.12.html">14.1.12</a>  <button id="b14x1x12" onclick="swapButton('14x1x12')">حل کردم</button> </h2>
+  
+  <p>در چند وجهی $G$ چهار ضلعی و پنج ضلعی نداریم حداقل تعداد مثلث ها را بیابید</p>
+
+</div>
+
+<div id="d14x1x13">
+  <h2>سوال <a href="14.1.13.html">14.1.13</a> (+) <button id="b14x1x13" onclick="swapButton('14x1x13')">حل کردم</button> </h2>
+  
+  <p>در هر گراف مسطح ثابت کنید عدد رنگی آن و مساوی 6 است و به عنوان یک مسئله سخت المپیادی ثابت کنید که عدد رنگی هر گراف مسطح کمتتر مساوی 5 است توجه کنید که در حالت کلی برای 4 برقرار است ولی اثبات آن خیلی سخت بوده ولی برای 5 و6 میشود اثباتی ارائه داد</p>
+
+</div>
+
+<div id="d14x1x14">
+  <h2>سوال <a href="14.1.14.html">14.1.14</a>  <button id="b14x1x14" onclick="swapButton('14x1x14')">حل کردم</button> </h2>
+  
+  <p>هرگاه $G$ گرافی مسطح با 11 راس باشد ثابت کنید مکمل آن نامسطح است</p>
+
+</div>
+
+<div id="d14x1x15">
+  <h2>سوال <a href="14.1.15.html">14.1.15</a>  <button id="b14x1x15" onclick="swapButton('14x1x15')">حل کردم</button> </h2>
+  
+  <p>در یک $n$ ضلعی محدب همه قطرها کشید شده اند درون این $n$ ضلعی حداکثر به چند ناحیه تقسیم میشود؟</p>
+
+</div>
+
+<div id="d14x1x16">
+  <h2>سوال <a href="14.1.16.html">14.1.16</a>  <button id="b14x1x16" onclick="swapButton('14x1x16')">حل کردم</button> </h2>
+  
+  <p>$n$ نقطه در صفحه طوری قرار دارند که فاصله هر دوتایی از آنها حداقل 1 است ثابت کنید حداکثر $3n-6$ زوج از این نقاط فاصله ای دقیقا برابر 1 دارند</p>
+
+</div>
+
+<div id="d14x1x17">
+  <h2>سوال <a href="14.1.17.html">14.1.17</a> (!) <button id="b14x1x17" onclick="swapButton('14x1x17')">حل کردم</button> </h2>
+  
+  <p>هرگاه گراف $G$ مسطح باشد ثابت کنید راسی با حداکثر درجه 5 دارد</p>
+
+</div>
+
+<div id="d14x1x18">
+  <h2>سوال <a href="14.1.18.html">14.1.18</a> (!) <button id="b14x1x18" onclick="swapButton('14x1x18')">حل کردم</button> </h2>
+  
+  <p>هرگاه گراف مسطح $G$ کمری برابر $g$ داشته باشد کرانی برای یال های آن ارائه دهید</p>
+
+</div>
+
+<div id="d14x1x21">
+  <h2>سوال <a href="14.1.21.html">14.1.21</a>  <button id="b14x1x21" onclick="swapButton('14x1x21')">حل کردم</button> </h2>
+  
+  <p>یک گراف هامنی ارائه دهید که درجه هر راس آن حداقل 5 است</p>
+
+</div>
+
+<div id="d14x1x22">
+  <h2>سوال <a href="14.1.22.html">14.1.22</a>  <button id="b14x1x22" onclick="swapButton('14x1x22')">حل کردم</button> </h2>
+  
+  <p>یک گراف هامنی(مسطح) 4 منتظم ارائه دهید</p>
+
+</div>
+
+<div id="d14x1x23">
+  <h2>سوال <a href="14.1.23.html">14.1.23</a>  <button id="b14x1x23" onclick="swapButton('14x1x23')">حل کردم</button> </h2>
+  
+  <p>گرافی خود مکمل است که مکملش با خودش یک ریخت باشد :مثالی ارائه دهید یا رد کنید که گرافی خود مکمل 8 راسی و مسطح وجود دارد</p>
+
+</div>
+
+<div id="d14x1x24">
+  <h2>سوال <a href="14.1.24.html">14.1.24</a>  <button id="b14x1x24" onclick="swapButton('14x1x24')">حل کردم</button> </h2>
+  
+  <p>نشان دهید گراف پیترسن نامسطح است</p>
+
+</div>
+
+<div id="d14x1x25">
+  <h2>سوال <a href="14.1.25.html">14.1.25</a>  <button id="b14x1x25" onclick="swapButton('14x1x25')">حل کردم</button> </h2>
+  
+  <p>مثالی از یک گراف ناهامنی  و همبند ساده ارائه دهید که تعداد یال های آن $3n-6$ عدد یا کمتر از آن باشد</p>
+
+</div>
+
+<div id="d14x1x26">
+  <h2>سوال <a href="14.1.26.html">14.1.26</a>  <button id="b14x1x26" onclick="swapButton('14x1x26')">حل کردم</button> </h2>
+  
+  <p>نشان دهید هر گراف ساده با دست کم 4 راس دارای 4 راس با درجه حداکثر 5 است</p>
+
+</div>
+
+<div id="d14x1x28">
+  <h2>سوال <a href="14.1.28.html">14.1.28</a> (!) <button id="b14x1x28" onclick="swapButton('14x1x28')">حل کردم</button> </h2>
+  
+  <p>اگر یالی داشته باشیم که در گراف مسطح ما ناحیه دو سمت آن یکی باشند آن یال دارای چه ویژگی هست؟</p>
+
+</div>
+
+<div id="d14x1x29">
+  <h2>سوال <a href="14.1.29.html">14.1.29</a> (!) <button id="b14x1x29" onclick="swapButton('14x1x29')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید میتوان هر ناحیه از گراف مسطح را به ناحیه بی نهایت تبدیل کرد</p>
+
+</div>
+
+<div id="d14x1x30">
+  <h2>سوال <a href="14.1.30.html">14.1.30</a>  <button id="b14x1x30" onclick="swapButton('14x1x30')">حل کردم</button> </h2>
+  
+  <p>کاوش کنید که در گراف دوگان $G$ هر کدام از موارد زیر به چه چیزی تبدیل میشوند یال برشی ،یال چندگانه ،ناحیه ،یال</p>
+
+</div>
+
+<div id="d14x1x31">
+  <h2>سوال <a href="14.1.31.html">14.1.31</a>  <button id="b14x1x31" onclick="swapButton('14x1x31')">حل کردم</button> </h2>
+  
+  <p>$G$ یک چند وجهی با نواحی مثلثی است ثابت کنید می توان یالها را قرمز و آبی کرد که از هر راس به هر راس دیگر هم مسیر قرمز داشته باشیم هم مسیر آبی داشته باشیم</p>
+
+</div>
+
+<div id="d14x1x32">
+  <h2>سوال <a href="14.1.32.html">14.1.32</a>  <button id="b14x1x32" onclick="swapButton('14x1x32')">حل کردم</button> </h2>
+  
+  <p>یک کره با حداقل 3 دایره عظیمه روی آن داده شده است به طوری که همه ی این دایره ها از یک نقطه نمیگذرند ثابت کنید نقطه ای روی دایره هست که دقیقا تقاطع دو دایره است</p>
+
+</div>
+
+<div id="d14x1x33">
+  <h2>سوال <a href="14.1.33.html">14.1.33</a>  <button id="b14x1x33" onclick="swapButton('14x1x33')">حل کردم</button> </h2>
+  <p>منبع: امتحان درس گراف دوره تابستان ۱۳۸۵</p>
+  <p>گراف مسطح $G$ داریم که تمام ناحیه های آن (از جمله ناحیه بیرونی) به شکل مثلث اند. سه یال ناحیه بیرونی را حذف می کنیم و گراف حاصل را $H$ می نامیم. ثابت کنید یال های $H$ را می توان به تعدادی $K_{1,3}$ افراز کرد به طوری که هر راس به جز سه راس بیرونی در دقیقا یکی از آن ها نقش راس مرکزی را داشته باشد.</p>
+
+</div>
+
+<h1>برگرد به <a href="14.html">بخش 14</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

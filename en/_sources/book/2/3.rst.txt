@@ -1,0 +1,115 @@
+Counting the Number of Trees
+============================
+
+Counting the number of :math:`n`-vertex trees is one of the most fascinating problems in combinatorics, with diverse and creative approaches. In this section, the discussion focuses on trees with labeled vertices. (You can think of them as the number of spanning subgraphs of the complete graph :math:`K_n` that are trees). We will, in fact, prove by several methods that the number of :math:`n`-vertex trees is equal to :math:`n^{n-2}`. Before reading the solution to each section, read the hints and try to devise your own solution.
+
+Counting with Degree Sequence
+-----------------------------
+
+Hint
+~~~~
+
+Provide a formula that counts the number of trees with a degree sequence :math:`d_1, d_2, ..., d_n`. To prove this formula, we will inductively remove leaves!
+
+Solution
+~~~~~~~~
+
+The desired formula is
+:math:`\frac {(n-2)!} {(d_1-1)! \times (d_2-1)! \times ... (d_n-1)!}`
+. Note that
+:math:`\sum (d_i-1)`
+is equal to :math:`n-2`, so the above expression is in fact a multinomial coefficient!
+
+To prove the formula, use induction on :math:`n`. As a base case, consider that for :math:`n \leq 2`, the formula holds. Now, it is sufficient to consider a specific leaf (a vertex like :math:`u` where :math:`d_u = 1`). Then, consider cases for its unique neighbor. If the unique neighbor of vertex :math:`u` is vertex :math:`v` (note that since :math:`n > 2`, we can conclude that :math:`v` should not be a leaf), then the number of possible trees in this case is
+:math:`\frac {(n-2)!} {(d_1-1)! \times (d_2-1)! \times ... (d_v-2)! (d_n-1)!}`
+. As we said, the above expression is similar to a multinomial coefficient. According to the generalized Pascal's identity, the sum of the expressions (after considering all cases) will be
+:math:`\frac {(n-2)!} {(d_1-1)! \times (d_2-1)! \times ... (d_n-1)!}`
+, as desired.
+
+Now, observe that the above expression actually counts the number of distinct sequences where the character :math:`i` appears :math:`d_i-1` times. Thus, it is as if we have mapped each tree to an :math:`n-2`-tuple sequence of numbers from :math:`1` to :math:`n`. Therefore, if we sum this expression for all possible :math:`d_1, d_2, ..., d_n`, the result will be :math:`n^{n-2}`, which is the total number of distinct :math:`n`-vertex trees.
+
+Prüfer Code
+-----------
+
+Hint
+~~~~
+
+We establish a one-to-one correspondence from :math:`n`-vertex trees to :math:`n-2`-tuple sequences of numbers from :math:`1` to :math:`n`.
+
+Solution
+~~~~~~~~
+
+Our correspondence function operates as follows: we start with a tree :math:`T`, and as long as its number of vertices is greater than 2, we repeatedly remove the leaf :math:`u` with the minimum label. Then, we write down the label of the unique neighbor of :math:`u`. Finally, consider the :math:`n-2` numbers written down, in the order they were written. They form our :math:`n-2`-tuple sequence.
+
+To prove the one-to-one nature of the correspondence, we must demonstrate that every :math:`n-2`-tuple sequence of numbers from :math:`1` to :math:`n` uniquely corresponds to an :math:`n`-vertex tree. Consider the sequence :math:`s_1,s_2,...,s_{n-2}`. We want to find the tree that corresponds to it.
+
+First, note that in our correspondence process, vertex :math:`i` appears exactly :math:`d_i-1` times in the sequence (why?).
+
+Thus, the numbers that do not appear in :math:`s_1,s_2,...,s_{n-2}` must be the leaves of the tree. In the correspondence process, in the first step, we removed the leaf with the minimum label. So, let :math:`u` be the smallest number that does not appear in :math:`s_1,s_2,...,s_{n-2}`. Initially, :math:`u` must have been removed, and its unique neighbor is vertex :math:`s_1`. Now, we can inductively find the tree corresponding to :math:`s_2,...,s_{n-2}`. Then, we add the edge between :math:`u` and :math:`s_1` to the tree, and the tree corresponding to :math:`s_1,s_2,...,s_{n-2}` will be obtained.
+
+Correspondence to Functional Graph
+----------------------------------
+
+Hint
+~~~~
+
+We define a two-colored tree as a tree in which vertex :math:`A` is colored blue and vertex :math:`B` is colored red (it is even possible that :math:`A` and :math:`B` are the same vertex).
+
+It is clear that for every :math:`n`-vertex tree, there are exactly :math:`n^2` two-colored trees. So, if we have :math:`c` :math:`n`-vertex trees, then we have :math:`c \times n^2` two-colored :math:`n`-vertex trees.
+
+In this section, we establish a one-to-one correspondence between :math:`n`-vertex functional graphs (of which there are :math:`n^n`) and two-colored trees.
+
+Solution
+~~~~~~~~~~~
+
+Consider a functional graph. As you know, in every functional graph, each connected component (in the underlying graph) consists of a directed cycle, with trees hanging from each of its vertices. Intuitively, to transform this functional graph into a tree, it would suffice to remove one edge from each cycle and then connect the functional graph components to form a tree. However, this process must be done in a way that ensures a one-to-one correspondence, allowing us to identify which edge was removed from the two-colored tree!
+
+Suppose, for each connected component of the functional graph (in the underlying graph), we call the smallest label in its cycle the *beauty of the component*, and the vertex with this minimum label the *beautiful vertex* of the component. Now, for the correspondence, perform the following process:
+
+- Arrange the components from left to right such that their beauties are in **decreasing** order.
+- In each component, assume its cycle is :math:`p_1,p_2,...,p_k` such that :math:`p_1` is the beautiful vertex of the component. First, remove the edge :math:`p_kp_1`. Then, connect :math:`p_k` to the beautiful vertex of the next component (to its right).
+- Color vertex :math:`p_1` in the leftmost component blue, and vertex :math:`p_k` in the rightmost component red. Then, remove the directions of the edges.
+
+In this way, we have constructed a two-colored tree from the functional graph we had.
+
+Why did we define the beauty of the component as the **smallest** vertex in the cycle, and why did we arrange the components such that their beauties are **decreasing**? The sole reason for this was to ensure that the path from the blue vertex to the red vertex possesses a property we call the *attractive property*.
+
+**Attractive Property**: First, note that each of the cycles of the functional graph is now actually an interval of the path between the blue and red vertices. Start from the blue vertex and move towards the red vertex, observing the labels. Suppose we are currently at vertex :math:`u`, and the minimum label :math:`X` we have seen along the path *before* :math:`u` is recorded. If :math:`u<X` (or, in other words, :math:`X` decreases after this step), it means that we have entered a vertex belonging to another cycle (of the functional graph) (why?)!
+
+To prove that the correspondence is reversible, we must be able to uniquely reconstruct the functional graph from a two-colored tree.
+
+As we said, let :math:`A` be the blue vertex and :math:`B` be the red vertex.
+
+We reverse the steps of the correspondence one by one to reach the functional graph. First of all, "hang" the tree from the path :math:`A` to :math:`B`. Consider vertex :math:`A` on the left and vertex :math:`B` on the right.
+
+- The path :math:`AB` must be directed from left to right.
+- Then, all trees hanging from the vertices of the path :math:`AB` must be directed from bottom to top (each vertex has an edge to its parent).
+- Here, we use the **attractive property** mentioned above. By traversing the path from :math:`A` to :math:`B`, we can partition the path into intervals that previously belonged to a single component (in the functional graph). Now we know that each of these intervals was previously a cycle with vertices :math:`p_1,...,p_k` in order, and the edge :math:`p_kp_1` was removed. So, it is sufficient to draw an edge from the last vertex of the interval (which is :math:`p_k`) to the first vertex of the interval (which is :math:`p_1`).
+
+Thus, by inverting the correspondence function, we were able to obtain a functional graph from each two-colored tree. Therefore, we have proven the one-to-one nature of the correspondence.
+
+Counting Arborescences
+----------------------
+
+Hint
+~~~~
+
+We attempt to count the number of arborescences (rooted trees where every vertex except the root has a directed edge to its parent). Furthermore, assume the edges of the tree are ordered, meaning we have written an :math:`n-1`-permutation on the edges of the tree.
+
+In this case, if the number of arborescences we counted (including the order of edges) is :math:`T`, then the number of trees will be :math:`\frac {T} {(n-1)! \times n}`. In other words, each tree is counted :math:`(n-1)! \times n` times. The factor :math:`n` is due to the choice of the root of the tree, and :math:`(n-1)!` is due to the choice of the permutation written on the edges of the tree.
+
+Solution
+~~~~~~~~~~~
+
+We attempt to calculate :math:`T`. Consider a specific arborescence and its construction process as follows:
+
+- First, consider an :math:`n`-vertex graph with no edges. We add edges one by one. Thus, at each step, we will have a number of directed trees.
+- In the :math:`i`-th step, consider the edge labeled :math:`i`. Assume it is :math:`uv`.
+- In this case, it is necessary and sufficient that at each step, :math:`u` and :math:`v` belong to two different components, and also that :math:`v` is a vertex that is the root of one of our directed trees.
+
+To count the number of possible arborescences, it is sufficient to understand how many different states the arborescence construction process can have.
+
+At the beginning of step :math:`i` (counting from 1), we have exactly :math:`n-i+1` rooted trees. If you consider cases for :math:`u` (of which there are :math:`n` possibilities), then for choosing :math:`v`, there are exactly :math:`n-i` possibilities, because :math:`v` must be the root of one of the trees and must not be the root of the tree that :math:`u` is in. Therefore, the :math:`i`-th step of the graph construction process has :math:`n \times (n-i)` states. So, finally, we have
+:math:`T = n^{n-1} \times (n-1)!`
+
+Thus, as we said, the number of trees must be equal to :math:`\frac {T} {(n-1)! \times n}`, which is :math:`n^{n-2}`. As desired!

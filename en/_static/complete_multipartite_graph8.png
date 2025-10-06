@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="1000.0" height="1000.0" id="c:\tom\ortho\2-generalized-4-orthoplex.svg">
+<!-- X Coordinate transform: fx(x)=(x+1.05)*476.1905-->
+<!-- Y Coordinate transform: fy(y)=(1.05-y)*476.1905 -->
+<g style="stroke:#000000;stroke-width:2.0;stroke-opacity:1.00;fill-opacity:0">
+<!-- Group: <Default>-->
+</g>
+<g style="stroke:#000000;stroke-width:4.0;stroke-opacity:1.00;fill-opacity:0">
+<!-- Group: c-->
+<polygon points=" 976.19,500 836.718,163.282 500,23.81 163.282,163.282 23.81,500 163.282,836.718 500,976.19 836.718,836.718"/>
+<polyline points=" 976.19,500 500,23.81"/>
+<polyline points=" 976.19,500 163.282,163.282"/>
+<polyline points=" 976.19,500 163.282,836.718"/>
+<polyline points=" 976.19,500 500,976.19"/>
+<polyline points=" 836.718,163.282 163.282,163.282"/>
+<polyline points=" 23.81,500 836.718,163.282"/>
+<polyline points=" 500,976.19 836.718,163.282"/>
+<polyline points=" 836.718,163.282 836.718,836.718"/>
+<polyline points=" 500,23.81 23.81,500"/>
+<polyline points=" 500,23.81 163.282,836.718"/>
+<polyline points=" 500,23.81 836.718,836.718"/>
+<polyline points=" 163.282,163.282 163.282,836.718"/>
+<polyline points=" 500,976.19 163.282,163.282"/>
+<polyline points=" 500,976.19 23.81,500"/>
+<polyline points=" 23.81,500 836.718,836.718"/>
+<polyline points=" 163.282,836.718 836.718,836.718"/>
+</g>
+<g style="stroke:#000000;stroke-width:0.8333333;fill:#FF0000">
+<circle cx="976.19" cy="500" r="20.0"/>
+<circle cx="23.81" cy="500" r="20.0"/>
+</g>
+<g style="stroke:#000000;stroke-width:0.8333333;fill:#FFFF00">
+<circle cx="836.718" cy="163.282" r="20.0"/>
+<circle cx="163.282" cy="836.718" r="20.0"/>
+</g>
+<g style="stroke:#000000;stroke-width:0.8333333;fill:#00FFFF">
+<circle cx="500" cy="23.81" r="20.0"/>
+<circle cx="500" cy="976.19" r="20.0"/>
+</g>
+<g style="stroke:#000000;stroke-width:0.8333333;fill:#0000FF">
+<circle cx="163.282" cy="163.282" r="20.0"/>
+<circle cx="836.718" cy="836.718" r="20.0"/>
+</g>
+</svg>

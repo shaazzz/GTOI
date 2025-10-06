@@ -1,0 +1,30 @@
+2-SAT
+============
+
+2-SAT, which is short for 2-Satisfiability, is a logical problem.
+
+The problem involves being given an expression with logical variables, and you must assign truth values (true/false or 1/0) to these variables such that the condition is satisfied, or determine that it cannot be satisfied. This expression is something like :math:`({a_1} ∨ {b_1}) ∧ ({a_2} ∨ {b_2}) ∧ ··· ∧ ({a_m} ∨ {b_m})`, where :math:`a_i` and :math:`b_i` are either one of the variables :math:`({x_1}, {x_2},..., {x_n})` or their negations, i.e., :math:`({¬x_1}, {¬x_2},..., {¬x_n})`.
+
+Algorithm
+---------
+Initially, for each variable and its negation, we place a vertex in the graph (a total of 2n vertices). For each clause :math:`u ∨ w`, we add a directed edge from not-u to w and a directed edge from not-w to u.
+
+If two vertices, u and not-u, are in the same strongly connected component, it means that the conditions of this expression cannot be satisfied. This is because if u is true, then its negation is also implied to be true, and if u is false, its negation is also implied to be false, which is a contradiction.
+
+Based on this concept, we can use `Kosaraju's algorithm <https://gtoi.shaazzz.ir/book/3/4.html#id13>`_ to determine if a vertex appears with its negation in the same strongly connected component.
+
+If the problem is found to be satisfiable (i.e., no variable and its negation are in the same strongly connected component), we can then proceed to assign true/false values to satisfy the expression.
+
+We `topologically sort <https://gtoi.shaazzz.ir/book/3/3.html#id4>`_ the graph's vertices. If a variable u appears after its negation (¬u) in the topological sort, we assign u a value of true (1). If u appears before its negation (¬u), we assign u a value of false (0).
+
+This algorithm has a time complexity of :math:`O(n + m)`.
+
+Applications
+-----------
+One application of 2-SAT is detecting if a graph is bipartite. We consider a variable for each vertex. If two vertices, such as u and v, have an edge between them, we add two clauses: :math:`(a_v ∨ ¬a_u) ∧ (¬a_v ∨ a_u)` to the 2-SAT expression.
+It is clear that with these clauses, we can detect bipartite graphs. If we consider one partition of the graph as 0 and the other as 1, the 2-SAT condition is satisfied. Therefore, if we find a solution, the graph is bipartite.
+
+3-SAT
+-------
+3-SAT is a harder problem than 2-SAT, where instead of two variables in each clause, there are three variables. This problem is NP-complete, and therefore, no efficient algorithm is known for it.
+It is worth mentioning that all K-SAT problems, where k is greater than three, can be reduced to 3-SAT.

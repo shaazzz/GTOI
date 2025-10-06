@@ -1,0 +1,73 @@
+Min-Max Theorems
+==================
+
+In this section, we examine several theorems that state that the minimum of one quantity is equal to the maximum of another. Some of these theorems hold for any graph, while others are only valid for bipartite graphs.
+
+First, let's define these notations:
+
++------------------------+--------------------------+
+|:math:`\alpha`          | Maximum Independent Set  |
++------------------------+--------------------------+
+|:math:`\alpha^{\prime}` | Maximum Matching         |
++------------------------+--------------------------+
+|:math:`\beta`           | Minimum Vertex Cover     |
++------------------------+--------------------------+
+|:math:`\beta^{\prime}`  | Minimum Edge Cover       |
++------------------------+--------------------------+
+
+Theorems Valid in Any Graph
+---------------------------
+
+:math:`\alpha + \beta = n`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The complement of an independent set is a vertex cover, and the complement of a vertex cover is an independent set (why?). Consequently, if you consider the maximum independent set, its complement is the minimum vertex cover, and vice versa.
+
+:math:`\alpha^{\prime} + \beta^{\prime} = n`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, we must assume that the graph has no isolated vertices, because otherwise, an edge cover is not defined for such a graph.
+
+Now, consider a minimum edge cover.
+
+Initially, we can deduce that there are no cycles in this set of edges (because if there were, removing one edge from the cycle would result in a smaller set that is still an edge cover). Therefore, each connected component of it is a tree.
+
+Then, we can deduce that in none of these trees is there a path of length greater than 2 (why?). Therefore, each of these trees is a star.
+
+The number of stars is :math:`n-\beta^{\prime}`. From each star, exactly one edge can be chosen to form a matching, whose size is less than or equal to the maximum matching. That is, :math:`n-\beta^{\prime} \leq \alpha^{\prime}`, which implies :math:`n \leq \alpha^{\prime} + \beta^{\prime}`.
+
+Now consider a maximum matching.
+
+Consider any vertex :math:`u` that is not covered by the maximum matching. All neighbors of :math:`u` must be covered by the maximum matching (why?), and since we have no isolated vertices, :math:`u` has at least one neighbor.
+
+Now we construct an edge cover. First, we add all edges of the matching to it. Then, for each vertex not covered by the maximum matching, we add one of its incident edges to the edge cover. Now we have an edge cover of size :math:`n - \alpha^{\prime}` because the initial :math:`\alpha^{\prime}` edges each covered two vertices, and the remaining edges each covered one vertex. So, :math:`n-\alpha^{\prime} \geq \beta^{\prime}`, which implies :math:`n \geq \alpha^{\prime} + \beta^{\prime}`.
+
+Finally, the two parts above prove the statement.
+
+:math:`\beta \geq \alpha^{\prime}`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider a maximum matching. To cover only the edges belonging to this matching, you need :math:`\alpha^{\prime}` vertices. (Each vertex can cover at most one of them). Therefore, :math:`\beta \geq \alpha^{\prime}`.
+
+Theorems Valid in Bipartite Graphs
+----------------------------------
+
+:math:`\alpha^{\prime} = \beta`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From the previous section, we had :math:`\beta \geq \alpha^{\prime}`, so every vertex cover is greater than or equal to a matching. Therefore, if we find a matching that is equal to a vertex cover, we have proven the statement. Additionally, that matching will be maximum, and that vertex cover will be minimum.
+
+Consider a minimum vertex cover. Suppose our bipartite graph has two partitions :math:`X,Y`, and our set of vertex cover vertices is :math:`X1 \cup Y1`, where :math:`X1` is from partition :math:`X` and :math:`Y1` is from partition :math:`Y`. Also, let :math:`X2=X-X1, Y2=Y-Y1`.
+
+Now consider the graph containing only the vertices :math:`X1,Y2`. We want to find a perfect matching from :math:`X1` to :math:`Y2` (meaning all vertices in :math:`X1` are included in the matching).
+
+We check Hall's condition for finding a perfect matching from :math:`X1` to :math:`Y2`. Suppose :math:`S \subseteq X1`. We claim that :math:`|S| \leq |n(S)|` holds. Assume it does not hold, i.e., :math:`|S| > |n(S)|`. Then, if we remove the set :math:`S` from the vertex cover and add the set :math:`n(S)` to the vertex cover, all edges are still covered, and we have arrived at a smaller vertex cover, which contradicts the minimality of the current vertex cover. Thus, Hall's condition holds.
+
+Similarly, a perfect matching can be found from :math:`Y1` to :math:`X2`. This implies that we have found a matching whose size is equal to the vertex cover.
+
+:math:`\beta^{\prime} = \alpha`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From previous sections, we know that :math:`\alpha^{\prime} = \beta` and :math:`n - \alpha = \beta` and :math:`n - \beta^{\prime} = \alpha^{\prime}` hold.
+
+Therefore, :math:`n - \alpha = n - \beta^{\prime}`, which implies :math:`\alpha = \beta^{\prime}`.

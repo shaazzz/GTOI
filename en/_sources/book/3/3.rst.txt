@@ -1,0 +1,178 @@
+Directed Acyclic Graph
+===========================================================
+Definition 3.3.1 (DAG)
+--------------------------------------------
+Suppose we have a gun game. The game developer is supposed to save the history of each round of the game. In other words, if player
+:math:`A`
+kills player
+:math:`B`,
+we draw a directed edge from
+:math:`A`
+to
+:math:`B`.
+
+Assuming that two players cannot kill each other at the same time, the graph formed by these players is a directed acyclic graph (why?).
+
+As the section name suggests, a directed graph that has no cycles is called a directed acyclic graph, or
+:math:`DAG`
+(directed acyclic graph) for short.
+
+An Important Property
+-----------------------------------------
+**Theorem 3.3.2**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Theorem Statement:** If
+:math:`G`
+is a directed acyclic graph, then its vertices can be ordered as
+:math:`v_{1}, v_{2}, ..., v_{n}`
+such that if there is an edge
+:math:`(v_{i}, v_{j})`
+in the graph, then
+:math:`i < j`.
+(See Figure 1 and Figure 2. Figure 2 shows a possible ordering of vertices for the graph in Figure 1.)
+
+.. figure:: /_static/dot/DAG_Random.svg
+   :width: 25%
+   :align: center
+
+.. figure:: /_static/dot/DAG_Sorted.svg
+   :width: 50%
+   :align: center
+
+**Proof:** We use induction to prove this theorem. The base case is
+:math:`n = 1`,
+which is a graph with one vertex. The statement is clearly true for this graph.
+
+According to Theorem
+:math:`3.1.2`,
+which we proved in graph definitions, there exists a vertex in
+:math:`G`
+with an in-degree of
+:math:`0`
+(because if all vertices had an in-degree of at least one, then the graph would contain a cycle, contradicting the problem's assumption).
+
+Now, suppose
+:math:`d^{-}(x) = 0`.
+We place vertex
+:math:`x`
+at position
+:math:`v_{1}`
+and remove it from the graph (along with all its incident edges).
+
+Since the original graph was acyclic, removing vertex
+:math:`x`
+does not create a cycle, and the inductive conditions hold. Thus, by induction, the remaining graph can be ordered such that the theorem's condition holds. We place this ordering of vertices, in order, into
+:math:`v_{2}, v_{3}, ..., v_{n}`.
+Also,
+:math:`v_{1} = x`.
+
+Now it is sufficient to prove that this ordering of vertices adheres to the theorem's condition. The vertices
+:math:`v_{2}, v_{3}, ..., v_{n}`
+are already placed according to the induction. Now it's only necessary for vertex
+:math:`v_{1}`
+to satisfy the condition, which is obvious because this vertex has no incoming edges. Thus, the theorem is proven!
+
+**Footnote:** A more intuitive statement of this theorem is that the vertices of an acyclic graph can be arranged in a line such that all edges go from left to right (or from right to left)! This ordering of vertices is also called a
+topological sort
+or topological ordering!
+
+Topological Sort
+-----------------------------------------
+
+Topological Sort Algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This algorithm is essentially the
+:math:`DFS`
+algorithm. We simply push a vertex onto a stack (here, we didn't use a stack to increase program speed; it is recommended to minimize stack usage) when its traversal is complete.
+
+Proof of Correctness
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suppose the order provided by the algorithm is :math:`v_{1}, v_{2}, ..., v_{n}`.
+Consider the following lemma:
+
+**Lemma 1:** When a vertex like
+:math:`x`
+is added to the array, all vertices reachable from :math:`x` (i.e., all vertices
+:math:`v`
+such that there is a path from
+:math:`x`
+to
+:math:`v`) must have finished their traversal and been added to the array! (Why?)
+
+To prove the above algorithm, we use proof by contradiction and **Lemma 1**. Suppose the order we obtained is not desired. That is, there exist
+:math:`i < j`
+such that the edge
+:math:`(v_{i}, v_{j})`
+belongs to the graph (i.e., an edge from left to right).
+
+But this is not possible! Because when
+:math:`v_{i}`
+is added to the array, according to **Lemma 1**, all vertices reachable from
+:math:`v_{i}`
+must have been added to the array. However, there is an edge from
+:math:`v_{i}`
+to
+:math:`v_{j}`
+(and obviously a path), and
+:math:`v_{j}`
+has not yet been added to the array! This contradicts **Lemma 1**. Therefore, the statement is false, and such
+:math:`i, j`
+do not exist!
+
+Algorithm Complexity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The complexity of the above algorithm is the same as the
+:math:`DFS`
+algorithm, which is
+:math:`O(n + m)`,
+where
+:math:`n`
+and
+:math:`m`
+are the number of vertices and edges, respectively.
+
+Algorithm Implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: cpp
+
+	#include<bits/stdc++.h>
+
+	using namespace std;
+
+	const int MX = 5e5 + 5;
+
+	int n, m; /// Tedad ra's ha va yal ha
+	vector<int> gr[MX]; /// vector mojaverat
+	vector<int> topologic; /// topological sort
+	bool mark[MX];
+
+	void dfs(int v){
+	    mark[v] = 1;
+	    for(int u: gr[v]){
+		if(!mark[u])
+		    dfs(u);
+	    }
+	    topologic.push_back(v); // in array yek topological sort baraie DAG ast!
+	}
+
+	int main(){
+	    cin >> n >> m;
+	    for(int i = 0; i < m; i++){
+			int v, u;
+			cin >> v >> u; // Ra's ha 0-based hastand!
+			gr[v].push_back(u);
+	    }
+	    // Graph vorodi bayad DAG bashad!
+	    for(int i = 0; i < n; i++)
+			if(!mark[i])
+		 	   dfs(i);
+	    // topological sort ro khoroji midahim!
+	    for(int i = 0; i < topologic.size(); i++)
+		  cout << topologic[i] << ' ';
+	    cout << endl;
+	    return 0;
+	}
+
+**Footnote 1:** Note that the above algorithm provides the correct answer only if it receives an acyclic graph as input. Later, we will describe the algorithm for finding cycles in a directed graph.
+
+**Footnote 2:** Finally, in the topological order we obtain, edges go from right to left (in other words, edges go from a larger index to a smaller index, contrary to the order presented in **Theorem 3.3.2**).

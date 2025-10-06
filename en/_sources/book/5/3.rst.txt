@@ -1,0 +1,27 @@
+De Bruijn sequence
+==========
+
+Can we write :math:`2^n` digits of 0s and 1s around a circle such that if we consider all consecutive segments of length :math:`n`, they produce all :math:`n`-bit binary numbers?
+
+Conversion to Hamiltonian Cycle
+------------------
+
+Our first idea for modeling this graph is as follows:
+
+We construct a graph with :math:`2^n` vertices, where each vertex represents an :math:`n`-tuple of 0s and 1s. And vertex :math:`a` has a directed edge to vertex :math:`b` if we can remove the last digit of string :math:`a` and then add a character to its beginning such that string :math:`b` is obtained. Now, the question is equivalent to finding a Hamiltonian cycle in the graph we constructed!
+
+Here we reach a dead end because we have no method to determine whether a graph contains a Hamiltonian cycle or not.
+
+Conversion to Eulerian Tour
+-----------------
+
+We construct a graph with :math:`2^{n-1}` vertices, where each vertex corresponds to an :math:`n-1`-tuple of 0s and 1s. Each vertex, such as :math:`u`, has exactly two outgoing edges. The outgoing edge labeled with 0 goes to vertex :math:`w` such that if we remove the last character of string :math:`u` and add 0 to its beginning, the resulting string will be :math:`w`. The outgoing edge labeled with 1 can be defined similarly.
+
+The main difference between the previous graph and this graph is that in the previous graph, each :math:`n`-tuple of 0s and 1s around the circle corresponded to a vertex in the graph. But here, it corresponds to an edge of the graph. And we have converted the problem to finding an Eulerian tour in the graph. (It can be proven that just as the out-degree of each vertex is 2, the in-degree of each vertex is also 2, and the underlying graph is connected, thus it is an Eulerian graph).
+
+Now, if you find an Eulerian tour of the graph and write the digits on its edges sequentially around the circle, our desired arrangement will be obtained!
+
+.. figure:: /_static/dot/De_Bruijn_Graph.svg
+   :width: 40%
+   :align: center
+   :alt: If the user's internet is slow, this will appear

@@ -1,0 +1,76 @@
+Obtaining Recursive Functions Using Graphs and Matrices
+=================================================
+
+The problem of finding the number of walks of length
+k
+in a graph is one from which many counting problems can be considered a special case. Since the computation time for this number is proportional to the logarithm of
+k,
+it often performs faster than other algorithms, and instead of other methods, one can use matrix exponentiation of this graph.
+
+In this section, we consider families of recursive functions that appear in theoretical problems as well as dynamic programming. For these functions, we construct graphs such that the
+n-th
+term of the desired recurrence relation is equal to the number of walks of length
+n
+in a graph with a fixed number of vertices. This way, an algorithm with a complexity of
+:math:`O(lg(n))`
+is obtained, which computes the desired recursive sequence.
+
+Fibonacci
+----------
+
+Consider a two-vertex graph where the two vertices are connected by an edge, and the first vertex has a self-loop. We want to calculate the number of walks of length
+n
+from vertex one to itself, and we call this value
+:math:`f_n`.
+We perform casework on the first edge of the walk. If the first edge of the walk is the self-loop, then by definition, we can continue the walk in
+:math:`f_{n-1}`
+ways. However, if in the first step we went to the other vertex, the second edge of the walk is uniquely determined, and we are forced to return to the first vertex. We can then continue the walk in
+:math:`f_{n-2}`
+ways. Thus, we have:
+
+.. math:: f_n = f_{n-1} + f_{n-2}
+
+And the number of 0-edge walks and 1-edge walks from vertex one to itself is 1. Therefore, the sequence
+f
+is the well-known Fibonacci sequence. So, if we want to calculate the
+n-th
+number in the Fibonacci sequence, we can raise the adjacency matrix of this graph to a power. That is, the (1,1) entry of the matrix
+:math:`\begin{bmatrix}1 & 1\\1 & 0\end{bmatrix} ^ n`
+is the
+n-th
+Fibonacci number.
+
+Transformations
+----------
+There is no need to construct a graph from scratch for every recurrence relation; instead, we can find general transformations and modify the graph to include a specific pattern of functions. For example, the partial sum transformation is presented below.
+
+Suppose we have a graph where the number of walks of length
+n
+from vertex
+i to j
+is equal to
+:math:`f_n`.
+We define the sequence g as follows:
+
+.. math:: g_0 = 0
+.. math:: g_n = g_{n-1} + f_{n-1}
+
+We want to modify the graph in such a way that the above sequence can be computed. We add a new vertex, say
+k,
+to the graph, add an edge from vertex
+j to k,
+and also place a self-loop on the new vertex. The number of walks from vertex
+i to j
+does not change and remains as before. We claim that the number of walks of length
+n from i to k
+is the desired value. First, it is clear that the base case holds, and there are no 0-edge walks
+from i to k.
+To prove the second part, we perform casework on the last edge of the walk. Either the last edge of the walk is the self-loop, in which case the beginning of the walk has
+:math:`g_{n-1}`
+possibilities, or it is an edge entering
+k
+from vertex
+j,
+in which case, according to the assumption, the beginning of the walk can have
+:math:`f_{n-1}`
+possibilities.
