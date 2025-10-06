@@ -88,14 +88,6 @@ In fact, the BFS tree can be considered a spanning subtree of the graph, "hangin
 
 In addition to its uses in programming, where it might be helpful in certain problems, the BFS tree can also be instrumental in solving some theoretical problems, which we demonstrate in the two examples below.
 
-|
-|
-|
-|
-|
-|
-|
-
 BFS Code
 ------
 
