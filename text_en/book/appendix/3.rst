@@ -1,0 +1,31 @@
+Cheat Sheet
+==========================
+
+The goal of this book's graph theory instruction is not to memorize definitions. Whenever you forget a definition, you can refer to this page, and doing so does not mean cheating at all (the page title is merely an idiom).
+
+Note that this page is not for teaching; the content is summarized so that only someone already familiar with it can recall it. For learning, use the lessons.
+
+Numbers
+-------
+- Independence number or maximum independent set (alpha :math:`\alpha`):
+  The maximum number of vertices in a graph that have no edges between them.
+- Maximum matching (alpha prime :math:`\alpha^{\prime}`):
+  The maximum number of edges in a graph such that no two edges share a common vertex.
+- Minimum vertex cover (beta :math:`\beta`):
+  The minimum number of vertices in a graph such that every edge has at least one endpoint in these vertices.
+- Minimum edge cover (beta prime :math:`\beta^{\prime}`):
+  The minimum number of edges in a graph such that every vertex is an endpoint of at least one of these edges.
+- Chromatic number (chi :math:`\chi`):
+  The minimum number of colors required to color the vertices of a graph such that no two adjacent vertices have the same color.
+- Edge chromatic number (chi prime :math:`\chi^{\prime}`):
+  The minimum number of colors required to color the edges of a graph such that no two incident edges have the same color.
+- Vertex connectivity (kappa :math:`\kappa`)
+  The minimum number of vertices whose removal disconnects the graph.
+- Edge connectivity (kappa prime :math:`\kappa^{\prime}`)
+  The minimum number of edges whose removal disconnects the graph.
+- Clique number (omega :math:`\omega`):
+  The maximum number of vertices in a graph that are pairwise adjacent.
+- Minimum degree (small delta :math:`\delta`):
+  The minimum number of edges incident to any vertex in the graph.
+- Maximum degree (capital delta :math:`\Delta`):
+  The maximum number of edges incident to any vertex in the graph.

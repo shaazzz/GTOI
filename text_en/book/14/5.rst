@@ -1,0 +1,121 @@
+Random Walk
+============
+
+Imagine you are trapped in a maze. Everywhere is dark, and at every intersection you reach, you randomly choose one of the paths. You also don't remember any information about the paths or intersections. What is the probability that you will eventually escape the maze? What is the expected time it takes to escape the maze?
+
+The general problem of a random walk is defined as follows: A directed graph is given. On the edges adjacent to each vertex, we have a probability distribution. That is, for each vertex :math:`v` where we are currently located, for each of its neighbors :math:`u`, we define the probability :math:`p_{vu}` as the probability of traversing this edge. Also, the sum of probabilities of all edges adjacent to :math:`v` must be equal to 1. Now, we can imagine a person standing on vertex :math:`s` who, at each step, moves randomly according to the probability distribution of the vertex they are currently on. This is the general problem space. Various questions can be asked within this framework. Two of the most important questions, which we will examine in this section, are: what is the probability and expected number of moves for the person to reach vertex :math:`t`?
+
+ 
+
+Transforming Problems into Random Walk
+----------------------------------------
+
+If you pay attention to probability problems, many of them can be transformed into a Random Walk. This is done by considering each possible state (you'll understand more precisely by looking at the examples below) as a vertex. The operations we perform are essentially edges that probabilistically change our state (moving us from one vertex to another).
+
+Let's examine a few examples.
+
+Mouse and Cheese
+~~~~~~~~~~~~~~~~~~
+
+We have an integer number line. A blind mouse is at point :math:`s` and is looking for a piece of cheese at point :math:`t`. At each step, the mouse moves forward with probability :math:`p` and backward with probability :math:`1-p`. What is the expected number of steps it takes for the mouse to reach the cheese?
+
+Transformation
+~~~~~~~~~~~
+
+To transform this problem into a random walk, it is enough to consider a graph with infinitely many vertices, where vertex :math:`x` represents point :math:`x` on the number line. Each vertex :math:`x` has an edge to :math:`x+1` with probability :math:`p` and an edge to :math:`x-1` with probability :math:`1-p`. Now, the problem is equivalent to finding the expected number of traversed edges to get from :math:`s` to :math:`t`.
+
+Note that we have only managed to transform this problem into a random walk, but we haven't solved it yet!
+
+Bomb
+~~~~~~~~~
+
+We have a terrorist holding a button. After every hour, the terrorist presses the button. After pressing the button, the bomb explodes with probability :math:`p`, and with probability :math:`1-p`, nothing happens. This process continues until the bomb finally explodes (or the process continues indefinitely). Find the expected time it takes for the bomb to explode.
+
+Transformation
+~~~~~~~~~
+
+Transforming this problem into a random walk is not obvious at first glance. However, as we said, most probability problems can be converted into a random walk (though the graph doesn't necessarily have to be small, nor does solving the main problem through the random walk problem need to be simpler).
+
+Here, our states are whether the bomb has exploded or not. So, it's sufficient to consider two vertices, :math:`A` and :math:`B`, where :math:`A` means we are in a state where the bomb has not exploded. Now, after every hour (each operation), the bomb explodes with probability :math:`p`. So, vertex :math:`A` has an edge to :math:`B` with probability :math:`p`. Also, with probability :math:`1-p`, the bomb does not explode, meaning we return to our previous state. So, vertex :math:`A` has an edge to itself with probability :math:`1-p`.
+
+Ultimately, our problem is transformed into finding the expected number of edges required to get from :math:`A` to :math:`B`. The graph in question has two vertices and two edges!
+
+Three Goat Thieves
+~~~~~~~~~~~~~~~~~
+
+In this problem, we have three goat thieves, whom we call First, Second, and Third. The three thieves are playing a game. Each round of the game proceeds as follows:
+
+-   They randomly choose one of themselves. In each step, the First is chosen with probability :math:`\frac 1 2`, the Second with probability :math:`\frac 1 3`, and the Third with probability :math:`\frac 1 6`. Let's call the chosen thief Mr. :math:`D`.
+-   Mr. :math:`D` goes to the farm and steals a goat. The stolen goat is added to Mr. :math:`D`'s assets.
+-   At this point, if Mr. :math:`D`'s goats are at least 2 more than one of his friends', Mr. :math:`D` becomes the King of Thieves, and the game ends. Otherwise, another person is chosen among them, and this process continues.
+
+So, in general, the thieves continue this process until the thief with the most assets has at least two more goats than the thief with the least assets...
+
+Now you must calculate the probability that the First becomes the King of Thieves!
+
+Transformation
+~~~~~~~~~~~
+
+A list of different game states is as follows:
+
+-   Everyone has an equal number of goats. Vertex :math:`s`
+-   The First's goats are one more than the others. Vertex :math:`A_1`
+-   The Second's goats are one more than the others. Vertex :math:`B_1`
+-   The Third's goats are one more than the others. Vertex :math:`C_1`
+-   The First's goats are one less than the others. Vertex :math:`A_{-1}`
+-   The Second's goats are one less than the others. Vertex :math:`B_{-1}`
+-   The Third's goats are one less than the others. Vertex :math:`C_{-1}`
+-   First is King. Vertex :math:`A_2`
+-   Second is King. Vertex :math:`B_2`
+-   Third is King. Vertex :math:`C_3`
+
+Each of the vertices (except the last three) has exactly three outgoing edges, each depending on which thief is chosen to steal. For example, the neighbors of vertex :math:`A_{-1}` are as follows:
+
+-   If the First is chosen, we go to vertex :math:`s` with probability :math:`\frac 1 2`.
+-   If the Second is chosen, we go to vertex :math:`B_2` with probability :math:`\frac 1 3`.
+-   If the Third is chosen, we go to vertex :math:`C_2` with probability :math:`\frac 1 6`.
+
+Ultimately, the problem is equivalent to the probability of reaching vertex :math:`A_2` from vertex :math:`s`.
+
+Solving Random Walk Problems
+----------------------------
+
+In the previous section, we saw that many probability problems can be modeled with a Random Walk. However, if this modeling doesn't bring us closer to solving the main problem, it won't be beneficial to us! In this section, we will see that the probability and expected number of moves to get from :math:`s` to :math:`t` in a Random Walk can be solved algorithmically using a system of several equations with several unknowns!
+
+Let :math:`P_{AB}` be the probability of going from vertex :math:`A` to vertex :math:`B`. If there is no edge from :math:`A` to :math:`B` in the graph, consider :math:`P_{AB}=0`. Also, :math:`P_{AB}` is not necessarily equal to :math:`P_{BA}` (since the graph is directed).
+
+In this section, we assume that vertex :math:`t` is given, and we want to find the probability and expected number of moves to get from any vertex :math:`u` to :math:`t`.
+
+We denote the probability of reaching :math:`t` from :math:`u` as :math:`ansP_u` and the expected number of edges traversed to reach :math:`t` from :math:`u` as :math:`ansE_u`.
+
+It is clear that :math:`ansP_t = 1` and :math:`ansE_t = 0`.
+
+The following equations hold for every :math:`u \neq t`:
+
+:math:`ansP_u = \sum P_{uv} \times ansP_v`
+
+:math:`ansE_u = 1 + \sum P_{uv} \times ansE_v`
+
+If we have :math:`n` vertices, these equations give us a system of :math:`n-1` equations with :math:`n-1` unknowns. Moreover, if our directed graph is a DAG, there is no need to solve a system of equations. Instead, we consider the graph in topological order and obtain the answers from last to first (which is very similar to what we do in recursive functions).
+
+Solving an Example
+~~~~~~~~~~~~~~~~~
+
+Here, we want to solve the bomb problem mentioned above. If we form the system of equations, the result is as follows:
+
+:math:`ansE_B = 0`
+
+:math:`ansE_A = 1 + (1-p) \times ansE_A + p \times ansE_B`
+
+Which easily leads to: :math:`ansE_A = \frac 1 p`
+
+Conclusion
+--------------
+
+Here we entered the realm of Random Walks and discussed some of the problems defined in this space, but the truth is that the types of questions raised in the Random Walk space are very numerous, and a detailed discussion is beyond the scope of this book.
+
+The method we described for transforming problems into a Random Walk and then solving them is very general. This approach is good for gaining intuition about problems, but often the constructed graph is much too large to manually solve its corresponding equations (like the Three Goat Thieves problem).
+
+Sometimes we can leverage the special nature of the graph. For example, suppose we want to find the expected number of moves to get from vertex :math:`s` to :math:`t`, and the graph structure is such that every path from :math:`s` to :math:`t` must pass through vertex :math:`w`. In this case, according to the rules of expected value, we can deduce that the expected number of edges to get from :math:`s` to :math:`t` is equal to the sum of the expected number of moves to get from :math:`s` to :math:`w` and then from :math:`w` to :math:`t`. You can use this concept to solve the mouse and cheese problem!
+
+So, in general, it can be said that transforming problems into a Random Walk helps us, but it is often not sufficient on its own to solve the question, and we need to use more creativity to simplify the problem.

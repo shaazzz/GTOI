@@ -1,0 +1,53 @@
+Problem Description
+=====================
+
+In this chapter, we deal with a rooted tree and examine the following two problems on this tree.
+
+Ancestor at Specific Height Problem
+-----------------------------------
+
+In this problem, a rooted tree with
+n
+vertices is given as input, and then
+q
+queries are made. In each query, a vertex like v and a number like
+h
+are given. It is guaranteed that the height of the vertex is greater than
+h
+, and we are asked for the ancestor of vertex
+v
+that is at height
+h
+(which is unique).
+
+Lowest Common Ancestor Problem
+------------------------------
+
+In this problem, a rooted tree with
+n
+vertices is given as input, and then
+q
+queries are made. In each query, two vertices like
+v and u
+are given, and we are asked for their lowest common ancestor.
+The lowest common ancestor of two vertices is generally called
+LCA
+, which stands for
+Lowest Common Ancestor
+.
+
+Relationship Between These Two Problems
+---------------------------------------
+
+If we have a solution for the first problem that answers each query in
+:math:`O(x)`
+, we can answer each query of the second problem in
+:math:`O(x*lg(n))`
+.
+
+Consider the LCA of these two vertices. Ancestors that are above its height
+are common, and lower ancestors are different. So, we can
+perform a binary search on the height. To check whether the ancestor at height x of these two vertices
+is common or not, it is sufficient to obtain the ancestor at height
+x
+for both vertices using the first method and compare whether they are the same.

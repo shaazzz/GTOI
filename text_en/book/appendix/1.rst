@@ -1,0 +1,50 @@
+How to Use This Book?
+==========================
+This book is designed to prepare for the Computer Olympiad, but all interested individuals can use it.
+
+The book covers graph topics related to the Computer Olympiad, including definitions and theoretical concepts, algorithms, and data structures. Along with each algorithm or data structure, its code in
+C++
+is also provided. Given that in the final stages of the Computer Olympiad you will need to know and use this language, it is highly recommended that you have a brief familiarity with C++ before starting to study this book, so that you can both use the code examples provided in the book and solve the programming problems linked within the book.
+
+The book's progression is structured from introductory to advanced, and later topics may require knowledge of earlier ones. Therefore, it is recommended to read the book sequentially, and it's good practice, even if you are familiar with a topic, to review the lesson to ensure no sub-topic is missed.
+
+Problems
+-------
+
+Problems hold double the importance compared to the lessons. Problem-solving cultivates your mind and leads to greater mastery. Problem-solving skill is what is required of you in the Olympiad and will also help you in life. Look at problems like puzzles and enjoy solving them.
+
+Anywhere in this book where you are asked to prove, demonstrate, determine, or calculate something, you must provide a mathematical proof. In some problems, you may have good intuition that a statement should hold true or you can guess the answer with small examples, but this is not enough, and you must provide a reason for every proposition you make.
+
+Some problems have a small symbol next to them. These symbols have specific meanings. A minus sign (-) means a warm-up, an exclamation mark (!) means an instructive question, and a plus sign (+) means a challenging question, sometimes requiring more knowledge.
+
+Getting Help
+----------
+
+It is natural not to be able to understand some topics. These topics are taught as university courses, and it might be difficult for you as a student to learn them solely from the book. These topics are well-known, and there are many writings and videos on the internet for learning them. You can also ask your friends your questions. Online forums are good places for this. For example, the Shaaz Group is an online group where you can ask questions, and your peers will answer them.
+
+Graph definitions are numerous, and you might forget them. The goal of this book in teaching graphs is by no means to memorize definitions. Whenever you forget a definition, you can review them from the lessons or from
+`this page </book/appendix/3>`_.
+If there's a definition in the book that is not on this page, please report it.
+
+Contribution and Reporting Issues
+----------------------
+This is a public book, and anyone can freely download it from the internet, print it, or use its content in any way in other works, provided the license conditions are met (referencing contributors and sharing the derived product under the same terms, i.e., freely for public use). Therefore, contributing to this book is helping the community. From the smallest contributions, such as reporting a typo, to larger contributions, such as writing incomplete lessons, all are useful.
+
+The book's source code is located in
+`this GitHub repository <https://github.com/shaazzz/GTOI>`_.
+To report issues, use
+https://github.com/shaazzz/GTOI/issues.
+To improve the text or add answers to questions, use the normal contribution process for GitHub projects: forking the repository and submitting a
+pull request.
+If you wish to complete a section of the lessons, please first raise it in the issues section to prevent duplication of effort and to ensure your or others' work is not wasted.
+
+Prerequisites
+------------
+
+The C++ programming language, as mentioned above, and also algorithm complexity analysis, if you are reading this book for the Computer Olympiad or are interested in practical graph topics and implementation. In the next appendix, we will examine
+algorithms and their time and space complexity analysis
+and you will become familiar with symbols such as
+:math:`O, \Omega, \theta`
+which are used extensively throughout the book. If you are not familiar with these symbols, be sure to read the next appendix.
+
+Mathematical proof, deduction, and deductive tools such as proof by contradiction are also necessary for proving problems. Knowing and mastering mathematical induction will also help you better understand and solve more problems.

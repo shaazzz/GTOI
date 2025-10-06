@@ -1,0 +1,207 @@
+
+Graph Implementation
+====================
+In this section, we will try to input and store graphs within a computer. Modeling graphs in a computer helps us leverage its immense processing power to execute theoretical methods and algorithms. In competitive programming, many problems are related to graphs, and to solve them, graphs must be input and stored in an appropriate way.
+
+How are Graphs Given as Input?
+------------------------------
+A standard method for inputting graphs, commonly used in competitive programming problems, is as follows: the first line gives you the number of vertices and the number of edges. Subsequently, for each of the 'number of edges' lines, the two endpoint vertices of that edge are written. For example:
+
+.. code-block:: cpp
+
+  5 6
+  1 2
+  1 3
+  1 4
+  2 5
+  4 5
+  3 4
+
+is a 5-vertex, 6-edge graph. For instance, the degree of vertex number 4 is 3. You can view the above graph graphically using the web application https://csacademy.com/app/graph_editor/
+
+Adjacency List
+--------------
+Although we can store a graph as an array of edges, this storage method is not suitable. This is because if we want to access the neighbors of a vertex, we would have to traverse all edges, which is unacceptable in many use cases.
+
+A better method is the adjacency list. An adjacency list refers to a list that stores the connections (neighboring vertices that are connected by an edge to this vertex). In this method, for each vertex, we maintain a variable-sized array, or a vector in C++, and store the list of neighbors for that vertex within it. The code for this method will be as follows:
+
+.. code-block:: cpp
+
+  const int M = 1e5 + 5; // maximum possible number of vertices, given in the problem
+
+  vector<int> list_peyvandi[M];
+
+  int main() {
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= m; i += 1) {
+      int u, v;
+      cin >> u >> v;
+      list_peyvandi[u].push_back(v);
+      list_peyvandi[v].push_back(u);
+    }
+  }
+
+The advantages of this method are, first, that neighbors of a vertex can be traversed in time proportional to the degree of that vertex, and second, its memory and execution time are
+:math:`O(N+E)`.
+(Note that in the previous chapter, we learned that the sum of degrees of all vertices is twice the number of edges.) This linear time complexity is the best achievable because the input operation itself takes this much time.
+
+Obtaining Useful Information from the Graph
+-------------------------------------------
+In this section, we want to obtain the values we defined in the previous part for the input graph. This information includes the degree of each vertex, the neighbors of each vertex, and the maximum and minimum degrees. It is good practice to try implementing it yourself before reading the code.
+
+.. code-block:: cpp
+
+  const int M = 1e5 + 5; // maximum possible number of vertices, given in the problem
+
+  vector <int> list_peyvandi[M];
+
+  int main() {
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= m; i += 1) {
+      int u, v;
+      cin >> u >> v;
+      list_peyvandi[u].push_back(v);
+      list_peyvandi[v].push_back(u);
+    }
+    int dmin = M + 5;
+    int dmax = -1;
+    for (int u = 1; u <= n; u += 1) {
+      cout << "Vertex number: " << u << "\n";
+      int d = list_peyvandi[u].size();
+      cout << "Degree: " << d << "\n";
+      if (dmin > d) dmin = d;
+      if (dmax < d) dmax = d;
+      cout << "Neighbors: ";
+      for (int v: list_peyvandi[u]) {
+        cout << v << " ";
+      }
+      cout << "\n";
+    }
+    cout << "Smallest Delta (min degree): " << dmin << "\n";
+    cout << "Largest Delta (max degree): " << dmax << "\n";
+  }
+
+Additional Information
+----------------------
+Consider this problem: We have an orchard with several trees, and each tree is connected to other trees by roads. (There's grass in the empty space, and you can only travel on roads.) We know the time it takes to travel each road and the number of apples on each tree. We want to pick the maximum possible apples in
+k
+minutes. The input, in graph format, could be as follows: First, the number of vertices (n), edges (m), and the time we have (k) are given on the first line. On the next line,
+n
+numbers representing the apple count of each tree are given. In the following
+m
+lines, each line contains three numbers: the start vertex, end vertex, and required time for the road, respectively. So, an example could be:
+
+.. code-block:: cpp
+
+  5 6 43.2
+  1 2 100 5 3
+  1 2 20
+  1 3 3.5
+  1 4 7.1
+  2 5 100.2
+  4 5 31
+  3 4 1.1
+
+In this section, we will not delve into the optimal solution for this problem. Instead, our goal is to examine how to input and store this graph in an adjacency list. The method we discussed above has a drawback: it loses the time for each edge and cannot store it anywhere. To solve this problem, instead of storing neighboring vertices in the adjacency list, we store the edge number. For each edge, we store its two endpoints and its time in arrays. The only point to note is that for each vertex, we don't know if this vertex is stored as the start or end of the edge, which makes finding the other end of the edge a bit difficult. One solution is to sum the two ends of the edge and subtract the current vertex. Since one of them is the current vertex, the other end of the edge is obtained. Another way is to XOR the two ends of the edge and the current vertex together. Since XORing any number with itself results in zero, similar to addition and subtraction, the other end is obtained. XOR is slightly faster in computers, but if you are not familiar with bitwise operations or dislike them, use the addition and subtraction method. In the code below, we have used XOR.
+
+.. code-block:: cpp
+
+  const int Mras = 1e5 + 5; // maximum possible number of vertices, given in the problem
+  const int Myal = 3e5 + 5; // maximum possible number of edges, given in the problem
+
+  vector<int> list_peyvandi[Mras];
+  int sib[Mras];
+  int u[Myal], v[Myal];
+  double zaman[Myal];
+
+  int main() {
+    int n, m;
+    cin >> n >> m;
+    // (k input is missing here, but it's part of the conceptual problem)
+    for (int e = 1; e <= m; e += 1) { // e is the edge number
+      cin >> u[e] >> v[e] >> zaman[e]; // Read u, v, and time for edge e
+      list_peyvandi[u[e]].push_back(e); // Note that this differs from above
+      list_peyvandi[v[e]].push_back(e); // The edge number is stored
+    }
+    // (sib input is missing here, but it's part of the conceptual problem)
+    // In the following, we print the neighbors of each vertex
+    for (int x = 1; x <= n; x += 1) {
+      cout << "Vertex number: " << x << "\n";
+      cout << "Neighbors: \n";
+      for (int e: list_peyvandi[x]) {
+        int y = u[e] ^ v[e] ^ x; // To find the other end
+        //  y = u[e] + v[e] - x; would also work
+        //  y = u[e] == x ? v[e] : u[e]; would also work
+        cout << "  neighbor = " << y << ", time = " << zaman[e] << "\n";
+      }
+    }
+  }
+
+A Real Algorithm
+----------------
+To conclude this section, we want to use what we have learned. Consider this solution for the problem above: In each step, we traverse the shortest edge whose apples we haven't picked yet, until our time runs out or we reach a vertex where all neighbors' apples have been picked. It's good practice to try implementing it yourself before seeing the code.
+
+.. code-block:: cpp
+
+  const int Mras = 1e5 + 5; // maximum possible number of vertices, given in the problem
+  const int Myal = 3e5 + 5; // maximum possible number of edges, given in the problem
+
+  vector <int> list_peyvandi[Mras];
+  int sib[Mras];
+  int u[Myal], v[Myal];
+  double zaman[Myal];
+  bool chide[Mras]; // "chide" means "picked" (for apples or visited for vertex)
+
+  int main() {
+    int n, m;
+    double k; // time we have
+    cin >> n >> m >> k; // Read n, m, k
+    for (int i = 1; i <= n; i += 1) {
+      cin >> sib[i]; // Read apples for each tree
+    }
+    for (int e = 1; e <= m; e += 1) { // e is the edge number
+      cin >> u[e] >> v[e] >> zaman[e]; // Read u, v, and time for edge e
+      list_peyvandi[u[e]].push_back(e); // Note that this differs from above
+      list_peyvandi[v[e]].push_back(e); // The edge number is stored
+    }
+    // We sort the adjacency list based on time
+    for (int x = 1; x <= n; x += 1) {
+      // sort is one of the most commonly used c++ functions. if
+      // you don't know it, go and learn it
+      sort(list_peyvandi[x].begin(), list_peyvandi[x].end(), [](int a, int b) {
+        // this is a lambda function, part of c++14 features.
+        // if you don't know it, you can simply define this function
+        // above or go and learn it
+        return zaman[a] < zaman[b];
+      });
+    }
+    int cur = 1; // We consider vertex 1 as the starting vertex
+    int score = 0; // Picked apples are stored here
+    while (k > 0) {
+      chide[cur] = true;
+      score += sib[cur];
+      bool berim = false; // "berim" means "should we go?"
+      int koja = -1; // "koja" means "where?" (next vertex)
+      for (int e: list_peyvandi[cur]) {
+        int nxt = u[e] ^ v[e] ^ cur; // Find the other end
+        if (chide[nxt]) continue; // If next vertex is already picked, skip
+        if (zaman[e] > k) break; // If travel time exceeds remaining time, stop
+        berim = true;
+        koja = nxt;
+        k -= zaman[e];
+        break; // Break after finding the shortest path to an unpicked neighbor
+      }
+      if (!berim) break; // If nowhere to go, stop
+      cur = koja;
+    }
+    cout << score;
+  }
+
+Note that this solution is merely a greedy solution and not an optimal one. For practice, you can create an example where this code does not behave optimally and does not yield the best answer.
+
+However, this code demonstrates the power of the adjacency list. The time complexity of the above code is
+:math:`O(n+mlg(m))`,
+but without an adjacency list, it would be difficult to implement this algorithm with a time better than
+:math:`O(nm)`.

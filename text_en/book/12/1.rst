@@ -1,0 +1,78 @@
+Cuts and Connectivity
+=========================
+Connectivity is one of the most widely used topics in graphs, also applied in programming.
+Without further introduction, let's move to definitions and theorems to become more familiar with connectivity.
+
+Connectivity
+------------
+A graph being connected means that there is a path between any two vertices in the graph.
+
+.. figure:: /_static/ConnectedGraph1.png
+   :width: 50%
+   :align: center
+   :alt: Connected Graph
+.. figure:: /_static/S37.png
+   :width: 50%
+   :align: center
+   :alt: Connected Graph
+.. figure:: /_static/ConnectedGraph2.png
+   :width: 50%
+   :align: center
+   :alt: Connected Graph
+
+Connected Component
+~~~~~~~~~~~~~~~~~~~
+Each connected part of a graph is called a connected component. Any graph with more than one component is called a **disconnected** graph. For example, in a forest, each tree is called a component, and the number of components in the forest is equal to the number of trees present.
+In the forest below, each component is shown with a different color.
+
+.. figure:: /_static/ForrestP1.png
+   :width: 50%
+   :align: center
+   :alt: Component
+.. figure:: /_static/ForrestP2.png
+   :width: 50%
+   :align: center
+   :alt: Component
+.. figure:: /_static/ForrestP3.png
+   :width: 50%
+   :align: center
+   :alt: Component
+
+Connectivity in Directed Graphs
+-------------------------------
+
+Weakly Connected
+~~~~~~~~~~~~~~~~
+If we replace the directed edges of a directed graph with undirected edges, and the resulting graph is connected, then we say the original graph (with directed edges) is weakly connected.
+
+.. figure:: /_static/WeaklyConnected.png
+   :width: 50%
+   :align: center
+   :alt: Weakly Connected
+
+Strongly Connected
+~~~~~~~~~~~~~~~~~~
+A directed graph is called strongly connected if for any two vertices u and v, there is a directed path from u to v and a directed path from v to u.
+
+Algorithms for finding strongly connected components are used to solve :math:`2-SAT` problems.
+
+.. figure:: /_static/StronglyConnected.png
+   :width: 50%
+   :align: center
+   :alt: Strongly Connected
+
+Strong Component
+~~~~~~~~~~~~~~~~
+Strong components are the maximal strongly connected subgraphs of a graph.
+
+Cuts
+-----
+
+Cut Vertex (Articulation Point)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A vertex is called a cut vertex if, after its removal from the graph, the number of its components increases.
+
+Cut Edge (Bridge)
+~~~~~~~~~~~~~~~~~
+An edge is called a cut edge (or bridge) if its removal increases the number of connected components.
+An edge uv that is part of a cycle in a graph cannot be a cut edge, because after its removal, the two vertices u and v still have a path between them (through the rest of the cycle), so no new component is added to the graph.

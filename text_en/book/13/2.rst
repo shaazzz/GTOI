@@ -1,0 +1,157 @@
+Matching in Bipartite Graphs
+===============================
+
+In the previous section, we stated that a necessary and sufficient condition for a maximum matching to exist is that there are no augmenting paths. This condition is easily verifiable in bipartite graphs (why?).
+
+Consequently, studying matching in bipartite graphs (as a special case of graphs) is beneficial due to their numerous applications.
+
+Algorithm
+----------
+
+In this algorithm, we start with an empty matching and enlarge it as long as an augmenting path exists in the graph. It is easily observable that the maximality of our final matching is then trivial. To find an augmenting path, we proceed as follows:
+
+Suppose our graph consists of two partitions with :math:`n_1` vertices and :math:`n_2` vertices. For each vertex :math:`v = 1 ... n_1` in our current graph, we search for an augmenting path. In the :math:`i`-th step, we can claim that the matching between the :math:`i` vertices of the first partition and the rest of the vertices in the second partition is maximum; consequently, our final matching will also be maximum. Its implementation is as follows:
+
+.. code-block:: cpp
+
+  const int N = 2e3 + 5;
+  int n1, n2, m, k, match[N];
+  vector <int> adj[N];
+  bool mark[N];
+
+  bool try_kuhn(int u){
+      mark[u] = true;
+      for(auto v: adj[u])
+          if(match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))){
+              match[v] = u;
+              return true;
+          }
+      return false;
+  }
+
+  void read_input(){
+      cin >> n1 >> n2 >> m;
+      for(int i = 0; i < m; i++){
+          int u, v;
+          cin >> u >> v;
+          adj[--u].push_back(--v);
+      }
+  }
+
+  void calc(){
+      memset(match, -1, sizeof match);
+      for(int u = 0; u < n1; u++){
+          memset(mark, false, sizeof mark);
+          k += try_kuhn(u);
+      }
+  }
+
+  void write_output(){
+      cout << k << endl;
+      for(int u = 0; u < n2; u++)
+          if (match[u] != -1)
+              cout << match[u] + 1 << ' ' << u + 1 << endl;
+  }
+
+  int main() {
+      read_input();
+      calc();
+      write_output();
+      return 0;
+  }
+
+In the algorithm mentioned, for each vertex in the first partition, :math:`O(m)` steps are performed, so its time complexity is :math:`O(nm)`. However, there is another implementation of this same algorithm that is at least twice as fast as the one above (why?):
+
+.. code-block:: cpp
+
+  const int N = 2e3 + 5;
+  int n1, n2, m, k, match[N];
+  vector <int> adj[N];
+  bool mark[N];
+
+  bool try_kuhn(int u){
+      mark[u] = true;
+      for(auto v: adj[u])
+          if (match[v] == -1 || (!mark[match[v]] && try_kuhn(match[v]))) {
+              match[v] = u;
+              return true;
+          }
+      return false;
+  }
+
+  void read_input(){
+      cin >> n1 >> n2 >> m;
+      for(int i = 0; i < m; i++){
+          int u, v;
+          cin >> u >> v;
+          adj[--u].push_back(--v);
+      }
+  }
+
+  void calc(){
+      memset(match, -1, sizeof match);
+      while(true){
+          bool flag = false;
+          memset(mark, false, sizeof mark);
+          for(int u = 0; u < n1; u++)
+              if (!mark[u])
+                  k += try_kuhn(u);
+          if (!flag)
+              break;
+      }
+  }
+
+  void write_output(){
+      cout << k << endl;
+      for (int u = 0; u < n2; u++)
+          if (match[u] != -1)
+              cout << match[u] + 1 << ' ' << u + 1 << endl;
+  }
+
+  int main(){
+      read_input();
+      calc();
+      write_output();
+      return 0;
+  }
+
+Hall's Theorem
+-------------
+
+This theorem states another necessary and sufficient condition for a maximum matching in a bipartite graph, which was first introduced by Philip Hall and is known as the Marriage Theorem. This theorem is as follows:
+
+Let :math:`X` be a set of vertices in the first partition of a bipartite graph. The set :math:`X` has a perfect matching in the graph if and only if for every subset :math:`S` of :math:`X` and their neighbors outside :math:`X` in the graph, named :math:`T`, we have :math:`|S| \leq |T|`.
+
+The necessity of the above condition is trivial (otherwise, the number of neighbors of a set would not be sufficient to match them). To prove sufficiency, we use proof by contradiction and assume there exists a graph with such a property that does not have a perfect matching;
+
+.. figure:: /_static/marriage_theorem.jpeg
+   :width: 50%
+   :align: center
+
+We consider a maximum matching and an arbitrary unsaturated vertex, say :math:`u` (which must exist!). Since this vertex is not matched with anyone, we consider the matched vertex of an arbitrary neighbor of :math:`u`. These two vertices, according to the problem assumption, have another neighbor which is either unmatched (in which case we have an augmenting path) or matched, in which case we add its matched vertex to these two vertices. We continue this process as far as possible, and since the number of neighbors of :math:`X` is at least their own size, we eventually reach a stage where our current set has an unmatched neighbor, which means we have an augmenting path. This contradicts the maximality of our matching.
+
+Matching in k-Regular Bipartite Graphs
+-----------------------------
+
+According to Hall's theorem, it can be proven that a k-regular bipartite graph has a perfect matching. To prove this, it suffices to show that Hall's condition holds for it;
+
+Consider a set of vertices from the first partition of the graph, say :math:`S`, and call their neighbors in the second partition :math:`T`. We prove that :math:`|S| \leq |T|`. We know that the sum of edges between the two partitions is :math:`x = |S| \times k`. From this relationship, we can deduce that :math:`|T| \geq (x \div k) = |S|`.
+
+.. figure:: /_static/dot/K_R_Bipartite_Subgraph.svg
+   :width: 30%
+   :align: center
+
+Thus, Hall's condition holds in our graph, and a perfect matching is definitely found in our graph.
+
+Generalization of Hall's Theorem
+--------------
+
+We have a bipartite graph named :math:`G` and want to remove some of its edges such that the degree of each vertex in the first partition, say :math:`u`, becomes :math:`a_u`, and the degree of each vertex in the second partition becomes at most one. To solve this problem, we construct a graph :math:`G'` such that a perfect matching from the first partition to the second exists in it if and only if such a set of edges exists in graph :math:`G`;
+
+We construct graph :math:`G'` such that for each vertex :math:`u` in the first partition of graph :math:`G`, we create a set of :math:`a_u` vertices (which are copies of vertex :math:`u`), and for each edge :math:`(u, v)` in graph :math:`G`, we connect all vertices in the set corresponding to :math:`u` to vertex :math:`v`. The resulting graph is bipartite (why?). If Hall's condition holds in it, meaning it has a perfect matching, then for each edge between the set of vertices corresponding to :math:`u` and vertex :math:`v` in :math:`G'`, we remove the edge :math:`(u, v)` in graph :math:`G`. It is clear that in this case, we obtain our desired set of edges. Similarly, if graph :math:`G'` does not have a perfect matching, it can be concluded that no such set exists in graph :math:`G` either (we proceed in reverse).
+
+Consider the process of checking Hall's condition in graph :math:`G^{\prime}`. For every subset :math:`S` from the first partition of graph :math:`G ^ {\prime}` and its set of neighbors :math:`T`, we check if :math:`|S| \leq |T|` holds. Now, it can be noted that for any vertex :math:`u`, if some copies of :math:`u` are included in :math:`S` but not all of them, we can add all copies to set :math:`S`. In this case, :math:`T` will not change, and only :math:`S` will increase. Therefore, we only need to check subsets :math:`S` where for each :math:`u`, either all copies of :math:`u` are included, or none are.
+
+With a bit of thought, we conclude that according to the above statements, this necessary and sufficient condition can be found for graph :math:`G`: :math:`\forall_{S} \sum\limits_{i \in S} a_i \leq |T|`
+
+where :math:`S` is any subset of vertices from the first partition of the graph, and :math:`T` is the union of neighbors of :math:`S`.

@@ -1,0 +1,131 @@
+
+   <meta charset="UTF-8">
+
+.. raw:: html
+
+   <style>
+       @font-face {
+           font-family: 'Vazirmatn';
+           src: url('/_static/fonts/Vazirmatn-Regular.woff2') format('woff2');
+           font-weight: normal;
+           font-style: normal;
+       }
+       body {
+           font-family: 'Vazirmatn', sans-serif;
+           direction: rtl; /* Right-to-left for Persian text, adjust for English */
+           text-align: right; /* Right-align for Persian text, adjust for English */
+       }
+       /* Adjustments for English translation: */
+       body {
+           direction: ltr;
+           text-align: left;
+       }
+       .section, .rubric {
+           direction: ltr;
+           text-align: left;
+       }
+       h1, h2, h3, h4, h5, h6 {
+           direction: ltr;
+           text-align: left;
+       }
+       p {
+           direction: ltr;
+           text-align: left;
+       }
+       li {
+           direction: ltr;
+           text-align: left;
+       }
+   </style>
+
+Idea Cultivation Workshop
+=========================
+
+Trees are known as the simplest connected graphs. In other words, a tree is like the skeleton of a graph. We know that every connected graph has at least one spanning tree because we can construct it. This is done by removing one of its edges as long as a cycle exists. Which edges we remove at each step will play a role in the structure of the final spanning tree. Specifically, the two algorithms, DFS and BFS, give us two different and interesting spanning trees with interesting properties!
+
+In this section, we discuss problems that will help you gain a better intuition for trees and also enhance your problem-solving perspective and power. Make sure to think sufficiently about the questions before reading their solutions!
+
+Square Eraser
+-------------
+
+We have a square eraser device that, at each step, can consider a :math:`C_4` from the graph and remove one of its edges. Initially, we have a :math:`K_n` with :math:`n \geq 4`. Our goal is to use the square eraser in such a way that the number of remaining edges in the graph is minimized. Find this minimum number.
+
+Solution
+~~~~
+
+The square eraser does not harm two properties.
+
+1. Graph connectivity is preserved.
+2. It will always have an odd cycle.
+
+Perhaps the second point is a bit harder to grasp. You probably initially guessed that the answer should be :math:`n-1` (due to the first property), but no matter how you use the square eraser, a troublesome cycle remains!
+
+For the second property, first note that since :math:`n \geq 3`, we certainly have an odd cycle initially. Suppose we removed edge :math:`AB` from square :math:`ABCD`, and the odd cycle we had in the previous step was eliminated. Now, traverse the previous odd cycle, but instead of using edge :math:`AB`, use walk :math:`ACDB`. It's clear that we will eventually reach an odd walk, and as we said in Chapter 1, every odd walk contains an odd cycle!
+
+From the two points mentioned, we can conclude that due to graph connectivity, we must have at least :math:`n-1` edges. And since if we have exactly :math:`n-1` connected edges, we have a tree that does not have an odd cycle, we must therefore have at least :math:`n` edges.
+
+We leave the construction of an example with exactly :math:`n` edges to the reader!
+
+Edge Labeling
+------------------
+
+We have a connected graph with :math:`m` edges. We want to assign the edges of this graph a permutation of numbers from 1 to :math:`m` such that for every vertex :math:`v` with degree greater than 1, the greatest common divisor (GCD) of the numbers on the edges adjacent to :math:`v` is 1.
+
+Solution
+~~~~~
+
+To solve the problem, we use the fact that the GCD of any two consecutive numbers is 1.
+
+Start executing DFS from an arbitrary vertex. Assign the number 1 to the first edge we see, 2 to the second edge we see, and so on. What does 'seeing an edge' mean? Suppose we are at vertex :math:`u` and performing DFS. We look at the list of all adjacent edges to :math:`u` in order. When we reach edge :math:`uv`, if no number has been assigned to this edge before, we assign one. Then, if vertex :math:`v` is unvisited, we call dfs(v).
+
+So, the number we assign to each edge is its order of being visited. The GCD of the numbers of edges adjacent to the root is 1, because the first edge we traverse is 1 and it's adjacent to the root. For any non-root vertex like :math:`u`, the GCD of adjacent numbers to :math:`u` is 1, because if we entered :math:`u` via an edge numbered :math:`x`, according to the recursive logic of DFS, we will immediately write the number :math:`x+1` on one of the edges adjacent to :math:`u` (unless the degree of vertex :math:`u` is 1, in which case we have no specific constraint on this vertex).
+
+
+.. figure:: /_static/dot/DFS_Magic.svg
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is rubbish, this appears
+
+
+Note that because of the DFS structure, each backedge, which is not part of the tree edges, is seen from its lower vertex! (Why?) Therefore, no problem arises for tree leaves whose degree is not 1.
+
+Leaves
+-------------------
+
+Prove that in a tree :math:`n > 1` that has no vertex of degree 2, the number of leaves is greater than the number of non-leaves.
+
+Solution
+~~~~~~
+
+To solve the problem, we use induction. We set the base case to :math:`n = 2`, for which its correctness is obvious. We root tree :math:`T` at an arbitrary vertex and call the lowest leaf :math:`u`. Assume the parent of the lowest leaf is :math:`v`. In this case, all children of :math:`v` are leaves (Why?). If :math:`v` is the root itself, the statement is obvious (since all vertices except :math:`v` are leaves). Otherwise, by removing all children of :math:`v` that are leaves, we reach a tree :math:`T'` with fewer vertices, which has at least 2 vertices and no vertex of degree 2, so the induction hypothesis holds for it. Assume that in this tree, the number of leaves is :math:`A'` and the number of non-leaves is :math:`B'`, and by the induction hypothesis, :math:`A' > B'`.
+
+Now, add :math:`v`'s children back. If it has :math:`d` children, then the changes applied to the tree are as follows:
+
+- Vertex :math:`v` ceases to be a leaf.
+- All children of :math:`v` are added to the set of leaves.
+
+So, if we denote the new number of leaves and non-leaves as :math:`A` and :math:`B` respectively, we have :math:`A = A' + d - 1` and :math:`B = B' + 1`. And since :math:`d>1`, it still holds that :math:`A > B`.
+
+Note
+~~~~~~~~
+
+The problem stated was a classic lemma that helps us in solving some problems. Generally, in some problems, we can compress vertices of degree 2 and eliminate them. This means that if we color all vertices of degree 2 in the tree red, these degree 2 vertices form a number of disjoint paths (Why?). Now, suppose for each path consisting of degree 2 vertices that starts at a vertex like :math:`A` and ends at a vertex like :math:`B`, we remove this path and only leave an edge from :math:`A` to :math:`B`. After performing these operations, all degree 2 vertices are eliminated, and the overall structure of the tree is preserved. Now, if the tree in the problem is such that the number of leaves is small, we can conclude that the total number of vertices in the tree is also small!
+
+
+BFS Magic
+-------------
+
+We have a connected graph. We know that if you consider any odd cycle in this graph and remove its edges, the graph becomes disconnected. Prove that the vertices of this graph can be colored with 4 colors such that any two adjacent vertices have different colors!
+
+Solution
+~~~~~~~~
+
+If we didn't know we should think of BFS, how difficult would this question be?
+
+Now, run BFS from an arbitrary vertex. The graph is now partitioned into several layers, where the edges of the graph are either within a single layer or between two adjacent layers.
+
+We claim that the subgraph consisting of the vertices of each layer is bipartite. Assume for contradiction that we have a layer that is not bipartite. Then it must contain an odd cycle. Now, if you remove the layers of this odd cycle, according to the problem statement, the graph should become disconnected, but we know this doesn't happen! This is because the graph is connected by the edges of the BFS tree, and the edges of the BFS tree are only between adjacent layers.
+
+Thus, we proved that each layer is bipartite. So, we can color each layer with two colors such that adjacent vertices have different colors. Now, color the odd layers with colors 1, 2 and the even layers with colors 3, 4. No problem arises because two vertices that have the same color are either within the same layer (where we resolved the issue with bipartiteness) or are not in adjacent layers (meaning there is no edge between them).
+
+It's that simple!

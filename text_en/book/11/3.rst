@@ -1,0 +1,115 @@
+Centroid
+============
+
+Definition
+-----------
+In a tree, a vertex is called a centroid if, by removing it, the number of vertices in the largest component is at most :math:`n/2`.
+
+Proof of Existence and Finding the Centroid
+----------------------------
+
+First, we root the tree at vertex 1. Now, we start from the root, and at each step, if the current vertex has a child whose subtree size is greater than :math:`n/2`, we move to that child. Eventually, we will reach a centroid.
+The vertex we found is a centroid because its subtree size is greater than :math:`n/2`, which means its parent component is less than :math:`n/2`, and it has no child with a subtree size greater than :math:`n/2`.
+See the algorithm implementation below.
+
+.. code-block:: cpp
+
+  const int N = 100000 + 77;
+  int n , sz[N];
+  vector < int > adj[N];
+
+  void dfs(int v ,int prev = -1) {
+     sz[v] = 1;  
+     for(int u : adj[v])
+        if(u != prev){
+           dfs(u , v);
+           sz[v] += sz[u];
+         }
+  }
+  int FindCentroid(int v , int prev = -1) {
+     for(int u : adj[v])
+        if(u != prev && sz[u] * 2 > n)
+           return FindCentroid(u, v);
+     return v;
+  }
+  int main() {
+     scanf("%d" , & n);
+     for(int v, u, i = 1; i < n; ++i){
+        scanf("%d %d" ,& v ,& u);
+        adj[v].push_back(u);
+        adj[u].push_back(v);
+      }
+     dfs(1);
+     printf("%d\n" , FindCentroid(1));
+     return 0;
+  }
+
+
+Centroid Decomposition
+-----------
+Suppose we want to implement a divide and conquer algorithm on a tree. The tree centroid will greatly assist us because, by removing it and solving the remaining subtrees, we can achieve an :math:`O(n log n)` complexity.
+If you observe, with this technique, we traverse each vertex at most :math:`lg n` times, because with each traversal, the size of its component becomes less than half. Thus, the total time complexity will be :math:`O(n log n)`.
+The implementation of this method involves first finding the correct centroid, and then solving each component separately, similar to the divide and conquer approach.
+See the algorithm implementation below.
+
+.. code-block:: cpp
+
+  const int N = 100000 + 77;
+  int n, sz[N];
+  bool M[N]; // che rass haee centroid shodeand ta be hal
+  vector < int > adj[N];
+
+  void dfs(int v, int prev = -1) {
+     sz[v] = 1;
+     for(int u : adj[v])
+        if(u != prev && ! M[u]){
+           dfs(u, v);
+           sz[v] += sz[u];
+         }
+  }
+
+  int FindCentroid(int v, int prev = -1) {
+     for(int u : adj[v])
+        if(u != prev && sz[u] * 2 > n)
+           return FindCentroid(u, v);
+     return v;
+  }
+  void Decompose(int v) {
+     dfs(v);
+     int c = FindCentroid(v);
+     M[c] = 1;
+     for(int u : adj[c])
+        if(! M[u])
+           Decompose(u);
+  }
+
+  int main() {
+     scanf("%d", & n);
+     for(int v, u, i = 1; i < n; ++i){
+        scanf("%d %d" , & v , & u);
+        adj[v].push_back(u);
+        adj[u].push_back(v);
+      }
+     Decompose(1);
+     return 0;
+  }
+
+Centroid Tree
+-----------
+Suppose we are building a new tree from the one we have. Consider the Centroid Decomposition algorithm. Now, at each step where we find the centroid of a subtree, we set its parent in this new tree we are constructing to be the centroid of the previous component that contained this vertex. We call this new tree a Centroid Tree.
+
+.. figure:: /_static/dot/Centroid_Clusters.svg
+   :figwidth: 50%
+   :align: center
+   :alt: Original Tree
+   
+   Original Tree
+
+.. figure:: /_static/dot/Centroid_Tree.svg
+   :figwidth: 50%
+   :align: center
+   :alt: Centrid Tree
+   
+   Centroid Tree
+
+In many problems, the Centroid Tree provides significant help in computations.
