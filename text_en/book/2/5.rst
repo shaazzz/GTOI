@@ -28,26 +28,7 @@ vertices that are neighbors of vertices in group :math:`A_{i-1}` and have not ye
    :align: right
 
 
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
+
 
 Now we prove that :math:`Dis_{i} = dis(i,root)`.
 
