@@ -96,11 +96,6 @@ In addition to its uses in programming, where it might be helpful in certain pro
 |
 |
 
-Theorem
-~~~~~~
-
-Statement:
-
 BFS Code
 ------
 
