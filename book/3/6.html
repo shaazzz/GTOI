@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>بازی‌ها و گراف جهت‌دار &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="گراف جهت‌دار" href="index.html" />
+        <link rel="next" title="گراف تابعی و گراف‌جایگشت" href="7.html" />
+        <link rel="prev" title="تشخیص دور داشتن گراف جهت دار" href="5.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">گراف جهت‌دار</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; بازی‌ها و گراف جهت‌دار</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/3/6.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>بازی‌ها و گراف جهت‌دار<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<section id="id2">
+<h2>مقدمه<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در این قسمت، به بررسی ارتباط بازی ها و گراف های جهت دار می‌پردازیم.</p>
+<p>کار را با یک مثال ساده شروع می‌کنیم:</p>
+<p>علی و متین مشغول بازی هستند. یک کیسه سنگریزه شامل 10 سنگریزه جلوی آن‌ها قرار دارد. در هر مرحله، کسی که نوبش است، 1 یا 2 سنگریزه از کیسه بر می‌دارد. بازنده بازی کسی است که با کیسه خالی مواجه شود و نتواند سنگریزه بردارد.</p>
+<p>فرض کنید متین بازی را شروع می‌کند. اگر هر دو نفر به بهترین نحو بازی کنند، برنده بازی چه کسی خواهد بود؟</p>
+</section>
+<section id="id3">
+<h2>بررسی یک مثال<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در این بخش، مثالی که در بخش مقدمه مطرح کردیم را توضیح می‌دهیم.</p>
+<p>یک گراف 11 راسی می‌سازیم که شماره راس های آن، از 0 تا 10 هستند. از راس
+<span class="math notranslate nohighlight">\(i\)</span>
+به راس
+<span class="math notranslate nohighlight">\(j\)</span>
+یک یال جهت‌دار رسم می‌کنیم، اگر بتوان با برداشتن 1 یا 2 سنگریزه از
+<span class="math notranslate nohighlight">\(i\)</span>
+به
+<span class="math notranslate nohighlight">\(j\)</span>
+رسید.</p>
+<p>کنار هر راس یک حرف
+<span class="math notranslate nohighlight">\(L(Lose)\)</span>
+یا
+<span class="math notranslate nohighlight">\(W(Win)\)</span>
+می‌نویسیم(یا اینکه هیچی نمی‌نویسیم،‌ که یعنی وضعیت این راس، هنوز مشخص نشده).</p>
+<p>فرض کنید کنار راس با شماره
+<span class="math notranslate nohighlight">\(i\)</span>
+حرف
+<span class="math notranslate nohighlight">\(L\)</span>
+را نوشته‌ایم. معنای آن این است که اگر کیسه اولیه که دو نفر روی آن بازی می‌کنند،
+<span class="math notranslate nohighlight">\(i\)</span>
+سنگریزه داشته باشد،‌ اگر هر دو نفر به بهترین شکل بازی کنند،‌ نفر اول بازنده آن بازی است.</p>
+<p>و برعکس،‌ فرض کنید کنار راس با شماره
+<span class="math notranslate nohighlight">\(i\)</span>
+حرف
+<span class="math notranslate nohighlight">\(W\)</span>
+را نوشته‌ایم. معنای آن این است که اگر کیسه اولیه که دو نفر روی آن بازی می‌کنند،
+<span class="math notranslate nohighlight">\(i\)</span>
+سنگریزه داشته باشد،‌ اگر هر دو نفر به بهترین شکل بازی کنند،‌ نفر اول برنده آن بازی است.</p>
+<p>حال در ابتدای بازی، به کدام راس می‌توان
+<span class="math notranslate nohighlight">\(L\)</span>
+یا
+<span class="math notranslate nohighlight">\(W\)</span>
+را نسبت داد؟!</p>
+<p>با کمی فکر، متوجه می‌شیم راس با شماره 0. به این معنا که اگر کیسه اولیه، شامل 0 سنگریزه باشد، طبق قوانین بازی، نفر اول، بازنده است. چون نمی‌تواند سنگریزه ای بردارد.</p>
+<p>پس به راس 0،
+<span class="math notranslate nohighlight">\(L\)</span>
+را نسبت می‌دهیم.</p>
+<p>حال راس بعدی  که تکلیف آن مشخص می‌شود کدام است؟</p>
+<p>راس 1 را در نظر بگیرید. اگر کیسه فقط 1 سنگریزه داشته باشد، نفر اول می‌تواند فقط یک سنگریزه بردارد. حال اگر دقت کنیم، میبینیم کیسه ای که بعد از حرکت نفر اول مانده است، شامل 0 سنگریزه است که قبلا تکلیف آن را مشخص کردیم.</p>
+<p>قبلا گفتیم که وضعیت راس 0،
+<span class="math notranslate nohighlight">\(L\)</span>
+می‌باشد. پس وضعیت راس 1، برابر با
+<span class="math notranslate nohighlight">\(W\)</span>
+می‌شود. چون اگر دقت کرده باشید، وقتی نفر اول، یک سنگریزه برداشت،‌ جای نفر اول و دوم بازی عوض شده(چون نوبت عوض شد). بنابراین راس 0، نشان دهنده باخت نفر دوم بازی(علی) است.</p>
+<section id="id4">
+<h3><strong>نتیجه</strong><a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>وضعیت راس ها، یعنی همان
+<span class="math notranslate nohighlight">\(L\)</span>
+یا
+<span class="math notranslate nohighlight">\(W\)</span>
+را، به ترتیب شماره راس ها مشخص می‌کنیم.</p>
+<p>برای این کار، اگر راس
+<span class="math notranslate nohighlight">\(u\)</span>
+بین راس هایی که
+<span class="math notranslate nohighlight">\(v\)</span>
+به آن یال جهت دار دارد وجود داشت که وضعیتش برابر با
+<span class="math notranslate nohighlight">\(L\)</span>
+بود، آنگاه وضعیت راس
+<span class="math notranslate nohighlight">\(v\)</span>
+برابر با
+<span class="math notranslate nohighlight">\(W\)</span>
+می شود. و اگر همه راس هایی که
+<span class="math notranslate nohighlight">\(v\)</span>
+به آنها یال داشت، وضعیت شان
+<span class="math notranslate nohighlight">\(W\)</span>
+بود، آنگاه وضعیت راس
+<span class="math notranslate nohighlight">\(v\)</span>
+برابر با
+<span class="math notranslate nohighlight">\(L\)</span>
+می شود.</p>
+<p>با این روش، می‌توان وضعیت همه راس ها را مشخص کرد. حال کافی است به حالت اولیه بازی نگاه کنیم و ببینیم
+<span class="math notranslate nohighlight">\(L\)</span>
+است یا
+<span class="math notranslate nohighlight">\(W\)</span>.
+اگر
+<span class="math notranslate nohighlight">\(L\)</span>
+بود، یعنی نفر اول بازنده بازی است. و اگر وضعیت
+<span class="math notranslate nohighlight">\(W\)</span>
+بود، یعنی نفر اول برنده است. با این کار، می‌توان فهمید در بازی‌ای که بالا تر مشخص کردیم، علی برنده بازی است یا متین!</p>
+</section>
+</section>
+<section id="id5">
+<h2>بازی حرکت مهره روی گراف<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>بازی ما به این صورت است که یک گراف داریم و در ابتدا یک مهره روی راس شروع است. بازیکنان به نوبت حرکت می کنند و هر بازیکن در نوبتش مهره را روی یک راس مجاور می برد. کسی که نتواند حرکتی کند بازنده بازی است.</p>
+<section id="id6">
+<h3>تعمیم<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>اگر به ماهیت اکثر بازی ها توجه کنید درون آن ها چنین گرافی خواهید دید! در واقع ذات بازی های ترکیبیاتی به این صورت است که دو نفر یا بیشتر روی منابعی مشترک تغییراتی اعمال می کنند (منابع مشترک می تواند صفحه شطرنج باشد که مهره ها را روی آن حرکت می دهیم یا می تواند یک کیسه باشد که از آن سنگ بر می داریم).</p>
+<p>حالا فرض کنید به ازای هر وضعیت از منابع مشترک و اینکه نوبت چه کسی است یک راس بسازیم و راس <span class="math notranslate nohighlight">\(A\)</span> را به <span class="math notranslate nohighlight">\(B\)</span> یال جهت دار بزنیم اگر و تنها اگر فردی که در وضعیت <span class="math notranslate nohighlight">\(A\)</span> نوبتش است بتواند در نوبتش به <span class="math notranslate nohighlight">\(B\)</span> برود. حالا یک گراف داریم! ما توانستیم بازی خود را روی یک گراف تعریف کنیم.</p>
+<p>پس به صورت شهودی قبول می کنیم که اکثر بازی ها می توانند به بازی حرکت مهره روی گراف (که در بالا گفتیم) تبدیل شود. برای مثال، بازی شطرنج را در نظر بگیرید. هر وضعیت از این بازی، یک صفحه شطرنج با چینش مختلف مهره‌ها است.</p>
+</section>
+<section id="id7">
+<h3>حل بازی روی گراف<a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>اگر بتوانیم بازی حرکت مهره روی گراف را حل کنیم گام بزرگی در فهم روش حل اکثر بازی ها برداشته ایم. برای حل این بازی به این صورت عمل می کنیم. به هر راس یک برچسب برد (W)، باخت(L) یا تساوی(D) نسبت می دهیم. به سه نکته زیر توجه کنید.</p>
+<ul class="simple">
+<li><p>راسی که یال خروجی نداشته باشد حتما L است.</p></li>
+<li><p>راسی که مجاور L داشته باشد حتما W است.</p></li>
+<li><p>اگر بازیکنی استراتژی نباختن داشته باشد امکان ندارد که مهره را به یک راس با برچسب W ببرد (زیرا در اینصورت حریفش می تواند ببرد).</p></li>
+</ul>
+<p>پس این الگوریتم را روی گرافمان پیاده می کنیم. تا زمانی که راسی مثل <span class="math notranslate nohighlight">\(u\)</span> بود که یال خروجی نداشت روی آن برچسب <span class="math notranslate nohighlight">\(L\)</span> می زنیم سپس روی تمام راس هایی مثل <span class="math notranslate nohighlight">\(v\)</span> که <span class="math notranslate nohighlight">\(v\)</span> به <span class="math notranslate nohighlight">\(u\)</span> یال دارد برچسب W می زنیم.
+سپس تمام راس هایی که روی آنها برچسب زدیم را از گراف حذف می کنیم. چرا؟ چون مطمئنیم که اگر بازیکن بخواهد مهره را به <span class="math notranslate nohighlight">\(v\)</span> برساند باید قبل از آن به راسی که روی آن W نوشته شده برسد و هیچکدام از بازیکنان دوست ندارند که مهره را روی راس های W ببرند.</p>
+<p>در نهایت زمانی می رسد که هر راس از گراف باقی مانده حداقل یک خروجی دارد. از هر کدام از راس های گراف که شروع کنیم بازی هیچگاه تمام نخواهد شد و هر دو بازیکن می توانند بازی را تا ابد ادامه دهند! پس توانستیم راس ها را به سه دسته افراز کنیم و به ازای هر دسته می دانیم که اگر از راسی روی آنها شروع کنیم نتیجه بازی چه خواهد بود (برد، باخت یا تساوی). پس ما بازی حرکت مهره روی گراف را به صورت الگوریتمی حل کردیم.</p>
+</section>
+<section id="id8">
+<h3>چند نتیجه گیری سودمند<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>اگر راسی به خودش یال داشته باشد آنگاه قطعا این راس
+L
+نخواهد بود. زیرا طبق الگوریتم تنها زمانی به یک راس برچسب
+L
+می زنیم که یال خروجی نداشته باشد. به صورت دقیق تر کسی که در حال حاضر
+مهره اش روی این راس است می تواند به راحتی استراتژی نفر مقابل را
+بدزدد. یعنی اگر تشخیص دهد نفر دیگر می تواند ببرد به راحتی از یال
+طوقه استفاده می کند و این حرکت مثل این است که نوبت خودش و نفر بعد
+را عوض کرده است، بعد از این می تواند از استراتژی نفر دیگر استفاده
+کند. در مسائل این بخش مثال هایی از دزدیدن استراتژی آورده شده است.</p>
+<p>الگوریتمی که مطرح کردیم به شیوه دیگری برای گراف های بدون دور قابل بررسی است. این موضوع به خاطر ویژگی DAG ها یعنی داشتن ترتیب توپولوژیکی است. راس های گراف را به ترتیب توپولوژیکی می چینیم. حالا از آخر شروع می کنیم و یکی یکی راس ها را حذف می کنیم. اگر راسی که حذف می کنیم به یک L که جلو تر است یال داشته باشد روی آن W می نویسیم در غیر اینصورت L می نویسیم و در نهایت به تمام راس ها برد یا باخت نسبت داده می شود زیرا چنین بازی هایی همیشه پایان پذیر هستند.</p>
+</section>
+</section>
+<section id="id9">
+<h2>حرف آخر<a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>به نظر می آید تبدیل کردن بازی ها به گراف راه موثری برای حل کردن آن ها می باشد اما در حقیقت اینطور نیست.</p>
+<p>زیرا که در عمل خیلی از بازی ها بعد از تبدیل شدن به گراف تعداد راس های بسیار زیادی (یا حتی نامتناهی) خواهند داشت و از آنجایی که ما برای حل کردن بازی ها به اندازه تعداد راس ها و یال ها حافظه و زمان اجرا نیاز خواهیم داشت، حل کردن بسیاری از بازی ها به این شیوه امکان پذیر نیست.‌ (می توانید تخمین بزنید که بازی شطرنج بعد از تبدیل به گراف چند راس متفاوت خواهد داشت؟!).</p>
+<p>از طرف دیگر در خیلی از بازی ها تبدیل کردن به گراف می تواند شهود بهتری برای حل مسئله به ما بدهد و یا اینکه گراف ما بسیار خاص خواهد شد. پس نتیجه گیری این است که تبدیل کردن به گراف ابزار نسبتا قدرتمندی در حل و شهود پیدا کردن روی بازی ها می باشد اما همیشه پاسخگوی نیاز ما نخواهد بود.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="5.html" style="float:right;" title="تشخیص دور داشتن گراف جهت دار" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="7.html" style="float:left;" title="گراف تابعی و گراف‌جایگشت" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

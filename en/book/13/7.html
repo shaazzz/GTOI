@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Matching in General Graphs &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Matching" href="index.html" />
+        <link rel="next" title="Special Topics" href="../14/index.html" />
+        <link rel="prev" title="Poset" href="6.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction to Graphs and Graph Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walks, Trails, Paths, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Introductory Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Tree and Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding Tree Diameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Cut Vertex and Bridge Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed Graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html"><strong>Strongly Connected Components</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in a Directed Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof Techniques for Graph Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contracting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graph and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Eulerian Tour and Hamiltonian Cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest Path Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Determinants of Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Obtaining Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">NP and NP-complete Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Proof of NP-Completeness of the SAT Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">Graph NP-Complete Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">O(n+q*lg(n)) Solution using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">Relationship between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">LCA Linear Time Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced Tree Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Sack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Max-Flow Min-Cut</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Matching</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Matching in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Min-Max Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Poset</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Matching in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Planar Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Identical Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Several Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">How to Use This Book?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">Introduction to Algorithms and Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Matching in General Graphs</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/13/7.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="matching-in-general-graphs">
+<h1>Matching in General Graphs<a class="headerlink" href="#matching-in-general-graphs" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>In previous chapters, we examined the necessary and sufficient condition for the existence of a perfect matching in bipartite graphs. In this section, we will investigate the existence of a perfect matching in any general graph.</p>
+<section id="tat-s-theorem">
+<h2>Tat's Theorem<a class="headerlink" href="#tat-s-theorem" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>For any subset <span class="math notranslate nohighlight">\(S\)</span> of vertices (which can also be empty), let <span class="math notranslate nohighlight">\(O(S)\)</span> be the number of connected components with an odd number of vertices, if we remove the vertices of <span class="math notranslate nohighlight">\(S\)</span> from the graph.</p>
+<p>Tutte's Theorem states that the following condition is necessary and sufficient:</p>
+<p><span class="math notranslate nohighlight">\(\forall_S : |S| \geq O(S)\)</span></p>
+<p>Tutte's condition is clearly necessary for the existence of a perfect matching. For proof, consider a set <span class="math notranslate nohighlight">\(S\)</span> such that <span class="math notranslate nohighlight">\(|S| &lt; O(S)\)</span>. In this case, for a perfect matching to exist, one vertex from each odd component counted in <span class="math notranslate nohighlight">\(O(S)\)</span> must be matched to a vertex in <span class="math notranslate nohighlight">\(S\)</span>. Since we stated <span class="math notranslate nohighlight">\(|S| &lt; O(S)\)</span>, finding a perfect matching is not possible.</p>
+<p>To prove the sufficiency of the condition, we use an extremal argument. That is, by contradiction, assume that graph <span class="math notranslate nohighlight">\(G\)</span> does not have a perfect matching and Tutte's condition holds in it. Note that adding an edge to graph <span class="math notranslate nohighlight">\(G\)</span> maintains Tutte's condition (why?). So our general idea is to add an edge that is not present in our graph until a perfect matching is formed. Eventually, we reach a maximal graph <span class="math notranslate nohighlight">\(H\)</span> such that:</p>
+<ul class="simple">
+<li><p>Tutte's condition holds in it.</p></li>
+<li><p>It does not contain a perfect matching.</p></li>
+<li><p>For every edge <span class="math notranslate nohighlight">\(uv\)</span> not in <span class="math notranslate nohighlight">\(H\)</span>, if we add it to <span class="math notranslate nohighlight">\(H\)</span>, a perfect matching will be formed.</p></li>
+</ul>
+<p>Now our goal is to prove that graph <span class="math notranslate nohighlight">\(H\)</span> already has a perfect matching (in which case, we reach a contradiction with our assumption, and the problem is proven).</p>
+<p>First, note that Tutte's condition holding for <span class="math notranslate nohighlight">\(S = \phi\)</span> implies that <span class="math notranslate nohighlight">\(H\)</span> has no connected components with an odd number of vertices, which means the total number of vertices in the graph is even.</p>
+<ul class="simple">
+<li><p><strong>Pear</strong> : Vertices <span class="math notranslate nohighlight">\(a,b,c,d\)</span> such that <span class="math notranslate nohighlight">\(ab,ac\)</span> are edges of the graph, but <span class="math notranslate nohighlight">\(bc,ad\)</span> are not edges of the graph.</p></li>
+<li><p><strong>Apple</strong> : Vertices <span class="math notranslate nohighlight">\(a,b,c\)</span> such that <span class="math notranslate nohighlight">\(ab,ac\)</span> are edges of the graph, but <span class="math notranslate nohighlight">\(bc\)</span> is not an edge of the graph.</p></li>
+</ul>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/sib_golabi.png"><img alt="If the user's internet is bad, this will show" src="../../_images/sib_golabi.png" style="width: 50%;" /></a>
+</figure>
+<p>We claim that if we can find a &quot;pear&quot; in <span class="math notranslate nohighlight">\(H\)</span>, we can prove that <span class="math notranslate nohighlight">\(H\)</span> contains a perfect matching. So, consider an arbitrary &quot;pear&quot; and its vertices <span class="math notranslate nohighlight">\(a,b,c,d\)</span> as per the definition.</p>
+<p>If you add edge <span class="math notranslate nohighlight">\(ad\)</span> to <span class="math notranslate nohighlight">\(H\)</span>, a matching <span class="math notranslate nohighlight">\(M1\)</span> will exist in it, which includes <span class="math notranslate nohighlight">\(ad\)</span>.</p>
+<p>If you add edge <span class="math notranslate nohighlight">\(bc\)</span> to <span class="math notranslate nohighlight">\(H\)</span>, a matching <span class="math notranslate nohighlight">\(M2\)</span> will exist in it, which includes <span class="math notranslate nohighlight">\(bc\)</span>.</p>
+<p>Now consider <span class="math notranslate nohighlight">\(M = M1 \Delta M2\)</span>. According to the material discussed in previous sections, the edges of <span class="math notranslate nohighlight">\(M\)</span> form a set of cycles.</p>
+<section id="if-edges-ad-and-bc-are-in-two-different-cycles">
+<h3>If edges <span class="math notranslate nohighlight">\(ad\)</span> and <span class="math notranslate nohighlight">\(bc\)</span> are in two different cycles<a class="headerlink" href="#if-edges-ad-and-bc-are-in-two-different-cycles" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Then, from the cycle containing <span class="math notranslate nohighlight">\(ad\)</span>, choose edges of <span class="math notranslate nohighlight">\(M2\)</span>, and from the cycle containing <span class="math notranslate nohighlight">\(bc\)</span>, choose edges of <span class="math notranslate nohighlight">\(M1\)</span> (from the remaining cycles, choose edges of <span class="math notranslate nohighlight">\(M1\)</span> or <span class="math notranslate nohighlight">\(M2\)</span> arbitrarily, and also choose edges that are in <span class="math notranslate nohighlight">\(M1 \cap M2\)</span>). In this case, we will have a perfect matching in <span class="math notranslate nohighlight">\(H\)</span>!</p>
+</section>
+<section id="if-edges-ad-and-bc-are-in-the-same-cycle">
+<h3>If edges <span class="math notranslate nohighlight">\(ad\)</span> and <span class="math notranslate nohighlight">\(bc\)</span> are in the same cycle<a class="headerlink" href="#if-edges-ad-and-bc-are-in-the-same-cycle" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>First, we must state that this cycle is even. Now, since <span class="math notranslate nohighlight">\(bc\)</span> is one of the edges of the cycle, <span class="math notranslate nohighlight">\(b,c\)</span> are two consecutive vertices in the cycle. Therefore, it happens that for exactly one of the edges <span class="math notranslate nohighlight">\(ab\)</span> or <span class="math notranslate nohighlight">\(ac\)</span>, the following occurs:</p>
+<p>If we remove the vertices at the ends of the edge, our cycle will turn into two even-vertex paths.</p>
+<p>Without loss of generality, suppose this edge is <span class="math notranslate nohighlight">\(ab\)</span>. Now, choose edge <span class="math notranslate nohighlight">\(ab\)</span> for the matching. Then, remove <span class="math notranslate nohighlight">\(a,b\)</span> from the graph and alternately choose edges from the two even-vertex paths formed for the matching. In this way, all vertices of our cycle will be covered by the selected edges. Similarly, from the remaining cycles, arbitrarily choose edges from <span class="math notranslate nohighlight">\(M1\)</span> or <span class="math notranslate nohighlight">\(M2\)</span>, and also choose edges that are in <span class="math notranslate nohighlight">\(M1 \cap M2\)</span>. In this case, we will have a perfect matching in <span class="math notranslate nohighlight">\(H\)</span>!</p>
+</section>
+<section id="what-if-we-don-t-have-a-pear">
+<h3>What if we don't have a pear?<a class="headerlink" href="#what-if-we-don-t-have-a-pear" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>In the two sections above, we proved that if graph <span class="math notranslate nohighlight">\(H\)</span> has a pear, then <span class="math notranslate nohighlight">\(H\)</span> contains a perfect matching. Now we must also consider cases where no pear exists in <span class="math notranslate nohighlight">\(H\)</span>.</p>
+<p>Consider the set <span class="math notranslate nohighlight">\(C\)</span> to include all vertices of <span class="math notranslate nohighlight">\(H\)</span> that have edges to all other vertices (their degree is <span class="math notranslate nohighlight">\(n-1\)</span>).</p>
+<p>Now, if <span class="math notranslate nohighlight">\(C\)</span> includes all vertices of <span class="math notranslate nohighlight">\(H\)</span>, this means that <span class="math notranslate nohighlight">\(H\)</span> is a clique (and has an even number of vertices). Thus, a perfect matching clearly exists in it.</p>
+<p>So consider the graph <span class="math notranslate nohighlight">\(W = H-C\)</span>. In <span class="math notranslate nohighlight">\(W\)</span>, for every vertex like <span class="math notranslate nohighlight">\(u\)</span>, there exists a vertex like <span class="math notranslate nohighlight">\(v\)</span> such that there is no edge between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> (why?). Thus, if we can find an apple in <span class="math notranslate nohighlight">\(W\)</span>, then we can also find a pear (because it is sufficient to find a vertex <span class="math notranslate nohighlight">\(d\)</span> for vertex <span class="math notranslate nohighlight">\(a\)</span> in the apple such that there is no edge between <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(d\)</span>).</p>
+<p>So if an apple exists in <span class="math notranslate nohighlight">\(W\)</span>, the problem is solved. Now, assume that no apple exists in <span class="math notranslate nohighlight">\(W\)</span>. In this case, for any arbitrary <span class="math notranslate nohighlight">\(a,b,c\)</span> such that <span class="math notranslate nohighlight">\(ab,ac\)</span> are edges of the graph, <span class="math notranslate nohighlight">\(bc\)</span> must also be an edge of this graph. Consider an arbitrary vertex like <span class="math notranslate nohighlight">\(u\)</span>, and let <span class="math notranslate nohighlight">\(A\)</span> be the set containing <span class="math notranslate nohighlight">\(u\)</span> itself and its neighbors. There must be an edge between any two vertices in <span class="math notranslate nohighlight">\(A\)</span> (why?). Also, no vertex outside <span class="math notranslate nohighlight">\(A\)</span> has an edge to <span class="math notranslate nohighlight">\(A\)</span> (why?). Therefore, it can be concluded that every connected component in <span class="math notranslate nohighlight">\(W\)</span> is a clique. Match vertices arbitrarily within each clique. Exactly one vertex remains unmatched from each odd-sized clique. Since Tutte's condition holds for <span class="math notranslate nohighlight">\(S = C\)</span>, all remaining unmatched vertices in <span class="math notranslate nohighlight">\(W\)</span> can be matched to vertices in <span class="math notranslate nohighlight">\(C\)</span>. Finally, we arbitrarily match all remaining unmatched vertices in <span class="math notranslate nohighlight">\(C\)</span> (which form an even-sized clique). Thus, we have found a perfect matching in <span class="math notranslate nohighlight">\(H\)</span>.</p>
+</section>
+</section>
+<section id="more-general-matching-or-k-factor">
+<h2>More General Matching or k-factor<a class="headerlink" href="#more-general-matching-or-k-factor" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>By definition, a perfect matching in graph <span class="math notranslate nohighlight">\(G\)</span> means a subset of graph edges, like <span class="math notranslate nohighlight">\(M\)</span>, where the degree of each vertex in <span class="math notranslate nohighlight">\(M\)</span> is exactly 1.</p>
+<p>Now we want to generalize this definition. Suppose <span class="math notranslate nohighlight">\(a_1,a_2,...,a_n\)</span> are given, and we need to determine if there exists a subset of graph edges, like <span class="math notranslate nohighlight">\(M\)</span>, in which the degree of each vertex <span class="math notranslate nohighlight">\(u\)</span> becomes <span class="math notranslate nohighlight">\(a_u\)</span>?</p>
+<section id="a-wrong-idea">
+<h3>A Wrong Idea<a class="headerlink" href="#a-wrong-idea" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Probably the first idea that comes to mind is to copy vertex <span class="math notranslate nohighlight">\(u\)</span> exactly <span class="math notranslate nohighlight">\(a_u\)</span> times, then for each edge <span class="math notranslate nohighlight">\(uv\)</span> in <span class="math notranslate nohighlight">\(G\)</span>, add an edge between all copies of <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span>. Then check if a perfect matching exists in the new graph.</p>
+<p>This idea is very similar to what we discussed previously in the bipartite matching chapter, but it has a very subtle mistake. The problem is that we might simultaneously use several edges between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> in the matching, and this causes us to use one edge multiple times, which is not desired by the problem.</p>
+</section>
+<section id="the-correct-solution">
+<h3>The Correct Solution<a class="headerlink" href="#the-correct-solution" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(d_u\)</span> be the degree of vertex <span class="math notranslate nohighlight">\(u\)</span>. We construct graph <span class="math notranslate nohighlight">\(G^{\prime}\)</span> from graph <span class="math notranslate nohighlight">\(G\)</span> as follows:</p>
+<p>For each vertex <span class="math notranslate nohighlight">\(u\)</span>, we place a complete bipartite graph! Such that its first part has <span class="math notranslate nohighlight">\(d_u - a_u\)</span> vertices, and its second part has <span class="math notranslate nohighlight">\(d_u\)</span> vertices. We call the bipartite graph corresponding to vertex <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(B_u\)</span>. Then, consider the edges of graph <span class="math notranslate nohighlight">\(G\)</span> in an arbitrary order and add their counterparts (as we will describe) to graph <span class="math notranslate nohighlight">\(G^{\prime}\)</span>. Suppose the <span class="math notranslate nohighlight">\(i\)</span>-th edge we examine is <span class="math notranslate nohighlight">\(uv\)</span>, and before it, we have examined <span class="math notranslate nohighlight">\(c1\)</span> edges incident to <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(c2\)</span> edges incident to <span class="math notranslate nohighlight">\(v\)</span>. Now, the counterpart of edge <span class="math notranslate nohighlight">\(uv\)</span> will be an edge between the following two vertices:</p>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(c1\)</span>-th vertex of the <strong>second part</strong> of graph <span class="math notranslate nohighlight">\(B_u\)</span></p></li>
+<li><p>The <span class="math notranslate nohighlight">\(c2\)</span>-th vertex of the <strong>second part</strong> of graph <span class="math notranslate nohighlight">\(B_v\)</span></p></li>
+</ul>
+<p>Now we claim that the existence of a subset <span class="math notranslate nohighlight">\(M\)</span> of edges that satisfies the problem's condition is equivalent to the existence of a perfect matching in graph <span class="math notranslate nohighlight">\(G^{\prime}\)</span>!</p>
+<p>Note that in this graph, each edge in the original graph has exactly one corresponding edge, so the previous problem (using an edge multiple times) does not arise. The complete proof of the correctness of the above theorem is left to the reader.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/k_factor.png"><img alt="If the user's internet is bad, this will show" src="../../_images/k_factor.png" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="6.html" style="float:left;" title="Poset" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="../14/index.html" style="float:right;" title="Special Topics" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>خاصیت های مقدماتی &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="درخت ها" href="index.html" />
+        <link rel="next" title="فاصله در درخت و گراف" href="2.html" />
+        <link rel="prev" title="درخت ها" href="index.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">درخت ها</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; خاصیت های مقدماتی</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/2/1.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>خاصیت های مقدماتی<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>در این فصل به بررسی درخت که یکی از مهمترین تعاریف گراف است و کاربرد زیادی در برنامه نویسی نیز دارد میپردازیم .</p>
+<p>در این بخش ویژگی ها و خاصیت های اصلی درخت را بیان و آن ها را اثبات میکنیم . در پایان این بخش انتظار میرود شهود خوبی روی شکل درخت و ویژگی های ابتدایی آن داشته باشید.</p>
+<section id="id2">
+<h2>تعاریف مربوط به این بخش<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<ul class="simple">
+<li><p><strong>درخت</strong> : گراف ساده ای که همبند است و دور ندارد .</p></li>
+<li><p><strong>جنگل</strong> : گراف ساده ای که دور ندارد .</p></li>
+<li><p><strong>برگ</strong> : راسی در درخت که درجه اش 1 است .</p></li>
+<li><p><strong>درخت فراگیر یا درخت پوشا</strong> : زیر گراف فراگیری که درخت است .</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>قضایا و لم های مورد استفاده در این بخش<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id4">
+<h3>لم 2.1.1<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت لم :</strong> یک گراف <span class="math notranslate nohighlight">\(n\)</span> راسی و <span class="math notranslate nohighlight">\(m\)</span> یالی حداقل max(1,n-m) مؤلفه همبندی دارد و اگر دقیقا n-m مؤلفه همبندی داشت دور ندارد و اگر نه دور دارد .</p>
+<p><strong>اثبات لم :</strong>
+ابتدا فرض میکنیم گراف هیچ یالی ندارد و یال های آن را به ترتیبی دلخواه اضافه میکنیم .</p>
+<p>حال اثبات میکنیم وقتی یک یال را به گراف اضافه میکنیم تعداد مؤلفه های همبندی حداکثر یکی کمتر میشود و اگر تعداد مؤلفه های ثابت ماند گراف دور خواهد داشت.
+فرض کنید یالی که الان به گراف اضافه میکنیم بین دو راس i و j است. اگر i و j در یک مؤلفه همبندی بودند بعد اضافه کردن یال تعداد مولفه های همبندی تغییر نمیکند و چون بین i و j مسیر است یال جدید و مسیر بین i و j تشکیل دور میدهند.
+اگر هم i و j در دو مؤلفه همبندی بودند بعد اضافه کردن یال مولفه های  i و j باهم یک مولفه همبندی میدهند یعنی تعداد مؤلفه های همبندی یکی کم میشود و چون مسیری بین i و j نبود با اضافه شدن یال دوری با این یال بوجود نمیاید.</p>
+<p>وقتی هیچ یالی را هنوز اضافه نکردیم گراف n مؤلفه همبندی دارد و چون با اضافه کردن هر یال حداکثر تعداد مولفه ها یکی کم میشد پس در اخر حداقل n-m مولفه همبندی داریم.
+پس اگر گراف در اخر دقیقا n-m مولفه همبندی داشت یعنی با اضافه کردن هر یال تعداد مولفه های همبندی دقیقا یکی کم میشد که ما ثابت کردیم وقتی تعداد مؤلفه های همبندی یکی کم شود دوری اظافه نمیشود
+پس در اخر گراف ما بدون دور است. و اگر بیشتر از n-m بود یعنی یالی بود که وقتی اضافه اش میکردیم تعداد مولفه های همبندی کم نمیشد پس دور بوجود می امد پس گراف ما دور دارد.</p>
+<p>با توجه به لم 2.1.1 اگر بدانیم یک گراف دور ندارد و از تعداد یال ها , تعداد راس ها و تعداد مولفه های همبندی حداقل دو تایشان را بدانیم دیگری یکتا بدست می اید در واقع اگر گراف دور نداشت :</p>
+<ul class="simple">
+<li><p>n - m - Cc = 0</p></li>
+<li><p>n = تعداد راس ها</p></li>
+<li><p>m = تعداد یال ها</p></li>
+<li><p>Cc = تعداد مؤلفه های همبندی</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>قضیه 2.1.2<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت قضیه :</strong> درخت n راسی دقیقا n-1 یال دارد.</p>
+<p><strong>اثبات قضیه :</strong> طبق لم 2.1.1 اگر یک گراف n راسی و m یالی دور نداشته باشد دقیقا n-m مولفه همبندی دارد و چون درخت یک مولفه همبندی دارد و دور ندارد پس در درخت n راسی n - m = 1 است پس m = n - 1.</p>
+</section>
+<section id="id6">
+<h3>قضیه 2.1.3<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت قضیه :</strong> یک درخت n راسی که (n &gt;= 2) حداقل 2 برگ دارد.</p>
+<p><strong>اثبات :</strong> بلندترین مسیر در درخت را در نظر بگیرید. چون n &gt; 1 پس قطعا بلندترین مسیر حداقل 2 راس دارد.حال 2 راس سر مسیر را در نظر بگیرید. حداکثر به یک راس در مسیر یال دارد زیرا اگر بیشتر داشته باشند دور بوجود می اید که با ویژگی درخت
+تناقض دارد . و چون بلند ترین مسیر را گرفته ایم دو سر مسیر به راسی که داخل مسیر نیست یال ندارند پس ثابت شد دو سر بلند ترین مسیر در درخت برگ هستند.</p>
+</section>
+<section id="id7">
+<h3>قضیه 2.1.4<a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت لم :</strong> اگر از درخت برگش را حذف کنیم گراف باقی مانده باز درخت است.</p>
+<p><strong>اثبات :</strong> باید ثابت کنیم گراف باقی مانده همبند است و دور ندارد. واضح است که یک گراف اگر دور نداشته باشد وقتی راسی از ان را نیز حذف کنیم باز دور ندارد.حال میخواهیم بگوییم همبند است. اگر برگ را حذف کنیم و گراف ناهمبند شود پس حداقل  2 مولفه همبندی دارد
+و راسی که حذف کردیم هم باید به هر یک از این مولفه ها حداقل یک یال میداشت تا گراف بدون حذفش همبند باشد پس درجه اش حداقل 2 بود ولی درجه برگ 1 است. با تناقض بدست آمده ثابت شد گراف همبند نیز هست پس درخت است.</p>
+<p>قضیه 2.1.4 بسیار کاریردی است چون نشان میدهد اگر در سوالی خواستید روی درخت استقرا بزنید با حذف برگ میتوانید به فرض استقرا بروید.در ادامه کتاب با چنین سوالاتی اشنا خواهید شد.</p>
+</section>
+<section id="id8">
+<h3>قضیه 2.1.5<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>ثابت کنید گرافی که ویژگی های یکی از موارد زیر را داشته باشد درخت است.</p>
+<ul class="simple">
+<li><p>الف) گرافی که n-1 یال دارد و همبند است.</p></li>
+<li><p>ب) گرافی که دور ندارد و n-1 یال دارد.</p></li>
+<li><p>ج) بین هر دو راس گراف دقیقا یک مسیر وجود دارد.</p></li>
+</ul>
+<p><strong>جواب :</strong></p>
+<p><strong>الف)</strong>  اگر ثابت کنیم گراف دور ندارد قضیه اثبات میشود. طبق لم 2.1.1 اگر گراف دور داشته باشد تعداد مولفه های همبندی بیشتر از n-m است ولی در این گراف برابر n-m است.
+با تناقض بدست امده قضیه اثبات شد.</p>
+<p><strong>ب)</strong>  چون گراف دور ندارد طبق لم 2.1.1 :</p>
+<p>n - m - Cc = 0  --&gt;  n - (n-1) = Cc  --&gt;  Cc = 1</p>
+<p>پس گراف همبند است و دور ندارد پس درخت است .</p>
+<p><strong>ج)</strong> باید ثابت کنیم گراف همبند است و دور ندارد. واضح است گراف همبند است زیرا بین هر دو راس مسیر وجود دارد پس همه در یک مولفه همبندی هستند .حال باید بگوییم دور ندارد .این هم
+واضح است زیرا اگر دور داشته باشد بین هر دو راس از یک دور حداقل 2 مسیر وجود دارد .</p>
+</section>
+<section id="id9">
+<h3>قضیه 2.1.6<a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p><strong>صورت قضیه :</strong> هر گراف همبند یک درخت فراگیر دارد.</p>
+<p><strong>اثبات :</strong> تا زمانی تعداد یال های گراف n-1 نشده هر مرحله یک یال را از گراف حذف میکنیم و ثابت میکنیم گراف همچنان همبند است و طبق قضیه 2.1.5 گرافی که n-1 یال دارد و همبند است درخت است و قضیه اثبات میشود.</p>
+<p>پس تا زمانی که تعداد یال ها n-1 نشده حرکت زیر را انجام میدهیم : چون تعداد یال ها بیشتر از n-1 است و گراف 1 مولفه همبندی دارد طبق لم 2.1.1 در گراف دور وجود دارد. یکی از دور ها را بگیرید و یک یال از ان را حذف کنید واضح است گراف همبند میماند
+زیرا دو سر این یال از طریق یال های دیگر این دور باز هم به هم مسیر دارند پس تا وقتی تعداد یال ها n-1 نشده میتوانیم هی یال حذف کنیم به طوری که گراف همبند بماند پس قضیه اثبات شد.</p>
+</section>
+</section>
+<section id="id10">
+<h2>ریشه دار کردن درخت<a class="headerlink" href="#id10" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>فرض کنید یال های درخت را طوری جهت دهی کردیم که هر راس به جز راس <span class="math notranslate nohighlight">\(u\)</span> دقیقا یک ورودی دارد (دقیقا یک یال به آن وارد می شود) و راس <span class="math notranslate nohighlight">\(u\)</span> هیچ ورودی ندارد.</p>
+<p>در ابتدا یک مهره را روی راس <span class="math notranslate nohighlight">\(v\)</span> قرار دهید و در هر مرحله مهره اگر در راس <span class="math notranslate nohighlight">\(w\)</span> بودیم مهره را به راسی ببرید که به <span class="math notranslate nohighlight">\(w\)</span> یال ورودی دارد. اگر <span class="math notranslate nohighlight">\(w \neq u\)</span> باشد آنگاه این راس یکتا است.</p>
+<p>اول از همه می توان نتیجه گرفت در هر مرحله یک راس جدید را می بینیم (زیرا در درخت دور نداریم و اگر راس تکراری ببینیم یک دور را طی کرده ایم) سپس می توان نتیجه گرفت مراحل متناهی است (زیرا در هر مرحله یک راس جدید را می بینیم و تعداد راس ها متناهی است) و در نهایت می توان گفت مهره به <span class="math notranslate nohighlight">\(u\)</span> خواهد رسید.</p>
+<p>به صورت شهودی می توانید تصور کنید درخت را از <span class="math notranslate nohighlight">\(u\)</span> <strong>آویزان</strong> کرده اید و به ازای هر یال <span class="math notranslate nohighlight">\(ab\)</span> اگر <span class="math notranslate nohighlight">\(a\)</span> در ارتفاع بالاتری نسبت به <span class="math notranslate nohighlight">\(b\)</span> بود یال را از <span class="math notranslate nohighlight">\(a\)</span> به <span class="math notranslate nohighlight">\(b\)</span> جهت دهی کرده ایم. در اینصورت جهت دهی مذکور همان جهت دهی خواهد بود که در بالا به آن اشاره کردیم. برای شهود بیشتر می توانید به اینصورت فکر کنید. در جهت دهی بالا راس <span class="math notranslate nohighlight">\(u\)</span> ورودی ندارد پس تمام یال های مجاور <span class="math notranslate nohighlight">\(u\)</span> باید از <span class="math notranslate nohighlight">\(u\)</span> به خارج جهت دهی شوند. در اینصورت به راس های مجاور <span class="math notranslate nohighlight">\(u\)</span> لایه اول می گوییم. حالا تمام لایه اول دقیقا یک ورودی دارند‌ (که آن ورودی <span class="math notranslate nohighlight">\(u\)</span> است) پس تمام یال های مجاور دیگر آن ها باید از لایه اول به خارج جهت دهی شوند که به آن ها لایه دوم می گوییم. به همین شکل می توان لایه سوم را تعریف کرد. هر راس لایه دوم دقیقا یک ورودی دارد که در لایه اول قرار دارد. پس تمام مجاور های دیگر آن را در لایه سوم قرار می دهیم و یال ها را از لایه دوم و سوم جهت دهی می کنیم. به همین شکل می توانید جهت دهی کردن و لایه بندی را ادامه دهید. یال های لایه <span class="math notranslate nohighlight">\(h\)</span> ام به <span class="math notranslate nohighlight">\(h+1\)</span> ام را در نظر بگیرید و توجه کنید که تعداد یال های ورودی هر راس لایه <span class="math notranslate nohighlight">\(h+1\)</span> ام باید دقیقا 1 باشد پس به هر راس در لایه <span class="math notranslate nohighlight">\(h+1\)</span> ام دقیقا یک یال از لایه <span class="math notranslate nohighlight">\(h\)</span> ام می رسد.در نهایت نتیجه می گیرید که جهت دهی که در ابتدا تصور کردیم همان جهت دهی است که با شهود <strong>آویزان کردن</strong> از راس <span class="math notranslate nohighlight">\(u\)</span> به دست آوردیم.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Simple_Rooted_Tree.svg"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/Simple_Rooted_Tree.svg" width="50%" /></a>
+</figure>
+<p>به این عمل آویزان کردن درخت از راس <span class="math notranslate nohighlight">\(u\)</span>، ریشه دار کردن درخت از راس <span class="math notranslate nohighlight">\(u\)</span> هم می گویند. در اینصورت به راس <span class="math notranslate nohighlight">\(u\)</span> <strong>ریشه</strong> می گوییم. همچنین گفتیم در جهت دهی هر راس به جز <span class="math notranslate nohighlight">\(u\)</span> تنها یک یال ورودی دارد.</p>
+<p>به ازای راس <span class="math notranslate nohighlight">\(b\)</span> اگر یال ورودی به آن <span class="math notranslate nohighlight">\(ab\)</span> باشد به راس <span class="math notranslate nohighlight">\(a\)</span> <strong>پدر</strong> راس <span class="math notranslate nohighlight">\(b\)</span> می گوییم.</p>
+<p>هر دو راسی که پدر مشترک داشته باشند را <strong>برادر</strong> می نامیم.</p>
+<p>راس <span class="math notranslate nohighlight">\(u\)</span> <strong>جد</strong> راس <span class="math notranslate nohighlight">\(v\)</span> است اگر که یا <span class="math notranslate nohighlight">\(u\)</span> پدر راس <span class="math notranslate nohighlight">\(v\)</span> باشد یا اینکه <span class="math notranslate nohighlight">\(u\)</span> جد پدر <span class="math notranslate nohighlight">\(v\)</span> باشد. به عبارتی به مجموعه پدران یک راس جد های این راس می گوییم.</p>
+<p>به فاصله بین <span class="math notranslate nohighlight">\(u\)</span> و هر راس (تعداد یال های مسیر بین آن ها) <strong>ارتفاع</strong> آن راس می گوییم.</p>
+<p>به ازای یک راس خاص مثل <span class="math notranslate nohighlight">\(v\)</span> به مجموعه راس هایی که مسیرشان (که این مسیر یکتا است) به ریشه از <span class="math notranslate nohighlight">\(v\)</span> می گذرد <strong>زیردرخت</strong> راس <span class="math notranslate nohighlight">\(v\)</span> می گوییم. به طور شهودی وقتی درخت را از <span class="math notranslate nohighlight">\(u\)</span> آویزان کردیم به مجموعه راس هایی که از <span class="math notranslate nohighlight">\(v\)</span> آویزان شده اند زیردرخت <span class="math notranslate nohighlight">\(v\)</span> می گوییم.</p>
+<p>اویزان کردن درخت بسیار مهم است زیرا در ادامه فصل در الگوریتم ها از آن استفاده میشود و همچنین در حال حاظر بهترین روش برای شهود روی شکل درخت است است به این صورت که درخت یک ریشه
+دارد و ان ریشه با تعدادی شاخه با راس های دیگر همسایه است و ان ها نیز با تعدادی شاخه با راس های جدیدی همسایه هستند و ...(به مانند شکل بالا)</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="index.html" style="float:right;" title="درخت ها" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="2.html" style="float:left;" title="فاصله در درخت و گراف" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

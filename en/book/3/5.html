@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Detecting Cycles in a Directed Graph &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Directed Graph" href="index.html" />
+        <link rel="next" title="Games and Directed Graphs" href="6.html" />
+        <link rel="prev" title="Strongly Connected Components" href="4.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction to Graphs and Graph Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walks, Trails, Paths, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">Introductory Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">Distance in Tree and Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">Algorithm for Finding Tree Diameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">Cut Vertex and Bridge Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Directed Graph</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Directed Acyclic Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html"><strong>Strongly Connected Components</strong></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Detecting Cycles in a Directed Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof Techniques for Graph Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contracting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graph and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Eulerian Tour and Hamiltonian Cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest Path Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Determinants of Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Obtaining Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">NP and NP-complete Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Proof of NP-Completeness of the SAT Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">Graph NP-Complete Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">O(n+q*lg(n)) Solution using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">Relationship between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">LCA Linear Time Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced Tree Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Sack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Max-Flow Min-Cut</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matching in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Min-Max Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matching in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Planar Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Identical Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Several Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">How to Use This Book?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">Introduction to Algorithms and Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Detecting Cycles in a Directed Graph</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/3/5.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <blockquote>
+<div><p>&lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+</div></blockquote>
+<section id="detecting-cycles-in-a-directed-graph">
+<h1>Detecting Cycles in a Directed Graph<a class="headerlink" href="#detecting-cycles-in-a-directed-graph" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>In previous sections, it was sometimes necessary to determine whether a directed graph had a cycle or not! For example, to provide a topological ordering of a graph, we first needed to ensure the graph was acyclic. This is because a graph with a cycle has no topological ordering!</p>
+<p>Here, we describe two algorithms that can detect if a graph contains a cycle. Furthermore, the first algorithm will output a cycle if one is found!</p>
+</section>
+<section id="cycle-detection-algorithm-using-dfs">
+<h2>Cycle Detection Algorithm Using DFS<a class="headerlink" href="#cycle-detection-algorithm-using-dfs" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p><strong>Description:</strong> This algorithm is similar to the algorithm in section 3.3, with the difference that here we will have two types of markings for each vertex. We traverse the graph using
+<span class="math notranslate nohighlight">\(DFS\)</span>
+, marking each vertex as 'visited' when we enter it, and as 'exited' when we leave it. Now, if during traversal we reach a vertex that we have 'visited' but not yet 'exited' (these are vertices on the current gray path), we conclude that the graph has a cycle. Otherwise, the graph is acyclic.</p>
+<p><strong>Correctness Proof:</strong> When traversing the graph, if we are at a vertex like
+<span class="math notranslate nohighlight">\(v\)</span>
+and reach a vertex like
+<span class="math notranslate nohighlight">\(u\)</span>
+that we have 'visited' but not yet 'exited' (the gray path vertices), this means there is a directed edge from
+<span class="math notranslate nohighlight">\(v\)</span>
+to
+<span class="math notranslate nohighlight">\(u\)</span>
+(the red edge), and
+<span class="math notranslate nohighlight">\(u\)</span>
+has a directed path to
+<span class="math notranslate nohighlight">\(v\)</span>, in which case the graph will have a cycle. Also, if the graph has a cycle, this algorithm will definitely find it. Otherwise, if we assume
+<span class="math notranslate nohighlight">\(G\)</span>
+is a graph with at least one cycle where the algorithm failed to find it, let
+<span class="math notranslate nohighlight">\(v\)</span>
+be the first vertex on cycle
+<span class="math notranslate nohighlight">\(C\)</span>
+that we enter, and
+<span class="math notranslate nohighlight">\(e\)</span>
+be an edge from
+<span class="math notranslate nohighlight">\(u\)</span>
+to
+<span class="math notranslate nohighlight">\(v\)</span>
+that is part of cycle
+<span class="math notranslate nohighlight">\(C\)</span>. In this case, during traversal, we would reach
+<span class="math notranslate nohighlight">\(u\)</span>
+before exiting
+<span class="math notranslate nohighlight">\(v\)</span>
+(because these two vertices are in the same cycle and there must be a path from
+<span class="math notranslate nohighlight">\(v\)</span>
+to
+<span class="math notranslate nohighlight">\(u\)</span>), and then using edge
+<span class="math notranslate nohighlight">\(e\)</span>
+we would reach
+<span class="math notranslate nohighlight">\(v\)</span>
+again, which means we have found a cycle. Thus, from the contradiction, it follows that the algorithm finds a cycle in any graph that contains one.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Cycle_DFS.svg"><img alt="If the internet is slow, this will appear" src="../../_images/Cycle_DFS.svg" width="50%" /></a>
+</figure>
+<section id="algorithm-complexity">
+<h3>Algorithm Complexity<a class="headerlink" href="#algorithm-complexity" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>In this algorithm, we used
+<span class="math notranslate nohighlight">\(DFS\)</span>
+once, resulting in a complexity of
+<span class="math notranslate nohighlight">\(O(m+n)\)</span>, where
+<span class="math notranslate nohighlight">\(n\)</span>
+is the number of vertices and
+<span class="math notranslate nohighlight">\(m\)</span>
+is the number of edges.</p>
+</section>
+<section id="algorithm-implementation">
+<h3>Algorithm Implementation<a class="headerlink" href="#algorithm-implementation" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Note that in the following implementation, if a cycle exists, it is found and output; if no cycle exists, the topological order of the vertices is output.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gr</span><span class="p">[</span><span class="n">MX</span><span class="p">],</span><span class="w"> </span><span class="n">topo</span><span class="p">,</span><span class="w"> </span><span class="n">cycle</span><span class="p">;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">st</span><span class="p">[</span><span class="n">MX</span><span class="p">],</span><span class="w"> </span><span class="n">ed</span><span class="p">[</span><span class="n">MX</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">st</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="o">:</span><span class="w"> </span><span class="n">gr</span><span class="p">[</span><span class="n">v</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">ed</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cycle</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cycle</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">st</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">u</span><span class="p">)){</span><span class="w"></span>
+<span class="w">                        </span><span class="k">if</span><span class="p">(</span><span class="n">cycle</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">cycle</span><span class="p">[</span><span class="n">cycle</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
+<span class="w">                                </span><span class="n">cycle</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ed</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">topo</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="w"></span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">gr</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">)){</span><span class="w"></span>
+<span class="w">                        </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">check</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;no cycle </span><span class="se">\n</span><span class="s">topo order: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"> </span><span class="n">topo</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;cycle: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cycle</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">cycle</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="kahn-s-algorithm">
+<h2>Kahn's Algorithm<a class="headerlink" href="#kahn-s-algorithm" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p><strong>Description:</strong> Another method to determine if a graph has a cycle is Kahn's algorithm. This algorithm works based on induction. This method is very similar to Theorem 3.3.2!</p>
+<p>The algorithm proceeds as follows: initially, we have an empty set of vertices called
+<span class="math notranslate nohighlight">\(zero\)</span>. This set contains vertices whose in-degree in the current graph is 0.</p>
+<p>Initially, we add all vertices with an in-degree of 0 to
+<span class="math notranslate nohighlight">\(zero\)</span>.</p>
+<p>In each step, we remove the vertices in
+<span class="math notranslate nohighlight">\(zero\)</span>
+along with their incident edges from the graph. Following this, some new vertices might have their in-degree become 0 and be added to
+<span class="math notranslate nohighlight">\(zero\)</span>. We continue this process until either the number of vertices in the graph becomes 0 or the set
+<span class="math notranslate nohighlight">\(zero\)</span>
+becomes empty.</p>
+<p>If at any stage the size of the set
+<span class="math notranslate nohighlight">\(zero\)</span>
+is 0 and the current graph still contains some vertices, then the graph definitely has a cycle. If this does not happen and all vertices are removed from the graph, then the graph is acyclic.</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../../_images/Cycle_Kahn.svg"><img alt="If the internet is slow, this will appear" src="../../_images/Cycle_Kahn.svg" width="80%" /></a>
+</figure>
+<p>For a better understanding, see the figure on the right. In this figure, the blue cycle never enters the
+<span class="math notranslate nohighlight">\(zero\)</span>
+set, and therefore the graph is detected as cyclic!</p>
+<p><strong>Correctness Proof:</strong> To prove the algorithm, we consider two cases for the graph. First, assume graph
+<span class="math notranslate nohighlight">\(G\)</span>
+has a cycle; then we claim the algorithm correctly detects the presence of a cycle.</p>
+<p>If
+<span class="math notranslate nohighlight">\(G\)</span>
+has a cycle, and we call this cycle
+<span class="math notranslate nohighlight">\(C\)</span>, then none of the vertices of
+<span class="math notranslate nohighlight">\(C\)</span>
+will ever be added to
+<span class="math notranslate nohighlight">\(zero\)</span>
+(why?). Thus, we reach a state where the graph still contains some vertices, but
+<span class="math notranslate nohighlight">\(zero\)</span>
+is empty! So the algorithm detects the cycle.</p>
+<p>Now, if the graph is acyclic, we prove by induction on the number of vertices that all vertices are removed!</p>
+<p>Firstly, if the graph is acyclic, according to Theorem 3.1.3, there are vertices in graph
+<span class="math notranslate nohighlight">\(G\)</span>
+whose in-degree is 0. These vertices are added to the
+<span class="math notranslate nohighlight">\(zero\)</span>
+set, then removed from the graph along with their edges. Thus, the number of vertices decreases. Furthermore, the inductive conditions hold, and the current graph is acyclic. Therefore, by induction, all vertices are removed from the graph, and the algorithm correctly detects that there is no cycle.</p>
+<section id="id1">
+<h3>Algorithm Complexity<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>To analyze the algorithm's complexity, we need to see how much we traverse vertices and edges. We traverse edges when a vertex is in the set
+<span class="math notranslate nohighlight">\(zero\)</span>, then we traverse its incident edges. Each vertex enters
+<span class="math notranslate nohighlight">\(zero\)</span>
+only once and is then removed from the graph. So we traverse each edge once.</p>
+<p>Also, we traverse vertices when a vertex is placed in the set
+<span class="math notranslate nohighlight">\(zero\)</span>. Similarly, each vertex is added to this set only once and is then removed from the graph.</p>
+<p>Thus, the complexity of the above algorithm is
+<span class="math notranslate nohighlight">\(O(n + m)\)</span>
+which is similar to the previous algorithm!</p>
+</section>
+<section id="id2">
+<h3>Algorithm Implementation<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">// number of vertices and edges</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">in_edge</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"> </span><span class="c1">// in_edge[v] is the in-degree of vertex v!</span>
+
+<span class="n">vector</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"> </span><span class="c1">// adjacency list</span>
+<span class="n">vector</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zero</span><span class="p">;</span><span class="w"> </span><span class="c1">// vertices with in-degree 0 that should be removed!</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">has_cycle</span><span class="p">(){</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">in_edge</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">                  </span><span class="n">zero</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">                  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">[</span><span class="n">zero</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"> </span><span class="c1">// last element from remove_set</span>
+<span class="w">            </span><span class="n">zero</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">v</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                  </span><span class="n">in_edge</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">--</span><span class="p">;</span><span class="w"></span>
+<span class="w">                  </span><span class="k">if</span><span class="p">(</span><span class="n">in_edge</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">                        </span><span class="n">zero</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">                  </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="w"></span>
+<span class="w">      </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="c1">// u, v are 0-based</span>
+<span class="w">            </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">in_edge</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="c1">// edge (u, v) is in the graph. So in-degree of v increases by one!</span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">has_cycle</span><span class="p">())</span><span class="w"></span>
+<span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;graph has at least one cycle!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;graph is acyclic!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="4.html" style="float:left;" title="Strongly Connected Components" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="6.html" style="float:right;" title="Games and Directed Graphs" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

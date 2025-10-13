@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>کاربرد ها &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="تطابق" href="index.html" />
+        <link rel="next" title="جریان بیشینه و تطابق" href="5.html" />
+        <link rel="prev" title="قضایا ی مینماکس" href="3.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">تطابق</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; کاربرد ها</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/13/4.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>کاربرد ها<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<section id="id2">
+<h2>گراف جهت دار و دوبخشی<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در این بخش می بینیم که دو مفهوم گراف دوبخشی و جهت دار قابل تبدیل به یکدیگر هستند و بسته به اینکه کدام یک شهود بهتری برای حل مسئله به ما می دهند می توانیم از یکی از آن دو استفاده کنیم.</p>
+<p>ماتریس مجاورت یک گراف دوبخشی و جهت دار را در نظر بگیرید. هر دو ماتریسی <span class="math notranslate nohighlight">\(n*n\)</span> هستند که در خانه ها 0,1 قرار دارد. (لزوما ماتریس متقارن نیست)</p>
+<p>حالا برای تبدیل گراف جهت دار به دوبخشی کافیست ماتریس مجاورت گراف جهت دار که آن را <span class="math notranslate nohighlight">\(M\)</span> می نامیم در نظر بگیرید و گراف دو بخشی رسم کنید که ماتریس مجاورت آن <span class="math notranslate nohighlight">\(M\)</span> باشد. تبدیل گراف دوبخشی به جهت دار نیز مشابه است. اگر بخواهیم شهودی تر به مطلب نگاه کنیم هر یال <span class="math notranslate nohighlight">\(ab\)</span> در گراف جهت دار معادل یک یال بین راس <span class="math notranslate nohighlight">\(a\)</span> از بخش سمت چپ و راس <span class="math notranslate nohighlight">\(b\)</span> از بخش سمت راست است. یعنی بخش سمت چپ نماینده خروجی ها و بخش سمت راست نماینده ورودی ها است.</p>
+<p>حالا یک تطابق در گرافی دوبخشی را در نظر بگیرید. اگر گراف دوبخشی را به گراف جهت دار تبدیل کنیم تطابق ما به چه چیزی تبدیل خواهد شد؟</p>
+<p>تعدادی دور و مسیر جهت دار! زیرا که در گراف دوبخشی از هر راس حداکثر یک یال مجاور انتخاب شده است این موضوع در گراف جهت دار به این معنی است که هر راس حداکثر یک ورودی و حداکثر یک خروجی دارد.</p>
+</section>
+<section id="dag">
+<h2>افراز dag به مسیر ها<a class="headerlink" href="#dag" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>یک گراف جهت دار بدون دور داریم. مینیمم <span class="math notranslate nohighlight">\(x\)</span> که می توان این گراف را به <span class="math notranslate nohighlight">\(x\)</span> مسیر جهت دار افراز کرد چند است؟</p>
+<p>توجه کنید که اگر در این افراز بهینه تعداد یال های مسیر ها <span class="math notranslate nohighlight">\(y\)</span> باشد آنگاه <span class="math notranslate nohighlight">\(x+y=n\)</span> پس برای مینیمم کردن <span class="math notranslate nohighlight">\(x\)</span> کافی است <span class="math notranslate nohighlight">\(y\)</span> را ماکسیمم کنیم. گراف جهت دار را به دوبخشی تبدیل کنید. حالا <span class="math notranslate nohighlight">\(y\)</span> برابر است با ماکسیمم تطابق این گراف دوبخشی.‌ (چرا؟)</p>
+</section>
+<section id="id3">
+<h2>افراز گراف جهت دار به دور ها<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>فرض کنید در یک گراف جهت دار می خواهیم یک روش برای افراز کردن این گراف به دور ها پیدا کنیم.</p>
+<p>ابتدا گراف را به فرم دوبخشی در بیاورید. گفتیم یک تطابق به معنای افراز به دور ها و مسیر ها است. می توانید به راحتی نتیجه گیری کنید که یک تطابق کامل به ما یک افراز به دور ها را ارائه می دهد. پس کافیست یک تطابق کامل در گراف دوبخشی پیدا کنیم.</p>
+</section>
+<section id="k">
+<h2>گراف 2k منتظم و افراز به دور ها<a class="headerlink" href="#k" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>این بار موضوع بحث ما گرافی بی جهت است. مشابه مسئله بالا تصور کنید گرافی <strong>بی جهت</strong> مثل <span class="math notranslate nohighlight">\(G\)</span> داریم و می دانیم <span class="math notranslate nohighlight">\(2k\)</span> منتظم است. می خواهیم <strong>اثبات کنیم</strong> یک روش برای افراز این گراف به دور ها وجود دارد.</p>
+<p>اولین ایده این است که به ازای هر یال <span class="math notranslate nohighlight">\(G\)</span> مثل <span class="math notranslate nohighlight">\(ab\)</span> در یک گراف جهت دار دو یال <span class="math notranslate nohighlight">\(ab, ba\)</span> را قرار دهیم. سپس مشابه مسئله بالا ابتدا گراف جهت دار را به فرم دوبخشی در بیاوریم و سپس تلاش کنیم تطابقی کامل پیدا کنیم.</p>
+<p>مشکلی که در این راه به وجود می آید این است که در این افراز ممکن است دور هایی به طول 2 (که همان تک یال می باشند) به وجود بیاید که این موضوع برای ما مطلوب نیست.</p>
+<p>برای اینکه این مشکل به وجود نیاید تور اویلری گراف را در نظر بگیرید و هر یال را در جهتی که تور اویلری آن را می پیماید جهت دار کنید. (اگر گراف چندین مولفه همبندی داشت این کار را برای هر کدام از مولفه ها انجام می دهیم).
+حالا گراف حاصل گرافی جهت دار است که در هر راس آن درجه ورودی و خروجی برابر با <span class="math notranslate nohighlight">\(k\)</span> می باشد. حالا اگر این گراف را به فرم دوبخشی در بیاوریم هر راس آن درجه <span class="math notranslate nohighlight">\(k\)</span> خواهد داشت.</p>
+<p>طبق قضیه ای که قبلا ثابت کردیم گراف دوبخشی <span class="math notranslate nohighlight">\(k\)</span> منتظم تطابق کامل دارد پس در این گراف جهت دار هم روشی برای افراز به دور ها وجود دارد.</p>
+</section>
+<section id="id4">
+<h2>دنباله درجه ای تورنومنت و تطابق<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>فرض کنید دنباله <span class="math notranslate nohighlight">\(d_1,d_2,...d_n\)</span> داده شده است و می دانیم <span class="math notranslate nohighlight">\(\sum\limits_{i=1}^{n} d_i = {n \choose 2}\)</span>.می خواهیم بررسی کنید آیا تورنومنتی وجود دارد درجه خروجی هر راس مثل <span class="math notranslate nohighlight">\(u\)</span> برابر با <span class="math notranslate nohighlight">\(d_u\)</span> باشد؟</p>
+<p>گرافی دوبخشی بسازید. بخش سمت راست <span class="math notranslate nohighlight">\(n\)</span> راس دارد و سمت چپ <span class="math notranslate nohighlight">\(n \choose 2\)</span> راس دارد و هر کدام از راس های بخش سمت چپ به نشانه یک یال از تورنومنت می باشد. راسی که به نشانه یال <span class="math notranslate nohighlight">\(ab\)</span> است را به راس <span class="math notranslate nohighlight">\(a\)</span> و راس <span class="math notranslate nohighlight">\(b\)</span> از بخش سمت راست متصل کنید. حالا یک زیرمجموعه از یال ها انتخاب کنید که درجه هر راس سمت چپ برابر با 1 و درجه راس <span class="math notranslate nohighlight">\(u\)</span> از بخش سمت راست برابر با <span class="math notranslate nohighlight">\(d_u\)</span> باشد. (شبیه تطابقی که در بخش تعمیم هال بررسی کردیم).</p>
+<p>به طور شهودی این هر راس سمت چپ مثل راسی که به نشانه <span class="math notranslate nohighlight">\(ab\)</span> است باید یکی از دو راس <span class="math notranslate nohighlight">\(a\)</span> یا <span class="math notranslate nohighlight">\(b\)</span> را انتخاب کند. اگر <span class="math notranslate nohighlight">\(a\)</span> را انتخاب کند یعنی قرار است در تورنومنت یال بین راس <span class="math notranslate nohighlight">\(a,b\)</span> از <span class="math notranslate nohighlight">\(a\)</span> به <span class="math notranslate nohighlight">\(b\)</span> جهت دار شده باشد و بالعکس. همچنین قرار است درجه خروجی راس <span class="math notranslate nohighlight">\(u\)</span> در تورنومنت برابر با <span class="math notranslate nohighlight">\(d_u\)</span> باشد پس هر راس <span class="math notranslate nohighlight">\(u\)</span> از بخش سمت چپ باید توسط دقیقا <span class="math notranslate nohighlight">\(d_u\)</span> راس از بخش سمت چپ انتخاب شده باشد!</p>
+<p>پس طبق مطالبی که در بخش تعمیم هال بررسی کردیم شرط لازم و کافی برای وجود داشتن چنین تورنومنتی این است که به ازای هر زیرمجموعه از راس های سمت چپ مثل <span class="math notranslate nohighlight">\(S\)</span> اگر اجتماع مجاور های آن در بخش سمت راست <span class="math notranslate nohighlight">\(P\)</span> باشد آنگاه :
+<span class="math notranslate nohighlight">\(|S| \leq \sum\limits_{u \in P} d_u\)</span>
+از آنجایی که می توانیم بدون تغییر دادن سمت راست نامساوی، سمت چپ را تا <span class="math notranslate nohighlight">\(|P| \choose 2\)</span> زیاد کنیم (چرا؟) پس می توانیم شرط را به این صورت نیز بنویسیم :</p>
+<p><span class="math notranslate nohighlight">\(\forall_{P \subseteq \{1,2,...,n\}} {|P| \choose 2} \leq \sum\limits_{u \in P} d_u\)</span></p>
+<p>حالا از آنجایی که در سمت چپ نامساوی تنها تعداد اعضای مجموعه مهم است نه خود مجموعه پس کافیست شرط را به ازای کمترین <span class="math notranslate nohighlight">\(d_u\)</span> ها بررسی کنیم. به عبارتی با فرض <span class="math notranslate nohighlight">\(d_1 \leq d_2 \leq ... d_n\)</span> شرط زیر لازم و کافی می باشد :</p>
+<p><span class="math notranslate nohighlight">\(\forall_{1 \leq k \leq n} {k \choose 2} \leq \sum\limits_{i=1}^{k} d_i\)</span></p>
+</section>
+<section id="id5">
+<h2>راس های ثابت در تطابق دو بخشی<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>یک گراف دوبخشی داریم. به ازای تطابق <span class="math notranslate nohighlight">\(M\)</span> هر راس <span class="math notranslate nohighlight">\(u\)</span> که مجاور یکی از یال های <span class="math notranslate nohighlight">\(M\)</span> باشد را حاضر در <span class="math notranslate nohighlight">\(M\)</span> می گوییم. حالا شما باید به ازای تمام راس ها مثل <span class="math notranslate nohighlight">\(u\)</span> بگویید آیا تطابقی ماکسیممی وجود دارد که <span class="math notranslate nohighlight">\(u\)</span> در این تطابق حاضر <strong>نباشد</strong>؟</p>
+<p>ابتدا یک تطابق ماکسیمم دلخواه مثل <span class="math notranslate nohighlight">\(M\)</span> را در نظر بگیرید. حالا به ازای تمام راس هایی که در <span class="math notranslate nohighlight">\(M\)</span> حاضر نیستند جواب را می دانیم. و می خواهیم به ازای هر راس حاضر در <span class="math notranslate nohighlight">\(M\)</span> مثل <span class="math notranslate nohighlight">\(u\)</span> جواب را بیابیم. فرض کنید تطابق ماکسیممی مثل <span class="math notranslate nohighlight">\(M^{\prime}\)</span> وجود دارد که <span class="math notranslate nohighlight">\(u\)</span> در آن حاضر نیست. حالا فرض کنید تفاضل متقارن <span class="math notranslate nohighlight">\(M\)</span> و <span class="math notranslate nohighlight">\(M^{\prime}\)</span> برابر با <span class="math notranslate nohighlight">\(H\)</span> باشد. در اینصورت <span class="math notranslate nohighlight">\(H\)</span> باید شامل تعدادی دور و مسیر زوج باشد همچنین <span class="math notranslate nohighlight">\(u\)</span> باید ابتدای یکی از این مسیر های زوج باشد(چرا؟)!</p>
+<p>پس نتیجه می گیریم به ازای هر راس <span class="math notranslate nohighlight">\(u\)</span> که عضو تطابق <span class="math notranslate nohighlight">\(M\)</span> هست می توانیم تطابقی پیدا کنیم که <span class="math notranslate nohighlight">\(u\)</span> در آن حاضر نباشد اگر و فقط اگر مسیری متناوب از راسی آزاد (راسی که در تطابق <span class="math notranslate nohighlight">\(M\)</span> نیامده است) به <span class="math notranslate nohighlight">\(u\)</span> وجود داشته باشد دقت کنید از آنجایی که این مسیر افزوده مسیر افزایشی نیست پس دو سر مسیر در یک بخش از گراف دوبخشی ما قرار دارند.</p>
+<p>تا اینجای کار از دوبخشی بودن گراف استفاده ای نکردیم (تمام حکم هایی که بیان شد برای هر گرافی صدق می کند). اما حالا برای پیدا کردن یک تطابق ماکسیمم و راس هایی که شروع مسیر متناوب هستند باید از دوبخشی بودن گراف استفاده کنیم.</p>
+<p>ابتدا با الگوریتمی که در بخش 12.2 ارائه دادیم تطابق ماکسیمم <span class="math notranslate nohighlight">\(M\)</span> را پیدا کنید.</p>
+<p>حالا فرض کنید دو بخش گراف <span class="math notranslate nohighlight">\(X\)</span> و <span class="math notranslate nohighlight">\(Y\)</span> باشند و ما می خواهیم به ازای بخش <span class="math notranslate nohighlight">\(X\)</span> مسئله را حل کنیم یال های گراف را جهت دهی می کنیم به این صورت که یال هایی که عضو <span class="math notranslate nohighlight">\(M\)</span> هستند را از <span class="math notranslate nohighlight">\(Y\)</span> به <span class="math notranslate nohighlight">\(X\)</span> و یال هایی که عضو <span class="math notranslate nohighlight">\(M\)</span> نیستد را از <span class="math notranslate nohighlight">\(X\)</span> به <span class="math notranslate nohighlight">\(Y\)</span> جهت دهی می کنیم. می توانید ببینید که یک هر مسیر متناوب با شروع از یک راس <span class="math notranslate nohighlight">\(X\)</span> در واقع معادل با مسیری در گراف جهت دهی شده ما است که باید از یکی از راس های آزاد <span class="math notranslate nohighlight">\(X\)</span> شروع شود.</p>
+<p>پس کافی است گراف را همانطور که گفتیم جهت دهی کنید و سپس از هر راس آزاد <span class="math notranslate nohighlight">\(X\)</span> الگوریتم dfs را اجرا کنید و بررسی کنید به کدام راس ها می رسیم. در نهایت تمامی راس های <span class="math notranslate nohighlight">\(X\)</span> که توانستیم به آن ها برسیم در یک مسیر متناوب قرار دارند. همانطور که گفتیم این موضوع به این معناست که به ازای هر کدام از آن راس ها تطابق ماکسیممی وجود دارد که آن راس در تطابق حاضر نباشد.</p>
+<p>مشابها می توانیم مسئله را برای بخش <span class="math notranslate nohighlight">\(Y\)</span> هم حل کنیم.</p>
+</section>
+<section id="id6">
+<h2>پیدا کردن یک مینیمم پوشش راسی در گراف دو بخشی<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در بخش 12.3 فهمیدیم که در گراف دوبخشی اندازه مینیمم پوشش راسی برابر است با اندازه ماکسیمم تطابق. در این قسمت یاد میگیریم چگونه با داشتن ماکسیمم تطابق، مینیمم پوشش راسی را پیدا کنیم.</p>
+<p>ابتدا یال های ماکسیمم تطابق را در نظر بگیرید و آن را <span class="math notranslate nohighlight">\(M\)</span> بنامید. از آنجایی که به ازای هر یال تطابق یکی از دو سر آن باید در پوشش راسی آمده باشد پس از هر یال دقیقا یکی از دو سر آن در مینیمم پوشش راسی آمده است (چرا؟). پس کافیست به ازای یال <span class="math notranslate nohighlight">\(M\)</span> تصمیم بگیریم که راسی که عضو بخش اول گراف است را در پوشش راسی بگذاریم یا راسی که در بخش دوم گراف است.</p>
+<p>دو بخش گراف را <span class="math notranslate nohighlight">\(X\)</span> و <span class="math notranslate nohighlight">\(Y\)</span> بنامید. مجموعه یال هایی از <span class="math notranslate nohighlight">\(M\)</span> که برای آن ها بخش <span class="math notranslate nohighlight">\(X\)</span> را انتخاب می کنیم <span class="math notranslate nohighlight">\(MX\)</span> بنامید و مجموعه یال هایی از <span class="math notranslate nohighlight">\(M\)</span> که برای آن ها بخش <span class="math notranslate nohighlight">\(Y\)</span> را انتخاب می کنیم <span class="math notranslate nohighlight">\(MY\)</span> بنامید. حالا می خواهیم <span class="math notranslate nohighlight">\(MX, MY\)</span> را مشخص کنیم.</p>
+<p>مشابه بخش قبل یال های گراف دوبخشی را جهت دهی می کنیم به اینصورت که یال های عضو <span class="math notranslate nohighlight">\(M\)</span> را از بخش <span class="math notranslate nohighlight">\(Y\)</span> به <span class="math notranslate nohighlight">\(X\)</span> و یال هایی که عضو <span class="math notranslate nohighlight">\(M\)</span> نیستند را از <span class="math notranslate nohighlight">\(X\)</span> به <span class="math notranslate nohighlight">\(Y\)</span> جهت دهی می کنیم. حالا از تمامی راس های بخش <span class="math notranslate nohighlight">\(X\)</span> که در تطابق حاضر نیستند dfs بزنید. تمام راس هایی که آن ها را می بینیم <span class="math notranslate nohighlight">\(A\)</span> و بقیه را <span class="math notranslate nohighlight">\(B\)</span> بنامیم. واضح است که بین <span class="math notranslate nohighlight">\(X \cap A\)</span> و <span class="math notranslate nohighlight">\(Y \cap B\)</span> یال نیست (در غیر اینصورت مجموعه <span class="math notranslate nohighlight">\(A\)</span> تغییر می کرد). پس می توان تمام راس هایی که در <span class="math notranslate nohighlight">\(Y \cap A\)</span> و <span class="math notranslate nohighlight">\(X \cap B\)</span> هستند را در پوشش راسی انتخاب کرد. از آنجایی که در هیچ یک از این دو مجموعه راس آزاد نداریم (به دلیل اینکه <span class="math notranslate nohighlight">\(M\)</span> ماکسیمم است پس مسیر افزایشی نداریم) می توان نتیجه گرفت حرفمان معادل این است که تمام یال هایی که در dfs دیده می شوند را <span class="math notranslate nohighlight">\(MY\)</span> قرار دهیم و باقی را <span class="math notranslate nohighlight">\(MX\)</span> قرار دهیم. یعنی <span class="math notranslate nohighlight">\(MX = M - MY\)</span>.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/min_cover_finding.jpg"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/min_cover_finding.jpg" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="3.html" style="float:right;" title="قضایا ی مینماکس" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="5.html" style="float:left;" title="جریان بیشینه و تطابق" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+O(n+q*lg(n)) Solution using Heavy-Light Decomposition
+=====================================================
+
+In this section, we present an :math:`O(n+q*lg(n))` solution for the aforementioned problems.
+
+Heavy-Light Decomposition
+-------------------------
+This decomposition is a widely used technique in trees. It divides the edges of the tree into two categories: **light** and **heavy**. Heavy edges are those where the size of the subtree of the corresponding child is greater than that of any other child's subtree. Only one child can have a heavy edge, and if multiple children have maximal subtree sizes, we arbitrarily choose one of their edges as heavy.
+
+Number of light edges on the path to the root
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The number of light edges on the path from any node to the root is at most :math:`O(lg(n))`. This is because if we start from an arbitrary node and go up towards the root, we define a variable :math:`X` as the size of the current node's subtree. Each time we go up towards the root (from ‍‍‍‍‍v to u) and traverse a light edge, :math:`X` at least doubles. Otherwise, :math:`2sz_v > sz_u`, which means this node controls more than half of its parent's subtree, and consequently, its edge must be heavy. Since :math:`X` will eventually become equal to :math:`n`, the maximum number of light edges is :math:`lg(n)`.
+
+Solving the problem of ancestor at a specific height
+----------------------------------------------------
+At most one child of a node can have a heavy edge, so in the first DFS, we can prioritize visiting the child with the heavy edge, ensuring that the heavy child's entry time is exactly one greater than its parent's. In this way, if we sort the nodes by their entry times, any node with a heavy edge to its parent will be placed exactly after its parent.
+
+Obtain this order, and also for each node, find how many of its ancestors are positioned consecutively right after it (in the ordered list), or in other words, find which node is the parent connected by the first light edge on the path from this node to the root.
+
+Now, to find an ancestor of a node at a specific height (depth), if the number of ancestors consecutively preceding this node (in the ordered list) is greater than or equal to the desired height difference, or in other words, all edges leading to the desired ancestor are heavy edges, in this case, we can find the desired ancestor in :math:`O(1)` time. However, if there was a light edge in between, we must go to the ancestor whose edge to its parent is light, then find its parent, and continue the process from that parent. Since there are at most :math:`O(lg(n))` light edges on the path from any node to the root, this process will ultimately take :math:`O(lg(n))` per query, and therefore, the total time complexity is :math:`O(n+q*lg(n))`.
+
+.. code-block:: cpp
+		
+  #include<bits/stdc++.h>
+
+  using namespace std;
+
+  const int M = 1e5+5;
+  
+  int edge_counter = 1;
+  
+  int st[M], stp[M], hld[M], par[M], h[M];
+  vector<int> g[M];
+  int time = 0;
+
+  int dfsz(int x, int p = 0) {
+    int sz = 1, mxsz = -2;
+    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size()-1]);
+    for (int i = 0; i < g[x].size(); i++) {
+      if (g[x][i] == p) continue;
+      int szy = dfsz(g[x][i], x);
+      sz += szy;
+      if (szy > mxsz) {
+        mxsz = szy;
+        swap(g[x][0], g[x][i]); // moving the heavy edge to g[x][0]
+      }
+    }
+    return sz;
+  }
+
+  void dfst(int stpx, int p = 0) {
+    int x = st[stpx] = time++; // We renumber the nodes such that heavy edges
+    stp[x] = stpx; // are consecutive. We store this permutation in st[x] and its inverse in stp[x]
+    for (int stpy: g[stpx]) {
+      if (stpy == p) continue;
+      dfst(stpy, stpx);
+      par[st[stpy]] = x;
+    }
+  }
+
+  int parat(int stpx, int hgoal) { // we want an ancestor from the input node that has the target height
+    int x = hld[st[stpx]];
+    while (h[x] > hgoal) x = hld[par[x]];
+    return stp[x + hgoal - h[x]];
+  }
+
+  int main(){
+    // Take the tree as input and put the edges in g
+    dfsz(0);
+    dfst(0);
+    for (int x = 1; x < n; x++) {
+      h[x] = h[par[x]] + 1;
+      hld[x] = par[x] == x - 1 ? hld[x-1] : x; // hld[x] is the highest ancestor we have a heavy edge to
+    }
+    // Then answer queries with parat
+  }
+
+Solving the LCA Problem
+-----------------------
+As we mentioned in the previous section, the above method can provide an :math:`O(n+q*lg^2(n))` solution for the Lowest Common Ancestor (LCA) problem. However, we can easily optimize the solution. Consider the lowest common ancestor. On the path from one of the nodes to this ancestor, its connecting edge is necessarily light (both connecting edges cannot be heavy). Therefore, with the following algorithm, we can find the lowest common ancestor. Determine which node has a lower-lying light edge (on its path towards the root). Take that node and find its ancestor that is at the same height as the other node. Then compute the parent of both nodes. If they are equal, we have found the common ancestor; otherwise, we continue with the two new nodes we found. Since there will be at most twice the logarithm of the number of nodes in the tree's path containing light edges, this algorithm has a time complexity of :math:`O(n+q*lg(n))`.
+
+.. code-block:: cpp
+
+  const int M = 1e5+5;
+  
+  int edge_counter = 1;
+  
+  int st[M], stp[M], hld[M], par[M], h[M];
+  vector <int> g[M];
+  int time = 0;
+
+  int dfsz(int x, int p = 0) {
+    int sz = 1, mxsz = -2;
+    if (p == g[x][0]) swap(g[x][0], g[x][g[x].size() - 1]);
+    for (int i = 0; i < g[x].size(); i++) {
+      if (g[x][i] == p) continue;
+      int szy = dfsz(g[x][i], x);
+      sz += szy;
+      if (szy > mxsz) {
+        mxsz = szy;
+        swap(g[x][0], g[x][i]); // moving the heavy edge to g[x][0]
+      }
+    }
+    return sz;
+  }
+
+  void dfst(int stpx, int p = 0) {
+    int x = st[stpx] = time++; // We renumber the nodes such that heavy edges
+    stp[x] = stpx; // are consecutive. We store this permutation in st[x] and its inverse in stp[x]
+    for (int stpy: g[stpx]) {
+      if (stpy == p) continue;
+      dfst(stpy, stpx);
+      par[st[stpy]] = x;
+    }
+  }
+
+  int parat(int x, int hgoal) { // we want an ancestor from the input node that has the target height
+    x = hld[x];
+    while (h[x] > hgoal) x = hld[par[x]];
+    return x + hgoal - h[x];
+  }
+
+  int lca(int stpx, int stpy) {
+    int x = st[stpx], y = st[stpy];
+    if (h[x] < h[y]) swap(x,y);
+    x = parat(x, h[y]); // we make the two nodes have the same height so the code becomes simpler
+    while (x != y) {
+      x = hld[x];
+      y = hld[y];
+      if (h[x] < h[y]) swap(x, y);
+      y += h[x] - h[y];
+      x = par[x];
+      y = par[y];  
+    }
+    return stp[x];
+  }
+
+  int main(){
+    // Take the tree as input and put the edges in g
+    dfsz(0);
+    dfst(0);
+    for (int x = 1; x < n; x++) {
+      h[x] = h[par[x]] + 1;
+      hld[x] = par[x] == x - 1 ? hld[x-1] : x; // hld[x] is the highest ancestor we have a heavy edge to
+    }
+    // Then answer queries with parat
+  }

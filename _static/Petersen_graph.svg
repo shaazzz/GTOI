@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1294" height="1232.825" viewBox="0,0 10352,9862.6" id="Petersen_graph">
+<g transform="translate(176,176)">
+  <path d="M 10000,3632.7 L 8333.3,4174.2 M 8090.2,9510.6 L 7060.1,8092.8 M 1909.8,9510.6 L 2939.9,8092.8 M 0,3632.7 L 1666.7,4174.2"
+      stroke="black" stroke-width="80" />
+  <polyline points="5000,0 10000,3632.7 8090.2,9510.6 1909.8,9510.6 0,3632.7 5000,0
+      5000,1752.4 7060.1,8092.8 1666.7,4174.2 8333.3,4174.2 2939.9,8092.8 5000,1752.4"
+      fill="none" stroke="black" stroke-width="80" />  
+  <g fill="red">
+    <circle r="176" cx="5000" cy="0" />
+    <circle r="176" cx="5000" cy="1752.4" />
+    <circle r="176" cx="10000" cy="3632.7" />
+    <circle r="176" cx="8333.3" cy="4174.2" />
+    <circle r="176" cx="8090.2" cy="9510.6" />
+    <circle r="176" cx="7060.1" cy="8092.8" />
+    <circle r="176" cx="1909.8" cy="9510.6" />
+    <circle r="176" cx="2939.9" cy="8092.8" />
+    <circle r="176" cx="0" cy="3632.7" />
+    <circle r="176" cx="1666.7" cy="4174.2" />
+  </g>
+</g>
+</svg>

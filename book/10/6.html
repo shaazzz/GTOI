@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>درخت مجازی &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Lca" href="index.html" />
+        <link rel="next" title="الگوریتم های پیشرفته درخت" href="../11/index.html" />
+        <link rel="prev" title="راه خطی برای LCA" href="5.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lca</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; درخت مجازی</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/10/6.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>درخت مجازی<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>یک درخت مثل <span class="math notranslate nohighlight">\(T\)</span>
+مثل
+<span class="math notranslate nohighlight">\(A\)</span>
+نسبت را درخت مجازی گوییم اگر نسبت به
+<span class="math notranslate nohighlight">\(lca\)</span>
+بسته باشد. یعنی
+<span class="math notranslate nohighlight">\(lca\)</span>
+هر دو راس دلخواه از
+<span class="math notranslate nohighlight">\(A\)</span>
+درون خود
+<span class="math notranslate nohighlight">\(A\)</span>
+باشد.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/virt_tree_intro.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/virt_tree_intro.png" style="width: 80%;" /></a>
+</figure>
+<section id="id2">
+<h2>چرا درخت مجازی برای ما مهم است؟<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id3">
+<h3>اولین مسئله<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>فرض کنید زیرمجموعه ای از راس های درخت مثل
+<span class="math notranslate nohighlight">\(B\)</span>
+را سیاه کرده ایم. حالا می خواهیم تعدادی از راس هایی که سیاه نیستند را نیز سیاه کنیم به طوریکه کل راس های سیاه همبند باشند.
+همچنین می خواهیم تعداد راس های سیاه در نهایت کمینه شوند. این کمینه تعداد را بیابید.</p>
+<p>واضح است که برای حل این سوال باید تمام راس هایی که بر روی مسیر حداقل دو راس سیاه هستند را سیاه کنیم. اما سوال مهم این است که چطور تعداد این راس ها را بیابیم
+به طوریکه پیچیدگی زمانی ما به
+<span class="math notranslate nohighlight">\(|B|\)</span>
+مربوط باشد و کاملا مستقل از
+<span class="math notranslate nohighlight">\(n\)</span>
+باشد. (یعنی اگر مجموعه‌ای که به ما دادند کوچک بود ما هم سریع جواب بدهیم و برعکس)</p>
+<p>فرض کنید عدد جواب
+<span class="math notranslate nohighlight">\(ans\)</span>
+باشد. توجه کنید که خود
+<span class="math notranslate nohighlight">\(ans\)</span>
+ممکن است خیلی زیاد باشد و از مرتبه
+<span class="math notranslate nohighlight">\(|B|\)</span>
+نباشد. مثلا اگر درخت ما یک مسیر باشد و
+<span class="math notranslate nohighlight">\(B\)</span>
+مجموعه دو راس ابتدا و انتهای این مسیر باشد
+<span class="math notranslate nohighlight">\(ans=n\)</span>
+می شود. پس نمی توانیم از مرتبه زمانی
+<span class="math notranslate nohighlight">\(ans\)</span>
+هم کار کنیم.</p>
+<p>حالا به این نکته جالب توجه کنید. حالت نهایی درخت را (که در آن راس های سیاه همبند هستند) را در نظر بگیرید و فرض کنید
+درجه سیاهی هر راس مثل
+<span class="math notranslate nohighlight">\(u\)</span>
+را تعداد راس های سیاه مجاور راس سیاه
+<span class="math notranslate nohighlight">\(u\)</span>
+تعریف می کنیم. همانطور که احتمالا از مثالی که برای مسیر زدیم متوجه شدید، ممکن است تعداد زیادی از راس هایی که مجبور به سیاه کردنشان هستیم درجه سیاهی ۲
+داشته باشند!</p>
+<p>یک معادل سازی روی مسئله انجام می دهیم تا کارمان راحت تر شود. درخت را از یکی از راس های
+<span class="math notranslate nohighlight">\(B\)</span>
+آویزان کنید. حالا به ازای هر راس
+<span class="math notranslate nohighlight">\(u\)</span>
+درون
+<span class="math notranslate nohighlight">\(B\)</span>
+تمام راس های از
+<span class="math notranslate nohighlight">\(u\)</span>
+تا ریشه باید سیاه شوند و همچنین این سیاه بودن کافی نیز هست (یعنی ساختار به دست آمده شرط همبند بودن را دارد).</p>
+<p>در اینجا هست که مسئله ما کمی شبیه مسئله درخت مجازی می شود.فرض کنید آنقدر به مجموعه
+<span class="math notranslate nohighlight">\(B\)</span>
+راس اضافه کردیم که نسبت به
+<span class="math notranslate nohighlight">\(lca\)</span>
+بسته شد. یعنی تا زمانی که دو راس
+<span class="math notranslate nohighlight">\(u, v\)</span>
+درون
+<span class="math notranslate nohighlight">\(B\)</span>
+بودند که
+<span class="math notranslate nohighlight">\(lca(u, v)\)</span>
+درون
+<span class="math notranslate nohighlight">\(B\)</span>
+نبود ما باید
+<span class="math notranslate nohighlight">\(lca(u, v)\)</span>
+را سیاه کنیم و به
+<span class="math notranslate nohighlight">\(B\)</span>
+اضافه کنیم.</p>
+<p>حالا به ازای هر راس غیر از ریشه مثل
+<span class="math notranslate nohighlight">\(u\)</span>
+پایین ترین جد سیاهش را پدر مجازی این راس بنامید که آن را با
+<span class="math notranslate nohighlight">\(p_u\)</span>
+نشان می دهیم. توجه کنید که حالا راس های بین
+<span class="math notranslate nohighlight">\(u, p_u\)</span>
+همان راس هایی بودند که گفتیم درجه سیاهی آنها ۲ می شود و ممکن است تعداد آنها زیاد باشد. حالا اگر به ازای تمام
+<span class="math notranslate nohighlight">\(u, p_u\)</span>
+هااین راس ها را بشماریم (که تعداد آن ها
+<span class="math notranslate nohighlight">\(h_u - h_{p_u} - 1\)</span>
+است) و این مقدار را با تعداد راس های سیاه فعلی جمع کنیم جواب مسئله به دست خواهد آمد.</p>
+<p>در این قسمت به چند نکته کلیدی اشاره نکردیم. از جمله اینکه:</p>
+<ul class="simple">
+<li><p>چطور می توانیم راس هایی را پیدا کنیم که اگر به مجموعه <span class="math notranslate nohighlight">\(B\)</span> اضافه شوند درخت مجازی می سازند؟</p></li>
+<li><p>چرا تعداد حداکثر تعداد راس های درخت مجازی تنها به <span class="math notranslate nohighlight">\(B\)</span> مربوط است و ربطی به <span class="math notranslate nohighlight">\(n\)</span> ندارد؟</p></li>
+</ul>
+<p>در ادامه به این سوال ها جواب می دهیم. همچنین لازم به ذکر است که سوالی که در این قسمت مطرح کردیم بدون عوض کردن ریشه هم به همان راحتی قایل حل است.
+عوض کردن ریشه ای که انجام دادیم صرفا به دلیل راحت تر کردن توضیحات بود!</p>
+</section>
+<section id="id4">
+<h3>قطر یک زیرمجموعه<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>فرض کنید یک درخت
+<span class="math notranslate nohighlight">\(T\)</span>
+و یک مجموعه
+<span class="math notranslate nohighlight">\(B\)</span>
+به شما داده اند. حالا شما باید دو تا از راس های درون
+<span class="math notranslate nohighlight">\(B\)</span>
+را نام ببرید که فاصله آن دو از یکدیگر بیشینه است.</p>
+<p>الگوریتم پیدا کردن قطر درخت با
+dfs
+را در فصل ۲ بررسی کردیم. در اینجا هم اگر راس های
+<span class="math notranslate nohighlight">\(B\)</span>
+همبند باشند می توانیم از همان الگوریتم
+dfs
+استفاده کنیم.
+اگر همبند نبود چطور؟ دغدغه فعلی ما مشابه مسئله قبلی است. یعنی می خواهیم به ازای هر دو راس
+<span class="math notranslate nohighlight">\(u,v\)</span>
+از
+<span class="math notranslate nohighlight">\(B\)</span>
+تمام راس های حاظر در مسیر
+<span class="math notranslate nohighlight">\(uv\)</span>
+را به
+<span class="math notranslate nohighlight">\(B\)</span>
+اضافه کنیم و سپس روی گراف حاصل الگوریتم
+dfs
+را اجرا کنیم.</p>
+<p>اما در حقیقت این کار روش خوبی نیست چون همانطور که در مسئله قبل بیان کردیم ممکن است تعداد راس هایی که نیاز داریم به
+<span class="math notranslate nohighlight">\(B\)</span>
+خیلی زیاد باشد.</p>
+<p>در اینجا هم مثل مسئله قبل از درخت مجازی استفاده می کنیم. یعنی مجموعه
+<span class="math notranslate nohighlight">\(B\)</span>
+را آنقدر بسط می دهیم تا به یک درخت مجازی برسیم.
+حالا بین در یک گراف جدید بین هر راس و پدر مجازی خودش یالی با وزن
+<span class="math notranslate nohighlight">\(h_u - h_{p_u}\)</span>
+می کشیم.
+حالا درخت جدیدی که داریم همان درخت مجازی ما
+است! با پیدا کردن قطر در این درخت، بیشینه فاصله بین راس های
+<span class="math notranslate nohighlight">\(B\)</span>
+اولیه را پیدا می کنیم.</p>
+</section>
+</section>
+<section id="id5">
+<h2>الگوریتم<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<section id="id6">
+<h3>مقدمه<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>همانطور که احتمالا از مسائل قبلی شهود
+گرفتید، درخت مجازی می تواند نماینده یک زیردرخت کوچک از درخت ما باشد.
+نکته جالب توجه این است که این زیردرخت لزوما همبند نیست اما اگر درخت جدیدی بسازیم که
+در آن هر کس به پدر مجازی اش وصل شده باشد درخت جدیدی به دست می آوریم.
+سپس می توانیم از این به
+بعد تنها درخت جدید را در نظر بگیریم و محاسبات خود را روی آن انجام دهیم.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/transform_to_virt_tree.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/transform_to_virt_tree.png" style="width: 80%;" /></a>
+</figure>
+<p>در این قسمت فرض می کنیم که مجموعه راس های
+<span class="math notranslate nohighlight">\(B\)</span>
+به ما داده شده است و ما می خواهیم تعدادی راس به آن اضافه کنیم تا
+<span class="math notranslate nohighlight">\(B\)</span>
+یک درخت مجازی شود. در اینجا این کار را بسط دادن می نامیم.</p>
+</section>
+<section id="id7">
+<h3>اولین تلاش<a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در گام اول می توانیم به ازای هر دو راس درون مجموعه
+<span class="math notranslate nohighlight">\(B\)</span>
+مثل
+<span class="math notranslate nohighlight">\(a, b\)</span>
+،
+<span class="math notranslate nohighlight">\(lca(a, b)\)</span>
+را محاسبه کرده و آن را مجموعه
+<span class="math notranslate nohighlight">\(C\)</span>
+بنامیم.</p>
+<p>حالا ادعا می کنیم
+<span class="math notranslate nohighlight">\(D = B \cup C\)</span>
+یک درخت مجازی است. برای اثبات توجه کنید که هر راس عضو
+<span class="math notranslate nohighlight">\(D\)</span>
+درون زیردرختش یک عضو از
+<span class="math notranslate nohighlight">\(B\)</span>
+موجود است. (چرا؟) حالا فرض کنید که دو راس
+<span class="math notranslate nohighlight">\(a, b \in D\)</span>
+باشند که
+<span class="math notranslate nohighlight">\(lca\)</span>
+آن دو درون
+<span class="math notranslate nohighlight">\(D\)</span>
+نباشد.
+راس های عضو
+<span class="math notranslate nohighlight">\(B\)</span>
+که درون زیردرخت
+<span class="math notranslate nohighlight">\(a, b\)</span>
+بودند را به ترتیب
+<span class="math notranslate nohighlight">\(a\prime, a\prime\)</span>
+بنامید.
+اگر
+<span class="math notranslate nohighlight">\(lca(a, b)\)</span>
+در
+<span class="math notranslate nohighlight">\(D\)</span>
+نیامده باشد آنگاه
+<span class="math notranslate nohighlight">\(lca(a\prime, b\prime)\)</span>
+همان
+<span class="math notranslate nohighlight">\(lca(a, b)\)</span>
+خواهد بود که در
+<span class="math notranslate nohighlight">\(C\)</span>
+است که با حرف اولیه ما تناقض دارد.</p>
+<p>پس تنها کافیست به ازای هر دو راس درون
+<span class="math notranslate nohighlight">\(B\)</span>
+این محاسبات را انجام دهیم (و نیازی نیست که
+<span class="math notranslate nohighlight">\(lca\)</span>
+راس هایی که جدید اضافه می شوند را با بقیه بررسی کنیم)</p>
+</section>
+<section id="id8">
+<h3>یک الگوریتم بهتر<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>روشی که قبل از این گفتیم پیچیدگی زمانی بالایی داشت. اگر محسبات مربوط به
+<span class="math notranslate nohighlight">\(lca\)</span>
+را
+<span class="math notranslate nohighlight">\(O(lg(n))\)</span>
+در نظر بگیریم آنگاه روش بالا از
+<span class="math notranslate nohighlight">\(O(|B|^2)\)</span>
+خواهد بود.</p>
+<p>حالا تلاش می کنیم که یک روش بهتر پیدا کنیم. یک راس به نام
+<span class="math notranslate nohighlight">\(u\)</span>
+را در نظر بگیرید که در
+<span class="math notranslate nohighlight">\(B\)</span>
+نیست اما باید در درخت مجازی باشد. یعنی دو راس
+<span class="math notranslate nohighlight">\(u\)</span>
+دو بچه
+<span class="math notranslate nohighlight">\(a, b\)</span>
+دارد که درون زبردرخت هر یک از
+<span class="math notranslate nohighlight">\(a, b\)</span>
+یک یا چند راس از
+<span class="math notranslate nohighlight">\(B\)</span>
+وجود دارد (که
+<span class="math notranslate nohighlight">\(lca\)</span>
+آن ها
+<span class="math notranslate nohighlight">\(u\)</span>
+خواهد شد)</p>
+<p>حالا توجه کنید که از
+<span class="math notranslate nohighlight">\(lca\)</span>
+گرفتن هر کدام از راس های درون زیردرخت
+<span class="math notranslate nohighlight">\(a\)</span>
+با هر کدام از راس های درون زیردرخت
+<span class="math notranslate nohighlight">\(b\)</span>
+راس
+<span class="math notranslate nohighlight">\(u\)</span>
+به دست خواهد آمد. مشکل الگوریتم قبلی این بود که در این شرایط
+<span class="math notranslate nohighlight">\(u\)</span>
+را تعداد زیادی بار حساب می کرد که به این نیازی نداشتیم. یعنی به ازای هر زوج مرتب از راس های زیردرخت
+<span class="math notranslate nohighlight">\(a, b\)</span>
+یک بار راس
+<span class="math notranslate nohighlight">\(u\)</span>
+را حساب می کرد که دقیقا همین موضوع پیچیدگی زمانی راه قبل را زیاد می کرد.</p>
+<p>نکته جالب این است که اگر بتوانیم برای راس های درخت
+<span class="math notranslate nohighlight">\(T\)</span>
+ترتیب اولیه ای قائل شویم که در این ترتیب <strong>زیردرخت هر راس به یک بازه تبدیل شود</strong> آنگاه می توانیم از روش زیراستفاده کنیم و ادعا کنیم به درستی عمل می کند.</p>
+<ul class="simple">
+<li><p>راس های <span class="math notranslate nohighlight">\(B\)</span> را بر حسب این ترتیب گفته شده مرتب کنید.</p></li>
+<li><p>حالا به ازای هر دو راس متوالی در لیست مرتب شده ای که به دست آوردیم <span class="math notranslate nohighlight">\(lca\)</span> این دو راس را به مجموعه <span class="math notranslate nohighlight">\(C\)</span> اضافه کنید.</p></li>
+<li><p>اجتماع دو مجموعه
+<span class="math notranslate nohighlight">\(B, C\)</span>
+درخت مجازی ما را تشکیل می دهند.</p></li>
+</ul>
+<p>چرا این الگوریتم درست کار می کند؟ گفتیم راس
+<span class="math notranslate nohighlight">\(u\)</span>
+دو بچه دارد که در زیردرخت هر کدام راسی از
+<span class="math notranslate nohighlight">\(B\)</span>
+وجود دارد. در لیستی مرتب شده ای که الگوریتم را روی آن انجام دادیم <strong>یک بازه</strong> مربوط به زیر درخت
+<span class="math notranslate nohighlight">\(u\)</span>
+وجود دارد. در راس های مربوط به این بازه قطعا دو راس وجود داند که مربوط به زیردرخت بچه های متفاوتی از
+<span class="math notranslate nohighlight">\(u\)</span>
+هستند (چرا؟) بنابراین هنگامی که
+<span class="math notranslate nohighlight">\(lca\)</span>
+حساب می کنیم راس
+<span class="math notranslate nohighlight">\(u\)</span>
+به مجموعه
+<span class="math notranslate nohighlight">\(C\)</span>
+اضافه می شود! همانطور که می خواستیم.</p>
+</section>
+<section id="id9">
+<h3>ترتیب بهینه؟<a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در الگوریتم بالا به طور جادویی از یک ترتیب استفاده کردیم که ویژگی جالبی داشت. اما چنین ترتیبی ارائه ندادیم.</p>
+<p>می توانید خودتان چنین ترتیبی بسازید. تمام روش های ساختن چنین ترتیبی ریشه در الگوریتم
+dfs
+دارند. چرا؟ چون هنگامی که می خواهیم این ترتیب را برای زیردرخت راسی مثل
+<span class="math notranslate nohighlight">\(u\)</span>
+محاسبه کنیم باید ابتدا به صورت بازگشتی چنین ترتیبی برای زیردرخت تمام بچه های
+<span class="math notranslate nohighlight">\(u\)</span>
+پیدا کنیم و راس
+<span class="math notranslate nohighlight">\(u\)</span>
+را هم جایی بین فاصله بازه های دو تا از بچه ها (یا قبل و بعد از همه) اضافه کنیم.</p>
+<p>این دقیقا کاری است که
+در
+dfs
+آن را
+starting-time
+یا
+finishing-time
+می نامیم و آن را در فصل ۲ بررسی کردیم.</p>
+</section>
+<section id="id10">
+<h3>پیاده سازی<a class="headerlink" href="#id10" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">max_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">start_time</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">max_log</span><span class="p">],</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="n">h</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">par</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">par</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_log</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">      </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">sparse_table</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">i</span><span class="mi">-1</span><span class="p">]][</span><span class="n">i</span><span class="mi">-1</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">start_time</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">v</span><span class="p">]){</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">par</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">u</span><span class="p">){</span><span class="w"></span>
+<span class="w">          </span><span class="n">dfs</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">lca</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="w"></span>
+<span class="w">      </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_log</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">){</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="n">sparse_table</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="w"></span>
+<span class="w">          </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_log</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">){</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">sparse_table</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">          </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">sparse_table</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">build_virtual_tree</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="n">sort</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">start_time</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">start_time</span><span class="p">[</span><span class="n">b</span><span class="p">];</span><span class="w"> </span><span class="p">});</span><span class="w"> </span><span class="c1">// sort on starting time</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">){</span><span class="w"></span>
+<span class="w">      </span><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">lca</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="mi">-1</span><span class="p">]));</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">sort</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">start_time</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">start_time</span><span class="p">[</span><span class="n">b</span><span class="p">];</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="o">-</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>همچنین توجه کنید که اگر راس
+<span class="math notranslate nohighlight">\(u\)</span>
+درون درخت مجازی باشد و راس قبل از آن در ترتیب
+starting-time
+راس
+<span class="math notranslate nohighlight">\(v\)</span>
+باشد در اینصورت پدر مجازی راس
+<span class="math notranslate nohighlight">\(u\)</span>
+برابر با
+<span class="math notranslate nohighlight">\(lca(u, v)\)</span>
+می باشد. (چرا؟)</p>
+<p>برای محاسبه
+<span class="math notranslate nohighlight">\(lca\)</span>
+در کد بالا از روشی با پیچیدگی زمانی
+<span class="math notranslate nohighlight">\(O(lg(n))\)</span>
+استفاده شد و در نهایت پیدا کردن بسط درخت مجازی مجموعه
+<span class="math notranslate nohighlight">\(B\)</span>
+با زمان
+<span class="math notranslate nohighlight">\(O(|B| \times lg(n))\)</span>
+انجام شد.</p>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="5.html" style="float:right;" title="راه خطی برای LCA" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="../11/index.html" style="float:left;" title="الگوریتم های پیشرفته درخت" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

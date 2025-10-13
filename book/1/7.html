@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>گراف دو بخشی &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="تعاریف اولیه" href="index.html" />
+        <link rel="next" title="درخت ها" href="../2/index.html" />
+        <link rel="prev" title="همبندی، یال برشی و راس برشی" href="6.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">تعاریف اولیه</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; گراف دو بخشی</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/1/7.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>گراف دو بخشی<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>همان طور که در قسمت های قبل خواندیم،
+گراف دو بخشی که حالت خاصی از گراف k بخشی است،
+گرافی است که بتوان رئوس آن را به دو دسته افراز کرد، به طوری که درون هر دسته
+هیچ یالی نباشد و تمام یال ها بین دسته ها باشند.</p>
+<section id="id2">
+<h2>ارتباط با دور فرد<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>یک گراف دوبخشی است اگر و تنها اگر دور فرد نداشته باشد. یک طرف این قضیه واضح است
+چون اگر یک گراف دور فرد داشته باشد، آن گاه در هر افراز به دو دسته، یک دسته بیش از
+نیمی از رئوس این دور را خواهد داشت و در نتیجه درون آن دسته یال پیدا می شود و یعنی
+گراف دو بخشی نیست.</p>
+<p>پس به سراغ قسمت دوم می رویم. اگر دور فرد نداشته باشد، می دانیم زوجیت طول مسیر های بین دو راس
+همواره ثابت است، برای اثبات این مطلب، فرض کنید بین دو راس هم مسیر زوج یالی و هم
+مسیر فرد یالی وجود داشته باشد. با چسباندن این دو مسیر به هم یک گشت بسته فرد یالی به دست می آید
+و در قسمت قبل دیدیم که اگر گشت بسته فرد یالی در گراف وجود داشته باشد، دور فرد نیز وجود دارد
+که این مطلب با فرض در تناقض است.</p>
+<p>در ادامه فرض می کنیم که گراف همبند است، زیرا اگر همبند نباشد، می توان حکم را برای
+مولفه های آن ثابت کرد و نتیجه گرفت که هر مولفه دو بخشی است و سپس بخش اول هر مولفه
+را به عنوان بخش یک و بخش دوم را به عنوان بخش دو معرفی می کنیم.</p>
+<p>یک راس دلخواه را در نظر بگیرید. چون گراف همبند است، این راس یا به هر کسی مسیر فرد یالی
+دارد و یا مسیر زوج یالی. رئوس با مسیر فرد را درون دسته یک و رئوس با مسیر زوج را
+درون دسته دو قرار می دهیم. برای این که نشان دهیم گراف با این دسته ها دو بخشی است، برهان
+خلف می زنیم و فرض می کنیم که درون یک دسته یال وجود داشته باشد. در آن صورت
+هم مسیر فرد از راس اولیه به راس ها وجود خواهد داشت و هم مسیر زوج، که تناقض است.</p>
+</section>
+<section id="id3">
+<h2>وجود زیرگراف دوبخشی با نیمی از یال ها<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>هر گراف
+<span class="math notranslate nohighlight">\(m\)</span>
+یالی، زیر گرافی دارد که بیش از
+<span class="math notranslate nohighlight">\(\frac{m}{2}\)</span>
+یال دارد. برای اثبات، بزرگ ترین زیر گراف فراگیر دو بخشی را در نظر بگیرید. یک راس
+را در نظر بگیرید که بیش از نیمی از یال هایش در سمت خودش باشند. اگر چنین
+راسی وجود نداشته باشد جمع درجات رئوس در زیر گراف بیش تر مساوی نصف جمع در حالت
+عادی یعنی بیشتری مساوی
+m
+است که از این مطلب حکم نتیجه می شود.</p>
+<p>اما اگر چنین راسی وجود داشته باشد، آن راس را به بخش دیگر می بریم و یال های سمت خودش
+که بیش از نصف درجه اش و در نتیجه بیش از حالت قبل است، که با فرض اکسترمال
+در تناقض است.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="6.html" style="float:right;" title="همبندی، یال برشی و راس برشی" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="../2/index.html" style="float:left;" title="درخت ها" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

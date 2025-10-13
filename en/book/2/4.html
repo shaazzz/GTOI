@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>DFS &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Trees" href="index.html" />
+        <link rel="next" title="BFS" href="5.html" />
+        <link rel="prev" title="Counting the Number of Trees" href="3.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction to Graphs and Graph Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walks, Trails, Paths, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Trees</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Introductory Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Distance in Tree and Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Algorithm for Finding Tree Diameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">Cut Vertex and Bridge Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed Graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html"><strong>Strongly Connected Components</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in a Directed Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof Techniques for Graph Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contracting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graph and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Eulerian Tour and Hamiltonian Cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest Path Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Determinants of Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Obtaining Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">NP and NP-complete Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Proof of NP-Completeness of the SAT Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">Graph NP-Complete Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">O(n+q*lg(n)) Solution using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">Relationship between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">LCA Linear Time Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced Tree Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Sack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Max-Flow Min-Cut</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matching in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Min-Max Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matching in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Planar Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Identical Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Several Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">How to Use This Book?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">Introduction to Algorithms and Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; DFS</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/2/4.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="dfs">
+<h1>DFS<a class="headerlink" href="#dfs" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>The DFS algorithm is one of the graph traversal methods and one of the simplest and most fundamental graph algorithms. Despite its simplicity, this algorithm has interesting properties and, contrary to popular belief, has numerous applications in solving theoretical and practical problems!</p>
+<section id="first-problem">
+<h2>First Problem<a class="headerlink" href="#first-problem" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Imagine you are trapped in a maze that is represented as a graph. That is, each vertex of the graph represents a room, and each edge represents a corridor between two rooms. Your memory is strong enough that if you enter a repeated room, you can recognize it. When you are in a room, you can only see its adjacent corridors. You also have a thread, one end of which is tied to the room where you initially started, and the other end is in your hands. A treasure is located in one of the graph's vertices. Your goal is to find the treasure. How do you do this?</p>
+<p>Finding the treasure is as simple as performing the following algorithm. Until you reach the treasure, execute the following algorithm:</p>
+<ul class="simple">
+<li><p>If all adjacent rooms have been visited, return to the room from which you first entered the current room. (Simply follow the thread in your hand).</p></li>
+<li><p>Otherwise, go to one of the adjacent rooms that has not been visited yet.</p></li>
+</ul>
+<p>Why does this algorithm solve our problem? The point is that when we enter a room for the first time, we try our best to find a path from that room to the treasure. Consequently, when all adjacent rooms have been visited and we follow the thread to return, it can be concluded that no path exists from that room to the treasure. Therefore, we should never enter this room again. (And this logic of not entering a repeated room originates from here).</p>
+<p>One can also look at the problem from a different perspective. For any edge <span class="math notranslate nohighlight">\(uv\)</span>, if we see one of <span class="math notranslate nohighlight">\(u,v\)</span>, we will definitely see the other as well. (Because we only finish with a vertex when all its neighbors have been visited). Consequently, if we see one vertex of a connected component, we will see all other vertices in that component.</p>
+</section>
+<section id="connected-components">
+<h2>Connected Components<a class="headerlink" href="#connected-components" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Given a graph <span class="math notranslate nohighlight">\(G\)</span> as input, you need to find the number of its connected components.</p>
+<p>What we examine in this section is an overall picture of the DFS algorithm. Assume the <cite>mark</cite> array indicates which vertices have been visited, and initially, all its entries are <cite>false</cite>. Now, our algorithm will be as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">){</span><span class="w"></span>
+<span class="w">   </span><span class="n">mark</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">mark</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">           </span><span class="n">dfs</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Use the intuition we gained from solving the problem above. When <cite>dfs(u)</cite> is called, the algorithm recursively tries to visit all vertices reachable from <span class="math notranslate nohighlight">\(u\)</span>. Then <cite>dfs(u)</cite> finishes, and we return to a vertex called <span class="math notranslate nohighlight">\(par\)</span> from which we first reached <span class="math notranslate nohighlight">\(u\)</span>.</p>
+<p>Consequently, it can be seen that after executing this function, all vertices in the connected component of the starting vertex are visited. So, to solve the problem, it is sufficient to select a vertex like <span class="math notranslate nohighlight">\(y\)</span> whose <cite>mark</cite> is <cite>false</cite> in each step. Then, execute <cite>dfs(y)</cite> and increment the answer to the problem.</p>
+</section>
+<section id="dfs-tree">
+<h2>DFS Tree<a class="headerlink" href="#dfs-tree" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>In addition to traversing our graph, the DFS algorithm performs this traversal in a specific way! Now, let's get acquainted with some interesting features of this traversal.</p>
+<p>Assume the graph edges are initially blue. Now, whenever the program is at vertex <span class="math notranslate nohighlight">\(v\)</span> and traverses edge <span class="math notranslate nohighlight">\(uv\)</span> to reach a new vertex <span class="math notranslate nohighlight">\(u\)</span>, color edge <span class="math notranslate nohighlight">\(uv\)</span> red.</p>
+<p>First, note that the red edges form a tree! Because each time an edge turns red, one of its endpoints is connected to a vertex we haven't seen before. So, it's like adding leaves to this tree one by one! We call this tree, obtained from the DFS algorithm, the DFS tree. An interesting feature of DFS is that when <cite>dfs(u)</cite> starts, vertex <span class="math notranslate nohighlight">\(u\)</span> is just a leaf in the red tree, and when <cite>dfs(u)</cite> finishes, the subtree rooted at <span class="math notranslate nohighlight">\(u\)</span> has been fully constructed.
+So you see that after running the DFS algorithm on a connected graph, we will obtain a spanning tree of this graph. Root this spanning tree at the starting vertex.</p>
+<p>Now, pay attention to an interesting property that arises from the blue edges.</p>
+<p>An edge <span class="math notranslate nohighlight">\(uv\)</span> is called a back edge if one of <span class="math notranslate nohighlight">\(u,v\)</span> is an ancestor of the other. Otherwise, it is called a cross edge. (Sometimes, tree edges are considered a distinct category, and other edges connecting a vertex to its ancestor are called &quot;back edges.&quot; However, in this context, we consider all edges satisfying the ancestor-descendant relationship as 'back edges' and limit our classification to 'back edges' and 'cross edges'.)</p>
+<p>We claim that for any DFS tree, all edges of the graph are back edges!</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Back_Edge.svg"><img alt="../../_images/Back_Edge.svg" src="../../_images/Back_Edge.svg" width="50%" /></a>
+</figure>
+<p>To prove that all edges are back edges after a DFS traversal, consider an arbitrary edge <span class="math notranslate nohighlight">\(uv\)</span>. Without loss of generality, assume that the algorithm first enters vertex <span class="math notranslate nohighlight">\(u\)</span>. In this case, at the start of <cite>dfs(u)</cite>, vertex <span class="math notranslate nohighlight">\(v\)</span> has not yet been visited. Furthermore, when <cite>dfs(u)</cite> finishes, vertex <span class="math notranslate nohighlight">\(v\)</span> must have been visited (because it is adjacent to <span class="math notranslate nohighlight">\(u\)</span>). Therefore, if you consider the DFS tree, vertex <span class="math notranslate nohighlight">\(v\)</span> must be within the subtree of <span class="math notranslate nohighlight">\(u\)</span>! Consequently, <span class="math notranslate nohighlight">\(u\)</span> is an ancestor of <span class="math notranslate nohighlight">\(v\)</span>, and thus the edge <span class="math notranslate nohighlight">\(uv\)</span> will be a back edge.</p>
+<p>In the future, we will make extensive use of this theorem, that after running DFS, all edges are back edges!</p>
+</section>
+<section id="maximal-path-and-dfs">
+<h2>Maximal Path and DFS<a class="headerlink" href="#maximal-path-and-dfs" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>In Chapter 1, we became familiar with proofs performed using maximal paths. Here, we learn that instead of using maximal paths, we can use the leaves of the DFS tree (which provides a much stronger intuition)!</p>
+<p>After running DFS on the graph, we define <span class="math notranslate nohighlight">\(back_u\)</span> as the number of back edges for which <span class="math notranslate nohighlight">\(u\)</span> is the lower (descendant) endpoint. Note that, by our definition, the edges of the DFS tree itself are also considered back edges. We also define <span class="math notranslate nohighlight">\(h_u\)</span> as the height (or depth) of vertex <span class="math notranslate nohighlight">\(u\)</span> in the tree.</p>
+<p>The following two theorems easily follow from the specific structure of the tree (the second theorem holds assuming the graph is simple).</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sum back_u = m\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\forall_u back_u \leq h_u\)</span></p></li>
+</ul>
+<section id="path-of-length-delta">
+<h3>Path of length <span class="math notranslate nohighlight">\(\delta\)</span><a class="headerlink" href="#path-of-length-delta" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>We prove that a simple graph has a path of length at least <span class="math notranslate nohighlight">\(\delta\)</span>. It is sufficient to prove that the height of the DFS tree is at least <span class="math notranslate nohighlight">\(\delta\)</span>. Consider an arbitrary leaf, say <span class="math notranslate nohighlight">\(u\)</span>. It is clear that <span class="math notranslate nohighlight">\(back_u \geq \delta\)</span>, which implies <span class="math notranslate nohighlight">\(h_u \geq \delta\)</span>, easily yielding our claim!</p>
+</section>
+<section id="path-of-length-frac-m-n">
+<h3>Path of length <span class="math notranslate nohighlight">\(\frac m n\)</span><a class="headerlink" href="#path-of-length-frac-m-n" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>We prove that a simple graph has a path of length at least <span class="math notranslate nohighlight">\(\frac m n\)</span>. Similar to the above, we prove that the height of the DFS tree is at least <span class="math notranslate nohighlight">\(\frac m n\)</span>. For the proof, we use contradiction. Assume that the height of every vertex is less than <span class="math notranslate nohighlight">\(\frac m n\)</span>. We have:
+<span class="math notranslate nohighlight">\(m = \sum back_u \leq \sum h_u &lt; n \times \frac m n = m \Rightarrow m &lt; m\)</span></p>
+<p>which leads to a contradiction. Therefore, there exists a vertex with height at least <span class="math notranslate nohighlight">\(\frac m n\)</span>, which proves our claim.</p>
+</section>
+<section id="leaves-and-height-independent-set-and-longest-path">
+<h3>Leaves and Height, Independent Set and Longest Path!<a class="headerlink" href="#leaves-and-height-independent-set-and-longest-path" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>Assume that after applying the DFS algorithm, the height of the tree becomes <span class="math notranslate nohighlight">\(H\)</span> (in fact, <span class="math notranslate nohighlight">\(H\)</span> is the maximum value among all <span class="math notranslate nohighlight">\(h_u\)</span>). Also, assume the number of leaves is <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>Here, we prove that <span class="math notranslate nohighlight">\(H \times S \geq n-1\)</span>.</p>
+<p>For each leaf of the tree, traverse the path from this vertex to the root and place a stone on each vertex along this path, except for the root. In this case, for each leaf like <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(h_u\)</span> stones are added to the total. On the other hand, we placed at least one stone on each vertex except the root, so the total number of stones is at least <span class="math notranslate nohighlight">\(n-1\)</span>. Thus, we can write:</p>
+<p><span class="math notranslate nohighlight">\(n-1 \leq \sum h_u \leq H \times S\)</span></p>
+<p>which proves our claim. However, so far we haven't used any specific property derived from the DFS tree! The interesting point is that the leaves of the DFS tree form an independent set. (Because the existence of an edge between two leaves would create a cross edge).</p>
+<p>Consequently, if the size of the maximum independent set is <span class="math notranslate nohighlight">\(S^{\prime}\)</span>, then <span class="math notranslate nohighlight">\(S \leq S^{\prime}\)</span> holds.</p>
+<p>Similarly, if the length of the longest path in this graph is <span class="math notranslate nohighlight">\(H^{\prime}\)</span>, then <span class="math notranslate nohighlight">\(H \leq H^{\prime}\)</span> holds.</p>
+<p>So now we have arrived at the interesting inequality: <span class="math notranslate nohighlight">\(n-1 \leq H \times S \leq H^{\prime} \times S^{\prime}\)</span>!</p>
+<p>The interesting thing is that both problems of finding the maximum independent set and the longest path in a graph are NP-hard! But with the method we presented, we can provide either an independent set of size at least <span class="math notranslate nohighlight">\(\sqrt{n-1}\)</span> or a path of length at least <span class="math notranslate nohighlight">\(\sqrt{n-1}\)</span>!</p>
+</section>
+<section id="non-articulation-point">
+<h3>Non-articulation point<a class="headerlink" href="#non-articulation-point" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>We prove that every graph with <span class="math notranslate nohighlight">\(n &gt; 1\)</span> has at least two non-articulation points (vertices that are not cut vertices).</p>
+<p>It suffices to run DFS on the graph. Then, each of the leaves of the DFS tree will be a non-articulation point. (Also, if we remove these two vertices together, the graph does not become disconnected). This is because the edges of the DFS tree keep the rest of the graph connected (and removing a leaf from a tree does not break its connectivity). Furthermore, any tree with <span class="math notranslate nohighlight">\(n &gt; 1\)</span> has at least two leaves, which proves our claim. Of course, in this problem, it was not necessary to use a DFS tree; any arbitrary spanning tree would solve the problem for us.</p>
+</section>
+</section>
+<section id="tree-traversal">
+<h2>Tree Traversal<a class="headerlink" href="#tree-traversal" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>One of the special cases of graph traversal is tree traversal. In this section, we see that tree traversal can be done more simply with the DFS algorithm. For example, we no longer need a <cite>mark</cite> array. This is because the only neighbor of a vertex that has already been visited is its parent.</p>
+<p>Additionally, while executing DFS, other information about the tree can be obtained simultaneously. For example, in the code below, after running DFS on the tree, the number of vertices in each vertex's subtree is stored in the <cite>sz</cite> array, and the height (or depth) of each vertex is stored in the <cite>h</cite> array.</p>
+<p>Note that we have assumed the indices of the tree vertices start from 1, and there is no vertex with index 0.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">vector</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">sz</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">   </span><span class="n">h</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">[</span><span class="n">par</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">sz</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">par</span><span class="p">){</span><span class="w"></span>
+<span class="w">           </span><span class="n">dfs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">           </span><span class="n">sz</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sz</span><span class="p">[</span><span class="n">y</span><span class="p">];</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="3.html" style="float:left;" title="Counting the Number of Trees" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="5.html" style="float:right;" title="BFS" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

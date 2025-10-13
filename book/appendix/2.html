@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>آشنایی با الگوریتم ها و پیچیدگی &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="ضمیمه" href="index.html" />
+        <link rel="next" title="برگه تقلب (Cheat sheet)" href="3.html" />
+        <link rel="prev" title="چگونه از این کتاب استفاده کنیم؟" href="1.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ضمیمه</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; آشنایی با الگوریتم ها و پیچیدگی</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/appendix/2.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>آشنایی با الگوریتم ها و پیچیدگی<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>امروزه کامپیوتر ها بسیار سریع هستند، اما هیچ کامپیوتری دستورات را در لحظه اجرا نمی کند.
+مقدار بسیار کوچکی از زمان طول می کشد که کامپیوتر یک دستور را اجرا کند. برای مثال کامپیوتر
+های امروز در فرکانس حدود سه گیگاهرتز کار می کنند که یعنی یک زیر دستور العمل را در زمان
+حدود سه دهم نانو ثانیه انجام می دهند که این یعنی هر دستور العمل در حدود چند نانو ثانیه
+زمان می برد.</p>
+<p>با این حال کار نوشتن برنامه ای که ساعت ها، یا حتی سال ها زمان ببرد، اصلا کار سختی
+نیست. حتی ممکن است خودتان به آن برخورده باشید. مثلا در پردازش فیلم یا شبیه سازی های
+فیزیکی ممکن است ساعت ها کامپیوتر خود را روشن گذاشته باشید تا پاسخ را دریافت کنید.</p>
+<p>به همین دلیل در مسابقات برنامه نویسی محدودیت زمانی برای اجرای برنامه شما وجود دارد
+و برنامه شما باید در زمانی حدود ۱ تا ۵ ثانیه
+(بسته به مساله)
+اجرا شود. به همین دلیل در هنگام طراحی الگوریتم ها محاسبه می کنیم که آیا راه ما
+با توجه به شرایط ورودی در زمان خواسته شده اجرا می شود یا خیر و اگر اجرا می شد شروع
+به پیاده سازی آن می کنیم.</p>
+<section id="id2">
+<h2>تحلیل پیچیدگی<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>سخت است که زمان اجرای یک برنامه را به طور دقیق حساب کنیم. برای مثال دستور</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">y</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+<p>را در نظر بگیرید. این دستور چند عمل در سی پی یو است؟ پاسخ به این سوال بسیار سخت و نیازمند
+شناخت دقیق کامپایلر و سی پی یو است. حتی ممکن است پاسخ این سوال بسته به نوع سی پی یو یا
+کامپایلر یا درجه بهینه سازی کامپایلر یا مکان قرار گیری این دستور در کد فرق کند. برای مثال
+خواندن y از حافظه، جمع x با a و خواندن خانه به دست آمده از حافظه یا جمع
+مقدار a[x] و a[y] می تواند یک یا چند دستور العمل در سی پی یو باشد.</p>
+<p>حتی اگر می دانستیم که برنامه ما از چند دستور العمل تشکیل شده، باز برای تخمین زمان اجرای
+برنامه کافی نبود. برای مثال دستور باقیمانده و دستور شیفت بیتی هر دو یک دستور العمل
+هستند اما باقیمانده بسیار بیشتر از شیفت بیتی طول می کشد.</p>
+<p>بنابراین از محاسبه زمان دقیق اجرای کد صرف نظر می کنیم و تنها به این اکتفا می کنیم که
+دستورات سی پی یو مانند خواندن از آرایه یا جمع دو عدد، مقدار ثابتی از زمان طول می کشند.
+به همین صورت، دقت اندازه گیری ما در حد یک ضریب پایین می آید. برای مثال این کد را در نظر بگیرید</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>ما نمی دانیم که تابع سوپ یا عمل مقایسه یا عمل پلاس پلاس هر کدام چند واحد زمانی طول می کشند
+اما می دانیم که هر کدام مقدار ثابتی از زمان طول می کشند. پس می توان گفت که زمان اجرای این کد
+<span class="math notranslate nohighlight">\(kn^2\)</span>
+است که k یک ضریب ثابت با واحد ثانیه است.
+در عموم موارد مقدار k برای ما اهمیتی ندارد و از آن چشم پوشی می کنیم.</p>
+<section id="id3">
+<h3>نماد ها<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>چون می توانیم از ضریب چشم پوشی کنیم، تعریف نماد های زیر خالی از لطف نیست:</p>
+<ul class="simple">
+<li><p>نماد
+<span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span>:
+این نماد به این این معنی است که ضریبی مانند k وجود دارد به طوری که
+<span class="math notranslate nohighlight">\(f(n) \le kg(n)\)</span>
+به ازای تمامی n های بزرگ برقرار باشد.
+این نماد به صورت اِف اِن از او یِ جیِ اِن است خوانده می شود.</p></li>
+<li><p>نماد
+<span class="math notranslate nohighlight">\(f(n) = \Omega (g(n))\)</span>:
+اگر و تنها اگر
+<span class="math notranslate nohighlight">\(g(n) = O(f(n))\)</span>
+بر قرار باشد برقرار است و می خوانیم
+اِف اِن از اُمِگا یِ جیِ اِن است</p></li>
+<li><p>نماد
+<span class="math notranslate nohighlight">\(f(n) = \theta (g(n))\)</span>:
+اگر و تنها اگر
+<span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span> و <span class="math notranslate nohighlight">\(f(n) = \Omega (g(n))\)</span>
+بر قرار باشد برقرار است و می خوانیم
+اِف اِن از تِتا یِ جیِ اِن است</p></li>
+</ul>
+<p>به این نماد ها می توانید به چشم علامت های کوچکتر مساوی، بزرگتر مساوی و مساوی نگاه کنید.
+مثال های زیر می تواند به درک بهتر این علامت ها کمک کند.</p>
+<div class="math notranslate nohighlight">
+\[1000n = O(0.00001n)\]</div>
+<div class="math notranslate nohighlight">
+\[1000n = \Omega(0.00001n)\]</div>
+<div class="math notranslate nohighlight">
+\[1000n = \theta(0.00001n)\]</div>
+<div class="math notranslate nohighlight">
+\[1000n^2 = O(n^5)\]</div>
+<div class="math notranslate nohighlight">
+\[1000n^2 \ne \Omega(n^5)\]</div>
+<div class="math notranslate nohighlight">
+\[n^5 = O(2^n)\]</div>
+<div class="math notranslate nohighlight">
+\[2*n^{10}+100*n^7+20*n^2 = \theta(n^{10})\]</div>
+</section>
+</section>
+<section id="id4">
+<h2>دسته بندی پیچیدگی های مهم<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در مسائلی که ما بررسی می‌کنیم پیچیدگی هایی مرتبا تکرار می‌شوند که آن ها را در زیر
+بررسی می‌کنیم.</p>
+<section id="id5">
+<h3>پیچیدگی خطی<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>به الگوریتمی که زمان اجرایش ضریبی از طول ورودی باشد، الگوریتم خطی می گوییم. اگر طول
+ورودی n باشد زمان اجرای الگوریتم
+.. math:: O(n)
+است. در حالت عادی نمی توان الگوریتمی بهتر از الگوریتم خطی پیدا کرد زیرا خود دریافت
+ورودی ضریبی از
+n
+طول می‌کشد و حتی اگر زمان ورودی گرفتن را در نظر نگیریم چون در زمان ثابت می توان
+روی تعداد ثابتی از متغیر ها و خانه های حافظه انجام داد پس برای این که تمام ورودی
+را روی خروجی اثر دهیم باید ضریبی از طول ورودی را صرف کنیم.</p>
+</section>
+<section id="id6">
+<h3>تابع لگاریتم<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>تابع لگاریتم تابعی است که در تحلیل پیچیدگی الگوریتم ها بسیار ظاهر می‌شود.
+این تابع به صورت معکوس تابع توان ۲ تعریف می‌شود. یعنی:
+<span class="math notranslate nohighlight">\(2^{lg(n)} = n\)</span>
+به سادگی می توان صحت گزاره های زیر را بررسی کرد.</p>
+<div class="math notranslate nohighlight">
+\[lg(a*b) = lg(a) + lg(b)\]</div>
+<div class="math notranslate nohighlight">
+\[lg(a^b) = b * lg(a)\]</div>
+<div class="math notranslate nohighlight">
+\[a^{\frac{lg(n)}{lg(a)}} = n\]</div>
+<div class="math notranslate nohighlight">
+\[lg(n)^k = O(n)\]</div>
+</section>
+<section id="id7">
+<h3>پیچدگی شبه خطی<a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>به الگوریتمی که زمان اجرایش از
+<span class="math notranslate nohighlight">\(O(n*lg(n)^k)\)</span>
+باشد که k عددی ثابت است، این الگوریتم زمان اجرای شبه خطی دارد.</p>
+</section>
+<section id="id8">
+<h3>پیچیدگی چندجمله ای<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>اگر زمان اجرای الگوریتم از
+<span class="math notranslate nohighlight">\(O(n^k)\)</span>
+باشد و k عددی ثابت باشد می گوییم زمان اجرای الگوریتم چند جمله ای است.</p>
+</section>
+<section id="id9">
+<h3>پیچیدگی نمایی<a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>اگر زمان اجرای الگوریتم از
+<span class="math notranslate nohighlight">\(O(c^n)\)</span>
+باشد و c عددی ثابت باشد می گوییم زمان اجرای الگوریتم نمایی است.
+الگوریتم های نمایی عموما مناسب نیستند و برای
+n
+های بزرگ (مثلا ۱۰۰۰) می توانند به اندازه عمر کهکشان طول بشکند :))</p>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="1.html" style="float:right;" title="چگونه از این کتاب استفاده کنیم؟" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="3.html" style="float:left;" title="برگه تقلب (Cheat sheet)" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

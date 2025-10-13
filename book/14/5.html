@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Random Walk &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="مباحث ویژه" href="index.html" />
+        <link rel="next" title="اعداد رمزی" href="6.html" />
+        <link rel="prev" title="یک ریختی" href="4.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">تطابق</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">مباحث ویژه</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">یک ریختی</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Random Walk</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/14/5.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="random-walk">
+<h1>Random Walk<a class="headerlink" href="#random-walk" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>تصور کنید که در یک هزارتو گیر افتاده اید. همه جا تاریک است و شما به هر تقاطعی که می رسید به صورت تصادفی یکی از مسیر ها را در پیش می گیرید. همچنین هیچگونه اطلاعاتی از مسیر ها و تقاطع ها به خاطر نمی سپارید. احتمال اینکه در نهایت بتوانید از هزار تو خارج شوید چقدر است؟ امیدریاضی زمانی که طول می کشد که از هزار تو خارج شوید چقدر است؟</p>
+<p>مسئله کلی random walk به این شکل است که یک گراف جهت دار داده شده است. روی یال های مجاور هر راس یک توزیع احتمالاتی داریم. یعنی روی هر راس مثل <span class="math notranslate nohighlight">\(v\)</span> که باشیم به ازای هر کدام از مجاور های <span class="math notranslate nohighlight">\(v\)</span> مثل <span class="math notranslate nohighlight">\(u\)</span> احتمال <span class="math notranslate nohighlight">\(p_{vu}\)</span> را احتمال طی کردن این یال تعریف می کنیم. همچنین جمع احتمال تمام یال های مجاور <span class="math notranslate nohighlight">\(v\)</span> باید برابر با 1 باشد. حالا می توانیم تصور کنیم که فردی روی راس <span class="math notranslate nohighlight">\(s\)</span> ایستاده است و هر مرحله به صورت تصادفی و طبق توزیع احتمالاتی راسی که روی آن ایستاده است جا به جا می شود. فضای کلی مسئله به این شکل است. حالا می توان سوال های مختلفی در این فضا پرسید. دو تا از مهم ترین سوال ها که در این بخش آنها را بررسی می کنیم این است که احتمال و امیدریاضی تعداد حرکات رسیدن فرد به راس <span class="math notranslate nohighlight">\(t\)</span> چقدر است؟</p>
+<section id="id1">
+<h2>تبدیل مسائل به Random Walk<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>اگر به مسائل احتمالات توجه کنید خیلی از آنها به Random Walk تبدیل می شوند. به این صورت که به ازای هر وضعیت ممکن (با بررسی مثال های پایین دقیق تر متوجه می شوید) یک راس در نظر می گیریم. عملیات هایی که انجام می دهیم هم در واقع یال هایی هستند که به صورت احتمالاتی وضعیت ما را عوض می کنند (ما را از یک راس به راس دیگر می برند).</p>
+<p>چند مثال را بررسی می کنیم.</p>
+<section id="id2">
+<h3>موش و پنیر<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>یک محور اعداد صحیح داریم. موشی  نابینا روی نقطه <span class="math notranslate nohighlight">\(s\)</span> است و به دنبال یک پنیر می گردد که روی نقطه <span class="math notranslate nohighlight">\(t\)</span> است. موش در هر مرحله به احتمال <span class="math notranslate nohighlight">\(p\)</span> به جلو می رود و به احتمال <span class="math notranslate nohighlight">\(1-p\)</span> به عقب می رود. امیدریاضی مراحلی که طول می کشد تا موش به پنیر برسد چند است؟</p>
+</section>
+<section id="id3">
+<h3>تبدیل<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>برای تبدیل این مسئله به random walk کافی است گرافی با نامتناهی راس در نظر بگیریم. که راس <span class="math notranslate nohighlight">\(x\)</span> نشان دهنده نقطه <span class="math notranslate nohighlight">\(x\)</span> در محور اعداد است. هر راس <span class="math notranslate nohighlight">\(x\)</span> به <span class="math notranslate nohighlight">\(x+1\)</span> یال دارد که روی آن احتمال <span class="math notranslate nohighlight">\(p\)</span> نوشته شده است همچنین به <span class="math notranslate nohighlight">\(x-1\)</span> یال دارد که روی آن احتمال <span class="math notranslate nohighlight">\(1-p\)</span> نوشته شده است. حالا مسئله معادل با امیدریاضی یال های طی شده برای رسیدن از <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(t\)</span> است.</p>
+<p>توجه کنید که صرفا توانستیم این مسئله را به random walk تبدیل کنیم ولی هنوز آن را حل نکرده ایم!</p>
+</section>
+<section id="id4">
+<h3>بمب<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>یک تروریست داریم که دکمه ای در دست دارد. بعد از گذشت هر ساعت تروریست دکمه را فشار می دهد. بعد از فشار دادن دکمه بمب به احتمال <span class="math notranslate nohighlight">\(p\)</span> منفجر می شود و به احتمال <span class="math notranslate nohighlight">\(1-p\)</span> هیچ اتفاقی نمی افتد. این روند انقدر ادامه پیدا می کند که بالاخره بمب منفجر بشود (یا این روند تا بی نهایت به طول می انجامد). امیدریاضی زمانی که طول می کشد تا بمب منفجر شود را بیابید.</p>
+</section>
+<section id="id5">
+<h3>تبدیل<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>تبدیل این مسئله به random walk در نگاه اول واضح نیست. اما همانطور که گفتیم، اکثر مسائل احتمالاتی را می توان به random walk تبدیل کرد (اما لزومی ندارد که گراف کوچک باشد و حل مسئله اصلی از طریق حل مسئله random walk ساده تر باشد).</p>
+<p>در اینجا وضعیت های ما منفجر شدن و یا نشدن بمب است پس کافیست دو راس <span class="math notranslate nohighlight">\(A\)</span> و <span class="math notranslate nohighlight">\(B\)</span> در نظر بگیریم که <span class="math notranslate nohighlight">\(A\)</span> یعنی در وضعیتی هستیم که بمب منفجر نشده است. حالا بعد از گذشت هر ساعت (هر عملیات) به احتمال <span class="math notranslate nohighlight">\(p\)</span> بمب منفجر می شود. پس راس <span class="math notranslate nohighlight">\(A\)</span> یالی به <span class="math notranslate nohighlight">\(B\)</span> دارد که روی آن احتمال <span class="math notranslate nohighlight">\(p\)</span> نوشته شده است. همچنین به احتمال <span class="math notranslate nohighlight">\(1-p\)</span> بمب منفجر نمی شود که به وضعیت قبل خود بر می گردیم پس راس <span class="math notranslate nohighlight">\(A\)</span> یک یال به خودش دارد که روی آن احتمال <span class="math notranslate nohighlight">\(1-p\)</span> نوشته شده است.</p>
+<p>در نهایت مسئله ما تبدیل به امیدریاضی تعداد یال های مورد نیاز برای رسیدن از <span class="math notranslate nohighlight">\(A\)</span> به <span class="math notranslate nohighlight">\(B\)</span> شد. گراف مورد بحث هم دارای دو راس و دو یال می باشد!</p>
+</section>
+<section id="id6">
+<h3>سه دزد بز دزد<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در این مسئله سه دزد بز دزد داریم که آن ها را اولی، دومی و سومی می نامیم. سه دزد با هم مشغول بازی کردن هستند. هر مرحله از بازی به این صورت است :</p>
+<ul class="simple">
+<li><p>به صورت تصادفی آن ها از بین خودشان یکی را انتخاب می کنند. در هر گام به احتمال  <span class="math notranslate nohighlight">\(\frac 1 2\)</span> اولی، به احتمال <span class="math notranslate nohighlight">\(\frac 1 3\)</span> دومی و به احتمال <span class="math notranslate nohighlight">\(\frac 1 6\)</span> سومی انتخاب می شود. فرض کنید دزدی که در اینجا انتخاب شده را آقای <span class="math notranslate nohighlight">\(D\)</span> بنامیم.</p></li>
+<li><p>آقای <span class="math notranslate nohighlight">\(D\)</span> به مزرعه می رود و یک بز می دزد. بز دزدیده شده به دارایی های آقای <span class="math notranslate nohighlight">\(D\)</span> اضافه می شود.</p></li>
+<li><p>در اینجا اگر بز های آقای <span class="math notranslate nohighlight">\(D\)</span> از یکی از دوستانش حداقل 2 تا بیشتر باشد، آقای آقای <span class="math notranslate nohighlight">\(D\)</span> سلطان دزد ها می شود و بازی تمام می شود. در غیر اینصورت دوباره یک نفر دیگر از بین خودشان انتخاب می کنند و این روند ادامه پیدا می کند.</p></li>
+</ul>
+<p>پس به صورت کلی دزد ها آنقدر این روند را انجام می دهند که دزدی که بیشترین دارایی را دارد از دزدی که کمترین دارایی را دارد حداقل دو بز بیشتر داشته باشد...</p>
+<p>حالا شما باید احتمال اینکه اولی سلطان دزد ها بشود را حساب کنید!</p>
+</section>
+<section id="id7">
+<h3>تبدیل<a class="headerlink" href="#id7" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>لیستی از وضعیت های مختلف بازی به این شکل است.</p>
+<ul class="simple">
+<li><p>همه تعداد بز های برابر داشته باشند. راس <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p>تعداد بز های اولی یکی بیشتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(A_1\)</span></p></li>
+<li><p>تعداد بز های دومی یکی بیشتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(B_1\)</span></p></li>
+<li><p>تعداد بز های سومی یکی بیشتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(C_1\)</span></p></li>
+<li><p>تعداد بز های اولی یکی کمتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(A_{-1}\)</span></p></li>
+<li><p>تعداد بز های دومی یکی کمتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(B_{-1}\)</span></p></li>
+<li><p>تعداد بز های سومی یکی کمتر از بقیه باشد. راس <span class="math notranslate nohighlight">\(C_{-1}\)</span></p></li>
+<li><p>اولی سلطان باشد. راس <span class="math notranslate nohighlight">\(A_2\)</span></p></li>
+<li><p>دومی سلطان باشد. راس <span class="math notranslate nohighlight">\(B_2\)</span></p></li>
+<li><p>سومی سلطان باشد. راس <span class="math notranslate nohighlight">\(C_3\)</span></p></li>
+</ul>
+<p>هر کدام از راس ها (به جز سه تای آخر)، دقیقا سه یال خروجی دارند که هر کدام بستگی به این دارد که کدام یک از دزد ها برای دزدیدن انتخاب شوند. به عنوان مثال مجاور های راس <span class="math notranslate nohighlight">\(A_{-1}\)</span> به این صورت هستند :</p>
+<ul class="simple">
+<li><p>اگر اولی انتخاب شود به راس <span class="math notranslate nohighlight">\(s\)</span> می رویم که احتمال <span class="math notranslate nohighlight">\(\frac 1 2\)</span> دارد.</p></li>
+<li><p>اگر دومی انتخاب شود به راس <span class="math notranslate nohighlight">\(B_2\)</span> می رویم که احتمال <span class="math notranslate nohighlight">\(\frac 1 3\)</span> دارد.</p></li>
+<li><p>اگر سومی انتخاب شود به راس <span class="math notranslate nohighlight">\(C_2\)</span> می رویم که احتمال <span class="math notranslate nohighlight">\(\frac 1 6\)</span> دارد.</p></li>
+</ul>
+<p>در نهایت مسئله معادل با احتمال رسیدن از راس <span class="math notranslate nohighlight">\(s\)</span> به راس <span class="math notranslate nohighlight">\(A_2\)</span> می باشد.</p>
+</section>
+</section>
+<section id="id8">
+<h2>حل مسئله Random Walk<a class="headerlink" href="#id8" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در قسمت قبل دیدم که بسیاری از مسائل احتمال را می توان با Random Walk مدل سازی کرد. اما اگر این مدل سازی ما را به حل مسئله اصلی نزدیک تر نکند برای ما سودی نخواهد داشت! در این قسمت می بینیم که می توان مسئله احتمال و امیدریاضی رسیدن از <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(t\)</span> در  Random Walk را به صورت الگوریتمی و با استفاده از دستگاه چند معادله و چند مجهول حل کرد!</p>
+<p>فرض کنید احتمال رفتن از راس <span class="math notranslate nohighlight">\(A\)</span> به راس <span class="math notranslate nohighlight">\(B\)</span> برابر با <span class="math notranslate nohighlight">\(P_{AB}\)</span> باشد. در صورتیکه در گراف از <span class="math notranslate nohighlight">\(A\)</span> به <span class="math notranslate nohighlight">\(B\)</span> یالی نباشد، <span class="math notranslate nohighlight">\(P_{AB}=0\)</span> در نظر بگیرید. همچنین لزوما <span class="math notranslate nohighlight">\(P_{AB}\)</span> با <span class="math notranslate nohighlight">\(P_{BA}\)</span> مساوی نیست (چون گراف جهت دار است).</p>
+<p>در این قسمت فرض می کنیم که راس <span class="math notranslate nohighlight">\(t\)</span> به ما داده شده است و ما می خواهیم به ازای تمام راس ها مثل <span class="math notranslate nohighlight">\(u\)</span> احتمال و امیدریاضی رسیدن از <span class="math notranslate nohighlight">\(u\)</span> به <span class="math notranslate nohighlight">\(t\)</span> را بیابیم.</p>
+<p>احتمال رسیدن از <span class="math notranslate nohighlight">\(u\)</span> به <span class="math notranslate nohighlight">\(t\)</span> را <span class="math notranslate nohighlight">\(ansP_u\)</span> می نامیم و امیدریاضی تعداد یال های طی شده برای رسیدن از <span class="math notranslate nohighlight">\(u\)</span> به <span class="math notranslate nohighlight">\(t\)</span> را <span class="math notranslate nohighlight">\(ansE_u\)</span> می نامیم.</p>
+<p>واضح است که <span class="math notranslate nohighlight">\(ansP_t = 1\)</span> و <span class="math notranslate nohighlight">\(ansE_t = 0\)</span>.</p>
+<p>معادلات زیر به ازای هر <span class="math notranslate nohighlight">\(u \neq t\)</span> برقرار هستند.</p>
+<p><span class="math notranslate nohighlight">\(ansP_u = \sum P_{uv} \times ansP_v\)</span></p>
+<p><span class="math notranslate nohighlight">\(ansE_u = 1 + \sum P_{uv} \times ansE_v\)</span></p>
+<p>که اگر <span class="math notranslate nohighlight">\(n\)</span> راس داشته باشیم این معادلات به ما یک دستگاه <span class="math notranslate nohighlight">\(n-1\)</span> معادله و <span class="math notranslate nohighlight">\(n-1\)</span> مجهول می دهند. همچنین به طور خاص اگر گراف جهت دار ما DAG باشد دیگر نیازی به حل دستگاه معادلات نیست. بلکه گراف را به صورت ترتیب توپولوژیکی در نظر می گیریم و از آخر به اول جواب ها را به دست می آوریم (و این بسیار شبیه به کاری است که در توابع بازگشتی انجام می دهیم).</p>
+<section id="id9">
+<h3>حل یک مثال<a class="headerlink" href="#id9" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در اینجا می خواهیم مسئله بمب که در بالا گفته شد را حل کنیم. اگر دستگاه معادلات را شکل بدهیم نتیجه به این شکل است :</p>
+<p><span class="math notranslate nohighlight">\(ansE_B = 0\)</span></p>
+<p><span class="math notranslate nohighlight">\(ansE_A = 1 + (1-p) \times ansE_A + p \times ansE_B\)</span></p>
+<p>که به راحتی نتیجه می شود <span class="math notranslate nohighlight">\(ansE_A = \frac 1 p\)</span></p>
+</section>
+</section>
+<section id="id10">
+<h2>نتیجه گیری<a class="headerlink" href="#id10" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>در اینجا وارد فضای Random Walk شدیم و در مورد بعضی از مسائلی که در این فضا تعریف می شوند کمی صحبت کردیم اما حقیقت این است که انواع پرسش هایی که در فضای Random Walk مطرح می شوند بسیار زیاد است و بحث در این مورد از حوصله کتاب خارج است.</p>
+<p>روشی که برای تبدیل به Random Walk و سپس حل آن گفتیم بسیار کلی است. این کار برای شهود گرفتن ما نسبت به مسائل خوب است اما در خیلی از اوقات گرافی که ساخته می شود بسیار بزرگ تر از آن است که بتوان به صورت دستی معادلات مربوط به آن را حل کرد (مثل مسئله سه دزد بز دزد).</p>
+<p>گاهی اوقات می توانیم از خاص بودن گراف استفاده کنیم. مثلا فرض کنید می خواهیم امیدریاضی رسیدن از راس <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(t\)</span> را بیابیم و ساختار گراف طوری است که هر مسیر از <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(t\)</span> حتما از راس <span class="math notranslate nohighlight">\(w\)</span> می گذرد. در اینجا طبق قوانین امیدریاضی می توانیم بفهمیم که امیدریاضی تعداد یال ها برای رسیدن از <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(t\)</span> برابر است با جمع امیدریاضی رسیدن از <span class="math notranslate nohighlight">\(s\)</span> به <span class="math notranslate nohighlight">\(w\)</span> و سپس رسیدن از <span class="math notranslate nohighlight">\(w\)</span> به <span class="math notranslate nohighlight">\(t\)</span>. از این موضوع می توانید برای حل مسئله موش و پنیر استفاده کنید!</p>
+<p>پس در کل می توان گفت تبدیل مسائل به Random Walk به ما کمک می کند ولی اغلب به تنهایی برای حل سوال کافی نیست و ما باید خلاقیت بیشتری برای ساده تر کردن مسئله استفاده کنیم.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="4.html" style="float:right;" title="یک ریختی" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="6.html" style="float:left;" title="اعداد رمزی" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

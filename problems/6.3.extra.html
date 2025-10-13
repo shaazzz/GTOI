@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/6/3" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="6.3.html">بخش 6.3</a></h1><ul><li><a href=https://codeforces.com/contest/1202/problem/B>You Are Given a Decimal String...</a></li><li><a href=https://codeforces.com/gym/101845/problem/C>Cryptography</a></li><li><a href=https://www.urionlinejudge.com.br/judge/en/problems/view/2676>City in the Center</a></li><li><a href=https://codeforces.com/problemset/problem/21/D>Traveling Graph</a></li><li><a href=https://www.spoj.com/problems/INGRED/>Ingredients</a></li><li><a href=https://www.spoj.com/problems/ROHAAN/>Defend The Rohan</a></li><li><a href=https://codeforces.com/contest/25/problem/C>Roads in Berland</a></li><li><a href=https://codeforces.com/contest/33/problem/B>String Problem</a></li><li><a href=https://www.codechef.com/problems/BESTPATH>بهترین مسیر</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

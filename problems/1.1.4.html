@@ -1,0 +1,107 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/1/1" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>سوال 1.1.4 : <button id="b1x1x4" onclick="swapButton('1x1x4')">حل کردم</button></h1>
+
+<p>ابتدا یک گراف ۸ راسی بکشید که درجه تمام رئوس آن سه باشد، سپس ثابت کنید که نمی توان هیچ گراف ۹ راسی کشید که درجه تمام رئوس آن ۳ باشد.</p>
+
+<script>
+  const toggle = (id, txt) => {
+    const b = document.getElementById('b'+id);
+    const isSolved = window.getComputedStyle(document.body, null).getPropertyValue('background-color') === 'rgb(238, 255, 238)';
+    if (b.innerText === 'نمایش') {
+      if (txt && !isSolved) alert(txt);
+      b.innerText = 'پنهان کردن';
+    } else {
+      b.innerText = 'نمایش';
+    }
+    document.getElementById(id).classList.toggle('hidden');
+  };
+</script>
+
+  <h1>راهنمایی: <button id="bhint" onclick="toggle('hint')">نمایش</button></h1>
+  <div id="hint" class="hidden">
+    <p>برای قسمت اول، ابتدا یک هشت ضلعی بکشید. برای قسمت دوم، سعی کنید که از نتیجه سوال 1.1.3 استفاده کنید.</p>
+
+  </div>
+  
+
+  <h1>جواب: <button id="bsolution" onclick="toggle('solution',' هرگز سوالات را نسوزانید. سوزاندن سوالات نه تنها مفید نیست، بلکه ذهن شما را تنبل می کند و مضر است. اگر فکر می کنید که سوال به چیزی نیاز دارد که بلد نیستید، خواندن پاسخ سوال راه خوبی برای یادگیری نیست. از افراد مطلع بپرسید که آیا چیزی هست که بلد نباشید و آن چیز را از آن ها یاد بگیرید و سپس دوباره به سوال برگردید. اگر این توضیحات شما را به راه راست هدایت کرد، سریعا دکمه پنهان کردن را بزنید تا سوال برای شما سوزانده نشود.   ')">نمایش</button></h1>
+  <div id="solution" class="hidden">
+    <p>برای قسمت اول، یک هشت ضلعی بکشید و هر راس را به راس مقابلش وصل کنید. برای قسمت دوم، از سوال 1.1.3 می دانیم که جمع درجات دو برابر تعداد یال ها و در نتیجه زوج است اما $9 \times 3 = 27$ که عددی فرد است.</p>
+
+  </div>
+<div>
+  <a href="https://github.com/shaazzz/GTOI/blob/master/problems/1/1/4.yaml">
+    ویرایش و بهبود در گیت هاب
+  </a>
+</div>
+<h1>برگرد به <a href="1.1.html">بخش 1.1</a></h1>
+<script>
+document.body.id = "d1x1x4";
+</script>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

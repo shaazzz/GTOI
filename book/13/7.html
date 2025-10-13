@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="rtl" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>تطابق در گراف های عام &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-rtl.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="تطابق" href="index.html" />
+        <link rel="next" title="مباحث ویژه" href="../14/index.html" />
+        <link rel="prev" title="Poset" href="6.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-left " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="جستجو">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">تعاریف اولیه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">مقدمات و مدل سازی با گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">انواع گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">پیاده سازی گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">گشت، گذر، مسیر، اکسترمال</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">زیرگراف ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">همبندی، یال برشی و راس برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">گراف دو بخشی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2/index.html">درخت ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2/1.html">خاصیت های مقدماتی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/2.html">فاصله در درخت و گراف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/3.html">شمردن تعداد درخت ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/5.html">BFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/6.html">الگوریتم پیدا کردن قطر درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/8.html">الگوریتم های راس و یال برشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2/9.html">کارگاه پرورش ایده</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">گراف جهت‌دار</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">تعاریف</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">تورنومنت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">گراف جهت‌دار بدون دور</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html">مولفه‌های قویا همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">تشخیص دور داشتن گراف جهت دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">بازی‌ها و گراف جهت‌دار</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">گراف تابعی و گراف‌جایگشت</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">تکنیک های اثبات مسائل گراف</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">انتخاب های اکسترمالی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">منقبض کردن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">گراف و جادو</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">تور اویلری و دور همیلتونی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">معرفی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">تور اویلری در گراف جهت دار و بی جهت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">قضیه های وجودی دور همیلتونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">الگوریتم های کوتاه ترین مسیر</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">بلمن فورد</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">دکسترا</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">فلوید وارشال</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">ماتریس ها</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">ماتریس و عملیات های روی آن</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">دترمینان ماتریس ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">ماتریس وقوع</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">ماتریس مجاورت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">تعداد گشت ها به طول n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">به دست آوردن توابع بازگشتی به کمک گراف و ماتریس</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">داده ساختار های درختی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">درخت دودویی (Binary Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">درخت جست و جوی دودویی (BST یا Binary Search Tree)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">مسائل np و np کامل</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">تعریف np و np کامل</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">اثبات np کامل بودن مساله sat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">مسائل np کامل گراف</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">شرح مساله</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">راه حل O(n+q*lg(n)) به کمک جداسازی سبک-سنگین</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">الگوریتم برون‌خط تارجان</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">ارتباط LCA و RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">راه خطی برای LCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">درخت مجازی</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">الگوریتم های پیشرفته درخت</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">درخت پوشای کمینه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">گونی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">سنتروید</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">هافمن کدینگ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">هش درخت</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">تجزیه سبک سنگین(HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">همبندی</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">برش ها و همبندی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">گراف k همبند</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">برش کمینه و جریان بیشینه</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">تطابق</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">آشنایی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">تطابق در گراف دوبخشی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">قضایا ی مینماکس</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">کاربرد ها</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">جریان بیشینه و تطابق</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">Poset</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">تطابق در گراف های عام</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">مباحث ویژه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">گراف مسطح</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">دنباله درجه ای</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">رنگ آمیزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">یک ریختی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">اعداد رمزی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">مجموعه مستقل و خوشه</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">چند ماتریس خاص</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">ضمیمه</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">چگونه از این کتاب استفاده کنیم؟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">آشنایی با الگوریتم ها و پیچیدگی</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">برگه تقلب (Cheat sheet)</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; فهرست</a>&nbsp;
+        <a><i class="fa  fa-angle-left"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; تطابق در گراف های عام</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;سوالات</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/en/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (English)</a>
+        <script>document.getElementById('lang-link').href=`/en${window.location.pathname}`;</script>
+        
+            <a href="../../_sources/book/13/7.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; سورس</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="id1">
+<h1>تطابق در گراف های عام<a class="headerlink" href="#id1" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>در فصل های قبل شرط لازم و کافی برای وجود داشتن تطابق کامل در گراف های دوبخشی را بررسی کردیم. در این قسمت وجود تطابق کامل در هر گرافی را بررسی خواهیم کرد.</p>
+<section id="id2">
+<h2>قضیه تات<a class="headerlink" href="#id2" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>به ازای هر زیر مجموعه <span class="math notranslate nohighlight">\(S\)</span> از راس ها (که می تواند تهی نیز باشد) فرض کنید <span class="math notranslate nohighlight">\(O(S)\)</span> برابر با تعداد مولفه های همبندی با اندازه فرد باشد در صورتیکه رئوس <span class="math notranslate nohighlight">\(S\)</span> را از گراف حذف کرده باشیم.</p>
+<p>قضیه تات بیان می کند شرط زیر لازم و کافی می باشد :</p>
+<p><span class="math notranslate nohighlight">\(\forall_S : |S| \geq O(S)\)</span></p>
+<p>شرط تات به وضوح برای وجود تطابق کامل لازم است. برای اثبات به ازای یک مجموعه <span class="math notranslate nohighlight">\(S\)</span> داشته باشیم <span class="math notranslate nohighlight">\(|S| &lt; O(S)\)</span>. در اینصورت برای وجود تطابق کامل باید از هر مولفه فرد که در <span class="math notranslate nohighlight">\(O(S)\)</span> شمردیم باید یک راس به راسی در <span class="math notranslate nohighlight">\(S\)</span> مطابق شده باشد. از آنجایی که گفتیم <span class="math notranslate nohighlight">\(|S| &lt; O(S)\)</span> پس پیدا کردن تطابق کامل امکان پذیر نیست.</p>
+<p>برای اثبات کافی بودن شرط از اکسترمال استفاده می کنیم. یعنی با استفاده از برهان خلف فرض کنید گراف <span class="math notranslate nohighlight">\(G\)</span> تطابق کامل ندارد و شرط تات در آن صدق می کند. توجه کنید که با اضافه کردن یال به گراف <span class="math notranslate nohighlight">\(G\)</span> شرط تات برقرار می ماند‌ (چرا؟). پس ایده کلی ما به این صورت است که تا زمانی که در گرافمان تطابق کامل به وجود نیاید یک یال که در آن حضور ندارد را به آن اضافه خواهیم کرد. در نهایت به گراف ماکسیمال <span class="math notranslate nohighlight">\(H\)</span> می رسیم که :</p>
+<ul class="simple">
+<li><p>شرط تات در آن صدق می کند.</p></li>
+<li><p>در آن تطابق کامل وجود ندارد.</p></li>
+<li><p>به ازای هر یال <span class="math notranslate nohighlight">\(uv\)</span> که در <span class="math notranslate nohighlight">\(H\)</span> نیست در صورتی که آن را به <span class="math notranslate nohighlight">\(H\)</span> اضافه کنیم تطابق کامل به وجود خواهد آمد.</p></li>
+</ul>
+<p>حالا هدف ما این است که ثابت کنیم گراف <span class="math notranslate nohighlight">\(H\)</span> همین حالا هم تطابق کامل دارد (در اینصورت با فرض خلف به تناقض می خوریم و مسئله اثبات می شود).</p>
+<p>ابتدا توجه کنید که برقرار بودن شرط تات به ازای <span class="math notranslate nohighlight">\(S = \phi\)</span> به ما نتیجه می دهد که <span class="math notranslate nohighlight">\(H\)</span> دارای هیچ مولفه همبندی با فرد راس نیست در نتیجه تعداد راس های گراف زوج است.</p>
+<ul class="simple">
+<li><p><strong>گلابی</strong> : راس های <span class="math notranslate nohighlight">\(a,b,c,d\)</span> به طوریکه <span class="math notranslate nohighlight">\(ab,ac\)</span> یال‌های گراف باشند ولی <span class="math notranslate nohighlight">\(bc,ad\)</span> یال‌های گراف نباشند.</p></li>
+<li><p><strong>سیب</strong> : راس های <span class="math notranslate nohighlight">\(a,b,c\)</span> به طوریکه <span class="math notranslate nohighlight">\(ab,ac\)</span> یال‌های گراف باشند ولی <span class="math notranslate nohighlight">\(bc\)</span> یال‌ گراف نباشد.</p></li>
+</ul>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/sib_golabi.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/sib_golabi.png" style="width: 50%;" /></a>
+</figure>
+<p>ادعا می کنیم اگر بتوانیم در <span class="math notranslate nohighlight">\(H\)</span> یک گلابی پیدا کنیم می توانیم ثابت کنیم در <span class="math notranslate nohighlight">\(H\)</span> تطابق کامل وجود دارد. پس یک گلابی دلخواه را در نظر بگیرید و راس های آن را <span class="math notranslate nohighlight">\(a,b,c,d\)</span> مطابق تعریف در نظر بگیرید.</p>
+<p>اگر به <span class="math notranslate nohighlight">\(H\)</span> یال <span class="math notranslate nohighlight">\(ad\)</span> را اضافه کنید در آن تطابق <span class="math notranslate nohighlight">\(M1\)</span> وجود خواهد داشت که شامل <span class="math notranslate nohighlight">\(ad\)</span> است.</p>
+<p>اگر به <span class="math notranslate nohighlight">\(H\)</span> یال <span class="math notranslate nohighlight">\(bc\)</span> را اضافه کنید در آن تطابق <span class="math notranslate nohighlight">\(M2\)</span> وجود خواهد داشت که شامل <span class="math notranslate nohighlight">\(bc\)</span> است.</p>
+<p>حالا <span class="math notranslate nohighlight">\(M = M1 \Delta M2\)</span> را در نظر بگیرید. طبق مطالب گفته شده در قسمت های قبل یال های <span class="math notranslate nohighlight">\(M\)</span> به صورت تعدادی دور می باشد.</p>
+<section id="ad-bc">
+<h3>اگر یال <span class="math notranslate nohighlight">\(ad\)</span> و <span class="math notranslate nohighlight">\(bc\)</span> در دو دور متفاوت باشند‌<a class="headerlink" href="#ad-bc" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>آنگاه از دوری که <span class="math notranslate nohighlight">\(ad\)</span> درون آن است یال های <span class="math notranslate nohighlight">\(M2\)</span> و از دوری که <span class="math notranslate nohighlight">\(bc\)</span> درون آن است یال های <span class="math notranslate nohighlight">\(M1\)</span> را انتخاب کنید (از بقیه دور ها به صورت دلخواه یال های <span class="math notranslate nohighlight">\(M1\)</span> یا <span class="math notranslate nohighlight">\(M2\)</span> را انتخاب کنید و یال هایی که در <span class="math notranslate nohighlight">\(M1 \cap M2\)</span> هستند را نیز انتخاب کنید). در اینصورت در <span class="math notranslate nohighlight">\(H\)</span> یک تطابق کامل خواهیم داشت!</p>
+</section>
+<section id="id3">
+<h3>اگر یال <span class="math notranslate nohighlight">\(ad\)</span> و <span class="math notranslate nohighlight">\(bc\)</span> در یک دور باشند<a class="headerlink" href="#id3" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در ابتدا باید بگوییم که این دور زوج است. حالا چون <span class="math notranslate nohighlight">\(b,c\)</span> یکی از یال های دور است <span class="math notranslate nohighlight">\(b,c\)</span> دو راس متوالی در دور هستند پس در صورتیکه به ازای دقیقا یکی از یال های <span class="math notranslate nohighlight">\(ab\)</span> یا <span class="math notranslate nohighlight">\(ac\)</span> اتفاق زیر می افتد :</p>
+<p>اگر راس های دو سر یال را از گراف حذف کنیم دور ما تبدیل به دو مسیر زوج راسی خواهد شد.</p>
+<p>بدون کم شدن از کلیت مسئله فرض کنید این یال <span class="math notranslate nohighlight">\(ab\)</span> باشد. حالا یال <span class="math notranslate nohighlight">\(ab\)</span> را برای تطابق انتخاب کنید. و سپس <span class="math notranslate nohighlight">\(a,b\)</span> را از گراف حذف کنید و یال های دو مسیر زوج راسی به وجود آمده را یکی در میان برای تطابق انتخاب کنید. در اینصورت تمام راس های دور ما توسط یال های انتخاب شده پوشش داده می شوند. مشابه بالا از بقیه دور ها به صورت دلخواه یال های <span class="math notranslate nohighlight">\(M1\)</span> یا <span class="math notranslate nohighlight">\(M2\)</span> را انتخاب کنید و یال هایی که در <span class="math notranslate nohighlight">\(M1 \cap M2\)</span> هستند را نیز انتخاب کنید. در اینصورت در <span class="math notranslate nohighlight">\(H\)</span> یک تطابق کامل خواهیم داشت!</p>
+</section>
+<section id="id4">
+<h3>اگر گلابی نداشتیم چه؟<a class="headerlink" href="#id4" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>در دو قسمت بالا ثابت کردیم اگر در گراف <span class="math notranslate nohighlight">\(H\)</span> گلابی داشتیم آنگاه <span class="math notranslate nohighlight">\(H\)</span> دارای یک تطابق کامل است. حالا باید حالاتی که در <span class="math notranslate nohighlight">\(H\)</span> گلابی وجود ندارد را هم در نظر بگیریم.</p>
+<p>مجموعه <span class="math notranslate nohighlight">\(C\)</span> را شامل تمام راس های <span class="math notranslate nohighlight">\(H\)</span> در نظر بگیرید که به همه راس های دیگر یال دارند (درجه آن ها <span class="math notranslate nohighlight">\(n-1\)</span> است).</p>
+<p>حالا اگر <span class="math notranslate nohighlight">\(C\)</span> تمام راس های <span class="math notranslate nohighlight">\(H\)</span> را شامل شود به این معنی است که <span class="math notranslate nohighlight">\(H\)</span> یک خوشه‌ (و دارای زوج راس) است.پس به وضوح در آن تطابق کامل وجود دارد.</p>
+<p>پس گراف <span class="math notranslate nohighlight">\(W = H-C\)</span> را در نظر بگیرید. در <span class="math notranslate nohighlight">\(W\)</span> به ازای هر راس مثل <span class="math notranslate nohighlight">\(u\)</span> راسی مثل <span class="math notranslate nohighlight">\(v\)</span> وجود دارد که بین <span class="math notranslate nohighlight">\(uv\)</span> یالی نیست (چرا؟). پس اگر بتوانیم در <span class="math notranslate nohighlight">\(W\)</span> یک سیب پیدا کنیم آنگاه می توانیم یک گلابی هم پیدا کنیم(زیرا تنها کافیست به ازای راس <span class="math notranslate nohighlight">\(a\)</span> در سیب راس <span class="math notranslate nohighlight">\(d\)</span> را طوری بیابیم که بین <span class="math notranslate nohighlight">\(a,d\)</span> یال نباشد).</p>
+<p>پس اگر در <span class="math notranslate nohighlight">\(W\)</span> سیب وجود داشته باشد مسئله حل می شود. پس فرض کنید در <span class="math notranslate nohighlight">\(W\)</span> سیب وجود ندارد. در اینصورت به ازای هر <span class="math notranslate nohighlight">\(a,b,c\)</span> دلخواه که <span class="math notranslate nohighlight">\(ab,ac\)</span> یال گراف هستند، <span class="math notranslate nohighlight">\(bc\)</span> هم باید یال این گراف باشد. یک راس دلخواه مثل <span class="math notranslate nohighlight">\(u\)</span> را در نظر بگیرید و مجموعه خود <span class="math notranslate nohighlight">\(u\)</span> و راس های مجاور آن را <span class="math notranslate nohighlight">\(A\)</span> در نظر بگیرید. بین هر دو راس در <span class="math notranslate nohighlight">\(A\)</span> باید یال باشد(چرا؟) همچنین هیچ راسی خارج از <span class="math notranslate nohighlight">\(A\)</span> نیست که به <span class="math notranslate nohighlight">\(A\)</span> یال داشته باشد(چرا؟). پس می توان نتیجه گرفت که هر مولفه همبندی در <span class="math notranslate nohighlight">\(W\)</span> یک خوشه است. در هر خوشه راس ها را به صورت دلخواه تطابق دهید. از هر خوشه فرد دقیقا یک راس اضافه می ماند. از آنجایی که به ازای <span class="math notranslate nohighlight">\(S = C\)</span> شرط تات برقرار است پس می توان تمام راس های اضافه مانده در <span class="math notranslate nohighlight">\(W\)</span> را به راس های <span class="math notranslate nohighlight">\(C\)</span> تطابق داد. در نهایت کل راس های اضافه مانده در <span class="math notranslate nohighlight">\(C\)</span> را (که یک خوشه زوج راسی هستند) را به صورت دلخواه تطابق می دهیم. پس در نهایت یک تطابق کامل در <span class="math notranslate nohighlight">\(H\)</span> پیدا کردیم.</p>
+</section>
+</section>
+<section id="k-factor">
+<h2>حالت کلی تر تطابق یا k-factor<a class="headerlink" href="#k-factor" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>طبق تعریف یک تطابق کامل در گراف <span class="math notranslate nohighlight">\(G\)</span> به معنی یک زیرمجموعه از یال های گراف مثل <span class="math notranslate nohighlight">\(M\)</span> است که در <span class="math notranslate nohighlight">\(M\)</span> درجه هر راس دقیقا 1 باشد.</p>
+<p>حالا می خواهیم این تعریف را تعمیم دهیم. فرض کنید <span class="math notranslate nohighlight">\(a_1,a_2,...,a_n\)</span> داده شده است و ما باید بفهمیم آیا یک زیرمجموعه از یال های گراف مثل <span class="math notranslate nohighlight">\(M\)</span> وجود دارد که در آن درجه هر راس <span class="math notranslate nohighlight">\(u\)</span> برابر با <span class="math notranslate nohighlight">\(a_u\)</span> شود؟</p>
+<p>در نگاه اول این مسئله بسیار کلی تر و سخت تر از تطابق است ولی در این بخش می خواهیم آن را با استفاده از تطابق حل کنیم.</p>
+<section id="id5">
+<h3>یک ایده اشتباه<a class="headerlink" href="#id5" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>احتمالا اولین ایده ای که به ذهن می رسد این است که راس <span class="math notranslate nohighlight">\(u\)</span> را دقیقا <span class="math notranslate nohighlight">\(a_u\)</span> بار کپی کنیم سپس به ازای هر یال <span class="math notranslate nohighlight">\(uv\)</span> در <span class="math notranslate nohighlight">\(G\)</span> بین تمام کپی های <span class="math notranslate nohighlight">\(u,v\)</span> یال قرار دهیم. سپس بررسی کنیم که در گراف جدید تطابق کامل وجود دارد یا خیر.</p>
+<p>این ایده بسیار شبیه به آن چیزی است که قبلا در فصل تطابق دوبخشی بررسی کردیم اما یک اشتباه بسیار ریز دارد. مشکل این است که ممکن است همزمان از چند تا از یال های بین <span class="math notranslate nohighlight">\(u,v\)</span> در تطابق استفاده کنیم و این
+باعث می شود که از یک یال چند بار استفاده کنیم که مطلوب مسئله نیست.</p>
+</section>
+<section id="id6">
+<h3>حل درست<a class="headerlink" href="#id6" title="پیوند ثابت به این سر مقاله">¶</a></h3>
+<p>فرض کنید <span class="math notranslate nohighlight">\(d_u\)</span> درجه راس <span class="math notranslate nohighlight">\(u\)</span> باشد. از گراف <span class="math notranslate nohighlight">\(G\)</span> گراف <span class="math notranslate nohighlight">\(G^{\prime}\)</span> را به اینصورت می سازیم :</p>
+<p>به ازای هر راس <span class="math notranslate nohighlight">\(u\)</span> یک گراف دوبخشی کامل قرار می دهیم! به صورتی که بخش اول آن دارای <span class="math notranslate nohighlight">\(d_u - a_u\)</span> راس قرار داشته باشد و در بخش دوم آن <span class="math notranslate nohighlight">\(d_u\)</span> راس قرار داشته باشد. به گراف دوبخشی متناظر با راس <span class="math notranslate nohighlight">\(u\)</span> ، <span class="math notranslate nohighlight">\(B_u\)</span> گوییم. سپس یال های گراف <span class="math notranslate nohighlight">\(G\)</span> را به ترتیبی دلخواه در نظر بگیرید و متناظر آن را (به صورتی که خواهیم گفت) به گراف <span class="math notranslate nohighlight">\(G^{\prime}\)</span> اضافه کنید. فرض کنید <span class="math notranslate nohighlight">\(i\)</span> امین یالی که بررسی می کنیم <span class="math notranslate nohighlight">\(uv\)</span> باشد و قبل از آن <span class="math notranslate nohighlight">\(c1\)</span> تا از یال های مجاور <span class="math notranslate nohighlight">\(u\)</span> و <span class="math notranslate nohighlight">\(c2\)</span> تا از یال های مجاور <span class="math notranslate nohighlight">\(v\)</span> را بررسی کرده ایم. حالا متناظر یال <span class="math notranslate nohighlight">\(uv\)</span> برابر خواهد بود با یالی که بین دو راس زیر است :</p>
+<ul class="simple">
+<li><p>راس <span class="math notranslate nohighlight">\(c1\)</span> ام <strong>بخش دوم</strong> گراف <span class="math notranslate nohighlight">\(B_u\)</span></p></li>
+<li><p>راس <span class="math notranslate nohighlight">\(c2\)</span> ام <strong>بخش دوم</strong> گراف <span class="math notranslate nohighlight">\(B_v\)</span></p></li>
+</ul>
+<p>حالا ادعا می کنیم وجود داشتن زیرمجموعه <span class="math notranslate nohighlight">\(M\)</span> از یال ها که شرط مسئله را برآورده کند معادل است با وجود داشتن یک تطابق کامل در گراف <span class="math notranslate nohighlight">\(G^{\prime}\)</span>!</p>
+<p>توجه کنید که در این گراف هر یال در گراف اصلی دقیقا یک یال متناظر دارد پس مشکل قبل (چند بار استفاده کردن از یک یال) پیش نمی آید. اثبات کامل درستی قضیه بالا به عهده خواننده واگذار می شود.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/k_factor.png"><img alt="اگه اینترنت یارو آشغال باشه این میاد" src="../../_images/k_factor.png" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="6.html" style="float:right;" title="Poset" accesskey="p"><i class="fa fa-chevron-right"></i>&nbsp; قبلی</a>
+                    
+                    
+                    <a href="../14/index.html" style="float:left;" title="مباحث ویژه" accesskey="n">بعدی &nbsp;<i class="fa fa-chevron-left"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    این کتاب توسط 
+                    <a href="/contributors">
+                    مشارکت کنندگان شاززز
+                    </a>
+                    به وجود آمده است.
+                </p>
+                <p>
+                    این کتاب عمومی است و تحت
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        پروانه cc-by-sa
+                    </a>
+                    در دسترس است.
+                </p>
+                    <p style="font-size: 13px;">
+                        آخرین به روز رسانی در اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        ساخته شده به وسیله <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) و <a href="https://github.com/saeiddrv/SphinxMinooTheme">تم مینو</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

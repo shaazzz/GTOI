@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fa" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fa" > <!--<![endif]-->
+<html dir="ltr" lang="fa">
+    <head>
+        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    
+         <title>Algorithm for Finding Tree Diameter &mdash; نظریه گراف‌ها برای المپیاد کامپیوتر</title>
+    
+
+
+
+
+    
+
+    <link rel="stylesheet" type=text/css href="/_static/main.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/pygments.css">
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+
+
+<link rel="stylesheet" type=text/css href="../../_static/font-awesome.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/bootstrap.min.css">
+<link rel="stylesheet" type=text/css href="../../_static/pygment-solarized-light.css">
+
+
+    <link rel="stylesheet" type=text/css href="../../_static/minoo-ltr.css">
+
+        <link rel="index" title="فهرست" href="../../genindex.html" />
+        <link rel="search" title="جستجو" href="../../search.html" />
+        <link rel="top" title="نظریه گراف‌ها برای المپیاد کامپیوتر" href="../../index.html" />
+        <link rel="up" title="Trees" href="index.html" />
+        <link rel="next" title="DFS Start/Finish Time" href="7.html" />
+        <link rel="prev" title="BFS" href="5.html" />
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+
+    
+        <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="../../None"></script>
+        <script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+
+<script type="text/javascript" src="../../_static/minoo.js"></script>
+<script type="text/javascript" src="../../_static/modernizr.min.js"></script>
+<style>
+    * {
+        border-radius: 1rem;
+    }
+</style>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper-page-sidebar">
+                
+
+<div id="page-sidebar">
+<div id="sidebar-top">
+    <div id="sidebar-top-image">
+        <span style="background-image: url('../../_static/avatar.png');"></span>
+    </div>
+    <div id="sidebar-top-links">
+        
+            <a href=http://git.coderz.ir target="_blank"><i class="fa fa-globe" style="font-size:23px;"></i></a>
+        
+        
+        
+        
+        
+        
+            <a href=https://github.com/dariubs/git target="_blank"><i class="fa fa-github-square" style="font-size:23px;"></i></a>
+        
+        
+    </div>
+    <div id="sidebar-navigation">
+        <span id="navigation-toggle"><i class="fa  fa-angle-double-right " id="sidebar-toggle-icon" style="font-size: 27px;"></i></span>
+        <span id="navigation-search">
+                <form action="../../search.html" method="get">
+                    <input id="input-search" type="text" name="q"  placeholder="Search">
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+        </span>
+    </div>
+    <div id="sidebar-top-title">
+        <a href="../../index.html">نظریه گراف‌ها برای المپیاد کامپیوتر</a>
+    </div>
+</div>
+
+<div id="wrapper-sidebar-bottom">
+<div id="sidebar-bottom">
+    <div id="sidebar-bottom-list">
+        
+        
+            <div id="tree-toc">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">Basic Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1/1.html">Introduction to Graphs and Graph Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/2.html">Types of Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/3.html">Graph Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/4.html">Walks, Trails, Paths, Extremal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/5.html">Subgraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/6.html">Connectivity, Cut Edge, and Cut Vertex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1/7.html">Bipartite Graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Trees</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">Introductory Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">Distance in Tree and Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">Counting the Number of Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">DFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.html">BFS</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithm for Finding Tree Diameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.html">DFS Start/Finish Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.html">Cut Vertex and Bridge Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.html">Idea Cultivation Workshop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3/index.html">Directed Graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3/1.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/2.html">Tournament</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/3.html">Directed Acyclic Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/4.html"><strong>Strongly Connected Components</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/5.html">Detecting Cycles in a Directed Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/6.html">Games and Directed Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3/7.html">Functional Graphs and Permutation Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4/index.html">Proof Techniques for Graph Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4/1.html">Extremal Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/2.html">Contracting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4/3.html">Graph and Magic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5/index.html">Eulerian Tour and Hamiltonian Cycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/2.html">Eulerian Tour in Directed and Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/3.html">De Bruijn sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/4.html">Existence Theorems for Hamiltonian Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5/5.html">Exponential Algorithms for Finding Hamiltonian Cycles and Paths</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6/index.html">Shortest Path Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../6/1.html">Bellman-Ford</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/2.html">Dijkstra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6/3.html">Floyd-Warshall</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7/index.html">Matrices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7/1.html">Matrices and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/2.html">Determinants of Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/3.html">Incidence Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/4.html">Adjacency Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/5.html">Number of Walks of Length n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7/6.html">Obtaining Recursive Functions Using Graphs and Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../8/index.html">Tree Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../8/1.html">Binary Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/2.html">Binary Search Tree (BST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/3.html">Heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/4.html">DSU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/5.html">Segment Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8/6.html">Trie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../9/index.html">NP and NP-complete Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../9/1.html">NP and NP-complete Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/2.html">Proof of NP-Completeness of the SAT Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9/3.html">Graph NP-Complete Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../10/index.html">Lca</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10/1.html">Problem Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/2.html">O(n+q*lg(n)) Solution using Heavy-Light Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/3.html">Tarjan's Offline Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/4.html">Relationship between LCA and RMQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/5.html">LCA Linear Time Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10/6.html">Virtual Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../11/index.html">Advanced Tree Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11/1.html">Minimum Spanning Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/2.html">Sack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/3.html">Centroid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/4.html">Huffman Coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/5.html">Tree Hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11/6.html">Heavy-Light Decomposition (HLD)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../12/index.html">Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12/1.html">Cuts and Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/2.html">k-connected Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12/3.html">Max-Flow Min-Cut</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../13/index.html">Matching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../13/1.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/2.html">Matching in Bipartite Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/3.html">Min-Max Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/4.html">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/5.html">Maximum Flow and Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/6.html">Poset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../13/7.html">Matching in General Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../14/index.html">Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14/1.html">Planar Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/2.html">Degree Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/3.html">Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/4.html">Identical Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/5.html">Random Walk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/6.html">Ramsey Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/7.html">Independent Set and Clique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/8.html">2-SAT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14/9.html">Several Special Matrices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/index.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/1.html">How to Use This Book?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/2.html">Introduction to Algorithms and Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/3.html">Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        
+   </div>
+   <div id="sidebar-bottom-versions">
+      
+
+   </div>
+</div>
+</div>
+</div>
+            </div>
+            <div id="page-body">
+                <div class="container-fluid">
+                        <div id="body-content" style="max-width: 800px">
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+<div id="body-top">
+    
+    
+        <a href="../../index.html"><i class="fa fa-folder-o"></i>&nbsp; Index</a>&nbsp;
+        <a><i class="fa  fa-angle-right"></i></a>&nbsp;
+        <a><i class="fa fa-folder-open-o"></i>&nbsp; Algorithm for Finding Tree Diameter</a>
+    
+    
+        <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
+        <script>document.getElementById('problems-link').href=`/problems/${window.location.pathname.slice(6).replace('/','.')}.html`.replace('.html.html', '.html').replace('/.html', '/').replace('.index.html', '.html');</script>
+        <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
+        <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
+        
+            <a href="../../_sources/book/2/6.rst.txt" rel="nofollow" id="top-src" target="_blank"><i class="fa fa-code"></i>&nbsp; Source</a>
+        
+    
+</div>
+			        </div>
+			    </div>
+                            
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+  <section id="algorithm-for-finding-tree-diameter">
+<h1>Algorithm for Finding Tree Diameter<a class="headerlink" href="#algorithm-for-finding-tree-diameter" title="پیوند ثابت به این سر مقاله">¶</a></h1>
+<p>Another problem that is NP-hard for general graphs but easily solvable for trees is finding the longest path! Since the path between any two vertices in a tree is unique, it can be concluded that the tree's diameter is its longest path. In this section, we examine methods for finding the tree diameter with a time complexity of <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+<section id="using-dp">
+<h2>Using DP<a class="headerlink" href="#using-dp" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Root the tree at vertex 1. Using dynamic programming, we obtain the following two variables for each vertex <span class="math notranslate nohighlight">\(u\)</span>:</p>
+<ul class="simple">
+<li><p>The value <span class="math notranslate nohighlight">\(dp_u\)</span> is the maximum distance from vertex <span class="math notranslate nohighlight">\(u\)</span> to a vertex within its own subtree rooted at <span class="math notranslate nohighlight">\(u\)</span>.</p></li>
+<li><p>The value <span class="math notranslate nohighlight">\(ans_u\)</span> is the length of the diameter within the subtree rooted at <span class="math notranslate nohighlight">\(u\)</span>.</p></li>
+</ul>
+<p>It is clear that the answer to the problem is <span class="math notranslate nohighlight">\(ans_1\)</span>. Now the only remaining question is how to obtain these two variables.</p>
+<p>To obtain <span class="math notranslate nohighlight">\(dp_u\)</span>, it suffices to note that in the first move from <span class="math notranslate nohighlight">\(u\)</span>, we go to one of its children. So, we should go to the child whose <span class="math notranslate nohighlight">\(dp\)</span> value is maximum.</p>
+<p>To obtain <span class="math notranslate nohighlight">\(ans_u\)</span>, consider the cases where vertex <span class="math notranslate nohighlight">\(u\)</span> is part of the diameter or not.</p>
+<ul class="simple">
+<li><p>If vertex <span class="math notranslate nohighlight">\(u\)</span> is not part of the diameter, then <span class="math notranslate nohighlight">\(ans_u\)</span> will be the maximum <span class="math notranslate nohighlight">\(ans\)</span> of <span class="math notranslate nohighlight">\(u\)</span>'s children, because the diameter will be entirely within one of the children's subtrees.</p></li>
+<li><p>Otherwise, if vertex <span class="math notranslate nohighlight">\(u\)</span> is an endpoint of the diameter, the answer will be <span class="math notranslate nohighlight">\(dp_u\)</span>.</p></li>
+<li><p>Otherwise, vertex <span class="math notranslate nohighlight">\(u\)</span> must be an intermediate vertex on a path. Consider which children its two ends go to. If it goes to children <span class="math notranslate nohighlight">\(a, b\)</span>, the answer will be <span class="math notranslate nohighlight">\(2 + dp_a + dp_b\)</span>. So, it suffices to choose <span class="math notranslate nohighlight">\(a, b\)</span> as the two children whose <span class="math notranslate nohighlight">\(dp\)</span> values are maximum.</p></li>
+</ul>
+<p>In the following code, <span class="math notranslate nohighlight">\(mx1, mx2\)</span> store, respectively, the vertices with the maximum <span class="math notranslate nohighlight">\(dp\)</span> values.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span><span class="w"> </span><span class="n">ans</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mx1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">par</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="n">dfs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">dp</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">y</span><span class="p">]);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="n">ans</span><span class="p">[</span><span class="n">y</span><span class="p">]);</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">mx1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">mx1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">y</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mx1</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">mx2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">mx2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">y</span><span class="p">])</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">mx1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">mx2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">mx1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">mx2</span><span class="p">]);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Thus, we have presented an algorithm that finds the tree diameter with a time complexity of <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+</section>
+<section id="dfs-up-down">
+<h2>DFS Up/Down<a class="headerlink" href="#dfs-up-down" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>Sometimes our goal is to obtain a variable like <span class="math notranslate nohighlight">\(dp\)</span> for each vertex in the tree, but calculating <span class="math notranslate nohighlight">\(dp_u\)</span> requires knowing the <span class="math notranslate nohighlight">\(dp\)</span> values of all neighbors of vertex <span class="math notranslate nohighlight">\(u\)</span> (not just its children).</p>
+<p>The simplest example to introduce this technique is the problem of finding the maximum distance from each vertex. Suppose we want to find the eccentricity for each vertex <span class="math notranslate nohighlight">\(u\)</span>. Let the answer for vertex <span class="math notranslate nohighlight">\(u\)</span> be <span class="math notranslate nohighlight">\(ans_u\)</span>. To find the answer for a single vertex, one can easily root the tree at that vertex and calculate the tree's height in <span class="math notranslate nohighlight">\(O(n)\)</span>. But can the problem be solved for all vertices simultaneously in <span class="math notranslate nohighlight">\(O(n)\)</span>?</p>
+<p>Our first problem is that since calculating the answer for a vertex requires the answers of its neighbors, we don't know where to start the computation!</p>
+<p>Root the tree at vertex <span class="math notranslate nohighlight">\(u\)</span>. Breaking the problem into two parts can be useful. Assume <span class="math notranslate nohighlight">\(dpDown_u\)</span> is the maximum distance from vertex <span class="math notranslate nohighlight">\(u\)</span> to a vertex within <span class="math notranslate nohighlight">\(u\)</span>'s subtree. Also, <span class="math notranslate nohighlight">\(dpUp_u\)</span> is the maximum distance from vertex <span class="math notranslate nohighlight">\(u\)</span> to a vertex outside <span class="math notranslate nohighlight">\(u\)</span>'s subtree (meaning in the first step we must go to <span class="math notranslate nohighlight">\(u\)</span>'s parent). It is clear that the answer for vertex <span class="math notranslate nohighlight">\(u\)</span> is the maximum of <span class="math notranslate nohighlight">\(dpDown_u\)</span> and <span class="math notranslate nohighlight">\(dpUp_u\)</span>.</p>
+<p>As we discussed above, <span class="math notranslate nohighlight">\(dpDown_u\)</span> can be calculated from the <span class="math notranslate nohighlight">\(dpDown\)</span> values of <span class="math notranslate nohighlight">\(u\)</span>'s children.</p>
+<p>To calculate <span class="math notranslate nohighlight">\(dpUp_u\)</span>, note that after going from <span class="math notranslate nohighlight">\(u\)</span> to its parent <span class="math notranslate nohighlight">\(par\)</span>, we can take two paths.</p>
+<ul class="simple">
+<li><p>We can go up again. In this case, the answer is <span class="math notranslate nohighlight">\(1 + dpUp_{par}\)</span> (assuming <span class="math notranslate nohighlight">\(par\)</span> is the parent of vertex <span class="math notranslate nohighlight">\(u\)</span>).</p></li>
+<li><p>We can go down, i.e., to one of <span class="math notranslate nohighlight">\(u\)</span>'s siblings like <span class="math notranslate nohighlight">\(w\)</span>. Then we must go further down. In this case, the answer will be <span class="math notranslate nohighlight">\(2 + dpDown_w\)</span>.</p></li>
+</ul>
+<p>The key point is that we don't need to check all of <span class="math notranslate nohighlight">\(u\)</span>'s siblings every time to find the vertex with the maximum <span class="math notranslate nohighlight">\(dpDown\)</span> (that is, <span class="math notranslate nohighlight">\(w\)</span>). It is sufficient to find, for <span class="math notranslate nohighlight">\(par\)</span>, the two children whose <span class="math notranslate nohighlight">\(dpDown\)</span> values are maximum, just once. Vertex <span class="math notranslate nohighlight">\(w\)</span> will always be one of the two children of <span class="math notranslate nohighlight">\(par\)</span> whose <span class="math notranslate nohighlight">\(dpDown\)</span> values are maximum. (Why?)</p>
+<p>So, we understood how to obtain the variables. But one problem remains unsolved. In what order should we calculate the values? To obtain <span class="math notranslate nohighlight">\(dpDown\)</span>, we need the values of the children, and to obtain <span class="math notranslate nohighlight">\(dpUp\)</span>, we need the values of the parent. So, where should we start?</p>
+<p>The answer is simple and clever. We can obtain the values in two phases. First, calculate the <span class="math notranslate nohighlight">\(dpDown\)</span> values using <cite>dfsDown</cite>, and then the <span class="math notranslate nohighlight">\(dpUp\)</span> values using <cite>dfsUp</cite>! The key is that in <cite>dfsDown</cite>, the children's values are calculated first, then the current vertex's value. But in <cite>dfsUp</cite>, the parent's value is calculated first, then the children's values are derived from the parent's.</p>
+<p>Note that in the <cite>dfsUp</cite> function, when we are at a vertex, we assume that its <span class="math notranslate nohighlight">\(dpUp\)</span> value has been obtained, and then we derive the <span class="math notranslate nohighlight">\(dpUp\)</span> values of its children.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">dpUp</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfsDown</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"> </span><span class="c1">// this function should be executed first</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">par</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="n">dfsDown</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">dpDown</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dpDown</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">dfsUp</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">mx1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">par</span><span class="p">){</span><span class="w"></span>
+<span class="w">           </span><span class="k">if</span><span class="p">(</span><span class="n">mx1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">mx1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">y</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mx1</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">           </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">mx2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">mx2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dpDown</span><span class="p">[</span><span class="n">y</span><span class="p">]){</span><span class="w"></span>
+<span class="w">                </span><span class="n">mx2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">           </span><span class="p">}</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">u</span><span class="p">]){</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">par</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">mx1</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="n">dpUp</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dpUp</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">mx2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">dpUp</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dpUp</span><span class="p">[</span><span class="n">u</span><span class="p">],</span><span class="w"> </span><span class="n">doDown</span><span class="p">[</span><span class="n">mx2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">dpUp</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dpUp</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">doDown</span><span class="p">[</span><span class="n">mx1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="n">dfsUp</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="a-simpler-algorithm">
+<h2>A Simpler Algorithm<a class="headerlink" href="#a-simpler-algorithm" title="پیوند ثابت به این سر مقاله">¶</a></h2>
+<p>The tree diameter has a property that helps us find it more easily. That
+property is: The farthest vertex from any given vertex is an endpoint of one of the tree's diameters.</p>
+<p>To prove this, root the tree at this vertex. Consider one of the tree's
+diameters. This diameter, which is also a path, has exactly one vertex that is closest
+to the root. (The lowest common ancestor of the path's endpoints.) If our
+desired farthest vertex is within the subtree of this vertex, we remove one branch
+and add the branch corresponding to this vertex; the path length does not decrease,
+so it remains a diameter. The other case is not possible because in that scenario,
+starting from a vertex farther than the common ancestor and going to this vertex
+would yield a larger diameter, which is a contradiction. Thus, this vertex is an
+endpoint of one of the tree's diameters.</p>
+<p>This property can be used to find the tree diameter. We write a function that
+takes a vertex as input and, using a DFS algorithm, returns one of the farthest
+vertices from it. We execute this function starting from an arbitrary vertex
+and name the result <span class="math notranslate nohighlight">\(u\)</span>. Then we execute this function again starting from
+<span class="math notranslate nohighlight">\(u\)</span> and name the result <span class="math notranslate nohighlight">\(v\)</span>. Since we know from the above theorem that vertex
+<span class="math notranslate nohighlight">\(u\)</span> is an endpoint of one of the tree's diameters, the path <span class="math notranslate nohighlight">\(uv\)</span> is
+one of the tree's diameters.</p>
+</section>
+</section>
+
+
+			        </div>
+			    </div>
+
+                            <div class="row-fluid">
+			        <div class="col-lg-12">
+				    
+
+        
+            <div id="body-btn">
+                
+                    
+                    <a href="5.html" style="float:left;" title="BFS" accesskey="p"><i class="fa fa-chevron-left"></i>&nbsp; Previous</a>
+                    
+                    
+                    <a href="7.html" style="float:right;" title="DFS Start/Finish Time" accesskey="n">Next &nbsp;<i class="fa fa-chevron-right"></i></a>
+                    
+                
+            </div>
+        
+
+
+        <div id="body-footer">
+            <div>
+                <a href="https://shaazzz.ir/">
+                    <img style="max-width: unset;"  src="/_static/shaazzz_logo.png">
+                </a>
+            </div>
+            <div id="text">
+                <p>
+                    This book is made by
+                    <a href="/contributors">
+                    The Shaazzz contributors.
+                    </a>
+                </p>
+                <p>
+                    It is publicly available with
+                    <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                        cc-by-sa
+                    </a>
+                    license.
+                </p>
+                    <p style="font-size: 13px;">
+                        Last updated at اکتبر 13, 2025.
+                    </p>
+                <p style="font-size: 13px;">
+                    
+                        Rendered by <a href="http://sphinx-doc.org/">Sphinx</a> (4.3.2) and <a href="https://github.com/saeiddrv/SphinxMinooTheme">Minoo theme</a> (Beta 0.9.7).
+                    
+                </p>
+            </div>
+            <div>
+                <a href="https://pdcommunity.ir/license/cc-by-sa/">
+                    <img style="max-width: unset;" src="/_static/cc-by-sa.svg">
+                </a>
+            </div>
+        </div>
+			        </div>
+			    </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <span class="back-to-top">
+                <i class="fa fa-arrow-circle-up"></i>
+            </span>
+        </div>
+    </body>
+</html>

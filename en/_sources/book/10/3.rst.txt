@@ -1,0 +1,16 @@
+Tarjan's Offline Algorithm
+========================
+
+Problems involving a series of queries typically have two types of solutions: online and offline. In an online approach, you must answer each query immediately, and you cannot receive the next query until the current one is answered. In contrast, an offline approach allows you to receive all queries first and then begin answering them.
+
+In this section, we present an offline solution for the problems discussed. Since online processing imposes a constraint, offline approaches often have lower complexity.
+
+Solution for the K-th Ancestor Problem
+-----------------------------
+This problem is straightforward. Simply receive all queries, then perform a DFS from the root of the tree. When entering a node, we push it onto a vector, and when exiting, we pop it. This way, when at any given node, the node itself and all its ancestors are present in the vector, ordered by their depth. Thus, when we reach a node, we can answer all queries related to it in :math:`O(1)` time. This provides a linear-time solution.
+
+Solution for the LCA Problem
+-------------------------------
+First, we receive all queries and prepare a list of queries associated with each node. This can be done in linear time relative to the input.
+
+Then, we perform a DFS on the tree. When we visit a node, we create a set (or 'disjoint set') and place this node into it. When we exit this node, we merge the set containing this node with the set of its parent. In this manner, if we are at a node `u`, any other visited node `v` will be in a set whose representative (or 'leader') is the common ancestor of `u` and `v`. The merge operations can be performed using a Disjoint Set Union (DSU) data structure, and thus the complexity of this algorithm is: :math:`O((n+q)*a(n))` where :math:`a(n)` is the inverse Ackermann function.

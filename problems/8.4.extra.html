@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/8/4" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="8.4.html">بخش 8.4</a></h1><ul><li><a href=https://www.spoj.com/problems/ADABRANC/>Ada and Branches</a></li><li><a href=https://www.spoj.com/problems/CONSEC/>Consecutive Letters</a></li><li><a href=https://codeforces.com/gym/102006/problem/C>Portals</a></li><li><a href=https://codeforces.com/gym/101962/problem/J>Soteros</a></li><li><a href=https://codeforces.com/contest/915/problem/F>Imbalance Value of a Tree</a></li><li><a href=https://codeforces.com/contest/141/problem/E>Clearing Up</a></li><li><a href=https://codeforces.com/contest/110/problem/E>Lucky Tree</a></li><li><a href=https://codeforces.com/contest/90/problem/E>Chip Play</a></li><li><a href=https://codeforces.com/contest/87/problem/D>Beautiful Road</a></li><li><a href=https://codeforces.com/contest/884/problem/E>Binary Matrix</a></li><li><a href=https://codeforces.com/contest/60/problem/D>Savior</a></li><li><a href=https://codeforces.com/problemset/problem/742/D>Arpa's weak amphitheater and Mehrdad's valuable Hoses</a></li><li><a href=https://codeforces.com/contest/723/problem/F>st-Spanning Tree</a></li><li><a href=https://www.spoj.com/problems/BTCODE_G/>Coloring Trees</a></li><li><a href=https://codeforces.com/problemset/problem/691/D>Swaps in Permutation</a></li><li><a href=https://codeforces.com/problemset/problem/731/C>Socks</a></li><li><a href=https://www.codechef.com/problems/COZIC>Chef and Kites</a></li><li><a href=https://codeforces.com/problemset/problem/755/C>PolandBall and Forest</a></li><li><a href=https://codeforces.com/contest/687/problem/D>Dividing Kingdom II</a></li><li><a href=https://codeforces.com/contest/680/problem/E>Bear and Square Grid</a></li><li><a href=https://codeforces.com/contest/766/problem/D>Mahmoud and a Dictionary</a></li><li><a href=https://www.spoj.com/problems/LEXSTR/>Lexicographically Smallest</a></li><li><a href=https://codeforces.com/contest/805/problem/C>Find Amir</a></li><li><a href=https://www.spoj.com/problems/IITKWPCI/>Find Lexicographically Smallest Permutation</a></li><li><a href=https://www.spoj.com/problems/FRNDCIRC/>FRIEND CIRCLE</a></li><li><a href=https://www.spoj.com/problems/FOXLINGS/>Foxlings</a></li><li><a href=https://www.spoj.com/problems/NITTROAD/>Roads of NITT</a></li><li><a href=https://www.spoj.com/problems/SHAHBG/>SHAHBAG</a></li><li><a href=https://codeforces.com/contest/598/problem/D>Igor In the Museum</a></li><li><a href=https://codeforces.com/contest/9/problem/E>Interesting Graph and Apples</a></li><li><a href=https://codeforces.com/contest/25/problem/D>Roads not only in Berland</a></li><li><a href=https://codeforces.com/contest/28/problem/B>pSort</a></li><li><a href=https://codeforces.com/contest/876/problem/D>Sorting the Coins</a></li><li><a href=https://codeforces.com/contest/875/problem/F>Royal Questions</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>
