@@ -13,13 +13,16 @@
     {% endif %}
     {% if pagename != "search" %}
         <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
-        const path = window.location.pathname.replace(/^\/en/, '');
-
-        document.getElementById('problems-link').href =
-            `/problems/${path.slice(6).replace('/', '.')}.html`
-                .replace('.html.html', '.html')
-                .replace('/.html', '/')
-                .replace('.index.html', '.html');
+       
+    <script>
+            const path = window.location.pathname.replace(/^\/en/, '');
+    
+            document.getElementById('problems-link').href =
+                `/problems/${path.slice(6).replace('/', '.')}.html`
+                    .replace('.html.html', '.html')
+                    .replace('/.html', '/')
+                    .replace('.index.html', '.html');
+        </script>
     
         <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
         <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
