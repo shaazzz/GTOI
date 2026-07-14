@@ -32,7 +32,7 @@ A graph G is called an empty graph if it contains no edges. In fact, an empty gr
 
 Path Graph
 ----------
-A graph G is called a path graph if it has n - 1 edges and the degree of its vertices is at most 2.
+A connected graph G is called a path graph if it has n - 1 edges and the degree of its vertices is at most 2.
 A path graph is denoted by
 :math:`P_n`.
 
