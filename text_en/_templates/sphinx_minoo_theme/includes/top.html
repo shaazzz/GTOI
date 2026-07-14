@@ -13,21 +13,14 @@
     {% endif %}
     {% if pagename != "search" %}
         <a style="float: left; padding-right: 20px;" href="/problems/" id="problems-link"><i class="fa fa-question on fa-circle"></i>&nbsp;Problems</a>
-        <script>
-        const path = window.location.pathname;
-        
-        if (path === "/en/" || path === "/en/index.html") {
-            document.getElementById("problems-link").href = "/problems/";
-        } else {
-            const m = path.match(/^\/en\/book\/([^/]+)\/index\.html$/);
-        
-            if (m) {
-                document.getElementById("problems-link").href = `/problems/${m[1]}.html`;
-            } else {
-                document.getElementById("problems-link").href = "/problems/";
-            }
-        }
-        </script>
+        const path = window.location.pathname.replace(/^\/en/, '');
+
+        document.getElementById('problems-link').href =
+            `/problems/${path.slice(6).replace('/', '.')}.html`
+                .replace('.html.html', '.html')
+                .replace('/.html', '/')
+                .replace('.index.html', '.html');
+    
         <a style="float: left; padding-right: 20px;" href="/" id="lang-link"><i class="fa fa-language on fa-circle"></i>&nbsp;Change Language (Farsi)</a>
         <script>document.getElementById('lang-link').href=`${window.location.pathname.slice(3)}`;</script>
         {% if display_github %}
