@@ -1,0 +1,110 @@
+Independent Set and Clique
+====================
+
+In Chapter 1, we became acquainted with independent sets and cliques, as well as the independence and clique numbers. We also learned that
+
+.. math::
+  \alpha(G) = \omega(\overline{G})
+
+In this chapter, we will learn more properties of these two concepts.
+
+Turan's Theorem
+------------
+This theorem provides a bound on the number of edges in a graph, in terms of its clique number. If
+:math:`e`
+denotes the number of edges in the graph and
+:math:`n`
+denotes the number of its vertices, this theorem states that:
+
+.. math::
+  e \le \frac{n^2(\omega - 1)}{2 \omega}
+
+Equality holds only for a complete
+:math:`\omega`
+-partite graph.
+
+Proof
+~~~~~~~
+We define
+:math:`x \sim y`
+to mean that vertices
+:math:`x`
+and
+:math:`y`
+are not adjacent. In a graph with the maximum possible number of edges, we prove that if
+:math:`x \sim y`
+and
+:math:`y \sim z`
+then
+:math:`x \sim z`
+. We proceed by contradiction. Assume this is not the case; then one of the following two situations exists:
+
+*   The degree of vertex
+    :math:`y`
+    is greater than or equal to the degrees of the other two vertices. In this case, delete those two vertices and add two copies of vertex
+    :math:`y`
+    . It is clear that this graph will not have a larger clique, and with a little calculation, you can find that its number of edges is strictly greater.
+*   The degree of one of the vertices
+    :math:`x`
+    or
+    :math:`z`
+    is greater than the degree of vertex
+    :math:`y`
+    . In this case, delete vertex
+    :math:`y`
+    and add a copy of the vertex with the greater degree. This graph will not have a larger clique, but its number of edges is strictly greater.
+
+From the above proposition, it follows that a graph with a maximum clique size of
+:math:`\omega`
+that has the maximum number of edges must be a complete multipartite graph. And among these graphs, the one with the most edges is precisely an
+:math:`\omega`
+-partite graph where the vertices are divided as equally as possible among the parts (i.e., the difference in the sizes of the parts is not more than 1 unit), which you can prove by moving vertices from a larger part to a smaller one and observing an increase in the number of edges.
+
+Alternative Forms
+~~~~~~~~~~~~~~~~
+When the clique number is considered to be less than or equal to 2, it is called Mantel's Theorem, which implies that for any graph containing no triangles, we have
+
+.. math::
+  e \le \frac{n^2}{4}
+
+This theorem can also be stated for the independence number. In this way, according to Turan's theorem, we have:
+  
+.. math::
+  e(G) \le \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
+
+.. math::
+  \binom{n}{2} - e(G) \ge \binom{n}{2} - \frac{n^2(\omega(G) - 1)}{2 \omega(G)}
+
+.. math::
+  e(\overline{G}) \ge \binom{n}{2} - \frac{n^2(\alpha(\overline{G}) - 1)}{2 \alpha(\overline{G})}
+
+And since every graph has a complement, for all graphs we have:
+
+.. math::
+  e \ge \binom{n}{2} - \frac{n^2(\alpha - 1)}{2 \alpha}
+
+Connection to Ramsey Numbers
+------------------------
+According to the definition of Ramsey numbers, which we encountered in previous sections, if
+:math:`R(s,t)=n`
+, then every
+:math:`n`
+-vertex graph has either an independent set of size
+:math:`s`
+or a clique of size
+:math:`t`
+. From the previous part, we recall that
+:math:`R(a,b) \le \binom{a+b}{b}`
+and therefore
+
+.. math::
+  R(n,n) \le \binom{2n}{n} \le 4^n
+
+.. math::
+  max(\alpha, \omega) \ge log_4(n)
+
+which is an interesting bound in itself, especially when we know that for every
+:math:`n`
+, there exists a graph such that
+:math:`max(\alpha, \omega) = \theta(lg(n))`
+.

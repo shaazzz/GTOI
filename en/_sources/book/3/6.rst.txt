@@ -1,0 +1,87 @@
+Games and Directed Graphs
+==============================
+
+Introduction
+---------------------------
+In this section, we will explore the connection between games and directed graphs.
+
+Let's start with a simple example:
+
+Ali and Matin are playing a game. There is a bag containing 10 pebbles in front of them. In each turn, the player whose turn it is takes 1 or 2 pebbles from the bag. The loser of the game is the one who faces an empty bag and cannot take any pebbles.
+
+Assume Matin starts the game. If both players play optimally, who will win the game?
+
+Examining an Example
+---------------------------
+In this section, we will explain the example presented in the introduction.
+
+We construct an 11-vertex graph, with vertex numbers ranging from 0 to 10. A directed edge is drawn from vertex :math:`i` to vertex :math:`j` if it's possible to reach :math:`j` from :math:`i` by removing 1 or 2 pebbles.
+
+Next to each vertex, we write an :math:`L(Lose)` or :math:`W(Win)` label (or nothing at all, meaning the status of this vertex is yet to be determined).
+
+Suppose we have written the letter :math:`L` next to vertex number :math:`i`. This means that if the initial bag from which the two players are playing has :math:`i` pebbles, and both players play optimally, the first player will lose that game.
+
+Conversely, suppose we have written the letter :math:`W` next to vertex number :math:`i`. This means that if the initial bag from which the two players are playing has :math:`i` pebbles, and both players play optimally, the first player will win that game.
+
+Now, at the beginning of the game, which vertex can be assigned :math:`L` or :math:`W`?!
+
+With a little thought, we realize it's vertex number 0. This means that if the initial bag contains 0 pebbles, according to the game rules, the first player loses because they cannot take any pebbles.
+
+So, we assign :math:`L` to vertex 0.
+
+Now, which is the next vertex whose status is determined?
+
+Consider vertex 1. If the bag only has 1 pebble, the first player can only take one pebble. Now, if we pay attention, we see that the bag remaining after the first player's move contains 0 pebbles, whose status we determined earlier.
+
+We previously stated that the status of vertex 0 is :math:`L`. Therefore, the status of vertex 1 becomes :math:`W`. Because, as you may have noticed, when the first player took one pebble, the roles of the first and second players were swapped (because the turn changed). So, vertex 0 represents a loss for the second player (Ali) in that context.
+
+**Result**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We determine the status of the vertices, meaning :math:`L` or :math:`W`, in increasing order of vertex numbers.
+
+To do this, if among the vertices to which vertex :math:`v` has a directed edge, there exists a vertex :math:`u` whose status is :math:`L`, then the status of vertex :math:`v` becomes :math:`W`. And if all vertices to which :math:`v` has edges have a status of :math:`W`, then the status of vertex :math:`v` becomes :math:`L`.
+
+Using this method, the status of all vertices can be determined. Now, it is sufficient to look at the initial state of the game and see if it is :math:`L` or :math:`W`. If it is :math:`L`, it means the first player loses the game. And if the status is :math:`W`, it means the first player wins. With this, we can figure out if Ali or Matin wins the game we specified above!
+
+Moving a Piece on a Graph Game
+---------------------------
+Our game works as follows: we have a graph, and initially, a piece is on a starting vertex. Players take turns moving, and each player, on their turn, moves the piece to an adjacent vertex. The player who cannot make a move loses the game.
+
+Generalization
+~~~~~~~~~~~~~~~~
+
+If you pay attention to the nature of most games, you will see such a graph within them! In fact, the essence of combinatorial games is that two or more players make changes to shared resources (shared resources can be a chessboard where we move pieces, or it can be a bag from which we take pebbles).
+
+Now, suppose for each state of the shared resources and whose turn it is, we create a vertex, and we draw a directed edge from vertex :math:`A` to :math:`B` if and only if the person whose turn it is in state :math:`A` can move to :math:`B` in their turn. Now we have a graph! We were able to define our game on a graph.
+
+So, we intuitively accept that most games can be converted into the game of moving a piece on a graph (as described above). For example, consider chess. Each state of this game is a chessboard with different arrangements of pieces.
+
+Solving the Game on a Graph
+~~~~~~~~~~~~~~~~~~~~~
+
+If we can solve the game of moving a piece on a graph, we have taken a big step in understanding how to solve most games. To solve this game, we proceed as follows. We assign each vertex a label of Win (W), Lose (L), or Draw (D). Pay attention to the following three points.
+
+- A vertex that has no outgoing edges is definitely L.
+- A vertex that has an L-labeled neighbor is definitely W.
+- If a player has a non-losing strategy, they will never move the piece to a vertex with a W label (because in this case, their opponent can win).
+
+So, we implement this algorithm on our graph. As long as there is a vertex like :math:`u` that has no outgoing edges, we label it :math:`L`. Then, we label all vertices like :math:`v` that have an edge to :math:`u` with W.
+Then, we remove all labeled vertices from the graph. Why? Because we are sure that if a player wants to move the piece to :math:`v`, they must first reach a vertex labeled W, and no player wants to move the piece to W-labeled vertices.
+
+Finally, a time comes when every remaining vertex in the graph has at least one outgoing edge. If we start from any of these remaining graph vertices, the game will never end, and both players can continue the game indefinitely! Thus, we were able to partition the vertices into three categories, and for each category, we know what the outcome of the game will be (win, loss, or draw) if we start from a vertex within it. So, we have algorithmically solved the game of moving a piece on a graph.
+
+Some Useful Conclusions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a vertex has a self-loop, then this vertex will certainly not be L. This is because, according to the algorithm, we only label a vertex L if it has no outgoing edges. More precisely, the player whose piece is currently on this vertex can easily steal the opponent's strategy. That is, if they realize the other player can win, they can simply use the self-loop edge, and this move is as if they have swapped their turn and the next player's turn; after this, they can use the other player's strategy. Examples of stealing strategies are provided in the problems section.
+
+The algorithm we discussed can be examined in another way for directed acyclic graphs (DAGs). This is due to the characteristic of DAGs, namely having a topological order. We arrange the graph vertices in topological order. Now we start from the end and remove the vertices one by one. If the vertex we are removing has an edge to an L-labeled vertex further ahead, we label it W; otherwise, we label it L. In the end, all vertices are assigned either win or loss, because such games are always finite.
+
+Final Word
+------------
+
+It seems that converting games into graphs is an effective way to solve them, but in reality, this is not always the case.
+
+This is because, in practice, many games, after being converted into graphs, will have a very large (or even infinite) number of vertices. And since solving games requires memory and execution time proportional to the number of vertices and edges, solving many games using this method is not feasible. (Can you estimate how many distinct vertices a chess game would have after being converted into a graph?!).
+
+On the other hand, in many games, converting them into graphs can provide better intuition for solving the problem, or our graph might become very specific. So, the conclusion is that converting to a graph is a relatively powerful tool for solving games and gaining intuition, but it will not always meet our needs.

@@ -1,0 +1,39 @@
+Dijkstra
+============
+Problem Statement
+-----------------
+
+We have a weighted directed graph :math:`G`. The weights of all edges in :math:`G` are non-negative.
+
+Now we want to find the length of the shortest path from the source vertex :math:`sc` to all other vertices, where the length of a path is the sum of its edge weights.
+
+Dijkstra's Algorithm
+-------------------
+
+We define an array named :math:`dis`. During the execution of the algorithm, :math:`dis_u` represents the length of the shortest path to vertex :math:`u` such that the preceding vertex in the path has definitely been selected. (Selection will be explained further below). Initially, all entries of the :math:`dis` array are equal to :math:`\infty`. We initially know that :math:`dis_{sc} = 0`. Now we select :math:`sc` and update the :math:`dis` values of :math:`sc`'s neighbors.
+   
+Now, in each step of the algorithm, from the vertices we have not yet selected, we choose the vertex with the minimum :math:`dis` value and call it :math:`v`.
+
+Now we prove that the length of the shortest path from :math:`sc` to :math:`v` is precisely the current value of :math:`dis_v`. To do this, we use proof by contradiction and assume there exists a shorter path (a path of length :math:`P`). Take the last selected vertex in this path and name it :math:`last`. (It must exist because vertex :math:`sc` has been selected.) We name the next vertex after :math:`last` as :math:`u`. (:math:`u` must also exist, as :math:`v` itself has not been selected yet).
+
+According to the contradictory assumption, the path length to :math:`v` was less than :math:`dis_v`. Since edges are non-negative, the path length to :math:`u` is also less than :math:`dis_v`. As the vertex preceding :math:`u` in the path had been selected, and the final distance of selected vertices is their :math:`dis` value, then :math:`dis_u` would have been set to the shortest path length to :math:`u` when :math:`last` was selected. And since :math:`dis_u < P` and :math:`P < dis_v`, it implies that :math:`dis_u < dis_v`, which contradicts the minimality of :math:`dis_v` among the current values. Therefore, our contradictory assumption is false, and the claim is proven.
+
+Now that it is proven that :math:`dis_v` is exactly the length of the shortest path to :math:`v`, we select it. Then, for all its neighbors, such as :math:`adj`, where there is an edge from :math:`v` to :math:`adj` with weight :math:`w`, we perform :math:`dis_{adj} = min(dis_{adj}, dis_v + w)`. We continue this process until all vertices have been selected.
+
+Complexity Analysis
+------------
+There are two general ways to implement this algorithm.
+
+First approach with complexity :math:`\mathcal{O}(n^2)`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In each step, we iterate over all unselected vertices to find the minimum. In each step of the process, we perform :math:`\mathcal{O}(n)` operations. Since the algorithm has :math:`n` steps, the complexity of our program becomes :math:`\mathcal{O}(n^2)`.
+
+Second approach with complexity :math:`\mathcal{O}(n + m.lg(n))`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In each step, instead of iterating over all vertices, we use data structures that can find the minimum faster, such as :math:`set` and :math:`priority-queue` in :math:`C++`. (Assume we use a :math:`set` here).
+
+In each step, the minimum :math:`dis` value can be found in :math:`\mathcal{O}(1)`. Each time we change the value of an entry in :math:`dis`, we must update its value in the :math:`set`, which takes :math:`\mathcal{O}(lg(n))`.
+
+Since, in each step, the :math:`dis` values corresponding to the neighbors of the selected vertex might change, we update :math:`dis` values a total number of times proportional to the sum of the outgoing degrees of all vertices (which is :math:`m` for a directed graph). We know that the sum of the outgoing degrees is :math:`\mathcal{O}(m)`. So, in total, we incur a time cost of :math:`\mathcal{O}(m \log(n))` for the updates. Therefore, the complexity of the program becomes :math:`\mathcal{O}(n + m \log(n))`.

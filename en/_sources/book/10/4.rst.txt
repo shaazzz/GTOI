@@ -1,0 +1,37 @@
+Relationship between LCA and RMQ
+==================================
+
+In the following, we will examine another problem that superficially seems unrelated to the topic of discussion but has a close relationship with the LCA problem. Then, by solving this problem, we will provide a solution of order :math:`O(n*lg(n)+q)` which performs better than the previous method if the number of queries is large relative to the number of tree vertices.
+
+In this problem, you are first given an n-element array, and then q queries are performed. In each query, you are given the two endpoints of an interval and asked for the minimum element within that interval. Using the interval tree you previously learned about, you can solve this problem in :math:`O(n+q*lg(n))`. If, instead of the minimum elements, the sum of elements were requested, you could easily solve the problem in :math:`O(n+q)`. This problem is called RMQ, which stands for Range Minimum Query.
+
+Converting RMQ to LCA
+---------------------
+Here, we construct a Cartesian tree from the input array. A Cartesian tree is a binary tree where each array element corresponds to a node in the tree. The node corresponding to the minimum element of the array is at the root. The left child's subtree is equivalent to the Cartesian tree of the interval from the beginning up to the minimum element, and the right child's subtree is equivalent to the Cartesian tree of the interval from the minimum element to the end. You can see an example of a Cartesian tree in the figure below.
+
+.. figure:: /_static/dot/Cartesian_Tree.svg
+   :width: 40%
+   :align: center
+   :alt: An example image of a Cartesian tree
+
+Using the fact that the lowest common ancestor within the interval lies between these two nodes, prove that to find the minimum in an interval, one can find the lowest common ancestor in the Cartesian tree. Next, by providing an :math:`O(n)` method for constructing a Cartesian tree, we will show that if a method exists for RMQ, a method with the same complexity will exist for LCA.
+
+Linear-Time Cartesian Tree Construction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Cartesian tree can be constructed using a stack. Inside the stack, we maintain nodes whose parents we are unsure about, in a sorted manner (both by value and by position). We start with an empty stack and begin traversing the array. For each element we encounter, we remove elements from the top of the stack as long as the element at the top of the stack is greater than the current element. Their parents are all known. This is because no element from earlier in the array can possibly be a parent of these nodes. The parent of each (popped) node is the previous node in the stack, and the parent of the last removed node is the current input node. Then, we add this node to the stack and move to the next node. Finally, a forest is obtained, whose roots are in the stack. These nodes, in order, each become the parent of the previous node (since there are no new nodes), and the root of the tree is the last element in the stack, which is also the minimum of the array.
+
+Converting LCA to RMQ
+---------------------
+We perform a DFS traversal on the tree. Upon entering each node, we add it to an array and set its value equal to its depth. Upon exiting each node, we similarly add its parent to the array. Each node has one corresponding element in the array plus an additional element for each of its children. To find the lowest common ancestor, it is only necessary to calculate the minimum element among the corresponding elements of the two nodes whose LCA we want to find, and then determine which node it corresponds to. The proof of this statement is left to the reader. Therefore, if a solution exists for one of the LCA or RMQ problems, a solution with the same complexity exists for the other.
+
+Solving RMQ with Sparse Table
+--------------------------------
+A sparse table is a special type of dynamic programming where the second dimension has a logarithmic size relative to the first dimension. This table is used in various problems, and here we will use it to solve this problem. Let :math:`dp_{i,j}` be the minimum element in the interval :math:`[i,i+2^j)`. If we have this `dp` table, we can answer queries in :math:`O(1)`. To do this, we find `j` such that the length of the desired interval is between :math:`2^j` and :math:`2^{j+1}`. Then the answer to the problem is
+
+.. math:: min(dp_{l,j},dp_{r-2^j,j})
+
+Calculating this table is also possible in :math:`O(n*lg(n))`. It is sufficient to start from `j=0` and go up to the logarithm of the array length. Each `j` is derived from the previous `j` as follows:
+
+.. math:: dp_{i,j}=min(dp_{i,j-1},dp_{i+2^{j-1},j-1})
+
+Thus, for RMQ and LCA, we have an algorithm with a time complexity of :math:`O(n*lg(n)+q)`, which performs better than the previous algorithm of :math:`O(n+q*lg(n))` in scenarios where `n` is less than `q`.

@@ -1,0 +1,139 @@
+Determinants of Matrices
+=====================
+First of all, it should be noted that the determinant is defined for square matrices (matrices where the number of rows equals the number of columns). The determinant of a 1x1 matrix is equal to its single entry.
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+5 
+\end{vmatrix}
+= 5 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+3.3
+\end{vmatrix}
+= 3.3 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+-2 
+\end{vmatrix}
+= -2
+\end{equation*}`
+
+To find the determinant of a matrix, first, we choose a row or a column. For example, let's choose row i.
+Then the determinant is equal to the sum of :math:`-1^{i + j} × a_{ij} × det(B_{ij})`, where j is a natural number up to the number of columns, :math:`det(C)` is the determinant of the square matrix C, and :math:`B_{ij}` is the matrix obtained by deleting row i and column j from A.
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+5 
+\end{vmatrix}
+= 5 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+5 & 3 \\
+-2 & 0
+\end{vmatrix}
+= 6 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+2 & 3 \\
+4 & 5 
+\end{vmatrix}
+= -2
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+8 
+\end{vmatrix}
+= 8 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+1 & 0 & 1 \\
+0 & 37 & 0 \\
+1 & 0 & 1 \\
+\end{vmatrix}
+= 0 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+2.5 & 4 & 0 \\
+5 & 8 & 0 \\
+-9.056 & 0 & 37 \\
+\end{vmatrix}
+= 0 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+7 & 0 & 0 \\
+0 & 6 & 0 \\
+37 & 0 & 2 \\
+\end{vmatrix}
+= 84 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+5 & 0 & 0 & 0 & 0\\
+0 & 4 & 0 & 0 & 0\\
+0 & 0 & 3 & 0 & 0 \\
+0 & 0 & 0 & 2 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+\end{vmatrix}
+= 120 
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+37 & 1 & 1 & 1 & 1\\
+0 & 1 & 1 & 1 & 1\\
+0 & 0 & 1 & 1 & 1 \\
+0 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 & 1 \\
+\end{vmatrix}
+= 37
+\end{equation*}`
+
+:math:`\begin{equation*}
+|A| = 
+\begin{vmatrix} 
+1 & 2 & 3 & 4 & 5\\
+1 & 1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+\end{vmatrix}
+= 0
+\end{equation*}`
+
+Determinants have many uses among matrices. One of the applications of determinants is in Kirchhoff's theory.
+
+Kirchhoff's Theory
+-------------------------
+Suppose we are given a graph and we want to calculate the number of its spanning trees.
+One method for calculating this value is Kirchhoff's method.
+First, we construct an n × n matrix where :math:`a_{ij}` for i = j is equal to the degree of vertex i, and otherwise, it is equal to the negative of the number of edges between vertices i and j of the graph. The only point to note is that we must remove any loops from the graph before constructing the matrix.
+Now, we delete any row and any column we wish, and calculate the determinant of the resulting matrix (which has lost one row and one column), which will be equal to the number of spanning trees of the graph.

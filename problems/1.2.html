@@ -1,0 +1,243 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/1/2" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 1.2</h1>
+<p>در این قسمت 10 سوال وجود دارد
+
+<div id="d1x2x1">
+  <h2>سوال <a href="1.2.1.html">1.2.1</a>  <button id="b1x2x1" onclick="swapButton('1x2x1')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید مکمل یک گراف منتظم همچنان منتظم است.</p>
+
+</div>
+
+<div id="d1x2x2">
+  <h2>سوال <a href="1.2.2.html">1.2.2</a> (!) <button id="b1x2x2" onclick="swapButton('1x2x2')">حل کردم</button> </h2>
+  
+  <p>جدول زیر را کامل کنید</p>
+<table>
+<thead>
+<tr>
+<th>نام گراف</th>
+<th>تعداد راس</th>
+<th>تعداد یال</th>
+<th>$\delta$</th>
+<th>$\Delta$</th>
+<th>$\chi$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$P_n$</td>
+<td></td>
+<td>n-1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$C_n$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>اگر n فرد باشد ۳ وگرنه ۲</td>
+</tr>
+<tr>
+<td>$K_n$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$\overline{K_n}$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$K_{a,b,c}$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>گراف پیترسن</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$Q_n$</td>
+<td>$2^n$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<div id="d1x2x3">
+  <h2>سوال <a href="1.2.3.html">1.2.3</a>  <button id="b1x2x3" onclick="swapButton('1x2x3')">حل کردم</button> </h2>
+  
+  <p>خانواده
+$O_{n,k,x}$
+از گراف ها به این صورت تعریف می شوند که به ازای هر زیر مجموعه
+$k$
+عضوی از مجموعه اعداد
+${1..n}$
+یک راس دارد و دو راس به هم یال دارند اگر و تنها اگر اشتراکشان
+$x$
+عضوی باشد.</p>
+<ul>
+<li>تعداد رئوس و یال ها و اعداد $\delta,\Delta,\chi$ را برای این خانواده پیدا کنید.</li>
+<li>گراف پیترسن کدام یک از اعضای این خانواده است؟</li>
+</ul>
+
+</div>
+
+<div id="d1x2x4">
+  <h2>سوال <a href="1.2.4.html">1.2.4</a> (!) <button id="b1x2x4" onclick="swapButton('1x2x4')">حل کردم</button> </h2>
+  
+  <p>گراف جایگشت های
+$n$
+تایی را به این صورت تعریف می کنیم که به ازای هر جایگشت یک راس در این گراف
+وجود دارد و</p>
+<ul>
+<li>(نوع ساده):
+بین دو راس یال وجود دارد اگر و تنها اگر بتوان آن ها را با جا به جا کردن
+دو عضو مجاور به هم تبدیل کرد</li>
+<li>(نوع سخت):
+ین دو راس یال وجود دارد اگر و تنها اگر بتوان آن ها را با جا به جا کردن
+دو عضو دلخواه به هم تبدیل کرد
+موارد زیر را محاسبه کنید یا نشان دهید:</li>
+<li>تعداد یال ها</li>
+<li>نشان دهید که منتظم هستند و درجه هر راس را حساب کنید</li>
+<li>عدد رنگی آن ها برابر ۲ است</li>
+</ul>
+
+</div>
+
+<div id="d1x2x5">
+  <h2>سوال <a href="1.2.5.html">1.2.5</a> (!) <button id="b1x2x5" onclick="swapButton('1x2x5')">حل کردم</button> </h2>
+  
+  <p>با استفاده از گراف های کامل (و نه جبر!) گزاره های زیر را ثابت کنید</p>
+<ul>
+<li>$\binom{n}{2} = \binom{k}{2} + k(n-k) + \binom{n-k}{2}$</li>
+<li>اگر $\sum n_i = n$ باشد آنگاه $\sum \binom{n_i}{2} \le \binom{n}{2}$</li>
+</ul>
+
+</div>
+
+<div id="d1x2x6">
+  <h2>سوال <a href="1.2.6.html">1.2.6</a>  <button id="b1x2x6" onclick="swapButton('1x2x6')">حل کردم</button> </h2>
+  
+  <p>یک گراف ساده جداقل چند راس نیاز دارد تا بتواند ۳۷۰۰ یال داشته باشد؟</p>
+
+</div>
+
+<div id="d1x2x8">
+  <h2>سوال <a href="1.2.8.html">1.2.8</a>  <button id="b1x2x8" onclick="swapButton('1x2x8')">حل کردم</button> </h2>
+  
+  <p>مشخص کنید گراف های دو بخشی کاملی را که یک گراف کامل هستند.</p>
+
+</div>
+
+<div id="d1x2x9">
+  <h2>سوال <a href="1.2.9.html">1.2.9</a>  <button id="b1x2x9" onclick="swapButton('1x2x9')">حل کردم</button> </h2>
+  
+  <p>مکمل گراف استار را چگونه میتوان توصیف کرد؟</p>
+
+</div>
+
+<div id="d1x2x10">
+  <h2>سوال <a href="1.2.10.html">1.2.10</a>  <button id="b1x2x10" onclick="swapButton('1x2x10')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید که اگر درجه هر راس یک گراف ساده دو باشد، گراف مورد انتظار اجتماعی از دور هاست.</p>
+
+</div>
+
+<div id="d1x2x11">
+  <h2>سوال <a href="1.2.11.html">1.2.11</a>  <button id="b1x2x11" onclick="swapButton('1x2x11')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید اگر درجه هر راس حداکثر دو باشد گراف مورد نظر اجتماعی از مسیر ها و دور هاست.</p>
+
+</div>
+
+<h1>برگرد به <a href="1.html">بخش 1</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

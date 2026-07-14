@@ -1,0 +1,90 @@
+Poset
+==========
+
+Definition
+---------
+
+A directed graph with the following property is called a Poset (Partially ordered set):
+
+- If :math:`ab` and :math:`bc` are edges of this graph, then :math:`ac` is also an edge of this graph.
+
+Since many mathematical concepts can be transformed into posets, studying them is useful.
+
+First Problem
+~~~~~~~~~~~~~~
+
+Suppose we have a set of natural numbers, say :math:`A`, and we want to find its largest subset, say :math:`B`, such that for any two members of :math:`B` we consider, one is divisible by the other.
+
+We can model this problem as a graph. For each member of :math:`A`, place a vertex in the graph, and for two vertices :math:`x,y` such that :math:`x|y`, draw an edge from :math:`x` to :math:`y`. Now the problem is equivalent to finding the longest path in this graph!
+
+Chain and Antichain
+~~~~~~~~~~~~~~~~~~
+
+A sequence of distinct vertices, such as :math:`u_1,...,u_k`, where for every :math:`i<j`, :math:`u_i` has an edge to :math:`u_j`, is called a chain. Note that due to the poset property, it is sufficient that :math:`u_1, ... u_k` form a path.
+
+A subset of vertices where no two vertices have an edge between them is called an antichain.
+
+In the following, we will examine the partition of a graph into chains or antichains (partition of the graph's vertices is intended).
+
+Note that these definitions are used only in posets.
+
+Maximum Chain = Minimum Partition into Antichains
+-------------------------------------
+
+Suppose the size of the maximum chain is :math:`L`. Consider a maximum chain, say :math:`A`.
+
+Each antichain can contain at most one vertex from :math:`A`. Therefore, the minimum partition into antichains is at least :math:`L`. Now we will prove that an equality case also exists.
+
+To each vertex :math:`u`, we assign a number :math:`a_u` which is equal to the size of the longest chain ending at :math:`u`. Now you can see that if :math:`a_i = a_j` holds, it's impossible for an edge to exist between :math:`i,j`, because, for example, if there is an edge from :math:`i` to :math:`j`, then :math:`a_j \geq a_i+1`.
+
+For each vertex :math:`u`, we call :math:`a_u` the color of vertex :math:`u`. According to the proof above, vertices with the same color form an antichain. Also, the number of colors is equal to :math:`L` (why?). Thus, we were able to partition the graph into :math:`L` antichains.
+
+This theorem is known as Mirsky's theorem and was introduced in 1971. Interestingly, this theorem was known in 1940 by Dilworth, Galai, Fulkerson, and many others, and their only reason for not presenting it was that they considered it trivial!
+
+Maximum Antichain = Minimum Partition into Chains
+-------------------------------------
+
+As before, we can initially conclude that the minimum partition into chains is at least the size of the maximum antichain (because in any chain, we can use at most one vertex from the antichain). Now we want to provide an example to prove equality.
+
+We discussed the problem of partitioning graph vertices into a minimum number of paths in Section 4. It was sufficient to transform the graph into a bipartite form and find the maximum matching. Now we know that in posets, each chain is equivalent to a path. So, the problem of minimum partition into chains is solved by finding the minimum partition of vertices into paths.
+
+Pseudo-augmenting Path
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now, suppose our poset is a directed graph called :math:`P`. Call its equivalent bipartite graph :math:`G`. Consider a minimum partition into paths in :math:`P`. Let :math:`M` be the set of directed edges present in our paths. We know that the edges in :math:`M` are equivalent to the edges of a maximum matching in :math:`G`. The necessary and sufficient condition for a matching to be maximum was that there are no augmenting paths. We will examine what an equivalent of an augmenting path in our directed graph would look like. A free vertex in the first part of :math:`G` corresponds to a vertex in :math:`P` that is the end of a path. A free vertex in the second part of :math:`G` corresponds to a vertex in :math:`P` that is the start of a path.
+
+So, we want to understand the equivalent of an augmenting path in :math:`G` that starts from the first part and goes to the second part, in graph :math:`P`. We define a **pseudo-augmenting path** in :math:`P` as follows:
+
+A sequence of vertices :math:`u_1,u_2,...,u_{2k+1}` such that :math:`u_1` is the start and :math:`u_{2k+1}` is the end of a selected path in the minimum partition. Also, for :math:`u_{2i-1},u_{2i}` in :math:`P`, the edge :math:`u_{2i-1}u_{2i}` must exist and not be a member of :math:`M`, and for :math:`u_{2i},u_{2i+1}`, the edge :math:`u_{2i+1}u_{2i}` must be in :math:`M`! (Pay attention to the change in order).
+
+So now we can assume that we have partitioned the vertices of :math:`P` into the minimum number of paths such that there is no pseudo-augmenting path in :math:`P`.
+
+Algorithm
+~~~~~~~~~~~~~~~~~~~~~~
+
+Now our goal is to select exactly one vertex from each chain such that the selected vertices form an antichain. In this case, we can achieve equality.
+
+Consider the following algorithm:
+
+- Consider the first vertices of the paths. If there are no edges between them, just select them. Otherwise, there exists an edge like :math:`uv` where both :math:`u,v` are the first vertices of two paths in our partition.
+- Now we must remove vertex :math:`u`. Because, given that :math:`u` has an edge to :math:`v`, and :math:`v` is the first vertex of a path, by the poset property, it can be concluded that :math:`u` has an edge to all vertices of the path starting with :math:`v`. So if we select :math:`u` in the antichain, we cannot select any vertex from the path that starts with :math:`v`, and thus we cannot achieve our goal of selecting one vertex from each path. So, remove :math:`u`.
+
+Continue this process until there are no edges between the first vertices of the paths (after removals) and we find an antichain of size equal to the number of paths. The only case that would spoil our work is if a path is completely removed (in which case the antichain would not be of the size of the initial number of paths).
+
+No Path is Completely Removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So we prove that none of the paths are completely removed during the algorithm. The idea of the proof is to assume, by contradiction, that a path is completely removed, and then find a pseudo-augmenting path in the original graph, which will contradict the minimality of our partition.
+
+For each vertex :math:`a`, we call a vertex :math:`b` the parent of :math:`a` if :math:`a` was removed in the algorithm due to the edge :math:`ab`. That is, at some stage of the algorithm, :math:`a,b` are both the first vertices of two paths, and the edge :math:`ab` is a member of :math:`P`, and according to the algorithm above, we remove vertex :math:`a`.
+
+For each vertex :math:`a`, consider the path it is in, and call the vertex preceding :math:`a` in that path (e.g., :math:`b`) the chief of :math:`a` (meaning :math:`ba` is an edge in :math:`M`).
+
+Note that for any vertex :math:`a`, the time of :math:`a`'s removal is after the time of removal of the chief of :math:`a`'s parent. This is because when :math:`a` is removed by its parent, it must be the first vertex of a path. This means the chief of the parent (if it exists) was removed before this.
+
+Now suppose at some stage, vertex :math:`a` is removed, which is the end of a path from our partition. Start from vertex :math:`a` and place a marker on :math:`a`. At each step, if the marker is on :math:`u`, first move the marker to the parent of :math:`u`. If the parent of :math:`u` is the start of one of the paths, we have found our pseudo-augmenting path. Otherwise, move the marker to the chief of the parent of :math:`u`. Note two things:
+
+- The process terminates because, as we said, after each step, the marker is placed on a vertex whose removal time in the algorithm is earlier.
+- At each step, the vertex with the marker has a parent. This is because this vertex is removed in our algorithm (because its removal time is earlier than :math:`a`'s, and we said :math:`a` is also removed).
+
+Thus, we were able to find a pseudo-augmenting path. As we said, the resulting contradiction shows that no path is completely removed!

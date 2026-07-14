@@ -1,0 +1,250 @@
+الگوریتم های نمایی پیدا کردن دور و مسیر همیلتونی
+=========================================================
+
+در این بخش 4 الگوریتم همراه با پیاده سازی را بررسی خواهیم کرد. این 4 الگوریتم بسیار به هم شبیه هستند اما تفاوت های ریزی دارند که باید به این تفاوت ها و ایده اساسی پشت هر کدام توجه فراوان شود.
+
+مسیر همیلتونی
+--------------
+
+الگوریتم 1
+~~~~~~~~~~~~~
+
+از بخش های قبل متوجه شدیم که شرط لازم و کافی برای برای پیدا کردن دور و مسیر همیلتونی وجود ندارد. به عبارتی این یک مسئله np است و الگوریتم چند جمله ای برای آن وجود ندارد. حالا تلاش می کنیم الگوریتمی نمایی برای آن ارائه دهیم.
+
+حالا با استفاده از برنامه نویسی پویا :math:`dp_{mask, a, b}` را تعریف می کنیم که یک آرایه boolean می باشد که نشان می دهد آیا با استفاده از راس های عضو مجموعه :math:`mask` مسیری همیلتونی که از راس :math:`a` شروع شود و به راس :math:`b` ختم شود، وجود دارد یا خیر.
+
+برای آپدیت کردن این تابع کافی است روی راس قبل از :math:`b` حالت بندی کنیم. فرض کنید این راس :math:`c` باشد. لازم است :math:`c` عضو مجموعه :math:`mask` باشد همچنین یالی بین :math:`b` و :math:`c` وجود داشته باشد.
+در نهایت برای فهمیدن اینکه مسیر همیلتونی وجود دارد می توان :math:`dp_{2^n-1,i,j}` ها را به ازای همه :math:`i` و :math:`j` های ممکن بررسی کرد.
+
+پس پیاده سازی الگوریتم به این شکل خواهد بود : 
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  bool dp[1<<maxn][maxn][maxn];
+  bool adj[maxn][maxn];
+
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            cin >> adj[i][j];
+
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)][__builtin_ctz(mask)] = 1;
+	      continue;
+	  }
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		    if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0)
+		        continue;
+		    for(int k = 0; k < n; k++){
+		        if(k == j || bit(mask, k) == 0 || adj[k][j] == 0)
+			        continue;
+		        dp[mask][i][j] |= dp[mask ^ (1<<j)][i][k];
+		    }
+	      }
+	  }
+      }
+      bool ans = 0;
+      for(int i = 0; i < n; i++)
+	     for(int j = 0; j < n; j++)
+	         ans |= dp[(1<<n)-1][i][j];
+
+      if(ans)
+	      cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+همانطور که مشاهده می کنید الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n^3)` ارائه دادیم.
+
+الگوریتم 2
+~~~~~~~~~~~~~~~~~
+
+حالا می خواهیم با عوض کردن تعریف تابع بازگشتی الگوریتمی بهتر ارائه دهیم.
+
+فرض کنید :math:`dp_{mask,u}` برابر با زیرمجموعه ای از راس ها مثل :math:`mask2` باشد به طوریکه به ازای هر عضو آن مثل :math:`v` مسیری همیلتونی از :math:`u` به :math:`v` در راس های زیرمجموعه :math:`mask` وجود داشته باشد.
+
+برای آپدیت کردن این تابع بازگشتی باید روی راسی که بعد از :math:`u` می بینیم حالت بندی کنیم. در نهایت برای پیدا کردن جواب مسئله باید :math:`dp_{2^n-1,u}` را به ازای همه :math:`u` های ممکن بررسی کرد.
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  int dp[1<<maxn][maxn];
+  bool adj[maxn][maxn];
+
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+    	  for(int j = 0; j < n; j++)
+	          cin >> adj[i][j];
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	     if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)] = mask;
+	      continue;
+	  }	
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || adj[i][j] == 0){
+		      continue;
+		  }
+		  dp[mask][i] |= dp[mask ^ (1<<i)][j];
+	      }		    
+	  }
+      }
+      bool ans = 0;
+      for(int i = 0; i < n; i++)
+	  if(dp[(1<<n)-1][i] != 0){
+	      ans = 1;
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+پس توانستیم پیچیدگی زمانی الگوریتم را به :math:`O(2^n * n^2)` کاهش بدهیم.
+
+
+دور همیلتونی
+-------------
+
+الگوریتم 1
+~~~~~~~~~~~~~
+
+برای چک کردن اینکه در گراف دور همیلتونی وجود دارد یا خیر کافی است یک راس دلخواه مثل :math:`a` را در نظر بگیریم. سپس به ازای همه مجاور های راس :math:`a` مثل :math:`b` بفهمیم که آیا مسیر همیلتونی از :math:`a` به :math:`b` وجود دارد یا خیر. (اگر وجود داشت ابتدا مسیر همیلتونی را طی کنید سپس یال :math:`ab` را طی کنید).
+
+می توان با استفاده از تابع بازگشتی که در الگوریتم 1 بخش قبل انجام دادیم این کار را انجام داد.
+
+حالا سعی می کنیم الگوریتم را بهبود ببخشیم. از آنجایی که راس :math:`a` به صورت دلخواه انتخاب شده بود حدس می زنیم که می توان تعریف تابع بازگشتی را تغییر داد تا به الگوریتمی با پیچیدگی زمانی بهتری برسیم.
+
+تعریف می کنیم :math:`dp_{mask,u}` یک آرایه boolean است که نشان می دهد آیا می توان از راس :math:`u` شروع کرد و تمام رئوس مجموعه :math:`mask` را دید و در نهایت به کوچکترین عضو مجموعه :math:`mask` رسید یا خیر.
+
+تفاوت این تعریف با تعریف قبل این است که حالا راس انتهایی مسیر همیلتونی از روی :math:`mask` مشخص می شود و نیازی نیست یک بعد اضافه تر به آن اختصاص داد.
+
+
+برای آپدیت کردن می توانید روی راس بعد از :math:`u` حالت بندی کنید.
+
+.. code-block:: cpp
+
+  #include<bits/stdc++.h>
+  
+  #define bit(n,k) (((n)>>(k))&1)
+  
+  using namespace std;
+  
+  const int maxn = 16;
+  
+  bool dp[1<<maxn][maxn];
+  bool adj[maxn][maxn];
+  
+  int main(){
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++)
+  	  for(int j = 0; j < n; j++)
+	      cin >> adj[i][j];
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask][__builtin_ctz(mask)] = 1;
+	      continue;
+	  }
+	  int low_bit = __builtin_ctz(mask);
+	  for(int i = 0; i < n; i++){
+	      for(int j = 0; j < n; j++){
+		  if(i == j || bit(mask, i) == 0 || bit(mask, j) == 0 || i == low_bit || adj[i][j] == 0)
+		      continue;
+		  dp[mask][i] |= dp[mask ^ (1<<i)][j];
+	      }		    
+	  }
+      }
+      bool ans = 0;
+      for(int i = 1; i < n; i++){ // i != 0
+	  if(dp[(1<<n)-1][i] && adj[0][i])
+	      ans = 1;
+      }
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+
+پس الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n^2)` رسیدیم.
+
+الگوریتم 2
+~~~~~~~~~~~
+
+حالا با الهام گرفتن از الگوریتم 2 بخش قبل پیچیدگی زمانی راه حل را بهبود می دهیم. 
+
+تعریف می کنیم :math:`dp_{mask}` زیرمجموعه ای از راس ها مثل :math:`mask2` است که از هر راس :math:`mask2` مثل :math:`u` می توان شروع کرد و تمام راس های مجموعه :math:`mask` را دید و در نهایت به کوچکترین عضو :math:`mask` رسید.
+
+برای آپدیت کردن می توان روی راس شروع مسیر همیلتونی حالت بندی کرد.
+
+به کد زیر توجه کنید. آرایه :math:`adj\_mask_u` مجموعه راس هایی که مجاور راس :math:`u` هستند را نشان می دهد.
+
+
+.. code-block:: cpp
+
+  #define bit(n,k) (((n)>>(k))&1)
+
+  const int maxn = 16;
+
+  int dp[1<<maxn];
+  int adj_mask[maxn];
+
+  int main(){
+
+      // voroodi gereftan graph
+      int n;
+      cin >> n;
+      for(int i = 0; i < n; i++){
+	  for(int j = 0; j < n; j++){
+	      bool x;
+	      cin >> x;
+	      if(x){
+	  	  adj_mask[i] |= 1<<j;
+	      }
+	  }
+      }
+      // mohasebe dp
+      for(int mask = 1; mask < (1<<n); mask++){
+	  if(__builtin_popcount(mask) == 1){
+	      dp[mask] = mask;
+	      continue;
+	  }
+	  int low_bit = __builtin_ctz(mask);
+	  for(int i = 0; i < n; i++){
+	      if(bit(mask, i) == 0 || i == low_bit)
+	  	  continue;
+	      if(dp[mask ^ (1<<i)] & adj_mask[i])
+	          dp[mask] |= 1<<i;
+	  }
+      }
+      bool ans = 0;
+      if(dp[(1<<n)-1] != 0)
+	  ans = 1;
+      if(ans)
+	  cout << "YES\n";
+      else
+	  cout << "NO\n";
+      return 0;
+  }
+پس در نهایت به الگوریتمی با پیچیدگی زمانی :math:`O(2^n * n)` رسیدیم.

@@ -1,0 +1,244 @@
+
+   <meta charset="UTF-8">
+
+Detecting Cycles in a Directed Graph
+==========================================================
+Introduction
+------------------------------------------------
+In previous sections, it was sometimes necessary to determine whether a directed graph had a cycle or not! For example, to provide a topological ordering of a graph, we first needed to ensure the graph was acyclic. This is because a graph with a cycle has no topological ordering!
+
+Here, we describe two algorithms that can detect if a graph contains a cycle. Furthermore, the first algorithm will output a cycle if one is found!
+
+Cycle Detection Algorithm Using DFS
+------------------------------------------------
+**Description:** This algorithm is similar to the algorithm in section 3.3, with the difference that here we will have two types of markings for each vertex. We traverse the graph using
+:math:`DFS`
+, marking each vertex as 'visited' when we enter it, and as 'exited' when we leave it. Now, if during traversal we reach a vertex that we have 'visited' but not yet 'exited' (these are vertices on the current gray path), we conclude that the graph has a cycle. Otherwise, the graph is acyclic.
+
+**Correctness Proof:** When traversing the graph, if we are at a vertex like
+:math:`v`
+and reach a vertex like
+:math:`u`
+that we have 'visited' but not yet 'exited' (the gray path vertices), this means there is a directed edge from
+:math:`v`
+to
+:math:`u`
+(the red edge), and
+:math:`u`
+has a directed path to
+:math:`v`, in which case the graph will have a cycle. Also, if the graph has a cycle, this algorithm will definitely find it. Otherwise, if we assume
+:math:`G`
+is a graph with at least one cycle where the algorithm failed to find it, let
+:math:`v`
+be the first vertex on cycle
+:math:`C`
+that we enter, and
+:math:`e`
+be an edge from
+:math:`u`
+to
+:math:`v`
+that is part of cycle
+:math:`C`. In this case, during traversal, we would reach
+:math:`u`
+before exiting
+:math:`v`
+(because these two vertices are in the same cycle and there must be a path from
+:math:`v`
+to
+:math:`u`), and then using edge
+:math:`e`
+we would reach
+:math:`v`
+again, which means we have found a cycle. Thus, from the contradiction, it follows that the algorithm finds a cycle in any graph that contains one.
+
+.. figure:: /_static/dot/Cycle_DFS.svg
+   :width: 50%
+   :align: center
+   :alt: If the internet is slow, this will appear
+
+Algorithm Complexity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this algorithm, we used
+:math:`DFS`
+once, resulting in a complexity of
+:math:`O(m+n)`, where
+:math:`n`
+is the number of vertices and
+:math:`m`
+is the number of edges.
+
+Algorithm Implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note that in the following implementation, if a cycle exists, it is found and output; if no cycle exists, the topological order of the vertices is output.
+
+.. code-block:: cpp
+
+	const int MX = 5e5 + 200;
+
+	int n, m;
+	vector<int> gr[MX], topo, cycle;
+	bool st[MX], ed[MX];
+
+	bool dfs(int v){
+	    st[v] = 1;
+	    for(int u: gr[v]){
+			if(st[u] && !ed[u]){
+				cycle.push_back(u);
+				cycle.push_back(v);
+				return 0;
+			}
+			if(!st[u] && !dfs(u)){
+				if(cycle[0] != cycle[cycle.size() - 1])
+					cycle.push_back(v);
+				return 0;
+			}
+	    }
+	    ed[v] = 1;
+	    topo.push_back(v);
+	    return 1;
+	}
+
+	int main(){
+	    cin >> n >> m;
+	    for(int i = 0; i < m; i++){
+			int v, u;
+			cin >> v >> u;
+			gr[v].push_back(u);
+	    }
+	    bool check = 1;
+	    for(int i = 0; i < n; i++){
+			if(!st[i] && !dfs(i)){
+				check = 0;
+				break;
+			}
+	    }
+	    if(check){
+			cout << "no cycle \ntopo order: ";
+			for(int v: topo)
+				cout << v << ' ';
+	    }
+	    else{
+			cout << "cycle: ";
+			for(int i = cycle.size() - 2; i >= 0; i--)
+				cout << cycle[i] << ' ';
+	    }
+	    return 0;
+	} 
+
+Kahn's Algorithm
+------------------------------------------------
+**Description:** Another method to determine if a graph has a cycle is Kahn's algorithm. This algorithm works based on induction. This method is very similar to Theorem 3.3.2!
+
+The algorithm proceeds as follows: initially, we have an empty set of vertices called
+:math:`zero`. This set contains vertices whose in-degree in the current graph is 0.
+
+Initially, we add all vertices with an in-degree of 0 to
+:math:`zero`.
+
+In each step, we remove the vertices in
+:math:`zero`
+along with their incident edges from the graph. Following this, some new vertices might have their in-degree become 0 and be added to
+:math:`zero`. We continue this process until either the number of vertices in the graph becomes 0 or the set
+:math:`zero`
+becomes empty.
+
+If at any stage the size of the set
+:math:`zero`
+is 0 and the current graph still contains some vertices, then the graph definitely has a cycle. If this does not happen and all vertices are removed from the graph, then the graph is acyclic.
+
+.. figure:: /_static/dot/Cycle_Kahn.svg
+   :width: 80%
+   :align: left
+   :alt: If the internet is slow, this will appear
+
+For a better understanding, see the figure on the right. In this figure, the blue cycle never enters the
+:math:`zero`
+set, and therefore the graph is detected as cyclic!
+
+**Correctness Proof:** To prove the algorithm, we consider two cases for the graph. First, assume graph
+:math:`G`
+has a cycle; then we claim the algorithm correctly detects the presence of a cycle.
+
+If
+:math:`G`
+has a cycle, and we call this cycle
+:math:`C`, then none of the vertices of
+:math:`C`
+will ever be added to
+:math:`zero`
+(why?). Thus, we reach a state where the graph still contains some vertices, but
+:math:`zero`
+is empty! So the algorithm detects the cycle.
+
+Now, if the graph is acyclic, we prove by induction on the number of vertices that all vertices are removed!
+
+Firstly, if the graph is acyclic, according to Theorem 3.1.3, there are vertices in graph
+:math:`G`
+whose in-degree is 0. These vertices are added to the
+:math:`zero`
+set, then removed from the graph along with their edges. Thus, the number of vertices decreases. Furthermore, the inductive conditions hold, and the current graph is acyclic. Therefore, by induction, all vertices are removed from the graph, and the algorithm correctly detects that there is no cycle.
+
+Algorithm Complexity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To analyze the algorithm's complexity, we need to see how much we traverse vertices and edges. We traverse edges when a vertex is in the set
+:math:`zero`, then we traverse its incident edges. Each vertex enters
+:math:`zero`
+only once and is then removed from the graph. So we traverse each edge once.
+
+Also, we traverse vertices when a vertex is placed in the set
+:math:`zero`. Similarly, each vertex is added to this set only once and is then removed from the graph.
+
+Thus, the complexity of the above algorithm is
+:math:`O(n + m)`
+which is similar to the previous algorithm!
+
+Algorithm Implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: cpp
+
+	const int maxn = 5e5 + 5;
+
+	int n, m; // number of vertices and edges
+	int in_edge[maxn]; // in_edge[v] is the in-degree of vertex v!
+
+	vector <int> g[maxn]; // adjacency list
+	vector <int> zero; // vertices with in-degree 0 that should be removed!
+
+	bool has_cycle(){
+	      for(int i = 0; i < n; i++){
+		    if(in_edge[i] == 0){
+			  zero.push_back(i); 
+		    }	   
+	      }
+	      for(int i = 0; i < n; i++) {
+		    if(zero.size() == 0){
+			  return true;
+		    }
+		    int v = zero[zero.size() - 1]; // last element from remove_set
+		    zero.pop_back();
+		    for(int u : g[v]){
+			  in_edge[u]--;
+			  if(in_edge[u] == 0){
+				zero.push_back(u);
+			  }
+		    }
+	      }
+	      return false;
+	}
+
+
+	int main(){
+	      cin >> n >> m;
+	      for(int i = 0; i < m; i++){
+		    int u, v;
+		    cin >> u >> v; // u, v are 0-based
+		    g[u].push_back(v);
+		    in_edge[v]++; // edge (u, v) is in the graph. So in-degree of v increases by one!
+	      }
+	      if(has_cycle())
+		    cout << "graph has at least one cycle!" << endl;	    
+		  else 
+		    cout << "graph is acyclic!" << endl;
+	      return 0;
+	}

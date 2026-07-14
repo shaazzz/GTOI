@@ -1,0 +1,147 @@
+Algorithm for Finding Tree Diameter
+=======================================
+
+Another problem that is NP-hard for general graphs but easily solvable for trees is finding the longest path! Since the path between any two vertices in a tree is unique, it can be concluded that the tree's diameter is its longest path. In this section, we examine methods for finding the tree diameter with a time complexity of :math:`O(n)`.
+
+Using DP
+-------------------
+
+Root the tree at vertex 1. Using dynamic programming, we obtain the following two variables for each vertex :math:`u`:
+
+- The value :math:`dp_u` is the maximum distance from vertex :math:`u` to a vertex within its own subtree rooted at :math:`u`. 
+- The value :math:`ans_u` is the length of the diameter within the subtree rooted at :math:`u`.
+
+It is clear that the answer to the problem is :math:`ans_1`. Now the only remaining question is how to obtain these two variables.
+
+To obtain :math:`dp_u`, it suffices to note that in the first move from :math:`u`, we go to one of its children. So, we should go to the child whose :math:`dp` value is maximum. 
+
+To obtain :math:`ans_u`, consider the cases where vertex :math:`u` is part of the diameter or not.
+
+- If vertex :math:`u` is not part of the diameter, then :math:`ans_u` will be the maximum :math:`ans` of :math:`u`'s children, because the diameter will be entirely within one of the children's subtrees.
+- Otherwise, if vertex :math:`u` is an endpoint of the diameter, the answer will be :math:`dp_u`.
+- Otherwise, vertex :math:`u` must be an intermediate vertex on a path. Consider which children its two ends go to. If it goes to children :math:`a, b`, the answer will be :math:`2 + dp_a + dp_b`. So, it suffices to choose :math:`a, b` as the two children whose :math:`dp` values are maximum.
+
+In the following code, :math:`mx1, mx2` store, respectively, the vertices with the maximum :math:`dp` values.
+
+.. code-block:: cpp
+    
+    const int maxn = 1e5 + 10;
+
+    vector<int> g[maxn];
+    int dp[maxn], ans[maxn];
+
+    void dfs(int u, int par = 0){
+        int mx1 = -1, mx2 = -1;
+        for(int y : g[u]){
+            if(y != par){
+                dfs(y, u);
+                dp[u] = max(dp[u], 1 + dp[y]);
+                ans[u] = max(ans[u], ans[y]);
+                if(mx1 == -1 || dp[mx1] < dp[y]){
+                    mx2 = mx1;
+                    mx1 = y;
+                }
+                else if(mx2 == -1 || dp[mx2] < dp[y])
+                    mx2 = y;            
+            }
+        }
+        ans[u] = max(ans[u], dp[u]);
+        if(mx1 != -1 && mx2 != -1){
+        ans[u] = max(ans[u], 2 + dp[mx1] + dp[mx2]);
+    }
+
+
+Thus, we have presented an algorithm that finds the tree diameter with a time complexity of :math:`O(n)`.
+
+DFS Up/Down
+-----------------------
+
+Sometimes our goal is to obtain a variable like :math:`dp` for each vertex in the tree, but calculating :math:`dp_u` requires knowing the :math:`dp` values of all neighbors of vertex :math:`u` (not just its children).
+
+The simplest example to introduce this technique is the problem of finding the maximum distance from each vertex. Suppose we want to find the eccentricity for each vertex :math:`u`. Let the answer for vertex :math:`u` be :math:`ans_u`. To find the answer for a single vertex, one can easily root the tree at that vertex and calculate the tree's height in :math:`O(n)`. But can the problem be solved for all vertices simultaneously in :math:`O(n)`?
+
+Our first problem is that since calculating the answer for a vertex requires the answers of its neighbors, we don't know where to start the computation!
+
+Root the tree at vertex :math:`u`. Breaking the problem into two parts can be useful. Assume :math:`dpDown_u` is the maximum distance from vertex :math:`u` to a vertex within :math:`u`'s subtree. Also, :math:`dpUp_u` is the maximum distance from vertex :math:`u` to a vertex outside :math:`u`'s subtree (meaning in the first step we must go to :math:`u`'s parent). It is clear that the answer for vertex :math:`u` is the maximum of :math:`dpDown_u` and :math:`dpUp_u`.
+
+As we discussed above, :math:`dpDown_u` can be calculated from the :math:`dpDown` values of :math:`u`'s children.
+
+To calculate :math:`dpUp_u`, note that after going from :math:`u` to its parent :math:`par`, we can take two paths.
+
+- We can go up again. In this case, the answer is :math:`1 + dpUp_{par}` (assuming :math:`par` is the parent of vertex :math:`u`).
+- We can go down, i.e., to one of :math:`u`'s siblings like :math:`w`. Then we must go further down. In this case, the answer will be :math:`2 + dpDown_w`.
+
+The key point is that we don't need to check all of :math:`u`'s siblings every time to find the vertex with the maximum :math:`dpDown` (that is, :math:`w`). It is sufficient to find, for :math:`par`, the two children whose :math:`dpDown` values are maximum, just once. Vertex :math:`w` will always be one of the two children of :math:`par` whose :math:`dpDown` values are maximum. (Why?)
+
+So, we understood how to obtain the variables. But one problem remains unsolved. In what order should we calculate the values? To obtain :math:`dpDown`, we need the values of the children, and to obtain :math:`dpUp`, we need the values of the parent. So, where should we start?
+
+The answer is simple and clever. We can obtain the values in two phases. First, calculate the :math:`dpDown` values using `dfsDown`, and then the :math:`dpUp` values using `dfsUp`! The key is that in `dfsDown`, the children's values are calculated first, then the current vertex's value. But in `dfsUp`, the parent's value is calculated first, then the children's values are derived from the parent's.
+
+Note that in the `dfsUp` function, when we are at a vertex, we assume that its :math:`dpUp` value has been obtained, and then we derive the :math:`dpUp` values of its children.
+
+.. code-block:: cpp
+  
+  const int maxn = 1e5 + 10;
+
+  vector<int> g[maxn];
+  int dpUp[maxn], dpDown[maxn];
+
+  void dfsDown(int u, int par = 0){ // this function should be executed first
+      for(int y : g[u]){
+          if(y != par){
+              dfsDown(y, u);
+              dpDown[u] = max(dpDown[u], dpDown[y] + 1);
+          }
+      }
+  }
+  void dfsUp(int u, int par = 0){
+     int mx1 = -1, mx2 = -1;
+     for(int y : g[u]){
+	 if(y != par){
+             if(mx1 == -1 || dpDown[mx1] < dpDown[y]){
+                  mx2 = mx1;
+                  mx1 = y;
+             }
+             else if(mx2 == -1 || dpDown[mx2] < dpDown[y]){
+                  mx2 = y;
+             }            
+         }
+     }
+     for(int y : g[u]){
+	 if(y != par){
+              if(y == mx1){
+                  dpUp[y] = dpUp[u] + 1;
+                  if(mx2 != -1)
+                      dpUp[u] = max(dpUp[u], doDown[mx2] + 2);
+              }
+              else{
+                  dpUp[y] = max(dpUp[u]+1, doDown[mx1] + 2);
+              }
+              dfsUp(y, u);
+         }
+     }
+  }
+
+
+A Simpler Algorithm
+---------------------------
+The tree diameter has a property that helps us find it more easily. That
+property is: The farthest vertex from any given vertex is an endpoint of one of the tree's diameters.
+
+To prove this, root the tree at this vertex. Consider one of the tree's
+diameters. This diameter, which is also a path, has exactly one vertex that is closest
+to the root. (The lowest common ancestor of the path's endpoints.) If our
+desired farthest vertex is within the subtree of this vertex, we remove one branch
+and add the branch corresponding to this vertex; the path length does not decrease,
+so it remains a diameter. The other case is not possible because in that scenario,
+starting from a vertex farther than the common ancestor and going to this vertex
+would yield a larger diameter, which is a contradiction. Thus, this vertex is an
+endpoint of one of the tree's diameters.
+
+This property can be used to find the tree diameter. We write a function that
+takes a vertex as input and, using a DFS algorithm, returns one of the farthest
+vertices from it. We execute this function starting from an arbitrary vertex
+and name the result :math:`u`. Then we execute this function again starting from
+:math:`u` and name the result :math:`v`. Since we know from the above theorem that vertex
+:math:`u` is an endpoint of one of the tree's diameters, the path :math:`uv` is
+one of the tree's diameters.

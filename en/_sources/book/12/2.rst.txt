@@ -1,0 +1,25 @@
+
+k-connected Graph
+=================
+The first question that made this section meaningful was: what is the minimum number of vertices that need to be removed from a graph to make it disconnected?
+
+k-connected Graph
+-----------------
+
+A graph is called k-connected if it has more than k vertices, and if fewer than k vertices are removed from the graph, the graph remains connected. Also, k is the largest possible such value, and it is denoted by :math:`\kappa (G)`.
+Another definition exists for this concept, which states: "the minimum number of vertices whose removal from the graph makes the graph disconnected." However, this definition has a problem, which concerns complete graphs. If you consider, you can never disconnect complete graphs by removing any number of their vertices; at most, you can reduce them to a single isolated vertex. With this in mind, we can correct the second definition with a slight modification.
+Therefore, we can say:
+- The minimum number of vertices whose removal from the graph makes the graph disconnected or reduces it to a single vertex.
+:math:`\kappa (u,v)` is defined as the minimum number of vertices whose removal disconnects the path between u and v (or, in other words, places them in two separate components).
+
+k-edge-connected Graph
+----------------------
+It is defined similarly to the k-connected graph, except this definition applies to edges instead of vertices.
+Therefore, a k-edge-connected graph is a graph where the minimum number of edges that must be removed to make it disconnected or reduce it to a single vertex is k, and it is denoted by :math:`\kappa^{\prime}(G)`. Note that this value can also be zero. If it is connected and the graph has a bridge edge, its value becomes one.
+Also, :math:`\kappa^{\prime}(u,v)` is defined as the minimum number of edges whose removal disconnects the path between u and v, placing them in two separate components.
+
+Menger's Theorem
+----------------
+Several paths between vertices u and v are called disjoint if these paths share no common vertices other than u and v. Now, it can be stated that the minimum number of vertices whose removal disconnects the path between two vertices u and v is equal to the maximum number of disjoint paths between these two vertices.
+
+The same theorem also applies to edges, stating that the minimum number of edges whose removal disconnects the path between two vertices is equal to the maximum number of edge-disjoint paths between these two vertices.

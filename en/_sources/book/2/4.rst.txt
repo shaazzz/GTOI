@@ -1,0 +1,142 @@
+DFS
+=========
+
+The DFS algorithm is one of the graph traversal methods and one of the simplest and most fundamental graph algorithms. Despite its simplicity, this algorithm has interesting properties and, contrary to popular belief, has numerous applications in solving theoretical and practical problems!
+
+First Problem
+-------------
+
+Imagine you are trapped in a maze that is represented as a graph. That is, each vertex of the graph represents a room, and each edge represents a corridor between two rooms. Your memory is strong enough that if you enter a repeated room, you can recognize it. When you are in a room, you can only see its adjacent corridors. You also have a thread, one end of which is tied to the room where you initially started, and the other end is in your hands. A treasure is located in one of the graph's vertices. Your goal is to find the treasure. How do you do this?
+
+Finding the treasure is as simple as performing the following algorithm. Until you reach the treasure, execute the following algorithm:
+
+- If all adjacent rooms have been visited, return to the room from which you first entered the current room. (Simply follow the thread in your hand).
+- Otherwise, go to one of the adjacent rooms that has not been visited yet.
+
+Why does this algorithm solve our problem? The point is that when we enter a room for the first time, we try our best to find a path from that room to the treasure. Consequently, when all adjacent rooms have been visited and we follow the thread to return, it can be concluded that no path exists from that room to the treasure. Therefore, we should never enter this room again. (And this logic of not entering a repeated room originates from here).
+
+One can also look at the problem from a different perspective. For any edge :math:`uv`, if we see one of :math:`u,v`, we will definitely see the other as well. (Because we only finish with a vertex when all its neighbors have been visited). Consequently, if we see one vertex of a connected component, we will see all other vertices in that component.
+
+Connected Components
+------------------
+
+Given a graph :math:`G` as input, you need to find the number of its connected components.
+
+What we examine in this section is an overall picture of the DFS algorithm. Assume the `mark` array indicates which vertices have been visited, and initially, all its entries are `false`. Now, our algorithm will be as follows:
+
+.. code-block:: cpp
+
+  void dfs(int u){
+     mark[u] = true;
+     for(int y : g[u])
+	      if(mark[y] == false)
+             dfs(y);
+  }
+
+Use the intuition we gained from solving the problem above. When `dfs(u)` is called, the algorithm recursively tries to visit all vertices reachable from :math:`u`. Then `dfs(u)` finishes, and we return to a vertex called :math:`par` from which we first reached :math:`u`.
+
+Consequently, it can be seen that after executing this function, all vertices in the connected component of the starting vertex are visited. So, to solve the problem, it is sufficient to select a vertex like :math:`y` whose `mark` is `false` in each step. Then, execute `dfs(y)` and increment the answer to the problem.
+
+DFS Tree
+-----------------
+
+In addition to traversing our graph, the DFS algorithm performs this traversal in a specific way! Now, let's get acquainted with some interesting features of this traversal.
+
+Assume the graph edges are initially blue. Now, whenever the program is at vertex :math:`v` and traverses edge :math:`uv` to reach a new vertex :math:`u`, color edge :math:`uv` red.
+
+First, note that the red edges form a tree! Because each time an edge turns red, one of its endpoints is connected to a vertex we haven't seen before. So, it's like adding leaves to this tree one by one! We call this tree, obtained from the DFS algorithm, the DFS tree. An interesting feature of DFS is that when `dfs(u)` starts, vertex :math:`u` is just a leaf in the red tree, and when `dfs(u)` finishes, the subtree rooted at :math:`u` has been fully constructed.
+So you see that after running the DFS algorithm on a connected graph, we will obtain a spanning tree of this graph. Root this spanning tree at the starting vertex.
+
+Now, pay attention to an interesting property that arises from the blue edges.
+
+An edge :math:`uv` is called a back edge if one of :math:`u,v` is an ancestor of the other. Otherwise, it is called a cross edge. (Sometimes, tree edges are considered a distinct category, and other edges connecting a vertex to its ancestor are called "back edges." However, in this context, we consider all edges satisfying the ancestor-descendant relationship as 'back edges' and limit our classification to 'back edges' and 'cross edges'.)
+
+We claim that for any DFS tree, all edges of the graph are back edges!
+
+.. figure:: /_static/dot/Back_Edge.svg
+   :width: 50%
+   :align: center
+
+To prove that all edges are back edges after a DFS traversal, consider an arbitrary edge :math:`uv`. Without loss of generality, assume that the algorithm first enters vertex :math:`u`. In this case, at the start of `dfs(u)`, vertex :math:`v` has not yet been visited. Furthermore, when `dfs(u)` finishes, vertex :math:`v` must have been visited (because it is adjacent to :math:`u`). Therefore, if you consider the DFS tree, vertex :math:`v` must be within the subtree of :math:`u`! Consequently, :math:`u` is an ancestor of :math:`v`, and thus the edge :math:`uv` will be a back edge.
+
+In the future, we will make extensive use of this theorem, that after running DFS, all edges are back edges!
+
+Maximal Path and DFS
+-------------------------
+
+In Chapter 1, we became familiar with proofs performed using maximal paths. Here, we learn that instead of using maximal paths, we can use the leaves of the DFS tree (which provides a much stronger intuition)!
+
+After running DFS on the graph, we define :math:`back_u` as the number of back edges for which :math:`u` is the lower (descendant) endpoint. Note that, by our definition, the edges of the DFS tree itself are also considered back edges. We also define :math:`h_u` as the height (or depth) of vertex :math:`u` in the tree.
+
+The following two theorems easily follow from the specific structure of the tree (the second theorem holds assuming the graph is simple).
+
+- :math:`\sum back_u = m`
+- :math:`\forall_u back_u \leq h_u`
+
+Path of length :math:`\delta`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We prove that a simple graph has a path of length at least :math:`\delta`. It is sufficient to prove that the height of the DFS tree is at least :math:`\delta`. Consider an arbitrary leaf, say :math:`u`. It is clear that :math:`back_u \geq \delta`, which implies :math:`h_u \geq \delta`, easily yielding our claim!
+
+Path of length :math:`\frac m n`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We prove that a simple graph has a path of length at least :math:`\frac m n`. Similar to the above, we prove that the height of the DFS tree is at least :math:`\frac m n`. For the proof, we use contradiction. Assume that the height of every vertex is less than :math:`\frac m n`. We have:
+:math:`m = \sum back_u \leq \sum h_u < n \times \frac m n = m \Rightarrow m < m`
+
+which leads to a contradiction. Therefore, there exists a vertex with height at least :math:`\frac m n`, which proves our claim.
+
+Leaves and Height, Independent Set and Longest Path!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Assume that after applying the DFS algorithm, the height of the tree becomes :math:`H` (in fact, :math:`H` is the maximum value among all :math:`h_u`). Also, assume the number of leaves is :math:`S`.
+
+Here, we prove that :math:`H \times S \geq n-1`.
+
+For each leaf of the tree, traverse the path from this vertex to the root and place a stone on each vertex along this path, except for the root. In this case, for each leaf like :math:`u`, :math:`h_u` stones are added to the total. On the other hand, we placed at least one stone on each vertex except the root, so the total number of stones is at least :math:`n-1`. Thus, we can write:
+
+:math:`n-1 \leq \sum h_u \leq H \times S`
+
+which proves our claim. However, so far we haven't used any specific property derived from the DFS tree! The interesting point is that the leaves of the DFS tree form an independent set. (Because the existence of an edge between two leaves would create a cross edge).
+
+Consequently, if the size of the maximum independent set is :math:`S^{\prime}`, then :math:`S \leq S^{\prime}` holds.
+
+Similarly, if the length of the longest path in this graph is :math:`H^{\prime}`, then :math:`H \leq H^{\prime}` holds.
+
+So now we have arrived at the interesting inequality: :math:`n-1 \leq H \times S \leq H^{\prime} \times S^{\prime}`!
+
+The interesting thing is that both problems of finding the maximum independent set and the longest path in a graph are NP-hard! But with the method we presented, we can provide either an independent set of size at least :math:`\sqrt{n-1}` or a path of length at least :math:`\sqrt{n-1}`!
+
+Non-articulation point
+~~~~~~~~~~~~~~~~
+
+We prove that every graph with :math:`n > 1` has at least two non-articulation points (vertices that are not cut vertices).
+
+It suffices to run DFS on the graph. Then, each of the leaves of the DFS tree will be a non-articulation point. (Also, if we remove these two vertices together, the graph does not become disconnected). This is because the edges of the DFS tree keep the rest of the graph connected (and removing a leaf from a tree does not break its connectivity). Furthermore, any tree with :math:`n > 1` has at least two leaves, which proves our claim. Of course, in this problem, it was not necessary to use a DFS tree; any arbitrary spanning tree would solve the problem for us.
+
+Tree Traversal
+--------------------
+
+One of the special cases of graph traversal is tree traversal. In this section, we see that tree traversal can be done more simply with the DFS algorithm. For example, we no longer need a `mark` array. This is because the only neighbor of a vertex that has already been visited is its parent.
+
+Additionally, while executing DFS, other information about the tree can be obtained simultaneously. For example, in the code below, after running DFS on the tree, the number of vertices in each vertex's subtree is stored in the `sz` array, and the height (or depth) of each vertex is stored in the `h` array.
+
+Note that we have assumed the indices of the tree vertices start from 1, and there is no vertex with index 0.
+
+.. code-block:: cpp
+  
+  const int maxn = 1e5 + 10;
+
+  vector <int> g[maxn];
+  int sz[maxn], h[maxn];
+
+  void dfs(int u, int par = 0){
+     h[u] = h[par] + 1;
+     sz[u] = 1;
+     for(int y : g[u]){
+	 if(y != par){
+             dfs(y, u);
+             sz[u] += sz[y];
+         }
+     }
+  }

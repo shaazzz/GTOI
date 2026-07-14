@@ -1,0 +1,37 @@
+Minimum Spanning Tree
+=====================
+
+Problem Description
+--------------
+Suppose we are given a weighted graph and asked to find a spanning subgraph of it such that the sum of the weights of its edges is minimized.
+In this case, we are looking for its Minimum Spanning Tree.
+
+We introduce the following four algorithms to solve this problem.
+
+Algorithms
+---------------
+
+Kruskal
+~~~~~~~~~~
+
+We sort the edges of the graph in ascending order by their weights. We add the vertices of the graph into the final MST without any edges (assume we are building the MST step-by-step, and initially, this MST has no edges and we are about to add its edges).
+The algorithm starts with the first sorted edge and, in each step, adds the selected edge to the MST if it does not form a cycle with the previously selected edges in the MST.
+To determine whether the selected edge forms a cycle, we can use DSU (Disjoint Set Union).
+The proof of correctness for this algorithm relies on contradiction. Assume that G is the MST found by the algorithm, and H is the true MST. Consider the lightest edge that is used in H but not in G. In Kruskal's algorithm, we must have skipped this edge because it would have created a cycle. Therefore, H has a cycle, which contradicts the assumption of H (being an MST).
+The time complexity of this algorithm is :math:`O(mlgn + n)`.
+
+Prim
+~~~~~~~~~~~
+
+Overall, Prim's algorithm maintains a set of vertices, to which a new vertex is added with an edge in each step, until the set of vertices becomes identical to the set of all vertices in the original graph.
+To become more familiar with this algorithm, pay close attention to its steps.
+
+- We create a set that represents the vertices currently included in the MST at each step of this algorithm.
+- We create a 'minimum distance' value for all vertices in the graph and set all of them to infinity (a large number). For an arbitrary starting vertex, which is our first vertex in this algorithm, we set its value to zero.
+- Until our set becomes identical to the set of all vertices in the graph, we perform these three actions: First, we select a vertex `u` that is not in our set and has the minimum distance value. We add `u` to our set. After that, we update the distance values of all neighbors of `u`. Specifically, if vertex `w` is connected to `u` by an edge `z`, and `Dis[u] + z` is less than `Dis[w]`, we set `Dis[w]` to `Dis[u] + z`.
+
+.. math:: Dis [u] + z < Dis [w] => Dis [w] = Dis [u] + z
+
+The final explanation about the idea behind Prim's algorithm is that in each step, we select the edge with the minimum weight among all edges connecting our chosen set of vertices to the set of other vertices in the graph.
+The proof of the algorithm is as follows: In each step, we select an edge between our set and the set of other vertices. If this edge is not chosen, the MST will not be connected, which is a contradiction. If two edges are chosen, the MST will contain a cycle, which again creates a contradiction. Therefore, exactly one edge must be chosen, and for the MST to have the minimum total weight, the edge with the minimum weight must be chosen, which is precisely what we do.
+The time complexity of this algorithm is :math:`O(mlgn + n)`.

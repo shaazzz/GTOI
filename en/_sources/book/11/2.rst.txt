@@ -1,0 +1,93 @@
+Sack
+============
+Sack is one of the beautiful and practical algorithms in trees that solves a wide range of problems. In this problem, we have a Sack (an arbitrary data structure) where, in one operation, we can remove one of the tree's vertices or add one of the vertices to it. Our tree is rooted, and the goal is that each of the
+:math:`n`
+subtrees of the tree must have been placed in the Sack at least once on its own, and the total number of operations should be
+:math:`O(nlg(n))`.
+
+Application
+---------
+Sack can be used in many problems, some of which are presented in the exercises of this chapter. But to further clarify this problem and its importance for you, we will solve an example together. In this problem, we have a rooted tree where each vertex has a color. For each subtree, we want to find and output the number of distinct colors it contains. Assume you know the solution to the Sack problem and try to solve this problem with its help.
+
+To solve this problem, we use a data structure that allows adding a vertex, removing a vertex, or getting the number of distinct colors. This data structure can be a simple array where, upon adding, we increment the count for the corresponding color by one, and upon removal, we decrement the count by one. Simultaneously, we maintain the number of distinct colors; that is, if a color's count was zero before adding and now becomes one, we increment a distinct color counter, and similarly, if upon removal a color's count becomes zero, we decrement the counter. All three operations in this data structure are performed in
+:math:`O(1)`
+time.
+
+Now we use the Sack algorithm (whose implementation details we do not currently know). We bring all subtrees into this data structure once, record their answers, and then print the results.
+
+Algorithm
+----------
+The idea behind Sack is similar to the heavy-light decomposition idea that we became familiar with in the Lowest Common Ancestor chapter. (For a refresher, you can refer to section 10.2). Our goal is to perform operations on each vertex proportional to the number of its light edges on the path to the root. That is, the number of times vertex
+:math:`v`
+is added to and removed from the Sack throughout the entire operation should be
+:math:`O(light_v)`.
+And from section 10.2, we recall that
+:math:`light_v \le lg(n)`,
+so if we succeed in this, the total sum of operations over all vertices will be
+:math:`O(nlg(n))`.
+
+We implement the algorithm as a recursive function. This function takes a vertex as input, starts with an empty Sack, places all subtrees whose roots are within the subtree of this vertex into the Sack once, and then returns the Sack such that all vertices of its subtree are inside it. The implementation of this function is trivial for a leaf and runs in constant time. For non-leaf vertices, we implement it recursively. First, we execute this function on all light-edge children, and after execution, we clear the Sack. Then, we execute this function on the heavy-edge child of this vertex, but **we no longer clear the Sack**. After that, we add the light-edge children back to the Sack. Now the entire subtree is within the Sack. We retrieve the answer for the input vertex from the data structure, and then terminate the function's execution.
+
+During the execution of this function, all children of the heavy vertex are only added to and removed from the Sack as many times as required by the recursive function. The children of light-edge vertices, besides that, are removed once by the main function and added back once. The input vertex itself is also added once at the end. It can be seen that the total number of additions and removals for each vertex, say
+:math:`v`,
+will be exactly
+:math:`2light_v+1`.
+Furthermore, it can be understood that the program's running time is a factor of the number of operations on the Sack, and both, as discussed above, are
+:math:`O(nlg(n))`.
+
+Implementation
+------------
+
+.. code-block:: cpp
+
+    const int M = 1e5 + 5;
+    vector<int> g[M];
+    int sz[M]; // andaaze zirderakht har ras, baraaye tashkhis yaal haaye sabok va sangin
+    
+    void add_to_Sack(int v) {
+      // piade sazi motenaseb ba masale raa injaa gharaar dahid
+    }
+    void remove_from_Sack(int v) {
+      // piade sazi motenaseb ba masale raa injaa gharaar dahid
+    }
+    void compute_answer() {
+      // piade sazi motenaseb ba masale raa injaa gharaar dahid
+    }
+
+    void add_subtree(int v, int p){
+        add_to_Sack(v);
+        for(int u: g[v])
+            if(u != p)
+                add_subtree(u, v);
+    }
+    void remove_subtree(int v, int p){
+        remove_from_Sack(v);
+        for(int u: g[v])
+            if(u != p)
+                add_subtree(u, v);
+    }
+    
+    void dfs(int v, int p){
+        int mx = -1, bigChild = -1;
+        for(int u : g[v]) {
+          if(u != p && sz[u] > mx) {
+            mx = sz[u];
+            bigChild = u;
+          }
+        }
+        for(int u : g[v]) {
+          if(u != p && u != bigChild) {
+            dfs(u, v); // javaabe farzand haye sabok ra mohaasebe mikonim
+            remove_subtree(v, p); // sepas aan haa raa paak mikonim
+          }
+        }
+        if(bigChild != -1)
+            dfs(bigChild, v);  // farzande sangin raa paak nemikonim
+        for(auto u : g[v]) {
+          if(u != p && u != bigChild)
+            add_subtree(u, v); // farzand haye sabok ra mojadadan bar migardaanim
+        }
+        compute_answer(); // hame zirderakht v dar Sack ast, javabash ra hesab mikonim
+    }
+
+Note that in this implementation, you need to take the graph as input and populate the `sz` array values with another DFS, which we have not mentioned here.

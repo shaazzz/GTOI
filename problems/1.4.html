@@ -1,0 +1,159 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/1/4" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      
+<h1>بخش 1.4</h1>
+<p>در این قسمت 12 سوال وجود دارد
+
+<div id="d1x4x1">
+  <h2>سوال <a href="1.4.1.html">1.4.1</a>  <button id="b1x4x1" onclick="swapButton('1x4x1')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید در هر گراف که $ \delta \ge 2 $ باشد مسیری با $ \delta $ یال و دوری با حداقل $ \delta + 1 $ راس وجود دارد.</p>
+
+</div>
+
+<div id="d1x4x2">
+  <h2>سوال <a href="1.4.2.html">1.4.2</a>  <button id="b1x4x2" onclick="swapButton('1x4x2')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید در هر گرافی که $ \delta \ge 3 $ باشد دور زوج (دوری که زوج راس داشته باشد) وجود دارد.</p>
+
+</div>
+
+<div id="d1x4x3">
+  <h2>سوال <a href="1.4.3.html">1.4.3</a>  <button id="b1x4x3" onclick="swapButton('1x4x3')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید هر گرافی با n یال دور دارد.</p>
+
+</div>
+
+<div id="d1x4x4">
+  <h2>سوال <a href="1.4.4.html">1.4.4</a>  <button id="b1x4x4" onclick="swapButton('1x4x4')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید اگر از راس a به راس b و از راس b به راس c مسیری وجود داشته باشد، از راس a به c نیز مسیر وجود دارد.</p>
+
+</div>
+
+<div id="d1x4x5">
+  <h2>سوال <a href="1.4.5.html">1.4.5</a> (!) <button id="b1x4x5" onclick="swapButton('1x4x5')">حل کردم</button> </h2>
+  
+  <p>فرض کنید $G$ یک گراف با کمر حداقل 5 و k-منتظم باشد. ثابت کنید این گراف حداقل $k^2+1$ راس دارد. برای $k=2,3$ یک مثال با دقیقا $k^2+1$ راس بزنید.</p>
+
+</div>
+
+<div id="d1x4x6">
+  <h2>سوال <a href="1.4.6.html">1.4.6</a> (+) <button id="b1x4x6" onclick="swapButton('1x4x6')">حل کردم</button> </h2>
+  
+  <p>گراف های فرد خانواده ای از گراف ها هستند. گراف $O_k$ به این صورت تعریف می شود که به ازای هر زیر مجموعه $k$ عضوی از مجموعه ${ 1 .. 2k+1 }$ یک راس دارد و دو راس به هم یال دارند اگر و تنها اگر مجموعه هایشان مجزا باشند. می توانید بررسی کنید که $O_2$ همان گراف پیترسن است. ثابت کنید که کمر گراف $O_k$ برابر ۶ است وقتی که $k \ge 3$ باشد.</p>
+
+</div>
+
+<div id="d1x4x7">
+  <h2>سوال <a href="1.4.7.html">1.4.7</a> (!) <button id="b1x4x7" onclick="swapButton('1x4x7')">حل کردم</button> </h2>
+  
+  <p>تعداد دور های به طول $n$ در گراف $K_n$ و دور های به طول $2n$ در گراف $K_{n,n}$ را بشمارید. دقت کنیذ که دو دور متمایز در نظر گرفته می شوند اگر و تنها اگر یال هایشان متفاوت باشد؛ یعنی حداقل یک یال در یکی باشد و در دیگری نباشد.</p>
+
+</div>
+
+<div id="d1x4x8">
+  <h2>سوال <a href="1.4.8.html">1.4.8</a>  <button id="b1x4x8" onclick="swapButton('1x4x8')">حل کردم</button> </h2>
+  
+  <p>تعداد دور های به طول ۶ گراف پیترسن را بشمارید.</p>
+
+</div>
+
+<div id="d1x4x9">
+  <h2>سوال <a href="1.4.9.html">1.4.9</a>  <button id="b1x4x9" onclick="swapButton('1x4x9')">حل کردم</button> </h2>
+  
+  <p>ثابت یا رد کنید:</p>
+<ul>
+<li>اگر u و v تنها راس های فرد گراف باشند آنگاه گراف مسیر uv دارد.</li>
+</ul>
+
+</div>
+
+<div id="d1x4x10">
+  <h2>سوال <a href="1.4.10.html">1.4.10</a>  <button id="b1x4x10" onclick="swapButton('1x4x10')">حل کردم</button> </h2>
+  
+  <p>ثابت کنید گراف پیترسون دور به طول ۷ ندارد.</p>
+
+</div>
+
+<div id="d1x4x11">
+  <h2>سوال <a href="1.4.11.html">1.4.11</a> (+) <button id="b1x4x11" onclick="swapButton('1x4x11')">حل کردم</button> </h2>
+  
+  <p>به ازای هر $k \ge 2$ و $g \ge 2$ ثابت کنید گرافی k منتظم با کمر g وجود دارد.</p>
+
+</div>
+
+<div id="d1x4x12">
+  <h2>سوال <a href="1.4.12.html">1.4.12</a> (!) <button id="b1x4x12" onclick="swapButton('1x4x12')">حل کردم</button> </h2>
+  
+  <p>دور های به طول 6 در گراف $Q_3$ را بشمارید. ثابت کنید که هر دور به طول 6 در گراف $Q_k$ درون یک زیر مکعب سه بعدی می افتد. به کمک این دو مطلب، تعداد دور های به طول 6 در $Q_k$ را بشمارید.</p>
+
+</div>
+
+<h1>برگرد به <a href="1.html">بخش 1</a></h1>
+
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

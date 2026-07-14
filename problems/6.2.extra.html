@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/6/2" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="6.2.html">بخش 6.2</a></h1><ul><li><a href=https://www.spoj.com/problems/ADATRIP/>Ada and Trip</a></li><li><a href=https://www.urionlinejudge.com.br/judge/en/problems/view/1655>106 Miles To Chicago</a></li><li><a href=https://www.urionlinejudge.com.br/judge/en/problems/view/2910>Highway Decommission</a></li><li><a href=https://codeforces.com/gym/101628/problem/f>Find the Inn</a></li><li><a href=https://codeforces.com/gym/101845/problem/J>Jinping Trains</a></li><li><a href=https://codeforces.com/gym/101879/problem/F>Optimizing Transportation in Portugal</a></li><li><a href=https://codeforces.com/contest/144/problem/D>Missile Silos</a></li><li><a href=https://www.spoj.com/problems/ADRABR/>Adrita and Her Bike Ride</a></li><li><a href=https://codeforces.com/contest/141/problem/D>Take-off Ramps</a></li><li><a href=https://codeforces.com/problemset/problem/843/D>Dynamic Shortest Path</a></li><li><a href=https://www.spoj.com/problems/EZDIJKST/en/>Easy Dijkstra Problem</a></li><li><a href=https://codeforces.com/contest/716/problem/D>Complete The Graph</a></li><li><a href=https://codeforces.com/contest/757/problem/F>Team Rocket Rises Again</a></li><li><a href=https://codeforces.com/contest/827/problem/F>Dirty Arkady's Kitchen</a></li><li><a href=https://www.spoj.com/problems/DELIVER/>Delivery Route</a></li><li><a href=https://www.spoj.com/problems/CCHESS/>COSTLY CHESS</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

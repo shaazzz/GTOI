@@ -1,0 +1,84 @@
+Floyd-Warshall
+============
+Problem Statement
+-----------------
+
+We are given a weighted directed graph :math:`G`. The weights of the edges of :math:`G` can be negative. We know that graph :math:`G` does not contain any cycles with a negative total weight.
+
+In this problem, for every pair of vertices :math:`(u, v)`, we want to find the length of the shortest path from :math:`u` to :math:`v`. The length of a path is equal to the sum of its edge weights.
+
+Floyd-Warshall Algorithm
+-----------------------
+
+To solve this problem, we first define a :math:`dp` table with dimensions
+:math:`|V(G)| \times |V(G)| \times |V(G)|`.
+Let :math:`dp_{k, i, j}` be the length of the shortest walk from vertex :math:`i` to vertex :math:`j` such that all intermediate vertices (vertices on the path excluding :math:`i` and :math:`j` themselves) are chosen from the set of vertices
+:math:`\lbrace 1, 2, \dots, k \rbrace`.
+
+Now, we know that the length of the shortest walk between two vertices in graph :math:`G` is also equal to the length of the shortest path. This is because if the shortest walk contains two repeated vertices, we would have a cycle whose length is positive (as per the problem statement, cycle length cannot be negative). We could then remove this cycle, leading to a walk with a shorter length, which is a contradiction.
+
+For the base cases of this DP, we know that :math:`dp_{0, i, i} = 0`. For every pair of vertices like
+:math:`(u, v)`,
+we set :math:`dp_{0, u, v}` to be the weight of the shortest edge from :math:`u` to :math:`v`. (If there is no edge from :math:`u` to :math:`v`, then
+:math:`dp_{0, u, v} = \infty`
+).
+
+Now, to obtain :math:`dp_{k, i, j}`, we consider two cases: either vertex :math:`k` is not present in the optimal path, in which case the answer is
+:math:`dp_{k - 1, i, j}`.
+
+If vertex :math:`k` is in the path, then the optimal path is equal to
+:math:`dp_{k - 1, i, k} + dp_{k - 1, k, j}`.
+This is because we must first reach vertex :math:`k` from vertex :math:`i`, and then go from vertex :math:`k` to vertex :math:`j`. In both these sub-paths, the vertex indices must be less than :math:`k`.
+
+To find the length of the shortest path from vertex :math:`u` to vertex :math:`v`, it is sufficient to have the value :math:`dp_{n, u, v}`.
+
+Order Analysis
+--------------
+
+We perform
+:math:`\mathcal{O}(1)`
+operations to update each DP cell. We know that the DP table has
+:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`
+cells. Therefore, in total, we perform
+:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`
+operations. The space complexity used is also
+:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{3}\right)`.
+
+Memory Order Optimization
+------------------------
+
+To optimize the amount of memory consumed, we can eliminate the first dimension. As a result, the memory complexity becomes
+:math:`\mathcal{O}\left(\left|V\left(G\right)\right|^{2}\right)`.
+
+This means we run a
+:math:`for`
+loop from 1 to
+:math:`\left|V\left(G\right)\right|`
+and name its variable :math:`k`. Then, in each step, for every DP cell, we update it. By "update", we mean we branch based on whether vertex :math:`k` is an intermediate vertex of the path, just like in the normal case.
+
+Now, to prove its correctness, we say that after each step of the outer loop, all values are correct. First, we state that the DP cells where one of their dimensions is equal to
+:math:`k`
+never change. Then, to update the rest of the DP cells, we use values from cells where at least one of their dimensions is :math:`k`.
+
+Thus, by induction, it can be proven that after the :math:`k`-th step, :math:`dp_{i, j} = dp^{\prime}_{k, i, j}`, where
+:math:`dp^{\prime}`
+is the DP without optimization. Therefore, after the :math:`n`-th step, we will arrive at the desired values.
+
+Negative Cycles
+----------
+
+You might wonder how to detect if a graph has negative cycles when it's not guaranteed. For this purpose, we initially set
+:math:`dp_{i, i} = 0`.
+Now, if during the algorithm's execution one of the :math:`dp_{i, i}` entries becomes
+:math:`< 0`,
+then we know that a walk with negative length exists from :math:`i` to :math:`i`. We also know that any closed walk with negative length must contain a cycle of negative length.
+
+If a negative cycle existed, then for a vertex :math:`u` in that negative cycle,
+:math:`dp_{u, u} < 0`
+would necessarily become true. This is because our negative cycle, according to our DP definition, poses no problem and affects
+:math:`dp_{u, u}`,
+making it negative.
+
+According to the two arguments above, the existence of a negative cycle is equivalent to having
+:math:`dp_{i, i} < 0`.
+Thus, it is sufficient to check only that :math:`dp_{i, i}` does not become negative during the process.

@@ -1,0 +1,57 @@
+Graph NP-Complete Problems
+==========================
+
+The NP-completeness of problems in the SAT family is key to proving the NP-completeness and NP-hardness of other problems. In this chapter, we examine graph problems that are NP-complete or NP-hard. The process is to reduce each new problem to one of the problems we have previously proven to be NP-complete/hard in polynomial time, thereby demonstrating their NP-completeness or NP-hardness.
+
+These proofs generally come from Karp's 1972 paper. In this paper, Karp introduced and proved 21 NP-complete problems.
+
+These proofs are not particularly difficult, and as a thought exercise, it is good to think about the problems and prove them yourselves before studying the solutions.
+
+Maximum Independent Set
+-------------------------
+In this section, we prove that the decision problem of whether a graph has an induced subgraph with :math:`k` vertices and no edges is NP-complete, which demonstrates that computing :math:`\alpha` of a graph is an NP-hard problem.
+
+We reduce 3SAT to this problem. For each clause in the 3SAT input, create three vertices corresponding to the literals in that clause and connect them to each other. Then, connect any two vertices where one is a variable and the other is its negation. This constructs a graph with :math:`3k` vertices and several edges. It is clear that an independent set in this graph cannot be larger than :math:`k`. Now, this graph has an independent set of this size if and only if the original problem (3SAT) can be satisfied. This is because in each clause, at least one literal must be chosen to be true, and these chosen literals cannot be negations of each other; thus, in the resulting graph, they will not be connected by an edge and will form an independent set.
+
+It is worth noting that if :math:`k` is a constant (for instance, if the problem is whether a graph contains a triangle), then this problem is not NP-complete and will have a polynomial-time solution in :math:`O(n^k)` time.
+
+Graph Clique and Minimum Vertex Cover
+-------------------------------
+The largest clique is the same as the largest independent set of the complement graph. Therefore, computing :math:`\omega` of a graph is also NP-hard.
+
+The smallest vertex cover is the complement of the largest independent set. That is, the vertices *not* in the largest independent set form the smallest vertex cover, and vice versa. Thus, computing :math:`\beta` of a graph is also an NP-hard problem.
+
+Chromatic Number
+----------
+The decision problem of whether the input graph is 3-colorable (or 3-partite) is an NP-complete problem. From this, it follows that computing the chromatic number, or :math:`\chi`, of a graph is an NP-hard problem.
+
+We also reduce 3SAT to this problem. We construct a graph as follows:
+
+- We create three vertices: True, False, and Neutral, and connect them pairwise. We do this so that these vertices are not colored with the same color, and their colors represent the truth or falsity of variables.
+- For each variable and its negation, we add a vertex and connect these two with an edge. We also connect both of them to the Neutral vertex, forcing them to choose one of the two colors, True or False.
+- Then, for each clause, we add a gadget to the graph. A gadget is a graph that has three 'input' vertices and one 'output' vertex. The gadget has the property that if all three of its input vertices are colored the same as the False vertex, then the output vertex cannot be colored True; otherwise, it can be. For each clause, we connect the three input vertices of the gadget to the vertices corresponding to the literals, and we connect the output vertex to the Neutral and False vertices, forcing its color to be the same as the True vertex.
+
+Thus, a solution exists if and only if the graph can be colored with three colors. The only remaining point is the design of the gadget graph. A possible candidate for the gadget graph is the graph below.
+
+.. figure:: /_static/dot/Gadget.svg
+   :width: 50%
+   :align: center
+   :alt: Image of the gadget graph
+
+In which the three input vertices are shown in blue and the output vertex in red. You can verify the correctness of this gadget graph yourselves. You might wonder where this graph came from. The idea behind designing this graph is that each of the triangles acts like a logical OR gate, and by combining two two-input gates, we have obtained a three-input gate.
+
+From previous chapters, you know that the 2-coloring problem, unlike the 3-coloring problem which is NP-complete, can be solved in linear time using a DFS algorithm.
+
+Hamiltonian Path
+---------------------
+We reduce SAT to this problem. For each clause, we introduce a vertex, and for each variable, we introduce a diamond-shaped structure.
+
+The rest of the proof is at https://www.geeksforgeeks.org/proof-hamiltonian-path-np-complete/
+
+Hamiltonian Cycle
+---------------------
+We reduce the Hamiltonian Path problem to this problem (Hamiltonian Cycle). Consider an arbitrary simple graph :math:`G`. Then add a new vertex to it and connect it to all existing vertices. Name the new graph :math:`G^{\prime}`. Any Hamiltonian path in graph :math:`G` can be transformed into a Hamiltonian cycle in graph :math:`G^{\prime}` by traversing the new vertex. Conversely, any Hamiltonian cycle in graph :math:`G^{\prime}` can be transformed into a Hamiltonian path in graph :math:`G` by removing the new vertex. Therefore, if we have an algorithm to detect a Hamiltonian cycle, we can also detect a Hamiltonian path by adding a new vertex. Since Hamiltonian Path is NP-complete, and Hamiltonian Cycle is clearly among NP problems, Hamiltonian Cycle is also NP-complete.
+
+Longest Path and Cycle
+----------------------
+These problems are not decision problems. However, since the Hamiltonian Path and Hamiltonian Cycle problems are special cases of these problems (and HP/HC are NP-complete), it follows that these problems are NP-hard.

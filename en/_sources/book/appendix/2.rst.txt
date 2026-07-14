@@ -1,0 +1,86 @@
+Introduction to Algorithms and Complexity
+============================================
+
+Today, computers are very fast, but no computer executes instructions instantaneously. It takes a very small amount of time for a computer to execute an instruction. For example, today's computers operate at a frequency of about three gigahertz, which means they perform a micro-instruction in about three-tenths of a nanosecond. This implies that each instruction takes a few nanoseconds.
+
+However, writing a program that takes hours, or even years, is not difficult at all. You might even have encountered it yourself. For instance, in video processing or physical simulations, you might have left your computer on for hours to get a response.
+
+For this reason, in programming contests, there is a time limit for your program's execution, and your program must run within approximately 1 to 5 seconds (depending on the problem). This is why, when designing algorithms, we calculate whether our approach will execute within the required time given the input conditions. If it does, we proceed to implement it.
+
+Complexity Analysis
+-------------------
+It is difficult to precisely calculate the execution time of a program. For example, consider the instruction:
+
+.. code-block:: cpp
+  
+  a[x] += a[y];
+
+How many CPU operations does this instruction involve? The answer to this question is very difficult and requires precise knowledge of the compiler and CPU. The answer might even vary depending on the type of CPU, compiler, compiler's optimization level, or the instruction's placement in the code. For example, reading `y` from memory, adding `x` to `a` and reading the resulting memory location, or summing the values of `a[x]` and `a[y]` could be one or several CPU instructions.
+
+Even if we knew how many instructions our program consisted of, it still wouldn't be enough to estimate the program's execution time. For instance, the modulo operation and the bit shift operation are both single instructions, but the modulo operation takes significantly longer than a bit shift.
+
+Therefore, we forego calculating the exact execution time of the code and merely assume that CPU operations like reading from an array or adding two numbers take a constant amount of time. Similarly, our measurement precision is reduced to a constant factor. For example, consider this code:
+
+.. code-block:: cpp
+  
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      swap(a[i],a[j]);
+    }
+  }
+
+We don't know how many time units the `swap` function, the comparison operation, or the increment operation each take, but we do know that each takes a constant amount of time. Thus, we can say that the execution time of this code is :math:`kn^2`, where `k` is a constant factor with units of seconds. In most cases, the value of `k` is not important to us, and we disregard it.
+
+Notations
+~~~~~~~~~~
+Since we can disregard constant factors, defining the following notations is worthwhile:
+
+- Notation
+  :math:`f(n) = O(g(n))`:
+  This notation means that there exists a constant `k` such that :math:`f(n) \le kg(n)` holds for all sufficiently large `n`. This notation is read as "f of n is Big O of g of n".
+- Notation
+  :math:`f(n) = \Omega (g(n))`:
+  This holds if and only if :math:`g(n) = O(f(n))` holds, and it is read as "f of n is Big Omega of g of n".
+- Notation
+  :math:`f(n) = \theta (g(n))`:
+  This holds if and only if :math:`f(n) = O(g(n))` and :math:`f(n) = \Omega (g(n))` both hold, and it is read as "f of n is Big Theta of g of n".
+  
+You can view these notations as analogous to less than or equal to, greater than or equal to, and equal to signs. The following examples can help you better understand these symbols.
+
+.. math:: 1000n = O(0.00001n)
+.. math:: 1000n = \Omega(0.00001n)
+.. math:: 1000n = \theta(0.00001n)
+.. math:: 1000n^2 = O(n^5)
+.. math:: 1000n^2 \ne \Omega(n^5)
+.. math:: n^5 = O(2^n)
+.. math:: 2*n^{10}+100*n^7+20*n^2 = \theta(n^{10})
+
+Categorization of Important Complexities
+----------------------------
+
+In the problems we examine, certain complexities repeatedly appear, which we discuss below.
+
+Linear Complexity
+~~~~~~~~~~~~~
+An algorithm whose execution time is a constant factor of its input size is called a linear algorithm. If the input size is `n`, the algorithm's execution time is :math:`O(n)`. Under normal circumstances, one cannot find an algorithm better than a linear algorithm because acquiring the input itself takes a factor of `n` time. Even if we don't consider input acquisition time, since operations can be performed on a constant number of variables and memory locations in constant time, we must spend a factor of the input size to make the entire input affect the output.
+
+Logarithm Function
+~~~~~~~~~~~~~~
+The logarithm function is a function that appears frequently in algorithm complexity analysis. This function is defined as the inverse of the power of 2 function. That is: :math:`2^{lg(n)} = n`. The correctness of the following propositions can be easily verified.
+
+.. math:: lg(a*b) = lg(a) + lg(b)
+.. math:: lg(a^b) = b * lg(a)
+.. math:: a^{\frac{lg(n)}{lg(a)}} = n
+.. math:: lg(n)^k = O(n)
+
+Quasi-linear Complexity
+~~~~~~~~~~~~~~~~
+An algorithm whose execution time is :math:`O(n*lg(n)^k)`, where `k` is a constant, has quasi-linear execution time.
+
+Polynomial Complexity
+~~~~~~~~~~~~~~~~~~~~~~
+If an algorithm's execution time is :math:`O(n^k)` where `k` is a constant, we say the algorithm's execution time is polynomial.
+
+Exponential Complexity
+~~~~~~~~~~~~~~~
+If an algorithm's execution time is :math:`O(c^n)` where `c` is a constant, we say the algorithm's execution time is exponential. Exponential algorithms are generally not suitable, and for large `n` (e.g., 1000), they can take as long as the age of the galaxy :)).

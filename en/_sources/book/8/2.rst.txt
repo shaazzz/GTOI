@@ -1,0 +1,30 @@
+Binary Search Tree (BST)
+============================
+A Binary Search Tree (BST) is a special binary tree where the value in node `u` is greater than or equal to all values in its left child's subtree, and greater than or equal to all values in its right child's subtree.
+BST allows us to add, delete, or search for a value more quickly.
+Search, insertion, and deletion are the main foundations of BST.
+
+Search
+------
+The operation to search for a value, assuming the value we are looking for is `x`, is as follows:
+
+- First, we look at the value on the tree's root. If it is greater than `x`, we recursively perform this step on the left child's subtree. If it is smaller, we perform it on the right child's subtree.
+
+- We continue this step until either the desired child does not exist for us to descend into its subtree, or the value of the node we are examining is equal to `x`.
+
+Insertion
+---------
+The operation to add a value, assuming the value to be added is `x`, is as follows:
+
+- First, we look at the value on the tree's root. If it is greater than or equal to `x`, we recursively perform this step on the left child's subtree. If it is smaller, we perform it on the right child's subtree.
+
+- We continue this step until the desired child does not exist, and then we add a new child in that position and set its value to `x`.
+
+Deletion
+--------
+After finding the node to be deleted, using the same search method, there are 3 possible cases.
+The first case is when the target node has no children. It can be easily deleted immediately.
+The second case is when the target node has one child. The node can be deleted, and its child is placed in its position.
+The third case is when the target node has two children. This node can be deleted using two methods. To understand better, let's name the node to be deleted `u`.
+The first method is to find node `v`, which has the smallest value in `u`'s right subtree, and replace `u`'s value with `v`'s value. Now, we delete node `v` using either case one or case two (it's clear that node `v` cannot be in case three, because `v` is the smallest node, and if it had two children, it would mean it has a left child smaller than itself, which is a contradiction).
+The second method is similar to the first, with the difference that node `v` is the largest node in `u`'s left child's subtree.

@@ -1,0 +1,75 @@
+Tree Hashing
+============
+
+In this section, we examine checking the equality of two trees. Assume we are given two trees :math:`T_1` and :math:`T_2`, and we want to provide a linear algorithm to check if :math:`T_1, T_2` are equal. Equality here means that if we disregard vertex labels, the two trees can be drawn such that their shapes are identical.
+
+Conversion to Equality of Two Rooted Trees
+------------------------------------------
+
+Assume we know that vertex :math:`u_1` from tree :math:`T_1` is to be equal to vertex :math:`u_2` from tree :math:`T_2`. Then we can check the equality of two rooted trees, which seems simpler than the current problem.
+
+So now, if we can solve the problem of equality of two :math:`n`-vertex rooted trees in :math:`O(f(n))`, we have a solution that solves the current problem in :math:`O(n \times f(n))`. It is sufficient to consider :math:`u_1` as a fixed vertex and iterate over all possible choices for :math:`u_2`.
+
+The key idea here is to choose :math:`u_1, u_2` with a specific property such that the number of vertices in the tree having this property is small. For example, if we consider :math:`u_1` as a leaf, then :math:`u_2` must also be a leaf. So instead of iterating :math:`n` times for :math:`u_2`, it is sufficient to iterate a number of times equal to the number of leaves in :math:`T_2`.
+
+In previous sections, we learned that every tree has at most 2 centroids. Consequently, if we consider the desired property to be 'being a centroid', it is sufficient to pick :math:`u_1` as one of the centroids of tree :math:`T_1` and iterate over all centroids of tree :math:`T_2` for :math:`u_2` (of which there are at most 2). Thus, we can solve the problem in :math:`O(f(n))`.
+
+Solving the Equality Problem for Two Rooted Trees
+-------------------------------------------------
+
+Assume :math:`r_1` is the root of tree :math:`T_1` and :math:`r_2` is the root of tree :math:`T_2`, and now we want to check the equality of these two trees. Initially, if the number of children of :math:`r_1` and :math:`r_2` are not equal, then the two trees are clearly unequal. If the number of children is equal, we need to understand which child of :math:`r_1` corresponds to which child of :math:`r_2`. If we understand this, the problem can be solved recursively: for all children of :math:`r_1`, we must check the equality of their subtrees with the subtrees of their corresponding vertices in tree :math:`T_2`.
+
+In other words, we need to permute the sequences of children of :math:`r_1` and :math:`r_2` in some way, then for each :math:`i`, check the equality of the subtrees of the :math:`i`-th children of :math:`r_1` and :math:`r_2`.
+
+Now we use the idea of sorting the children of each vertex based on a specific property. In this way, we no longer need to check all permutations of children of :math:`r_1` and :math:`r_2`; it is sufficient to check the current order.
+
+To each rooted tree :math:`T` with root :math:`r`, we assign a sequence of parentheses. This is done by first recursively computing the subtrees corresponding to the children of :math:`r`, then sorting the children of :math:`r` based on the lexicographical order of their strings. **This is the fixed order we wanted to assign to the children of each vertex.** Finally, the parenthesis sequence of :math:`T` is :math:`S = (S_1S_2...S_k)`, where :math:`S_i`'s are the parenthesis sequences corresponding to the subtree of the :math:`i`-th child of :math:`r`.
+
+You can verify that two rooted trees are equal if and only if their assigned parenthesis sequences are identical.
+
+.. figure:: /_static/dot/Hash_Tree.svg
+   :width: 30%
+   :align: center
+   :alt: If the user's internet is slow, this appears
+
+Computing the Hash of a Rooted Tree
+-----------------------------------
+
+Since working with a string (concatenating two strings or checking string equality) requires :math:`O(n)` operations, it leads us to think: instead of assigning a string to each vertex, assign a number to each vertex, where each number represents a string!
+
+So we use the logic above, and the number corresponding to each vertex will be obtained as follows. First, we obtain the numbers of the children, then sort them, and assuming they are :math:`H_1, ..., H_k`, our number will be :math:`H = 1 + \sum H_i \times P^i` modulo :math:`M`, where :math:`M, P` are two random prime numbers. This technique is called hashing. Since :math:`M, P` are random numbers, it can be assumed that the resulting numbers are random, and the probability of assigning identical numbers to two different trees will be very negligible. (For assurance, this can be done with more pairs of :math:`M, P` to further reduce the chance of collision).
+
+The implementation of the algorithm we described is as follows:
+
+.. code-block:: cpp
+
+  const int maxn = 1e5 + 10, P = 101, M = 1e9 + 9;
+  
+  vector <int> v[maxn];
+  
+  int calc(int u, int par = -1){
+      vector<int> vec;
+      for(int y : v[u]){
+  	      if(y != par)
+  	      vec.push_back(calc(y, u));
+      }
+      sort(vec.begin(), vec.end());
+      int H = 0;
+      for(int x : vec)
+	    H = (1ll * H * P + x) % M;
+      H = (1 + H) % M;
+      return H;
+  }
+  
+  int main(){
+      int n;
+      cin >> n;
+      for(int i = 0; i < n - 1; i++){
+	  int a, b;
+	  cin >> a >> b;
+	  v[a].push_back(b);
+	  v[b].push_back(a);
+      }
+      cout << calc(1) << "\n"; // hash of rooted tree from 1
+      return 0;
+  }

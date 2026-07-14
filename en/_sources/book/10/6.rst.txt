@@ -1,0 +1,158 @@
+
+   <meta charset="UTF-8">
+
+Virtual Tree
+============
+
+Consider a tree :math:`T`. An arbitrary subset of vertices of :math:`T`, say :math:`A`, is called a virtual tree if it is closed under :math:`lca`. That is, the :math:`lca` of any two arbitrary vertices from :math:`A` must also be within :math:`A` itself.
+
+.. figure:: /_static/virt_tree_intro.png
+   :width: 80%
+   :align: center
+   :alt: This appears if the user's internet is bad
+
+Why is the Virtual Tree important to us?
+---------------------------------------
+
+First Problem
+~~~~~~~~~~~~~~
+
+Suppose we have colored a subset of the tree's vertices, say :math:`B`, black. Now we want to color some uncolored vertices black such that all black vertices become connected. Additionally, we want the total number of black vertices to be minimized. Find this minimum count.
+
+It's clear that to solve this problem, we must color all vertices that lie on the path between at least two black vertices. But the important question is how to find the number of these vertices such that our time complexity depends on :math:`|B|` and is completely independent of :math:`n`. (i.e., if the given set is small, we should answer quickly, and vice-versa).
+
+Let the answer be :math:`ans`. Note that :math:`ans` itself might be very large and not of the order of :math:`|B|`. For example, if our tree is a path and :math:`B` is the set of the two endpoints of this path, then :math:`ans=n`. Therefore, we cannot work with a time complexity of :math:`ans`.
+
+Now, pay attention to this interesting point. Consider the final state of the tree (where black vertices are connected) and suppose we define the 'black degree' of each vertex :math:`u` as the number of black vertices adjacent to the black vertex :math:`u`. As you probably noticed from the path example, many vertices we are forced to color black might have a black degree of 2!
+
+We perform an equivalent transformation on the problem to simplify our work. Root the tree at one of the vertices in :math:`B`. Now, for every vertex :math:`u` in :math:`B`, all vertices from :math:`u` up to the root must be colored black, and this coloring is also sufficient (meaning the resulting structure satisfies the connectivity condition).
+
+This is where our problem becomes somewhat similar to the virtual tree problem. Suppose we added enough vertices to set :math:`B` such that it became closed under :math:`lca`. That is, as long as there were two vertices :math:`u, v` in :math:`B` such that :math:`lca(u, v)` was not in :math:`B`, we had to color :math:`lca(u, v)` black and add it to :math:`B`.
+
+Now, for every non-root vertex :math:`u`, call its lowest black ancestor its virtual parent, denoted by :math:`p_u`. Note that the vertices between :math:`u` and :math:`p_u` are precisely those we mentioned would have a black degree of 2, and there might be many of them. Now, if we count these vertices for all :math:`u, p_u` (their count is :math:`h_u - h_{p_u} - 1`) and add this value to the current number of black vertices, we will get the answer to the problem.
+
+In this section, we didn't mention a few key points, including:
+
+- How can we find vertices that, if added to set :math:`B`, will form a virtual tree?
+
+- Why is the maximum number of vertices in the virtual tree related only to :math:`B` and not to :math:`n`?
+
+We will answer these questions next. It is also worth noting that the problem we posed in this section is just as easily solvable without re-rooting the tree. The re-rooting we performed was solely for ease of explanation!
+
+Diameter of a Subset
+~~~~~~~~~~~~~~~~~~~~
+
+Suppose you are given a tree :math:`T` and a set :math:`B`. Now you need to name two vertices within :math:`B` whose distance from each other is maximal.
+
+We discussed the DFS-based algorithm for finding the diameter of a tree in Chapter 2. Here too, if the vertices of :math:`B` are connected, we can use the same DFS algorithm. What if they are not connected? Our current concern is similar to the previous problem. That is, for any two vertices :math:`u,v` from :math:`B`, we want to add all vertices present on the path :math:`uv` to :math:`B` and then run the DFS algorithm on the resulting graph.
+
+However, in reality, this is not a good method because, as we stated in the previous problem, the number of vertices we might need to add to :math:`B` could be very large.
+
+Here, just like in the previous problem, we use the virtual tree. That is, we expand the set :math:`B` until it becomes a virtual tree. Now, in a new graph, we draw an edge between each vertex and its virtual parent with a weight of :math:`h_u - h_{p_u}`. The new tree we have is our virtual tree! By finding the diameter in this tree, we find the maximum distance between the original vertices of :math:`B`.
+
+Algorithm
+---------------
+
+Introduction
+~~~~~~~~~~~
+
+As you probably intuited from the previous problems, a virtual tree can represent a small subtree of our original tree. The interesting point is that this subtree is not necessarily connected, but if we construct a new tree where each vertex is connected to its virtual parent, we obtain a new tree. Then, from now on, we can only consider this new tree and perform our calculations on it.
+
+.. figure:: /_static/transform_to_virt_tree.png
+   :width: 80%
+   :align: center
+   :alt: This appears if the user's internet is bad
+
+In this section, we assume that the set of vertices :math:`B` is given to us, and we want to add some vertices to it to make :math:`B` a virtual tree. Here, we call this process 'expansion'.
+
+First Attempt
+~~~~~~~~~~~~
+
+In the first step, for any two vertices :math:`a, b` within set :math:`B`, we can calculate :math:`lca(a, b)` and call this set :math:`C`.
+
+Now we claim that :math:`D = B \cup C` is a virtual tree. For proof, note that every vertex in :math:`D` has at least one member of :math:`B` within its subtree. (Why?) Now suppose there are two vertices :math:`a, b \in D` such that their :math:`lca` is not in :math:`D`. Let :math:`a\prime` be a vertex from :math:`B` in the subtree of :math:`a`, and :math:`b\prime` be a vertex from :math:`B` in the subtree of :math:`b`. If :math:`lca(a, b)` is not in :math:`D`, then :math:`lca(a\prime, b\prime)` would be the same as :math:`lca(a, b)`, which is in :math:`C`, contradicting our initial statement.
+
+Therefore, it is sufficient to perform these calculations only for every pair of vertices within :math:`B` (and there's no need to check the :math:`lca` of newly added vertices with the others).
+
+A Better Algorithm
+~~~~~~~~~~~~~~~~~~
+
+The method we described earlier had high time complexity. If we consider :math:`lca` calculations to be :math:`O(lg(n))`, then the above method would be :math:`O(|B|^2)`.
+
+Now we try to find a better method. Consider a vertex :math:`u` that is not in :math:`B` but must be in the virtual tree. This means :math:`u` has two children, say :math:`a` and :math:`b`, such that within the subtree of each of :math:`a` and :math:`b`, there exist one or more vertices from :math:`B` (whose :math:`lca` will be :math:`u`).
+
+Now note that taking the :math:`lca` of any vertex in :math:`a`'s subtree with any vertex in :math:`b`'s subtree will yield vertex :math:`u`. The problem with the previous algorithm was that in these situations, it would calculate :math:`u` many times, which we didn't need. That is, for every ordered pair of vertices from :math:`a`'s and :math:`b`'s subtrees, it calculated vertex :math:`u` once, and this is precisely what increased the time complexity of the previous approach.
+
+The interesting point is that if we can define an initial order for the vertices of tree :math:`T` such that in this order, **each vertex's subtree transforms into an interval**, then we can use the following method and claim it works correctly.
+
+- Sort the vertices of :math:`B` according to the described order.
+- Now, for every two consecutive vertices in the sorted list we obtained, add their :math:`lca` to set :math:`C`.
+- The union of the two sets :math:`B` and :math:`C` forms our virtual tree.
+
+Why does this algorithm work correctly? We said vertex :math:`u` has two children, and there's a vertex from :math:`B` in each of their subtrees. In the sorted list on which we performed the algorithm, there exists **an interval** corresponding to the subtree of :math:`u`. Within the vertices corresponding to this interval, there must definitely be two vertices belonging to the subtrees of different children of :math:`u` (Why?) Therefore, when we calculate :math:`lca`, vertex :math:`u` is added to set :math:`C`! Just as we wanted.
+
+Optimal Order?
+~~~~~~~~~~~~~~~~~
+
+In the above algorithm, we magically used an order that had an interesting property. But we didn't provide such an order.
+
+You can construct such an order yourself. All methods for constructing such an order are rooted in the DFS algorithm. Why? Because when we want to calculate this order for the subtree of a vertex like :math:`u`, we must first recursively find such an order for the subtrees of all of :math:`u`'s children, and then add vertex :math:`u` somewhere between the intervals of two of its children (or before and after all of them).
+
+This is exactly what we call 'starting-time' or 'finishing-time' in DFS, and we discussed it in Chapter 2.
+
+Implementation
+~~~~~~~~~~~~~~~~
+
+.. code-block:: cpp
+  
+  const int maxn = 1e5 + 10, max_log = 20;
+
+  int start_time[maxn], sparse_table[maxn][max_log], h[maxn];
+  vector<int> g[maxn];
+  int Counter = 0;
+
+  void dfs(int v, int par = 0){
+    h[v] = h[par] + 1;
+    sparse_table[v][0] = par;
+    for(int i = 1; i < max_log; i++){
+        sparse_table[v][i] = sparse_table[sparse_table[v][i-1]][i-1];
+    }
+    start_time[v] = Counter;
+    Counter = Counter + 1;
+    for(int u : g[v]){
+        if(par != u){
+            dfs(u, v);
+        }
+    }
+  }
+
+  int lca(int a, int b){
+    if(h[a] < h[b])
+        swap(a, b);
+    for(int i = max_log-1; i >= 0; i--){
+        if(h[sparse_table[a][i]] >= h[b])
+            a = sparse_table[a][i];
+    }
+    if(a == b)
+        return a;
+    for(int i = max_log-1; i >= 0; i--){
+        if(sparse_table[a][i] != sparse_table[b][i])
+            a = sparse_table[a][i], b = sparse_table[b][i];
+    }
+    return sparse_table[a][0];
+  }
+  
+  vector<int> build_virtual_tree(vector<int> vec){
+    sort(vec.begin(), vec.end(), [](int a, int b){ return start_time[a] < start_time[b]; }); // sort on starting time
+    for(int i = vec.size()-1; i > 0; i--){
+        vec.push_back(lca(vec[i], vec[i-1]));
+    }
+    sort(vec.begin(), vec.end(), [](int a, int b){ return start_time[a] < start_time[b]; });
+    vec.resize(unique(vec.begin(), vec.end())-vec.begin());
+    return vec;
+  }
+
+
+Also, note that if vertex :math:`u` is in the virtual tree, and the vertex preceding it in the starting-time order is :math:`v`, then the virtual parent of :math:`u` is equal to :math:`lca(u, v)`. (Why?)
+
+To calculate :math:`lca` in the code above, a method with :math:`O(lg(n))` time complexity was used, and finally, finding the virtual tree expansion of set :math:`B` was done in :math:`O(|B| \times lg(n))` time.

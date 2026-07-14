@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    .hidden {display: none;}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    if (!window.localStorage.getItem('solvedProblems')) {
+      window.localStorage.setItem('solvedProblems', '[]');
+    }
+    let styleEl = document.createElement('style');
+    document.head.appendChild(styleEl);
+    const reloadColor = () => {
+      document.head.removeChild(styleEl);
+      styleEl = document.createElement('style');
+      document.head.appendChild(styleEl);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      sp.forEach((x)=>{
+        styleEl.sheet.insertRule("#d"+x+"{background:#efe;}")
+      });
+    };
+    reloadColor();
+    const swapButton = (id) => {
+      const dx = document.getElementById('b'+id);
+      const sp = JSON.parse(window.localStorage.getItem('solvedProblems'));
+      if ( sp.find( (x) => x === id ) ) {
+        window.localStorage.setItem('solvedProblems', JSON.stringify(
+          sp.filter( (x)=>x!==id )
+        ));
+        dx.innerText = 'حل کردم';
+      } else {
+        sp.push(id);
+        window.localStorage.setItem('solvedProblems', JSON.stringify(sp) ); 
+        dx.innerText = 'حل نکردم';
+      }
+      reloadColor();
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="/_static/problems.css">
+  <link rel="stylesheet" type="text/css" href="/_static/font-awesome.min.css">
+  </head>
+  <body style="direction:rtl;">
+    <div class="container-fluid">
+    <div id="body-top">
+      <a href="/problems/"><i class="fa fa-folder-o"></i>&nbsp; فهرست اصلی</a>
+      <a style="float: left; padding-right: 20px;" href="/book/8/7" id="problems-link"><i class="fa fa-book"></i>&nbsp; درس‌نامه</a>    
+    </div>
+    <div id="page-body" style="max-width:800px;">
+      <h1>مسائل بیشتر <a href="8.7.html">بخش 8.7</a></h1><ul><li><a href=https://www.spoj.com/problems/ADABEHIVE>Ada and Behives</a></li><li><a href=https://www.spoj.com/problems/ADACABAA>Ada and Species</a></li><li><a href=https://codeforces.com/contest/1191/problem/F>Tokitsukaze and Strange Rectangle</a></li><li><a href=https://codeforces.com/gym/102001/problem/H>Lexical Sign Sequence</a></li><li><a href=https://toph.co/p/easy-prime>Easy Prime!</a></li><li><a href=https://toph.co/p/mario-and-princess-peach>Mario and Princess Peach</a></li><li><a href=https://codeforces.com/gym/101628/problem/B>Battleship</a></li><li><a href=https://codeforces.com/gym/101908/problem/C>Pizza Cutter</a></li><li><a href=https://codeforces.com/contest/903/problem/D>Almost Difference</a></li><li><a href=https://codeforces.com/contest/102/problem/D>Buses</a></li><li><a href=https://codeforces.com/gym/101047/problem/J>The Kamphaeng Phet's Chedis</a></li><li><a href=https://www.spoj.com/problems/MATSUM>Matrix Summation</a></li><li><a href=https://www.hackerearth.com/practice/data-structures/advanced-data-structures/fenwick-binary-indexed-trees/practice-problems/algorithm/counting-in-byteland>Counting In Byteland</a></li><li><a href=https://codeforces.com/contest/707/problem/E>Garlands</a></li><li><a href=https://codeforces.com/contest/749/problem/E>Inversions After Shuffle</a></li><li><a href=https://codeforces.com/problemset/gymProblem/101055/D>Cairo Market</a></li><li><a href=https://codeforces.com/contest/459/problem/D>Pashmak and Parmida's problem</a></li><li><a href=https://codeforces.com/contest/61/problem/E>Enemy is weak</a></li><li><a href=https://codeforces.com/contest/669/problem/E>Little Artem and Time Machine</a></li><li><a href=https://codeforces.com/contest/777/problem/E>Hanoi Factory</a></li><li><a href=https://www.spoj.com/problems/TULIPNUM>Tulip And Numbers</a></li><li><a href=https://codeforces.com/contest/799/problem/C>Fountains</a></li><li><a href=https://codeforces.com/contest/831/problem/E>Cards Sorting</a></li><li><a href=https://www.spoj.com/problems/TPGA>The Permutation Game Again</a></li><li><a href=https://www.spoj.com/problems/SGIFT>Sabbir and gifts</a></li><li><a href=https://www.spoj.com/problems/SUMSUM>Enjoy Sum with Operations</a></li><li><a href=https://codeforces.com/contest/849/problem/E>Goodbye Souvenir</a></li><li><a href=https://www.spoj.com/problems/CRAYON>Crayon</a></li><li><a href=https://www.spoj.com/problems/KOPC12G>K12-Bored of Suffixes and Prefixes</a></li><li><a href=https://www.spoj.com/problems/TRIPINV>Mega Inversions</a></li><li><a href=https://codeforces.com/contest/597/problem/C>Subsequences</a></li><li><a href=https://codeforces.com/contest/12/problem/D>Ball</a></li><li><a href=https://www.spoj.com/problems/NARHIL>NARUTO AND HILLS</a></li><li><a href=https://quera.ir/problemset/university/9721/%D8%B3%D8%A4%D8%A7%D9%84-%D8%AF%D8%A7%D9%86%D8%B4%DA%AF%D8%A7%D9%87-%D8%B5%D9%86%D8%B9%D8%AA%DB%8C-%D8%A7%D9%85%DB%8C%D8%B1%DA%A9%D8%A8%DB%8C%D8%B1-%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C-%D8%A7%D9%84%DA%AF%D9%88%D8%B1%DB%8C%D8%AA%D9%85-%D9%BE%D8%A7%DB%8C%DB%8C%D8%B2-%DB%B9%DB%B5-%D9%88%D8%A7%D8%B1%D9%88%D9%86%DA%AF%DB%8C>وارونگی</a></li></ul>
+    </div></div>
+    <script>
+      JSON.parse(window.localStorage.getItem('solvedProblems')).forEach((e)=>{
+        const k = document.getElementById('b'+e);
+        if (!k) return;
+        k.innerText = 'حل نکردم';
+      });
+    </script>
+  </body>
+</html>

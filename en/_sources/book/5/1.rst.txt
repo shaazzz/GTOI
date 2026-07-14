@@ -1,0 +1,29 @@
+Introduction
+============
+
+Definitions
+-----------
+
+An Eulerian tour is a closed walk that traverses every edge exactly once.
+A Hamiltonian cycle is a cycle in which every vertex is visited exactly once, and a Hamiltonian path is a path in which every vertex is visited exactly once.
+
+Pay attention to the difference between a walk, a trail, and a path!
+
+The definitions of an Eulerian tour and a Hamiltonian cycle are very similar, but this subtle difference (replacing "vertex" instead of "edge") has led to the problem of finding a Hamiltonian cycle not having a polynomial-time algorithm, whereas a linear-time algorithm can be provided for finding an Eulerian tour!
+
+Königsberg Bridges
+----------------
+
+It is said that the concept of graphs originated from the Königsberg bridges problem.
+Königsberg was a city divided into several regions by a river, and connections between these regions were made via bridges. After some time, the citizens wondered whether it was possible to start from one of the regions, traverse each bridge exactly once, and return to the starting city in the end?!
+You can see that the problem is exactly equivalent to finding an Eulerian tour.
+
+.. figure:: /_static/Konigsberg_Bridges.png
+   :width: 50%
+   :align: center
+   :alt: If the user's internet is garbage, this will appear
+
+.. figure:: /_static/dot/Konigsberg_Graph.svg
+   :width: 35%
+   :align: center
+   :alt: If the user's internet is garbage, this will appear
